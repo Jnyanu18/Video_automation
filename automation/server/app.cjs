@@ -322,6 +322,29 @@ function createApp(cfg, deps) {
       auth.revoke(session);
       return sendJson(res, 200, { ok: true }, { 'set-cookie': auth.cookie('', 0) });
     }
+    if (p.startsWith('/api/editor/')) {
+      const editorUrl = 'http://127.0.0.1:8793' + p + (url.search || '');
+      try {
+        let body;
+        if (method === 'POST' || method === 'PUT') {
+          const rawBody = await readJson(req);
+          if (rawBody && typeof rawBody.uploadId === 'string' && /^[a-f0-9]{32}$/.test(rawBody.uploadId)) {
+            rawBody.video_path = path.join(cfg.uploadDir, rawBody.uploadId + '.mp4');
+          }
+          body = JSON.stringify(rawBody);
+        }
+        const f = deps.fetch || fetch;
+        const resp = await f(editorUrl, {
+          method,
+          headers: { 'content-type': 'application/json' },
+          body,
+        });
+        const json = await resp.json().catch(() => ({ ok: false, error: 'INVALID_JSON' }));
+        return sendJson(res, resp.status, json);
+      } catch (e) {
+        return sendJson(res, 502, { ok: false, error: 'EDITOR_SERVICE_UNAVAILABLE', message: 'AI Editor service is not running on port 8793 (' + e.message + ')' });
+      }
+    }
     if (method === 'GET') {
       if (p === '/api/summary') return summary(res);
       if (p === '/api/reels') return listReels(res, url.searchParams);

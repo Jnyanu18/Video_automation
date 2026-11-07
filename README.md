@@ -236,11 +236,12 @@ python -m pytest agent/ tools/ evals/ services/ -q   # ~230 Python tests
 - [x] MoneyPrinterTurbo faceless video (local fallback)
 - [x] Raw footage upload pipeline
 - [x] Gemini AI video editor (silence cut, reframe, captions)
+- [x] **Reference Style & AI Storyboard Editor** (inspired by [winkguys reel](https://www.instagram.com/reels/DfJ52pVzp67/))
+- [x] **Interactive Storyboard review & AI revision chat in Dashboard**
 - [ ] **Higgsfield cinematic video** (adapter built, needs API key)
 - [ ] **Visual prompt** in AI script (Higgsfield-ready cinematic description)
 - [ ] Real stock footage via Pixabay
 - [ ] Instagram publish (Postiz Cloud or Meta Graph API)
-- [ ] Storyboard approval UI in dashboard
 - [ ] Content calendar / scheduling
 - [ ] Brand kits (voice, fonts, colours per client)
 - [ ] Multi-platform (more coming)

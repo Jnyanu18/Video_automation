@@ -13,6 +13,6 @@
     "setup:local": "node scripts/setup-local.cjs",
     "start:all": "node scripts/start-all.cjs",
     "postiz-adapter": "node adapters/postiz/index.cjs",
-    "test": "node --test test/*.test.cjs"
+    "test": "node --test --test-concurrency=1 test/*.test.cjs"
   }
 }

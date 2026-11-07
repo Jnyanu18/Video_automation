@@ -1,0 +1,508 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "editplan.schema.json",
+  "title": "EditPlan",
+  "type": "object",
+  "required": [
+    "version",
+    "source",
+    "keep"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "path",
+        "duration"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fps": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fps": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "keep": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/keep"
+      }
+    },
+    "captions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/caption"
+      }
+    },
+    "reframe": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "face-follow",
+            "center",
+            "none"
+          ]
+        },
+        "track": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trackpoint"
+          }
+        }
+      }
+    },
+    "overlays": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/overlay"
+      }
+    },
+    "style_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "time_base": {
+      "enum": [
+        "source",
+        "output"
+      ]
+    },
+    "timeline": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "number"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "src_start",
+              "src_end",
+              "out_start",
+              "out_end"
+            ]
+          }
+        }
+      }
+    },
+    "speed": {
+      "type": "array",
+      "description": "Playback speed ranges, SOURCE time. Output length of a span = span/factor.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "start",
+          "end",
+          "factor"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "factor": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 16
+          }
+        }
+      }
+    },
+    "zooms": {
+      "type": "array",
+      "description": "Punch-in zooms, SOURCE time (output time once time_base=output).",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "start",
+          "end"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "scale": {
+            "type": "number",
+            "exclusiveMinimum": 1,
+            "maximum": 4
+          },
+          "cx": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "cy": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "ramp": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "ease": {
+            "enum": [
+              "smooth",
+              "linear"
+            ]
+          }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "description": "Transitions at cuts between kept segments. `at` = SOURCE time inside the cut gap. Each overlaps its neighbours by `duration`, shortening the output.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "at",
+          "kind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "at": {
+            "type": "number",
+            "minimum": 0
+          },
+          "kind": {
+            "enum": [
+              "crossfade",
+              "fade-black",
+              "fade-white",
+              "dissolve",
+              "wipe-left",
+              "wipe-right",
+              "wipe-up",
+              "wipe-down",
+              "slide-left",
+              "slide-right",
+              "slide-up",
+              "slide-down",
+              "smooth-left",
+              "smooth-right",
+              "circle-open",
+              "circle-close",
+              "radial",
+              "pixelize",
+              "zoom-in"
+            ]
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 3
+          }
+        }
+      }
+    },
+    "color_grade": {
+      "type": "object",
+      "description": "Whole-video grade.",
+      "properties": {
+        "preset": {
+          "enum": [
+            "neutral",
+            "warm",
+            "cool",
+            "cinematic",
+            "vintage",
+            "bw",
+            "vivid",
+            "punchy",
+            "faded"
+          ]
+        },
+        "lut": {
+          "type": "string"
+        },
+        "exposure": {
+          "type": "number",
+          "minimum": -3,
+          "maximum": 3
+        },
+        "contrast": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 2
+        },
+        "saturation": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "brightness": {
+          "type": "number",
+          "minimum": -0.5,
+          "maximum": 0.5
+        }
+      }
+    },
+    "audio": {
+      "type": "object",
+      "description": "Audio mix. music.start is OUTPUT seconds; mute ranges are SOURCE seconds (output once time_base=output).",
+      "properties": {
+        "music": {
+          "type": "object",
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "volume_db": {
+              "type": "number"
+            },
+            "start": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fade_in": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fade_out": {
+              "type": "number",
+              "minimum": 0
+            },
+            "loop": {
+              "type": "boolean"
+            }
+          }
+        },
+        "duck": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "amount_db": {
+              "type": "number"
+            },
+            "attack_ms": {
+              "type": "number"
+            },
+            "release_ms": {
+              "type": "number"
+            }
+          }
+        },
+        "loudness": {
+          "type": "object",
+          "required": [
+            "target_lufs"
+          ],
+          "properties": {
+            "target_lufs": {
+              "type": "number"
+            },
+            "true_peak_db": {
+              "type": "number"
+            },
+            "lra": {
+              "type": "number"
+            }
+          }
+        },
+        "mute": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "start",
+              "end"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "start": {
+                "type": "number",
+                "minimum": 0
+              },
+              "end": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "keep": {
+      "type": "object",
+      "required": [
+        "id",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "caption": {
+      "type": "object",
+      "required": [
+        "id",
+        "text",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        },
+        "style": {
+          "type": "string"
+        }
+      }
+    },
+    "trackpoint": {
+      "type": "object",
+      "required": [
+        "t",
+        "cx",
+        "cy"
+      ],
+      "properties": {
+        "t": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cx": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "cy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "broll",
+            "lower-third",
+            "title",
+            "graphic"
+          ]
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        },
+        "asset": {
+          "type": "string"
+        },
+        "params": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

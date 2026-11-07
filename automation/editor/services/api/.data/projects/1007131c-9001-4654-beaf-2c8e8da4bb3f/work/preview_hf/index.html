@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=360, height=640"/>
+<script src="vendor/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:360px;height:640px;overflow:hidden;background:#000;font-family:sans-serif}
+#stage{position:relative;width:360px;height:640px;overflow:hidden}
+#main{position:absolute;left:0;top:0;width:360px;height:640px;z-index:0}
+.ov-full{position:absolute;inset:0;z-index:5;overflow:hidden}
+.ov-title{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 40.0px}
+.ov-lt{position:absolute;left:36.7px;bottom:166px;z-index:6}
+.ov-gfx{position:absolute;inset:36.7px;z-index:6;display:flex;align-items:center;justify-content:center}
+.tt{color:#fff;font-weight:800;font-size:24.0px;text-shadow:0 4px 18px rgba(0,0,0,.8)}
+.sub{color:#eee;font-weight:500;font-size:12.7px;margin-top:2.7px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.lt{background:rgba(0,0,0,.6);border-left:2.7px solid #ff7a00;padding:5.3px 9.3px}
+.lt .tt{font-size:14.7px}
+.cap{position:absolute;left:0;right:0;bottom:77px;z-index:10;text-align:center;padding:0 36.7px}
+.ct{display:inline-block;font-size:21.3px;line-height:1.2}
+.w{display:inline-block;transform-origin:50% 70%}
+</style></head><body>
+<div id="stage" data-composition-id="edit" data-start="0" data-duration="15.146" data-width="360" data-height="640" data-fps="24">
+  <video id="main" class="clip" data-start="0" data-duration="15.146" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
+  <div id="cap0" class="clip cap" data-start="0.000" data-duration="3.780" data-track-index="1" style=""><span class="ct" id="cap0t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span></div>
+  <div id="cap1" class="clip cap" data-start="3.780" data-duration="3.780" data-track-index="1" style=""><span class="ct" id="cap1t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Lorem Ipsum has been the industry&#x27;s standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset&#x27;s Body Type sheets.</span></div>
+  <div id="cap2" class="clip cap" data-start="7.560" data-duration="3.780" data-track-index="1" style=""><span class="ct" id="cap2t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged.</span></div>
+  <div id="cap3" class="clip cap" data-start="11.340" data-duration="3.788" data-track-index="1" style=""><span class="ct" id="cap3t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.</span></div>
+</div>
+<script>
+const tl = gsap.timeline({paused:true});
+tl.from("#cap0t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},0.000);
+tl.from("#cap1t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},3.780);
+tl.from("#cap2t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},7.560);
+tl.from("#cap3t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},11.340);
+window.__timelines = window.__timelines || {};
+window.__timelines["edit"] = tl;
+</script></body></html>

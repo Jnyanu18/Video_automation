@@ -37,6 +37,10 @@ const mptPy = env.MPT_DIR && path.join(env.MPT_DIR, '.venv', process.platform ==
 if (mptPy && fs.existsSync(mptPy)) start('mpt', ['main.py'], {}, env.MPT_DIR, mptPy);
 if (env.MPT_API_KEY) start('mpt-adapter', [path.join(ROOT, 'adapters', 'mpt', 'index.cjs')], {});
 else console.warn('MPT_API_KEY is empty; video generation will report an error until MoneyPrinterTurbo is configured in .env.local.');
+const editorScript = path.join(ROOT, 'editor', 'api_server.py');
+if (fs.existsSync(editorScript)) {
+  start('ai-editor', [editorScript], { EDITOR_PORT: '8793' }, path.join(ROOT, 'editor'), 'python');
+}
 start('public-media', [path.join(ROOT, 'scripts', 'public-media.cjs')], {});
 start('backend', [path.join(ROOT, 'server', 'index.cjs')], {});
-setTimeout(() => console.log('\nDashboard: http://127.0.0.1:' + (env.PORT || 8787) + '   n8n editor: http://127.0.0.1:' + (env.N8N_PORT || 5678)), 1500);
+setTimeout(() => console.log('\nDashboard: http://127.0.0.1:' + (env.PORT || 8787) + '   n8n editor: http://127.0.0.1:' + (env.N8N_PORT || 5678) + '   AI Editor: http://127.0.0.1:8793'), 1500);

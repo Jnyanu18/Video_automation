@@ -15,7 +15,15 @@ Written 2026-11-07 by Claude Code. Updated 2026-11-07 by Antigravity (Claude Son
   - 11 API calls, 89 s, scorecard FAIL→PASS (agent self-corrected a mid-word cut), preview MP4 at `out/edit/work/preview.mp4` ✅ **VERIFIED**
 - `pipeline/main.py` (prototype): broken on Windows (`npx` not `npx.cmd`); superseded by `services/`
 
-**Changes made:** None to either project code yet. Created comprehensive [README.md](file:///c:/Users/jnyan/Downloads/new%20project%20-%20marketing%20automatio/new%20project%20-%20marketing%20automatio/README.md) and initialized git repository at https://github.com/Jnyanu18/Video_automation and pushed to `main`. Verified all `.env` and `.env.local` files remain safely ignored.
+**Changes made:**
+- Integrated the full **AI Video Editor** engine into `automation/editor/` inspired by https://www.instagram.com/reels/DfJ52pVzp67/ (winkguys workflow: reference style -> raw footage -> Gemini Storyboard first -> review & revise -> render).
+- Created `automation/editor/api_server.py` on port `:8793` (FastAPI) exposing endpoints for style extraction, preset listing, storyboard generation, revision chat, and FFmpeg/Hyperframes rendering into `runtime/renders/`.
+- Mounted `/api/editor/*` proxy in `automation/server/app.cjs` with automatic staged upload file resolution.
+- Updated `automation/scripts/start-all.cjs` to start the AI editor service automatically.
+- Updated Expo frontend (`automation/app/src/app/(app)/new.tsx`) with a full **AI Video Editor** mode: Style Sheet selector, Raw footage upload, Scene-by-scene Storyboard display with stats and scorecard, interactive revision chat, video preview player, and 1-click submit for approval and Instagram publishing.
+- Added test suite `automation/test/editor-service.test.cjs`. All **211 tests pass green** (node test with concurrency=1).
+- Rebuilt frontend web bundle (`automation/web/dist`).
+- Pushed clean codebase to https://github.com/Jnyanu18/Video_automation. Verified all `.env` and `.env.local` files remain safely ignored.
 
 **Recommendation for 6B:** Wrap `ai-video-editor` as a local adapter service on `:8793` (FastAPI). Use its existing `run_agent()` and `adapters.collect_tools()`. Do not extract code. Its EditPlan JSON is the contract. Keep its `.env` separate from `automation/.env.local`.
 
