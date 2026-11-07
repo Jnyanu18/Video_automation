@@ -15,7 +15,7 @@ Written 2026-11-07 by Claude Code. Updated 2026-11-07 by Antigravity (Claude Son
   - 11 API calls, 89 s, scorecard FAIL→PASS (agent self-corrected a mid-word cut), preview MP4 at `out/edit/work/preview.mp4` ✅ **VERIFIED**
 - `pipeline/main.py` (prototype): broken on Windows (`npx` not `npx.cmd`); superseded by `services/`
 
-**Changes made:** None to either project. This was a read-and-verify session only.
+**Changes made:** None to either project code yet. Created comprehensive [README.md](file:///c:/Users/jnyan/Downloads/new%20project%20-%20marketing%20automatio/new%20project%20-%20marketing%20automatio/README.md) and initialized git repository at https://github.com/Jnyanu18/Video_automation and pushed to `main`. Verified all `.env` and `.env.local` files remain safely ignored.
 
 **Recommendation for 6B:** Wrap `ai-video-editor` as a local adapter service on `:8793` (FastAPI). Use its existing `run_agent()` and `adapters.collect_tools()`. Do not extract code. Its EditPlan JSON is the contract. Keep its `.env` separate from `automation/.env.local`.
 
