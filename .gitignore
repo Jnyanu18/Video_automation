@@ -1,0 +1,43 @@
+# Secrets — NEVER commit these
+.env
+.env.local
+*.env.local
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Runtime state (n8n data, renders, uploads)
+automation/runtime/
+automation/server/storage/
+
+# Expo / React Native
+automation/app/.expo/
+automation/app/node_modules/
+automation/app/.expo-shared/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+.venv/
+venv/
+
+# ai-video-editor outputs
+out/
+*.mp4
+*.part
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/settings.json
+.idea/
+*.suo
+*.user

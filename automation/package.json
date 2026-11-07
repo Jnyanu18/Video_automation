@@ -1,0 +1,18 @@
+{
+  "name": "reels-automation",
+  "private": true,
+  "version": "0.1.0",
+  "description": "n8n Instagram Reels pipeline: generated workflows, mock services and tests",
+  "scripts": {
+    "build": "node n8n/build/generate-workflows.cjs",
+    "mock": "node mock/mock-server.cjs",
+    "server": "node server/index.cjs",
+    "hash-password": "node server/hash-password.cjs",
+    "dev:stack": "node mock/dev-stack.cjs",
+    "n8n:install": "npm install --prefix runtime/n8n n8n --no-audit --no-fund",
+    "setup:local": "node scripts/setup-local.cjs",
+    "start:all": "node scripts/start-all.cjs",
+    "postiz-adapter": "node adapters/postiz/index.cjs",
+    "test": "node --test test/*.test.cjs"
+  }
+}

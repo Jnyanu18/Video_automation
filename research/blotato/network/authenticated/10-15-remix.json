@@ -1,0 +1,112 @@
+{
+ "requested": "/remix",
+ "url": "https://my.blotato.com/remix",
+ "title": "Blotato",
+ "headings": [],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools"
+ ],
+ "inputs": [],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings",
+ "api": [
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774513566&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774514320&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events"
+ ],
+ "ws_frames": [],
+ "screenshot": "10-15-remix.png"
+}

@@ -1,0 +1,880 @@
+{
+  "capture_path": "C:\\Users\\LENOVO\\AppData\\Local\\rea-work\\blotato\\login-shell-capture.json",
+  "capture_sha256": "2867f3b3548314ed32347448e2e489159f0ba0229a4da9ad5f77856dc3a2ac52",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_7657568283f1056f652fbd317f1d168d0a3bf7e471090d9c332daf0ff770b53e",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames",
+      "workers"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 27
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 20
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 12
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 13
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 2
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "C:\\Users\\LENOVO\\AppData\\Local\\rea-work\\blotato\\login-shell",
+  "analysis_input": {
+    "input_path": "C:\\Users\\LENOVO\\AppData\\Local\\rea-work\\blotato\\login-shell\\files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_02b920f140c4ed1010bced8e4f2f0e60fa47997443e4d8f3be013c621b23f893",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/4356-adbcb551d260c64b.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/4356-adbcb551d260c64b.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "18c22944ed3efe0917d949075c76cf41580ba93c908814695e989ac2bbf5db53",
+        "bytes": 15587,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1cd27e02d18344ee100be7ad96738ed7eee17739ffb47f8774a89947c6ea3079",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/ef3d1a43-2b4a3928e39b581d.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/ef3d1a43-2b4a3928e39b581d.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "90acf9cc0b7b3a59325db553b51ea02599e978d4a984c28a055e9b6b2f9dcdc5",
+        "bytes": 3742,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1fddccc6642cec0b0c75d1a79bb4528254fec2607285d4134d790169fff319da",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/8415-1b2dc436cf3247c5.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/8415-1b2dc436cf3247c5.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "c586f679927ee75ba68fc82951f7fba903df084bbcb3fa1040484a235ce89e3b",
+        "bytes": 9478,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_249b80ecbfc732cdff95ac4379f3ce3c6ec6ab3002556f4fb4936f5739bbef1e",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/8609-eeadd1c8acc4bd17.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/8609-eeadd1c8acc4bd17.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "54add7408f59e4161ac5f5c6b6da9dd713de2396d7e2251ed47692c555d1173c",
+        "bytes": 20119,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_266b9a4338b0f0678939df7ece9173109bd4cc3068361aaefe70b8fabe77ce3d",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/1987-a67b2c60cac41a2b.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/1987-a67b2c60cac41a2b.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "fead6ca138a1115d3d49636e6e00cbd7a92c8bb96f7de36a605ba177ee1566da",
+        "bytes": 18577,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_279a36845b4bc5458a13c867902ae58a71ad7efb08481f76d4945773ff880f24",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/7163-9f202ae803e1a88d.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/7163-9f202ae803e1a88d.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "1c0e29a6c927abf9efd87f2606b762ec676066d80af78d21ac3b6a49f3acf52a",
+        "bytes": 15130,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_2884d83507ad9c5a66def8cb71bfea431940cde772c4168999e7c4745854c097",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/1612-1dc5627160fee03c.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/1612-1dc5627160fee03c.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "e4ef5a206eabed44e16fdf09b623961979c876c51bdf968eb6628a8c4b37390e",
+        "bytes": 10235,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_35ec3d693451f718709819b147a45834edde83f4f49b81fa517e7224d8ede713",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/9795-7096dbe5a1dabb5b.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/9795-7096dbe5a1dabb5b.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "233cb091f4f779697272151c989f9c588d3aee33d535dc03c587907c14848c80",
+        "bytes": 13104,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_3792cf75775540d985a888ddf342c9d6e08d208a5359c3911221ca99df33ce97",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/807-84b7fd48581bce66.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/807-84b7fd48581bce66.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "3def2bacef6540ad6f9990098187f5613f244ef1855c97eff387eeb3df760220",
+        "bytes": 23749,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_3c3df45633c9997a0a5c88372cd0c4f68ee99e76da50f85f730402472f79616f",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/6332-6ea21540daee7d92.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/6332-6ea21540daee7d92.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "4c4143812ad83a9c09010c141fd11aacaec012fe35ccdd2610fcbe4a5554cf1f",
+        "bytes": 201850,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_418089dcba1df3a3a2915a447db441c96405757d6d13ba3bc64db353e93e76dc",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/7902-c980e7af84a778d5.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/7902-c980e7af84a778d5.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "76b74bb47ca02119e87a229831db72411ce0522145c59fd8ba4f01bad2e2e614",
+        "bytes": 7681,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_4a92d267071281947104f9fb205fbdd16663140d9de3cfcb13face4280a03d57",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/8355-a8350fba7b46ab39.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/8355-a8350fba7b46ab39.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "4328669045e7a503d332ead19a89864d0cec5b884fc9da2f3b647daea68630f2",
+        "bytes": 40292,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5921e09e50eb31455661ec147300a5bc2169c4ae68b7bf099fa493cc16ff028b",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/5219-02da974a2d6a00dc.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/5219-02da974a2d6a00dc.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "dfccb78a04688fe46f6bf1a2001caa307a4fb76ec9f888139ced62da95ee980c",
+        "bytes": 7531,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_59ede4f871a450d33eac011a9e5e7c7bd2a0368b687f5d4416102b1e9e5a7ac8",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/webpack-ec5a8957af91d58d.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/webpack-ec5a8957af91d58d.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "8cc7d6a768181e29edf9dcef8fb14cd50806b01e3cc88b06c6ab540922e480c1",
+        "bytes": 4235,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_6b0244b24516ba71ef6ece05052b22f0b43f5918f241ddaa10ede987a340a3ca",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/8bb4d8db-aaf7767335084d14.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/8bb4d8db-aaf7767335084d14.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "3bc4beebecf95161e5288781cc9b696d7614dce4b1d478b179e1a6d53d6f843e",
+        "bytes": 16331,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_6c49eca69c9fc68bd588eab570ad6b2e3d6d87d30571fea024ad8abb029f5566",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/6258-2de1ed876731e755.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/6258-2de1ed876731e755.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "1dd4660b2956e78e2d359e53fb4009a51be6f4ef0ef97b145d0dc8c3ac0e01fe",
+        "bytes": 14782,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_6e258ac8a0a02e2980f509cb7ac5f574dbd8c58e39d437f6b61b3164992ec6f1",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/layout-5a495a1ba72c576a.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-17-b108a5a898a830a85b4d3360e8c81054a9ebfb876af34345bbde21a92be39062.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "931b66279ea44c4793ac81146eb2ade498113c7f65315022e348fb18fb280428",
+        "bytes": 3537,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_6f6cc653986b757a139ee4779f3d94b5caddde50ce122d4241cf4f481d65dc42",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/6316-2bcdb052010ec06c.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/6316-2bcdb052010ec06c.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "62826d0dcf835bf6b76d2d74f04d787549e3c5e9e7a8e4398c192a2c8deef621",
+        "bytes": 59925,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_71ed6fc71bbb3103fbd4a4088b03e1f633e0827e2f42a9aae0f017781244be66",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/7027-90771e02ff0a731c.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/7027-90771e02ff0a731c.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "e8e66d3f1d880b5cbcbd2f93766971df9c8e0d7d5887ce07701945c9bef0a350",
+        "bytes": 13179,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_72e118767f0dff3d29f88ffe3828cff4fef4fd4abaf40eb3bd9394ea835fdaec",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/login/page-5af6937c6aa1189a.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-20-8479e3cc7de4c28a09e5235241a5126c2d5c0e1216927034f378d9d8da4cea6b.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "f7e82ccd371fdeb8cd81246b3fce05daeef1638bd43ec00f2febcf6bc462d8e7",
+        "bytes": 4575,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_7b1a4a6a14488012fc35f13594aaf0ff79db1656677c92f101173b2efa799af1",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/108-815193fcaa3589c8.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/108-815193fcaa3589c8.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "4f44934feb864f06dc0b7e8ef720f502e31882d023f1ebe4258c297ca93cb5f2",
+        "bytes": 29628,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_82a7638b7ae1357638d90669ebc45d212a1940237a710bcbe15b209521530ee1",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/87c73c54-dd8d81ac9604067c.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/87c73c54-dd8d81ac9604067c.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "7afc888897c7fd966a59ab776e12ab02703256ba55240e30c176b6784b6cf9b6",
+        "bytes": 173023,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_884188c2fdc14bce26d4c5823c09f4a7afed4a65c62bc78ff3bcf2688517f797",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/18-ae8587bda1f855c7.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/18-ae8587bda1f855c7.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "18cb5a321fa1ebea9c3f53cb737c91a1cad317e53d83f3dfe145b8993b464d7f",
+        "bytes": 172576,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_976acf45d5d95022fd7ce498d9fa4bb366aea9a38ba21b98ebbb616ca7dcd1e1",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/cd24890f-260c1a6f3c1216c8.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/cd24890f-260c1a6f3c1216c8.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "1961dd9dd88fcb5d5880fa7f28d48cf188c7c8551d35ad9c2904e6bc18c6b188",
+        "bytes": 179421,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ab36d2cce0546f84092aede5cb16536025b4ba2e48af51176a92e8f3d1b3e32d",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/497-da68cf6a3de0d9d0.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/497-da68cf6a3de0d9d0.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "d330c21a7a99cbcb55aa552314a69b897f76754a6256cf289ed219c1c41a6d99",
+        "bytes": 17946,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ae6667ef51a380819a70b6135df0c00204dee97bf33200a3ad4071afda6e672c",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/main-app-52eeb162d6743c4f.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/main-app-52eeb162d6743c4f.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "d740001bbed8142efb517113eba524e79b42aba84131b0054af7971422ed17a2",
+        "bytes": 842,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b2ffdc5c0981bd6e7e26c15ee51108774fa30cef31fa7b29761c8bb9af5adb23",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/4219-f8d793125f39bdda.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/4219-f8d793125f39bdda.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "6078af7b405932f831f3efc455b5cab6c13029bf5385b7c369d3fc78cce218b1",
+        "bytes": 9150,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b9b76d72db086a31de4a8082eb4f7863860981e0c5b73a83b3eea3da35db9bfd",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/app/layout-ab30be20a4e4ef3a.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/app/layout-ab30be20a4e4ef3a.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "f59fc4f89972987efe505b0b4ff1909d9ba281ac25561e441f9237a4a2d80e59",
+        "bytes": 1693,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c36d92c5cb90f84c845ad6a24193802488ec138113033ce00ac666c60fb9c5b1",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/4680-d6853c3b6bb7adeb.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/4680-d6853c3b6bb7adeb.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "6a59f08cc8e4123c25c15c7f49282cc6ee411bbda8dd1183e5a270aa68aae55f",
+        "bytes": 31284,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_d0465b08ab0fbdaf969b4ac52256d7b9f76f63b9f20448b83fc79b319851c06d",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/2536-de0d990f803aa05f.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/2536-de0d990f803aa05f.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "2f6d6ac557f9774d594106dfa862085497d4630b0c12f7272057b6d1988b3b60",
+        "bytes": 22595,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e1793c3a40dce61b7eac3e32ea63e81e472add231b8ef0ec18aa3f97c576c61b",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/292-32a4343b098b04af.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/292-32a4343b098b04af.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "8b44bd20cec26fb24d4d1cf7105fb9ef4b94f9929a0855074b169e24d03ee2b7",
+        "bytes": 173503,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f054c2a0663a27bc0813124c50856d179df1ad73d6051c4dd8317b6135f12fdd",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/4161-d3bd355003bec045.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/4161-d3bd355003bec045.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "0f14266dd37de04a37044f8f5f21ca2f70de6b0e74cc57906b29e4602360fe6b",
+        "bytes": 93890,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f276677e7b437434c67ca88409b8d2fc7419a9fba4370f1912e05016aba5ceae",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/5305-c9f9cacab6216c55.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/5305-c9f9cacab6216c55.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "ffa7bd9cbe1fcced5d971fcc74895fe151cac4ef855f615ea81adc566a28ccde",
+        "bytes": 10801,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f2917bc359ce87be669b2d65b15b173d94ef0cc1d03e5611899dc49d25c14d5c",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/539.b5b9a8f2c184319f.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/539.b5b9a8f2c184319f.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "f82afb5da187c50b949b97d54ddba192f4b39773fb3aaf557cf56153b2b44935",
+        "bytes": 4720,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_fc90e09dbe85ede3a1284bcdb919fd666c9ebeb9aedc9e2acd0dc546b79b2403",
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://my.blotato.com/_next/static/chunks/8543-547ea536a970eba9.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/ed3070e3c6660039c7d0f1ef80e434f8ed8537aa9acfb86951d1203ed3e707d1/_next/static/chunks/8543-547ea536a970eba9.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "7c98aba85cbecc947345e06abc0d43de1367e75662f8055259f181fbca312c4e",
+        "bytes": 60072,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Worker targets are a final inventory snapshot, not worker-session observation. Their attached flag describes any debugging client; this page-session collector does not observe worker network, console, or script events, and short-lived workers may be absent from the snapshot.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

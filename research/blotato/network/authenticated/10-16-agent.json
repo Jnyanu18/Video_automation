@@ -1,0 +1,236 @@
+{
+ "requested": "/agent",
+ "url": "https://my.blotato.com/agent",
+ "title": "Blotato",
+ "headings": [
+  "What are we making today?"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "View old remix screen",
+   "h": "/remix"
+  },
+  {
+   "t": "",
+   "h": "/settings/brand"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools",
+  "Discard drafts",
+  "Blank Post",
+  "Single Post",
+  "Week of Posts",
+  "Visual Post"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "No brand voice",
+   "aria": ""
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "ph": "Write posts about...",
+   "aria": ""
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "ph": "",
+   "aria": ""
+  }
+ ],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings\nDiscard drafts\nView old remix screen\nBRAND\nCONTEXT\nWhat are we making today?\n\nor pick one to get started\n\nBlank Post\nSingle Post\nWeek of Posts\nVisual Post\n1",
+ "api": [
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774524314&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774534049&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/brands",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774535326&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774537322&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774537327&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774542348&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-BJ9GbU-mazTVG-R4oSKvztDm3r44tbaDdBx2CWd_I2zJy4A68XwMXmBGjsjb1SbvaxI0RRYbdGWDuL4ahbP5hF0BEnXbEA_AMthO?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "10-16-agent.png"
+}

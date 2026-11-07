@@ -1,0 +1,209 @@
+{
+ "requested": "/inspiration",
+ "url": "https://my.blotato.com/inspiration",
+ "title": "Blotato",
+ "headings": [
+  "Filters",
+  "Inspiration"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Inspiration",
+   "h": "/inspiration"
+  },
+  {
+   "t": "Prompts",
+   "h": "/prompts"
+  },
+  {
+   "t": "Viral AI Coach",
+   "h": "/labs/viral-coach"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools",
+  "Reset",
+  "Hide Filters",
+  "Sort By",
+  "Media Type",
+  "Likes Range",
+  "Comments Range",
+  "Shares Range",
+  "Followers Range",
+  "Exclude Keywords",
+  "Creator",
+  "Hide Filters",
+  "Shuffle"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "Search posts...",
+   "aria": ""
+  }
+ ],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nInspiration\nPrompts\nViral AI Coach\nSettings\nFilters\nReset\nHide Filters\n\nSort By\n\nMedia Type\n\nLikes Range\n\nComments Range\n\nShares Range\n\nFollowers Range\n\nExclude Keywords\n\nCreator\n\nInspiration\nHide Filters\nShuffle\nFailed to load posts\nAn error occurred while fetching viral posts. Please try again later.\n1",
+ "api": [
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793775737679&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793775738323&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "OPTIONS",
+   "url": "https://backend.blotato.com/v2/viral-posts",
+   "type": "Other",
+   "status": 204,
+   "mime": ""
+  },
+  {
+   "method": "POST",
+   "url": "https://backend.blotato.com/v2/viral-posts",
+   "type": "Fetch"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793775739316&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793775741325&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793775741331&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [
+  {
+   "method": "POST",
+   "url": "https://backend.blotato.com/v2/viral-posts"
+  }
+ ],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-62vuafBi-aRHnHsAZSzWUJH52dVzO6YiIJQeuyJIFsPltY-MTmpvzyoNZ5M_SFNN58ViuXcVUi0m4QgAeiq9GcZ65ssy8AQ_3BlY?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "30-01-inspiration.png"
+}

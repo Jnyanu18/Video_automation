@@ -1,0 +1,352 @@
+{
+ "requested": "/logs",
+ "url": "https://my.blotato.com/logs",
+ "title": "Blotato",
+ "headings": [
+  "Logs"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "Set up API / MCP",
+   "h": "/settings/api"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "Search action, endpoint or request ID",
+   "aria": "Search logs"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "All platforms",
+   "aria": "Platform"
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "All accounts",
+   "aria": "Account"
+  }
+ ],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings\nLogs\n\n0 actions run through the API and MCP in the last 24 hours · 0 failed\n\nAll\nPosts\nVideos\nMedia\nAccounts\nDM\nAll\nProcessing\nFailed\nSuccess\nNo API requests yet\n\nConnect your automation to the Blotato API or MCP and every action will show up here.\n\nSet up API / MCP\n1",
+ "api": [
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774065374&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774065381&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774067158&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774067412&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/api-requests?limit=50&offset=0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/api-requests/stats?",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/accounts?",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/automation-accounts",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774068321&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774070413&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774070419&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774076332&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-9Lbjn1m_LRnCiobHcMdW0LnXjBiiF7WorEu6hvnZwNDn-t5l4qKNqB2914wJOCQODnOH1aIcMNTViiutEABwxzf4h4PHltUWiAMU?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "10-05-logs.png"
+}

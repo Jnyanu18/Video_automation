@@ -1,0 +1,550 @@
+{
+  "name": "07 - Integration Status",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reels/status",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "2f631731-d779-244a-353e-e70689a076fa",
+      "name": "Webhook: Integration Status",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "cc0aa37e-b29d-1c0e-0f5a-41e2e668ed23",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Reels Internal Webhook Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function cfgFromEnv(env) {\r\n  env = env || {};\r\n  const num = (v, d) => (v === undefined || v === '' || isNaN(Number(v)) ? d : Number(v));\r\n  return {\r\n    publishAdapter: env.PUBLISH_ADAPTER || 'mock',\r\n    llmJsonMode: env.LLM_JSON_MODE || 'json_schema',\r\n    targetSeconds: num(env.TARGET_SECONDS, 30),\r\n    wordsPerSecond: num(env.WORDS_PER_SECOND, 2.5),\r\n    maxSourceSeconds: num(env.MAX_SOURCE_SECONDS, 180),\r\n    minVideoSeconds: num(env.MIN_VIDEO_SECONDS, 3),\r\n    maxVideoSeconds: num(env.MAX_VIDEO_SECONDS, 90),\r\n    maxScriptOverlap: num(env.MAX_SCRIPT_OVERLAP, 0.2),\r\n    maxCaptionOverlap: num(env.MAX_CAPTION_OVERLAP, 0.4),\r\n    maxContentAttempts: num(env.MAX_CONTENT_ATTEMPTS, 3),\r\n    maxPollAttempts: num(env.MAX_POLL_ATTEMPTS, 40),\r\n    maxManualRetries: num(env.MAX_MANUAL_RETRIES, 5),\r\n    lockTtlMinutes: num(env.LOCK_TTL_MINUTES, 30),\r\n    stuckMinutes: num(env.STUCK_MINUTES, 60),\r\n    approvalTtlHours: num(env.APPROVAL_TTL_HOURS, 48),\r\n    approvalLockMinutes: num(env.APPROVAL_LOCK_MINUTES, 2),\r\n    minEditWords: num(env.MIN_EDIT_WORDS, 10),\r\n    maxRegenerations: num(env.MAX_REGENERATIONS, 5),\r\n    maxVideoAttempts: num(env.MAX_VIDEO_ATTEMPTS, 3),\r\n    heygenPollSeconds: num(env.HEYGEN_POLL_SECONDS, 10),\r\n    heygenPollCapSeconds: num(env.HEYGEN_POLL_CAP_SECONDS, 60),\r\n    autoPublish: String(env.AUTO_PUBLISH) === 'true',\r\n    publishPollSeconds: num(env.PUBLISH_POLL_SECONDS, 5),\r\n    publishPollCapSeconds: num(env.PUBLISH_POLL_CAP_SECONDS, 60),\r\n    maxPublishPollAttempts: num(env.MAX_PUBLISH_POLL_ATTEMPTS, 30),\r\n    maxPostCreateAttempts: num(env.MAX_POST_CREATE_ATTEMPTS, 3),\r\n    postCreateRetrySeconds: num(env.POST_CREATE_RETRY_SECONDS, 5),\r\n    blotatoMediaHosts: String(env.BLOTATO_MEDIA_HOSTS || (env.PUBLISH_ADAPTER === 'postiz' ? 'postiz.media' : 'blotato.com,blotato.io')).split(','),\r\n    maxUploadBytes: Math.round(num(env.MAX_UPLOAD_MB, 100) * 1048576),\r\n  };\r\n}\n\nconst BLOTATO_PROD_BASE = 'https://backend.blotato.com';\r\n\r\n// 'mock' talks to a Blotato-compatible mock; 'blotato' can only ever target the production API host.\n\nfunction resolvePublishAdapter(env) {\r\n  env = env || {};\r\n  const name = String(env.PUBLISH_ADAPTER || 'mock');\r\n  const bad = (message, code) => ({ ok: false, error: code || 'ADAPTER_CONFIG_INVALID', message: message, adapter: name });\r\n  const strip = (u) => String(u || '').replace(/\\/+$/, '');\r\n  if (name === 'blotato') {\r\n    const base = strip(env.BLOTATO_BASE_URL || BLOTATO_PROD_BASE);\r\n    if (base !== BLOTATO_PROD_BASE) return bad('BLOTATO_BASE_URL must be ' + BLOTATO_PROD_BASE + ' for the blotato adapter; use PUBLISH_ADAPTER=mock for other hosts');\r\n    if (!env.BLOTATO_ACCOUNT_ID) return bad('BLOTATO_ACCOUNT_ID is required for the blotato adapter');\r\n    return { ok: true, adapter: name, baseUrl: base, accountId: String(env.BLOTATO_ACCOUNT_ID) };\r\n  }\r\n  if (name === 'mock') {\r\n    const base = strip(env.MOCK_PUBLISH_BASE_URL);\r\n    const m = /^https?:\\/\\/([A-Za-z0-9.-]+)(?::[0-9]+)?$/.exec(base);\r\n    if (!m) return bad('MOCK_PUBLISH_BASE_URL must be an http(s) origin for the mock adapter');\r\n    if (/(^|\\.)blotato\\.(com|io)$/i.test(m[1])) return bad('the mock adapter must not point at a Blotato host');\r\n    return { ok: true, adapter: name, baseUrl: base, accountId: String(env.BLOTATO_ACCOUNT_ID || 'acc_mock_1') };\r\n  }\r\n  if (name === 'postiz') {\r\n    // The Postiz adapter (adapters/postiz) listens on localhost and speaks the same three calls as Blotato.\r\n    const base = strip(env.POSTIZ_ADAPTER_URL || 'http://127.0.0.1:8790');\r\n    if (!/^https?:\\/\\/(127\\.0\\.0\\.1|localhost|\\[::1\\])(?::[0-9]+)?$/.test(base)) return bad('POSTIZ_ADAPTER_URL must be a localhost origin (the adapter runs next to n8n)');\r\n    if (!env.POSTIZ_INTEGRATION_ID) return bad('POSTIZ_INTEGRATION_ID is required for the postiz adapter');\r\n    return { ok: true, adapter: name, baseUrl: base, accountId: String(env.POSTIZ_INTEGRATION_ID) };\r\n  }\r\n  return bad('PUBLISH_ADAPTER must be mock, blotato or postiz', 'ADAPTER_NOT_IMPLEMENTED');\r\n}\r\n\r\n// A recorded post id means the post exists and must only be tracked. A recorded intent without an id means a create\r\n// call may have succeeded without us learning its id, so the only safe action is to stop and ask a human.\n\nconst adapter = resolvePublishAdapter($env);\nconst cfg = cfgFromEnv($env);\nconst missing = {\n  n8n: $env.N8N_WEBHOOK_BASE ? [] : ['N8N_WEBHOOK_BASE'],\n  airtable: $env.AIRTABLE_BASE_ID ? [] : ['AIRTABLE_BASE_ID'],\n  blotato: adapter.ok ? [] : [adapter.message],\n};\nconst settings = {\n  publishAdapter: adapter.adapter, autoPublish: cfg.autoPublish, minVideoSeconds: cfg.minVideoSeconds, maxVideoSeconds: cfg.maxVideoSeconds,\n  maxUploadMb: Math.round(cfg.maxUploadBytes / 1048576), notifyConfigured: !!$env.NOTIFY_WEBHOOK_URL, defaultAvatarConfigured: !!$env.HEYGEN_AVATAR_ID,\n  defaultVoiceConfigured: !!$env.HEYGEN_VOICE_ID, openaiModel: $env.OPENAI_MODEL || 'gpt-4o-mini', approvalRequired: true,\n};\nreturn [{ json: { missing, settings, blotatoBase: adapter.ok ? adapter.baseUrl : '', accountId: adapter.ok ? adapter.accountId : '' } }];\n"
+      },
+      "id": "58f8e78d-9cb1-41af-aa7e-0a56ae9fcb6a",
+      "name": "Check Configuration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "pageSize",
+              "value": "1"
+            },
+            {
+              "name": "fields[]",
+              "value": "ReelKey"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "0762fa5c-54eb-3b04-8bfd-674490148c8d",
+      "name": "Probe Airtable",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        0
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.APIFY_BASE_URL || 'https://api.apify.com') + '/v2/users/me' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "15b3e15f-6a94-477d-7bb8-b5329546f1f4",
+      "name": "Probe Apify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Apify API Token"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.OPENAI_BASE_URL || 'https://api.openai.com') + '/v1/models' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "74780668-fbfc-562f-d0a9-6d43e468a962",
+      "name": "Probe OpenAI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_ME",
+          "name": "OpenAI API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.HEYGEN_BASE_URL || 'https://api.heygen.com') + '/v3/users/me' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "f05b656d-7c26-3686-a05f-5d09ee2992af",
+      "name": "Probe HeyGen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1400,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "HeyGen API Key"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($('Check Configuration').first().json.blotatoBase || 'https://unconfigured.invalid') + '/v2/users/me/accounts' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "platform",
+              "value": "instagram"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "dc54dcdc-be60-396c-e780-ee777b9c5cf5",
+      "name": "Probe Blotato",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Blotato API Key"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction summarizeProbe(label, missing, probe, detail) {\r\n  const miss = missing || [];\r\n  if (miss.length) return { service: label, status: 'unconfigured', configured: false, missing: miss, message: 'Missing configuration: ' + miss.join(', ') };\r\n  if (probe && probe.error) {\r\n    const f = describeFailure(probe, label);\r\n    return { service: label, status: 'error', configured: true, missing: [], code: f.code, httpStatus: f.httpStatus, message: f.message };\r\n  }\r\n  return Object.assign({ service: label, status: 'connected', configured: true, missing: [], message: 'Credentials accepted' }, detail || {});\r\n}\n\nconst c = $('Check Configuration').first().json;\nconst get = (n) => $(n).first().json || {};\nconst data = (n) => get(n).data || {};\nconst heygen = summarizeProbe('heygen', [], get('Probe HeyGen'), { account: String(data('Probe HeyGen').username || '') });\nconst blotatoProbe = get('Probe Blotato');\nlet blotato = summarizeProbe('blotato', c.missing.blotato, blotatoProbe, {});\nif (blotato.status === 'connected') {\n  const items = Array.isArray(blotatoProbe.items) ? blotatoProbe.items : [];\n  const accounts = items.filter((i) => i && i.platform === 'instagram').map((i) => ({ id: String(i.id), username: String(i.username || ''), fullname: String(i.fullname || '') }));\n  blotato.accounts = accounts;\n  blotato.accountId = c.accountId;\n  blotato.account = accounts.find((a) => a.id === c.accountId) || null;\n  if (!blotato.account) blotato = Object.assign(blotato, { status: 'error', code: 'ACCOUNT_NOT_FOUND', message: 'The configured account id (BLOTATO_ACCOUNT_ID / POSTIZ_INTEGRATION_ID) is not one of the connected Instagram accounts' });\n}\nblotato.adapter = c.settings.publishAdapter;\nconst integrations = {\n  n8n: { service: 'n8n', status: c.missing.n8n.length ? 'unconfigured' : 'connected', configured: !c.missing.n8n.length, missing: c.missing.n8n, message: c.missing.n8n.length ? 'Missing configuration: ' + c.missing.n8n.join(', ') : 'Workflows reachable' },\n  airtable: summarizeProbe('airtable', c.missing.airtable, get('Probe Airtable'), {}),\n  apify: summarizeProbe('apify', [], get('Probe Apify'), { account: String(data('Probe Apify').username || '') }),\n  openai: summarizeProbe('openai', [], get('Probe OpenAI'), { model: c.settings.openaiModel }),\n  heygen: $env.HEYGEN_ENABLED === 'false'\n    ? { service: 'heygen', status: 'unconfigured', configured: false, missing: ['HEYGEN_ENABLED'], message: 'Disabled: use video upload instead of AI avatars' }\n    : heygen,\n  blotato: blotato,\n};\nreturn [{ json: { ok: true, checkedAt: new Date().toISOString(), integrations, settings: c.settings } }];\n"
+      },
+      "id": "6f4f0d8e-3be6-b7b9-96f5-5818177b34ba",
+      "name": "Assemble Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "42baa579-09cb-8640-880d-0f0755928c81",
+      "name": "Respond Status",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reels/options",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7329d5fd-74dc-ef28-5471-39c86b048f02",
+      "name": "Webhook: Creative Options",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        160
+      ],
+      "webhookId": "2c4b0b88-f3d9-199e-0c38-7ac2aeaa524d",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Reels Internal Webhook Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.HEYGEN_BASE_URL || 'https://api.heygen.com') + '/v3/avatars/looks' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "50"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "9b499fef-a631-fec7-e5dc-adf396ec075e",
+      "name": "List Avatars",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        160
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "HeyGen API Key"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.HEYGEN_BASE_URL || 'https://api.heygen.com') + '/v3/models/audio/voices' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "private"
+            },
+            {
+              "name": "limit",
+              "value": "100"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "aad6db63-8ac7-bda1-7deb-8dce9cf38dd5",
+      "name": "List Private Voices",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        160
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "HeyGen API Key"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.HEYGEN_BASE_URL || 'https://api.heygen.com') + '/v3/models/audio/voices' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "public"
+            },
+            {
+              "name": "limit",
+              "value": "100"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "026e1a57-1810-e7d7-4b5f-d658d9678020",
+      "name": "List Public Voices",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        160
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "HeyGen API Key"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction normalizeHeyGenOptions(avatarsResp, privateVoicesResp, publicVoicesResp, env) {\r\n  const warnings = [];\r\n  const e = env || {};\r\n  const page = (resp, label) => {\r\n    if (resp && resp.error) {\r\n      const f = describeFailure(resp, label);\r\n      warnings.push({ source: label, code: f.code, message: f.message });\r\n      return { items: [], more: false };\r\n    }\r\n    return { items: resp && Array.isArray(resp.data) ? resp.data : [], more: !!(resp && resp.has_more) };\r\n  };\r\n  const https = (u) => (typeof u === 'string' && /^https:\\/\\//.test(u) ? u : '');\r\n  const str = (v) => (typeof v === 'string' ? v.slice(0, 200) : '');\r\n  const a = page(avatarsResp, 'HeyGen avatars');\r\n  const p1 = page(privateVoicesResp, 'HeyGen private voices');\r\n  const p2 = page(publicVoicesResp, 'HeyGen public voices');\r\n  const avatars = a.items.filter((x) => x && typeof x.id === 'string' && /^[A-Za-z0-9_-]+$/.test(x.id)).map((x) => ({\r\n    id: x.id, name: str(x.name) || x.id, type: str(x.avatar_type), gender: str(x.gender), defaultVoiceId: str(x.default_voice_id),\r\n    previewImageUrl: https(x.preview_image_url), previewVideoUrl: https(x.preview_video_url), status: str(x.status),\r\n  }));\r\n  const toVoice = (scope) => (x) => ({\r\n    id: x.voice_id, name: str(x.name) || x.voice_id, language: str(x.language), scope: scope, status: str(x.status), previewAudioUrl: https(x.preview_audio_url),\r\n  });\r\n  const okVoice = (x) => x && typeof x.voice_id === 'string' && /^[A-Za-z0-9_-]+$/.test(x.voice_id) && x.status !== 'FAILED';\r\n  const voices = p1.items.filter(okVoice).map(toVoice('private')).concat(p2.items.filter(okVoice).map(toVoice('public')));\r\n  return {\r\n    avatars: avatars, voices: voices, hasMoreAvatars: a.more, hasMoreVoices: p1.more || p2.more, warnings: warnings,\r\n    defaults: { avatarId: e.HEYGEN_AVATAR_ID || '', voiceId: e.HEYGEN_VOICE_ID || '' },\r\n  };\r\n}\r\n\r\n// Presentable summary of one provider probe; never contains credentials.\n\nconst o = normalizeHeyGenOptions($('List Avatars').first().json, $('List Private Voices').first().json, $input.first().json, $env);\nreturn [{ json: Object.assign({ ok: true }, o) }];\n"
+      },
+      "id": "e1a56ce8-db47-9845-963d-c1e36c59655c",
+      "name": "Assemble Options",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "db73c522-ed94-ed42-418c-bbb9773d0f25",
+      "name": "Respond Options",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1400,
+        160
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook: Integration Status": {
+      "main": [
+        [
+          {
+            "node": "Check Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Configuration": {
+      "main": [
+        [
+          {
+            "node": "Probe Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Probe Airtable": {
+      "main": [
+        [
+          {
+            "node": "Probe Apify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Probe Apify": {
+      "main": [
+        [
+          {
+            "node": "Probe OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Probe OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Probe HeyGen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Probe HeyGen": {
+      "main": [
+        [
+          {
+            "node": "Probe Blotato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Probe Blotato": {
+      "main": [
+        [
+          {
+            "node": "Assemble Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Status": {
+      "main": [
+        [
+          {
+            "node": "Respond Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook: Creative Options": {
+      "main": [
+        [
+          {
+            "node": "List Avatars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Avatars": {
+      "main": [
+        [
+          {
+            "node": "List Private Voices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Private Voices": {
+      "main": [
+        [
+          {
+            "node": "List Public Voices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Public Voices": {
+      "main": [
+        [
+          {
+            "node": "Assemble Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Options": {
+      "main": [
+        [
+          {
+            "node": "Respond Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

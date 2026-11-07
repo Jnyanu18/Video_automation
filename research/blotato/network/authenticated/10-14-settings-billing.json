@@ -1,0 +1,212 @@
+{
+ "requested": "/settings/billing",
+ "url": "https://my.blotato.com/settings/billing",
+ "title": "Blotato",
+ "headings": [
+  "Settings",
+  "AI Credits and Usage",
+  "Billing Information"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "My Brand",
+   "h": "/settings/brand"
+  },
+  {
+   "t": "API",
+   "h": "/settings/api"
+  },
+  {
+   "t": "Profile",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "Billing",
+   "h": "/settings/billing"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools",
+  "Buy 1000 More Credits",
+  "Activate Subscription",
+  "View Billing Portal",
+  "Cancel Subscription"
+ ],
+ "inputs": [],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings\nSettings\nMy Brand\nAPI\nProfile\nBilling\nAI Credits and Usage\n\nYour monthly AI credits and usage. AI credits are used for AI images, AI videos, and AI voices. Every 30 days from the start of your subscription, you will receive monthly credits according to your pricing plan.\n\n500 AI credits remaining\nBought credits but don't see them? Try refreshing the page in a few minutes when the payment is fully processed.\nBuy 1000 More Credits\nBilling Information\n\nSubscription status:\n\nTRIALING\nActivate Subscription\nView Billing Portal\nCancel Subscription\n1",
+ "api": [
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774464591&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774465320&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774468313&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774471338&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774476187&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-tbgkpBh9IZ0pbKJxpTYgfkpjht6b7C3154gRhWeZoIQh_CHzds0LluL4uBDnXirVERk_P3gV_kVx7rUAq-M_sCCZPfHcNJSZylQR?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "10-14-settings-billing.png"
+}

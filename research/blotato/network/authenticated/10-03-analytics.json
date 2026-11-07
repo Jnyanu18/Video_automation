@@ -1,0 +1,266 @@
+{
+ "requested": "/analytics",
+ "url": "https://my.blotato.com/analytics",
+ "title": "Blotato",
+ "headings": [
+  "Analytics"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "Failed posts",
+   "h": "/posts?status=failed&days=30"
+  },
+  {
+   "t": "All automations",
+   "h": "/dm-automations"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "radio",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "",
+   "aria": ""
+  }
+ ],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings\nAnalytics\n\n0 posts with analytics · last 30 days\n\n7 days\n30 days\nAll time\n\nPOSTS PUBLISHED\n\n0\n\n0% vs previous period\n\nVIEWS\n\n0\n\n0% vs previous period\n\nCOMMENTS\n\n0\n\n0% vs previous period\n\nLIKES\n\n0\n\n0% vs previous period\n\nPUBLISHING SUCCESS RATE\n\n–\n\n0 published · 0 failed · last 30 days\n\nAPI REQUESTS\n\n0\n\n0 failed · last 30 days\n\nFAILED POSTS\n\n0\n\nlast 30 days\n\nTIME SAVED (HOURS)\n\n0\n\n0 posts × 15 min · last 30 days\n\nTOP POSTS\n\nranked by\n\nNo analytics yet for posts published in this period.\n\nPERFORMANCE BY PLATFORM\n\n0 of 0 platforms · cumulative since publish\n\nplot\n\nNo analytics yet for posts published in this period.\n\nLATEST POSTS\n\nMetrics refresh periodically after publish.\n\nNo posts published in this period.\n\nPosts published\n\n0 published, 0 failed\n\nOct 5\nOct 8\nOct 11\nOct 14\nOct 17\nOct 20\nOct 23\nOct 26\nOct 29\nNov 4\n0\n1\n2\n3\n4\n\nBy platform\n\nFailed posts\n\nNo posts published in this period.\n\nDM automations\n\nAll automations\n\nNo active DM automations.\n\n29\n1",
+ "api": [
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774049257&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774049266&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774049273&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/analytics/summary?since=2026-10-05T06%3A34%3A00.000Z&until=2026-11-04T06%3A34%3A00.000Z&bucket=day",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/analytics/summary?since=2026-09-05T06%3A34%3A00.000Z&until=2026-10-05T06%3A34%3A00.000Z&bucket=day",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/api-requests/stats?windowHours=720&bucket=day",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/analytics?since=2026-10-05T06%3A34%3A00.000Z&until=2026-11-04T06%3A34%3A00.000Z&sortBy=views_count&limit=5",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/analytics/platforms?since=2026-10-05T06%3A34%3A00.000Z&until=2026-11-04T06%3A34%3A00.000Z&bucket=day",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/posts?since=2026-10-05T06%3A34%3A00.000Z&until=2026-11-04T06%3A34%3A00.000Z&status=published&limit=5",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/dm-automations?",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774050020&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774052203&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774052205&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774056441&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774056449&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-vbI4ua23YgY_ZCL1jkxtAyiH6WUc5Msn3c_yFtI2GvRbDlLo3yTkRuNVXTXkbwberrOtOE0bEEot3us4khI8GyHJ_Ikj5edDDprO?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-vbI4ua23YgY_ZCL1jkxtAyiH6WUc5Msn3c_yFtI2GvRbDlLo3yTkRuNVXTXkbwberrOtOE0bEEot3us4khI8GyHJ_Ikj5edDDprO?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "10-03-analytics.png"
+}

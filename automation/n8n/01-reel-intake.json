@@ -1,0 +1,1839 @@
+{
+  "name": "01 - Reel Intake",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reels/intake",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a34ed85f-4f3b-bbf5-7486-f6c6aff8637c",
+      "name": "Webhook: Submit Reel",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "c54382cb-28e5-0ab3-ce0c-8ba8bc157303",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Reels Intake Webhook Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function normalizeReelUrl(input) {\r\n  const fail = (error) => ({ ok: false, error });\r\n  if (typeof input !== 'string') return fail('URL_REQUIRED');\r\n  const raw = input.trim();\r\n  if (raw.length === 0 || raw.length > 300) return fail('URL_INVALID_LENGTH');\r\n  const m = /^https:\\/\\/(?:www\\.)?instagram\\.com\\/(?:[A-Za-z0-9._]+\\/)?(reel|reels|p)\\/([A-Za-z0-9_-]{5,20})\\/?(?:[?#].*)?$/.exec(raw);\r\n  if (!m) return fail('URL_NOT_INSTAGRAM_REEL');\r\n  return { ok: true, shortCode: m[2], url: 'https://www.instagram.com/reel/' + m[2] + '/', key: 'ig_' + m[2] };\r\n}\n\nfunction keyFormula(key) {\r\n  if (!/^(ig_[A-Za-z0-9_-]{5,20}|up_[0-9a-f]{16})$/.test(String(key))) throw new Error('INVALID_KEY');\r\n  return \"{ReelKey}='\" + key + \"'\";\r\n}\n\nfunction normalizeSubmitOptions(body) {\r\n  const b = body && typeof body === 'object' && !Array.isArray(body) ? body : {};\r\n  const errors = [];\r\n  const out = {};\r\n  const text = (k, max, code) => {\r\n    if (b[k] === undefined || b[k] === null || b[k] === '') return;\r\n    if (typeof b[k] !== 'string') { errors.push(code); return; }\r\n    const v = b[k].replace(/[\\u0000-\\u001f\\u007f]+/g, ' ').trim();\r\n    if (v.length > max) errors.push(code + '_TOO_LONG');\r\n    else if (v) out[k] = v;\r\n  };\r\n  text('niche', 60, 'NICHE');\r\n  text('brandVoice', 60, 'BRAND_VOICE');\r\n  text('brandVoiceNotes', 500, 'BRAND_VOICE_NOTES');\r\n  ['avatarId', 'voiceId'].forEach((k) => {\r\n    if (b[k] === undefined || b[k] === null || b[k] === '') return;\r\n    if (typeof b[k] !== 'string' || !/^[A-Za-z0-9_-]+$/.test(b[k]) || b[k].length > 100) errors.push(k === 'avatarId' ? 'AVATAR_ID_INVALID' : 'VOICE_ID_INVALID');\r\n    else out[k] = b[k];\r\n  });\r\n  return { ok: errors.length === 0, errors: errors, options: out };\r\n}\r\n\r\n// Caption/overlay/hashtag rules for content that was not AI-generated (uploaded videos).\n\nconst body = $input.first().json.body || {};\nconst norm = normalizeReelUrl(body.url);\nif (!norm.ok) return [{ json: { ok: false, error: norm.error } }];\nconst so = normalizeSubmitOptions(body);\nif (!so.ok) return [{ json: { ok: false, error: 'INVALID_OPTIONS', errors: so.errors } }];\nreturn [{ json: { ok: true, key: norm.key, url: norm.url, shortCode: norm.shortCode, formula: keyFormula(norm.key), submittedBy: body.submittedBy || 'api', options: so.options } }];\n"
+      },
+      "id": "4a3e2508-a389-2694-86fa-f23e104f4f65",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8ce71936-94e9-a1da-6ac3-84d1a21cdb7d",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d765bb05-1b3c-c1f0-d418-53b3d8bf7e5b",
+      "name": "IF Input Valid",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: $json.error, errors: $json.errors || [] } }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "828caf0f-4ff4-ef5f-b7c4-0bd0b87bf508",
+      "name": "Respond 400",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "filterByFormula",
+              "value": "={{ $json.formula }}"
+            },
+            {
+              "name": "maxRecords",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "26702944-7a6d-3284-77ec-161cdf388079",
+      "name": "Find Existing",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        160
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'STORE_UNAVAILABLE' } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "id": "ed4b882d-d239-4a00-27db-ae7b52261a78",
+      "name": "Respond 503",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function recordFromAirtable(rec) {\r\n  const f = (rec && rec.fields) || {};\r\n  return {\r\n    id: rec && rec.id, key: f.ReelKey, reelUrl: f.ReelURL, status: f.Status,\r\n    sourceCaption: f.SourceCaption || '', sourceTranscript: f.SourceTranscript || '', transcriptSource: f.TranscriptSource,\r\n    sourceDuration: f.SourceDuration, sourceOwner: f.SourceOwner, audioUrl: f.AudioURL,\r\n    extractionDone: !!f.ExtractionDone, script: f.Script || '', caption: f.Caption || '', overlay: f.Overlay || '',\r\n    hashtags: f.Hashtags || '', contentAttempts: f.ContentAttempts || 0, approvedBy: f.ApprovedBy, rejectedReason: f.RejectedReason,\r\n    approvedAt: f.ApprovedAt, approvedFingerprint: f.ApprovedFingerprint, regenerationNote: f.RegenerationNote || '',\r\n    regenerationCount: f.RegenerationCount || 0, videoAttempt: f.VideoAttempt || 0, pollAttempts: f.PollAttempts || 0,\r\n    videoUrl: f.VideoURL, thumbnailUrl: f.ThumbnailURL, heygenStatus: f.HeyGenStatus,\r\n    heygenVideoId: f.HeyGenVideoId, videoDuration: f.VideoDuration, publishAdapter: f.PublishAdapter,\r\n    postSubmissionId: f.PostSubmissionId, containerId: f.ContainerId, publishedUrl: f.PublishedURL,\r\n    blotatoMediaUrl: f.BlotatoMediaURL, publishIntentAt: f.PublishIntentAt, publishStatus: f.PublishStatus,\r\n    publishPollAttempts: f.PublishPollAttempts || 0, publishedAt: f.PublishedAt,\r\n    retryCount: f.RetryCount || 0, failedFromState: f.FailedFromState, errorLog: f.ErrorLog || '',\r\n    lockedBy: f.LockedBy || '', lockedAt: f.LockedAt, modifiedTime: f.ModifiedTime,\r\n    sourceType: f.SourceType || 'reel', niche: f.Niche || '', brandVoice: f.BrandVoice || '', brandVoiceNotes: f.BrandVoiceNotes || '',\r\n    avatarId: f.AvatarID || '', voiceId: f.VoiceID || '', uploadFileName: f.UploadFileName || '', uploadSizeBytes: f.UploadSizeBytes,\r\n    uploadSha256: f.UploadSha256 || '', createdTime: (rec && rec.createdTime) || f.CreatedTime, submittedBy: f.SubmittedBy || '',\r\n    lastAction: f.LastAction || '', lastActionBy: f.LastActionBy || '', lastActionAt: f.LastActionAt, videoSubmittedAt: f.VideoSubmittedAt,\r\n    videoCompletedAt: f.VideoCompletedAt,\r\n  };\r\n}\n\nconst recs = $input.first().json.records || [];\nconst v = $('Validate Input').first().json;\nif (recs.length) {\n  const r = recordFromAirtable(recs[0]);\n  return [{ json: { duplicate: true, recordId: r.id, status: r.status, key: v.key } }];\n}\nreturn [{ json: { duplicate: false, key: v.key } }];\n"
+      },
+      "id": "1858c8fe-2980-c24a-072b-922a45957335",
+      "name": "Dedup Decision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "827e91a7-063d-c78f-b0d5-d233b24ccc5f",
+              "leftValue": "={{ $json.duplicate }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a8a77f34-3dd8-86cc-9628-fb465f2432b5",
+      "name": "IF Duplicate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, duplicate: true, recordId: $json.recordId, status: $json.status, key: $json.key } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "cc6c9300-ad7b-4745-8598-fa123dc7cb69",
+      "name": "Respond Duplicate",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction newRecordFields(norm, submittedBy, options) {\r\n  const o = options || {};\r\n  return toAirtableFields({\r\n    key: norm.key, reelUrl: norm.url, status: 'SUBMITTED', submittedBy: String(submittedBy || 'api').slice(0, 100),\r\n    contentAttempts: 0, retryCount: 0, extractionDone: false, sourceType: 'reel',\r\n    niche: o.niche || undefined, brandVoice: o.brandVoice || undefined, brandVoiceNotes: o.brandVoiceNotes || undefined,\r\n    avatarId: o.avatarId || undefined, voiceId: o.voiceId || undefined,\r\n  });\r\n}\r\n\r\n// Optional creative settings shared by the reel-URL and upload intakes. Free text is length-limited and control characters are stripped.\n\nconst v = $('Validate Input').first().json;\nreturn [{ json: { fields: newRecordFields(v, v.submittedBy, v.options) } }];\n"
+      },
+      "id": "f8e4b516-efb1-affe-b630-fd5439687444",
+      "name": "Build New Record",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { fields: $json.fields } }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "15e7d006-177a-7bc4-5c69-4d56a81c85f9",
+      "name": "Create Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        0
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'RECORD_CREATE_FAILED' } }}",
+        "options": {
+          "responseCode": 502
+        }
+      },
+      "id": "295779fe-c704-4b4d-5cd1-a7c35c414488",
+      "name": "Respond 502",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "filterByFormula",
+              "value": "={{ $('Validate Input').first().json.formula }}"
+            },
+            {
+              "name": "sort[0][field]",
+              "value": "CreatedTime"
+            },
+            {
+              "name": "sort[0][direction]",
+              "value": "asc"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "b91ae492-7d38-7bf3-a81c-9093e2caf4dd",
+      "name": "Verify Unique",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2240,
+        160
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const recs = $input.first().json.records || [];\nconst mine = $('Create Record').first().json.id;\nconst winner = recs.length ? recs[0].id : mine;\nreturn [{ json: { isWinner: winner === mine, recordId: mine, winnerId: winner, key: $('Validate Input').first().json.key } }];\n"
+      },
+      "id": "39ab79e9-5e98-ac3e-91bb-fb856a1e7b6f",
+      "name": "Unique Decision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c6a30684-d49d-f5cc-57c7-1c9cb6423875",
+              "leftValue": "={{ $json.isWinner }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "38398d11-500e-f18e-ea34-e121ba9eee2b",
+      "name": "IF Is Winner",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2800,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') + '/' + $('Unique Decision').first().json.recordId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "a19a1b4e-3429-546a-54cd-793a5ed328d6",
+      "name": "Delete Duplicate Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3080,
+        0
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, duplicate: true, recordId: $('Unique Decision').first().json.winnerId, key: $('Unique Decision').first().json.key } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "bc40662d-fd2f-d533-c5a8-1cfee6624449",
+      "name": "Respond Duplicate (Race)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3360,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, duplicate: false, recordId: $json.recordId, key: $json.key, status: 'SUBMITTED' } }}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "a14803e0-7571-47eb-f49a-b38a07fc9620",
+      "name": "Respond Accepted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3080,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "let recordId = null;\ntry { recordId = $('Unique Decision').first().json.recordId; } catch (e) { recordId = null; }\nconst src = recordId ? $('Validate Input').first().json : $('Retry Decision').first().json;\nreturn [{ json: { recordId: recordId || src.recordId, url: src.url, shortCode: src.shortCode, key: src.key } }];\n"
+      },
+      "id": "840cb2c8-8c9f-7490-9ce5-653b8f8082b4",
+      "name": "Record Ref",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') + '/' + $('Record Ref').first().json.recordId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { fields: { Status: 'EXTRACTING', LockedBy: String($execution.id), LockedAt: new Date().toISOString() } } }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "10b6c303-5640-c28a-eeb4-683864144445",
+      "name": "Claim Extracting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2240,
+        320
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function apifyRequestBody(url, opts) {\r\n  const o = opts || {};\r\n  return { username: [url], resultsLimit: 1, skipPinnedPosts: false, includeTranscript: o.includeTranscript !== false, includeDownloadedVideo: false };\r\n}\n\nconst v = $('Record Ref').first().json;\nreturn [{ json: { body: apifyRequestBody(v.url, { includeTranscript: true }) } }];\n"
+      },
+      "id": "a1e596d2-e1b7-972f-2c99-c71f0aff7451",
+      "name": "Build Apify Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2520,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.APIFY_BASE_URL || 'https://api.apify.com') + '/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "43da5b50-9fa3-f2b9-871d-fec3e609d166",
+      "name": "Run Apify Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2800,
+        160
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Apify API Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function cfgFromEnv(env) {\r\n  env = env || {};\r\n  const num = (v, d) => (v === undefined || v === '' || isNaN(Number(v)) ? d : Number(v));\r\n  return {\r\n    publishAdapter: env.PUBLISH_ADAPTER || 'mock',\r\n    llmJsonMode: env.LLM_JSON_MODE || 'json_schema',\r\n    targetSeconds: num(env.TARGET_SECONDS, 30),\r\n    wordsPerSecond: num(env.WORDS_PER_SECOND, 2.5),\r\n    maxSourceSeconds: num(env.MAX_SOURCE_SECONDS, 180),\r\n    minVideoSeconds: num(env.MIN_VIDEO_SECONDS, 3),\r\n    maxVideoSeconds: num(env.MAX_VIDEO_SECONDS, 90),\r\n    maxScriptOverlap: num(env.MAX_SCRIPT_OVERLAP, 0.2),\r\n    maxCaptionOverlap: num(env.MAX_CAPTION_OVERLAP, 0.4),\r\n    maxContentAttempts: num(env.MAX_CONTENT_ATTEMPTS, 3),\r\n    maxPollAttempts: num(env.MAX_POLL_ATTEMPTS, 40),\r\n    maxManualRetries: num(env.MAX_MANUAL_RETRIES, 5),\r\n    lockTtlMinutes: num(env.LOCK_TTL_MINUTES, 30),\r\n    stuckMinutes: num(env.STUCK_MINUTES, 60),\r\n    approvalTtlHours: num(env.APPROVAL_TTL_HOURS, 48),\r\n    approvalLockMinutes: num(env.APPROVAL_LOCK_MINUTES, 2),\r\n    minEditWords: num(env.MIN_EDIT_WORDS, 10),\r\n    maxRegenerations: num(env.MAX_REGENERATIONS, 5),\r\n    maxVideoAttempts: num(env.MAX_VIDEO_ATTEMPTS, 3),\r\n    heygenPollSeconds: num(env.HEYGEN_POLL_SECONDS, 10),\r\n    heygenPollCapSeconds: num(env.HEYGEN_POLL_CAP_SECONDS, 60),\r\n    autoPublish: String(env.AUTO_PUBLISH) === 'true',\r\n    publishPollSeconds: num(env.PUBLISH_POLL_SECONDS, 5),\r\n    publishPollCapSeconds: num(env.PUBLISH_POLL_CAP_SECONDS, 60),\r\n    maxPublishPollAttempts: num(env.MAX_PUBLISH_POLL_ATTEMPTS, 30),\r\n    maxPostCreateAttempts: num(env.MAX_POST_CREATE_ATTEMPTS, 3),\r\n    postCreateRetrySeconds: num(env.POST_CREATE_RETRY_SECONDS, 5),\r\n    blotatoMediaHosts: String(env.BLOTATO_MEDIA_HOSTS || (env.PUBLISH_ADAPTER === 'postiz' ? 'postiz.media' : 'blotato.com,blotato.io')).split(','),\r\n    maxUploadBytes: Math.round(num(env.MAX_UPLOAD_MB, 100) * 1048576),\r\n  };\r\n}\n\nfunction extractTranscript(item) {\r\n  const t = item && (item.transcript !== undefined ? item.transcript : item.transcriptText);\r\n  let s = '';\r\n  if (typeof t === 'string') s = t;\r\n  else if (Array.isArray(t)) s = t.map((x) => (typeof x === 'string' ? x : (x && x.text) || '')).join(' ');\r\n  else if (t && typeof t.text === 'string') s = t.text;\r\n  s = s.replace(/\\s+/g, ' ').trim();\r\n  return s.length >= 20 ? s : '';\r\n}\n\nfunction normalizeApifyItems(items, shortCode, cfg) {\r\n  const fail = (error, message) => ({ ok: false, error, message });\r\n  if (!Array.isArray(items) || items.length === 0) return fail('REEL_NOT_FOUND_OR_PRIVATE', 'Apify returned no items (private, deleted or invalid reel)');\r\n  const item = items.find((i) => i && i.shortCode === shortCode) || items[0];\r\n  if (item.error || item.errorDescription) return fail('REEL_SCRAPE_ERROR', String(item.errorDescription || item.error));\r\n  if (item.shortCode && item.shortCode !== shortCode) return fail('REEL_MISMATCH', 'Returned reel does not match submitted URL');\r\n  if (!item.videoUrl && !item.audioUrl) return fail('NO_MEDIA', 'No videoUrl/audioUrl in scraped item');\r\n  const dur = Number(item.videoDuration);\r\n  if (dur && dur > cfg.maxSourceSeconds) return fail('SOURCE_TOO_LONG', 'Source reel is ' + dur + 's, limit ' + cfg.maxSourceSeconds + 's');\r\n  const transcript = extractTranscript(item);\r\n  const caption = String(item.caption || '').trim();\r\n  return {\r\n    ok: true,\r\n    reel: { shortCode, caption, transcript, transcriptSource: transcript ? 'apify' : 'none', duration: dur || null, owner: item.ownerUsername || '', audioUrl: item.audioUrl || '', videoUrl: item.videoUrl || '' },\r\n    needsStt: !transcript && !!(item.audioUrl || item.videoUrl),\r\n  };\r\n}\n\nconst items = $input.all().map((i) => i.json).filter((j) => j && Object.keys(j).length > 0);\nconst v = $('Record Ref').first().json;\nreturn [{ json: normalizeApifyItems(items, v.shortCode, cfgFromEnv($env)) }];\n"
+      },
+      "id": "2b39d1ca-8958-3f8f-67fd-f156f8d17c0a",
+      "name": "Normalize Reel",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a0f22e0e-1e3b-2f9f-f3e7-15d9116a3d3b",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c3341c7b-f91d-a039-12fa-24fbf4649e6c",
+      "name": "IF Extract OK",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3360,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e24e8d05-37e8-1518-7d56-67edd87cd48d",
+              "leftValue": "={{ $json.needsStt }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "89b431a6-70d1-f82e-3af9-a05819a93169",
+      "name": "IF Needs STT",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3640,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.reel.audioUrl || $json.reel.videoUrl }}",
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "0409deb1-d099-f98c-5c74-b65b61118658",
+      "name": "Download Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3920,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.OPENAI_BASE_URL || 'https://api.openai.com') + '/v1/audio/transcriptions' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "model",
+              "value": "={{ $env.OPENAI_STT_MODEL || 'whisper-1' }}"
+            },
+            {
+              "name": "response_format",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "b6b092a1-76f9-ef08-a105-ad34b1ae7b15",
+      "name": "Transcribe Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4200,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_ME",
+          "name": "OpenAI API"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction resolveSourceText(reel, sttText) {\r\n  const out = Object.assign({}, reel);\r\n  const stt = String(sttText || '').trim();\r\n  if (!out.transcript && stt.length >= 20) { out.transcript = stt; out.transcriptSource = 'stt'; }\r\n  if (!out.transcript && out.caption.length < 40) return { ok: false, error: 'NO_SOURCE_CONTENT', message: 'No transcript and caption too short to ground a script' };\r\n  out.lowContext = !out.transcript;\r\n  return { ok: true, reel: out };\r\n}\n\nfunction sourceFields(reel, now) {\r\n  return toAirtableFields({\r\n    sourceCaption: reel.caption, sourceTranscript: reel.transcript, transcriptSource: reel.transcriptSource,\r\n    sourceDuration: reel.duration || undefined, sourceOwner: reel.owner, audioUrl: reel.audioUrl || undefined,\r\n    extractionDone: true, lockedBy: '', lockedAt: null,\r\n    errorLog: reel.lowContext ? appendErrorLog('', { warning: 'LOW_CONTEXT', message: 'No transcript available; script grounded on caption only' }, now) : undefined,\r\n  });\r\n}\n\nconst n = $('Normalize Reel').first().json;\nlet stt = '';\ntry { stt = $('Transcribe Audio').first().json.text || ''; } catch (e) { stt = ''; }\nconst r = resolveSourceText(n.reel, stt);\nif (!r.ok) return [{ json: { ok: false, error: r.error, message: r.message } }];\nreturn [{ json: { ok: true, reel: r.reel, fields: sourceFields(r.reel, new Date().toISOString()) } }];\n"
+      },
+      "id": "93b510ad-9793-c4d0-f3e4-93fb0f13799d",
+      "name": "Merge Source",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3920,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d12f0db7-95ea-018c-8c75-a88cebdb8247",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "cf36ec5e-6a65-35bd-6a73-8936aa20874e",
+      "name": "IF Source OK",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4200,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') + '/' + $('Record Ref').first().json.recordId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { fields: $json.fields } }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "6417efb4-7b95-b321-c4f8-10299905ab35",
+      "name": "Save Source",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4480,
+        0
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_WEBHOOK_BASE + '/webhook/reels/content' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { recordId: $('Record Ref').first().json.recordId } }}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "417180da-e17e-e074-25ac-e3cd1974e400",
+      "name": "Trigger Content Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4760,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Reels Internal Webhook Auth"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') + '/' + $json.recordId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { fields: $json.fields } }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "7d71a055-2146-4b0d-8ec4-cd64ba6159e8",
+      "name": "Mark Failed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2800,
+        320
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "68cd5a12-774c-2435-55e3-22ce0fcb5901",
+              "leftValue": "={{ !!$env.NOTIFY_WEBHOOK_URL }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "80b387dc-1412-73b0-4141-a3c5563abab3",
+      "name": "IF Notify Failure",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3080,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.NOTIFY_WEBHOOK_URL }}",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ { text: 'Reel pipeline FAILED (intake) record ' + ($json.id || 'unknown') + ': ' + String(($json.fields && $json.fields.ErrorLog) || '').slice(0, 300) } }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "a6bf23a4-f431-80e0-6992-a689faf1334b",
+      "name": "Notify Failure",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3360,
+        320
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reels/intake-retry",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "d70b1cbc-9d08-9a59-6a0c-649f46280966",
+      "name": "Webhook: Retry Intake",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        160
+      ],
+      "webhookId": "48874169-bacc-6ba6-3acf-bd8960e916ac",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Reels Internal Webhook Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const body = $input.first().json.body || {};\nconst ok = typeof body.recordId === 'string' && /^rec[A-Za-z0-9]{6,30}$/.test(body.recordId);\nreturn [{ json: { ok, recordId: ok ? body.recordId : null } }];\n"
+      },
+      "id": "bfc81cf3-4f29-2555-ecf4-487603ead201",
+      "name": "Retry Validate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c9af8445-df5d-c98b-1351-22a5a0084161",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4825e050-7e48-f687-288e-e50ca52d7b76",
+      "name": "IF Retry Request Valid",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'INVALID_REQUEST' } }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "d112c4fd-9a19-17f1-fac7-744ecdde3ba6",
+      "name": "Respond 400 (Retry)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($env.AIRTABLE_BASE_URL || 'https://api.airtable.com') + '/v0/' + $env.AIRTABLE_BASE_ID + '/' + ($env.AIRTABLE_TABLE || 'Reels') + '/' + $json.recordId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "0f76dc19-afc4-cee9-8795-2ea9e11baa84",
+      "name": "Get Record (Retry)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        480
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_ME",
+          "name": "Airtable Personal Access Token"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'STORE_UNAVAILABLE' } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "id": "2624d2bd-f67a-2179-37fd-c544ef153ae3",
+      "name": "Respond 503 (Retry)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function cfgFromEnv(env) {\r\n  env = env || {};\r\n  const num = (v, d) => (v === undefined || v === '' || isNaN(Number(v)) ? d : Number(v));\r\n  return {\r\n    publishAdapter: env.PUBLISH_ADAPTER || 'mock',\r\n    llmJsonMode: env.LLM_JSON_MODE || 'json_schema',\r\n    targetSeconds: num(env.TARGET_SECONDS, 30),\r\n    wordsPerSecond: num(env.WORDS_PER_SECOND, 2.5),\r\n    maxSourceSeconds: num(env.MAX_SOURCE_SECONDS, 180),\r\n    minVideoSeconds: num(env.MIN_VIDEO_SECONDS, 3),\r\n    maxVideoSeconds: num(env.MAX_VIDEO_SECONDS, 90),\r\n    maxScriptOverlap: num(env.MAX_SCRIPT_OVERLAP, 0.2),\r\n    maxCaptionOverlap: num(env.MAX_CAPTION_OVERLAP, 0.4),\r\n    maxContentAttempts: num(env.MAX_CONTENT_ATTEMPTS, 3),\r\n    maxPollAttempts: num(env.MAX_POLL_ATTEMPTS, 40),\r\n    maxManualRetries: num(env.MAX_MANUAL_RETRIES, 5),\r\n    lockTtlMinutes: num(env.LOCK_TTL_MINUTES, 30),\r\n    stuckMinutes: num(env.STUCK_MINUTES, 60),\r\n    approvalTtlHours: num(env.APPROVAL_TTL_HOURS, 48),\r\n    approvalLockMinutes: num(env.APPROVAL_LOCK_MINUTES, 2),\r\n    minEditWords: num(env.MIN_EDIT_WORDS, 10),\r\n    maxRegenerations: num(env.MAX_REGENERATIONS, 5),\r\n    maxVideoAttempts: num(env.MAX_VIDEO_ATTEMPTS, 3),\r\n    heygenPollSeconds: num(env.HEYGEN_POLL_SECONDS, 10),\r\n    heygenPollCapSeconds: num(env.HEYGEN_POLL_CAP_SECONDS, 60),\r\n    autoPublish: String(env.AUTO_PUBLISH) === 'true',\r\n    publishPollSeconds: num(env.PUBLISH_POLL_SECONDS, 5),\r\n    publishPollCapSeconds: num(env.PUBLISH_POLL_CAP_SECONDS, 60),\r\n    maxPublishPollAttempts: num(env.MAX_PUBLISH_POLL_ATTEMPTS, 30),\r\n    maxPostCreateAttempts: num(env.MAX_POST_CREATE_ATTEMPTS, 3),\r\n    postCreateRetrySeconds: num(env.POST_CREATE_RETRY_SECONDS, 5),\r\n    blotatoMediaHosts: String(env.BLOTATO_MEDIA_HOSTS || (env.PUBLISH_ADAPTER === 'postiz' ? 'postiz.media' : 'blotato.com,blotato.io')).split(','),\r\n    maxUploadBytes: Math.round(num(env.MAX_UPLOAD_MB, 100) * 1048576),\r\n  };\r\n}\n\nfunction normalizeReelUrl(input) {\r\n  const fail = (error) => ({ ok: false, error });\r\n  if (typeof input !== 'string') return fail('URL_REQUIRED');\r\n  const raw = input.trim();\r\n  if (raw.length === 0 || raw.length > 300) return fail('URL_INVALID_LENGTH');\r\n  const m = /^https:\\/\\/(?:www\\.)?instagram\\.com\\/(?:[A-Za-z0-9._]+\\/)?(reel|reels|p)\\/([A-Za-z0-9_-]{5,20})\\/?(?:[?#].*)?$/.exec(raw);\r\n  if (!m) return fail('URL_NOT_INSTAGRAM_REEL');\r\n  return { ok: true, shortCode: m[2], url: 'https://www.instagram.com/reel/' + m[2] + '/', key: 'ig_' + m[2] };\r\n}\n\nfunction recordFromAirtable(rec) {\r\n  const f = (rec && rec.fields) || {};\r\n  return {\r\n    id: rec && rec.id, key: f.ReelKey, reelUrl: f.ReelURL, status: f.Status,\r\n    sourceCaption: f.SourceCaption || '', sourceTranscript: f.SourceTranscript || '', transcriptSource: f.TranscriptSource,\r\n    sourceDuration: f.SourceDuration, sourceOwner: f.SourceOwner, audioUrl: f.AudioURL,\r\n    extractionDone: !!f.ExtractionDone, script: f.Script || '', caption: f.Caption || '', overlay: f.Overlay || '',\r\n    hashtags: f.Hashtags || '', contentAttempts: f.ContentAttempts || 0, approvedBy: f.ApprovedBy, rejectedReason: f.RejectedReason,\r\n    approvedAt: f.ApprovedAt, approvedFingerprint: f.ApprovedFingerprint, regenerationNote: f.RegenerationNote || '',\r\n    regenerationCount: f.RegenerationCount || 0, videoAttempt: f.VideoAttempt || 0, pollAttempts: f.PollAttempts || 0,\r\n    videoUrl: f.VideoURL, thumbnailUrl: f.ThumbnailURL, heygenStatus: f.HeyGenStatus,\r\n    heygenVideoId: f.HeyGenVideoId, videoDuration: f.VideoDuration, publishAdapter: f.PublishAdapter,\r\n    postSubmissionId: f.PostSubmissionId, containerId: f.ContainerId, publishedUrl: f.PublishedURL,\r\n    blotatoMediaUrl: f.BlotatoMediaURL, publishIntentAt: f.PublishIntentAt, publishStatus: f.PublishStatus,\r\n    publishPollAttempts: f.PublishPollAttempts || 0, publishedAt: f.PublishedAt,\r\n    retryCount: f.RetryCount || 0, failedFromState: f.FailedFromState, errorLog: f.ErrorLog || '',\r\n    lockedBy: f.LockedBy || '', lockedAt: f.LockedAt, modifiedTime: f.ModifiedTime,\r\n    sourceType: f.SourceType || 'reel', niche: f.Niche || '', brandVoice: f.BrandVoice || '', brandVoiceNotes: f.BrandVoiceNotes || '',\r\n    avatarId: f.AvatarID || '', voiceId: f.VoiceID || '', uploadFileName: f.UploadFileName || '', uploadSizeBytes: f.UploadSizeBytes,\r\n    uploadSha256: f.UploadSha256 || '', createdTime: (rec && rec.createdTime) || f.CreatedTime, submittedBy: f.SubmittedBy || '',\r\n    lastAction: f.LastAction || '', lastActionBy: f.LastActionBy || '', lastActionAt: f.LastActionAt, videoSubmittedAt: f.VideoSubmittedAt,\r\n    videoCompletedAt: f.VideoCompletedAt,\r\n  };\r\n}\n\nfunction decideEntry(p) {\r\n  // p: {record, expectedStates[], now(ms), lockTtlMs, resume, requireExtraction}\r\n  const r = p.record;\r\n  if (!r || !r.id) return { action: 'skip', reason: 'RECORD_NOT_FOUND' };\r\n  if (p.expectedStates.indexOf(r.status) === -1) return { action: 'skip', reason: 'UNEXPECTED_STATE ' + r.status };\r\n  if (p.requireExtraction && !r.extractionDone) return { action: 'skip', reason: 'EXTRACTION_NOT_DONE' };\r\n  const lockAge = r.lockedAt ? p.now - Date.parse(r.lockedAt) : Infinity;\r\n  if (r.lockedBy && lockAge < p.lockTtlMs) return { action: 'skip', reason: 'LOCKED_BY_OTHER_RUN' };\r\n  return { action: p.resume ? 'resume' : 'proceed', reason: 'OK' };\r\n}\n\nfunction decideIntakeRetry(p) {\r\n  const r = p.record;\r\n  const d = decideEntry({ record: r, expectedStates: ['SUBMITTED'], now: p.now, lockTtlMs: p.cfg.lockTtlMinutes * 60000, resume: false });\r\n  if (d.action === 'skip') return { action: 'skip', reason: d.reason };\r\n  if (r.extractionDone) return { action: 'skip', reason: 'EXTRACTION_ALREADY_DONE' };\r\n  if (r.sourceType === 'upload' || !r.reelUrl) return { action: 'skip', reason: 'NOT_A_REEL_URL_RECORD' };\r\n  return { action: 'proceed', reason: 'OK', url: r.reelUrl, key: r.key };\r\n}\r\n\r\n// Picker data for the dashboard from HeyGen list responses (data, not instructions). Only https preview URLs are passed on.\n\nconst record = recordFromAirtable($input.first().json);\nconst d = decideIntakeRetry({ record, cfg: cfgFromEnv($env), now: Date.now() });\nconst norm = d.action === 'proceed' ? normalizeReelUrl(d.url) : { ok: false, error: d.reason };\nreturn [{ json: { proceed: d.action === 'proceed' && norm.ok, reason: norm.ok ? d.reason : norm.error, recordId: record.id, url: norm.url, shortCode: norm.shortCode, key: record.key } }];\n"
+      },
+      "id": "23907246-743b-6f64-5566-a4f34934de27",
+      "name": "Retry Decision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8e2320d9-c469-de07-12e3-b3b064eb03a2",
+              "leftValue": "={{ $json.proceed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5cbe888d-63a6-f5c8-48e1-f389d9a2e3a9",
+      "name": "IF Retry Proceed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1400,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, recordId: $json.recordId, status: 'SUBMITTED' } }}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "1ff93949-76b7-14f9-9240-1469d966516c",
+      "name": "Respond Retry Accepted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, skipped: true, reason: $json.reason } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "1d7a439d-7416-3da4-d33e-1d2615ef4229",
+      "name": "Respond Retry Skipped",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: 'STORE_UNAVAILABLE' } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "id": "99dce142-3788-1864-332c-952f5f365695",
+      "name": "Respond 503 (Verify)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Verify Unique\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"SUBMITTED\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "312ebfb2-81bd-1117-2b38-7342c9b09f7d",
+      "name": "Fail: Verify Unique",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2520,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Claim\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"SUBMITTED\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "301a39e2-194b-3850-ccf8-09f345c08a6b",
+      "name": "Fail: Claim",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2520,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Apify\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"EXTRACTING\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "c30f8e4a-4f49-a47f-c85a-0b2ed8d6c6e1",
+      "name": "Fail: Apify",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Extraction\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"EXTRACTING\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "015a56a3-ab00-9152-ea7f-421cda97c4db",
+      "name": "Fail: Extraction",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3640,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Source\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"EXTRACTING\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "13dbf53c-de42-349c-bf22-7e21a549fcd1",
+      "name": "Fail: Source",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4480,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Save Source\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"EXTRACTING\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "57ee9922-8e67-36a7-8712-f7b576ca3737",
+      "name": "Fail: Save Source",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4760,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function redact(value) {\r\n  if (Array.isArray(value)) return value.map(redact);\r\n  if (value && typeof value === 'object') {\r\n    const out = {};\r\n    Object.keys(value).forEach((k) => {\r\n      out[k] = /key|token|secret|authorization|password|cookie/i.test(k) ? '[REDACTED]' : redact(value[k]);\r\n    });\r\n    return out;\r\n  }\r\n  if (typeof value === 'string') return value.replace(/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/g, 'Bearer [REDACTED]');\r\n  return value;\r\n}\n\nfunction appendErrorLog(existing, entry, nowIso) {\r\n  const line = '[' + (nowIso || new Date().toISOString()) + '] ' + JSON.stringify(redact(entry));\r\n  return (line + '\\n' + (existing || '')).slice(0, 8000);\r\n}\n\nfunction classifyHttpError(status, body) {\r\n  const b = body && typeof body === 'object' ? body : {};\r\n  if (status === 403 && (b.subscriptionStatus || b.action)) return { retryable: false, code: 'SUBSCRIPTION_REQUIRED', message: 'Provider requires an active subscription' };\r\n  if (status === 401 || status === 403) return { retryable: false, code: 'AUTH_FAILED', message: 'Credentials rejected (HTTP ' + status + ')' };\r\n  if (status === 429) return { retryable: true, code: 'RATE_LIMITED', message: 'Rate limited' };\r\n  if (status === 409) return { retryable: true, code: 'REQUEST_IN_PROGRESS', message: 'Conflict / request in progress' };\r\n  if (status >= 500 || status === 0 || status === undefined) return { retryable: true, code: 'UPSTREAM_ERROR', message: 'Upstream failure (HTTP ' + status + ')' };\r\n  if (status === 404) return { retryable: false, code: 'NOT_FOUND', message: 'Resource not found' };\r\n  return { retryable: false, code: 'BAD_REQUEST', message: 'Request rejected (HTTP ' + status + ')' };\r\n}\n\nconst AIRTABLE_FIELD_MAP = {\r\n  key: 'ReelKey', reelUrl: 'ReelURL', status: 'Status', sourceCaption: 'SourceCaption', sourceTranscript: 'SourceTranscript',\r\n  transcriptSource: 'TranscriptSource', sourceDuration: 'SourceDuration', sourceOwner: 'SourceOwner', audioUrl: 'AudioURL',\r\n  extractionDone: 'ExtractionDone', script: 'Script', caption: 'Caption', overlay: 'Overlay', hashtags: 'Hashtags',\r\n  contentAttempts: 'ContentAttempts', approvedBy: 'ApprovedBy', approvedAt: 'ApprovedAt', rejectedReason: 'RejectedReason',\r\n  heygenVideoId: 'HeyGenVideoId', videoDuration: 'VideoDuration', publishAdapter: 'PublishAdapter',\r\n  postSubmissionId: 'PostSubmissionId', containerId: 'ContainerId', publishedUrl: 'PublishedURL', retryCount: 'RetryCount',\r\n  failedFromState: 'FailedFromState', errorLog: 'ErrorLog', lockedBy: 'LockedBy', lockedAt: 'LockedAt', submittedBy: 'SubmittedBy',\r\n  approvedFingerprint: 'ApprovedFingerprint', regenerationNote: 'RegenerationNote', regenerationCount: 'RegenerationCount',\r\n  lastAction: 'LastAction', lastActionBy: 'LastActionBy', lastActionAt: 'LastActionAt',\r\n  videoAttempt: 'VideoAttempt', pollAttempts: 'PollAttempts', videoUrl: 'VideoURL', thumbnailUrl: 'ThumbnailURL',\r\n  videoSubmittedAt: 'VideoSubmittedAt', videoCompletedAt: 'VideoCompletedAt', heygenStatus: 'HeyGenStatus',\r\n  blotatoMediaUrl: 'BlotatoMediaURL', publishIntentAt: 'PublishIntentAt', publishStatus: 'PublishStatus',\r\n  publishPollAttempts: 'PublishPollAttempts', publishedAt: 'PublishedAt',\r\n  sourceType: 'SourceType', niche: 'Niche', brandVoice: 'BrandVoice', brandVoiceNotes: 'BrandVoiceNotes', avatarId: 'AvatarID', voiceId: 'VoiceID',\r\n  uploadFileName: 'UploadFileName', uploadSizeBytes: 'UploadSizeBytes', uploadSha256: 'UploadSha256',\r\n};\n\nfunction toAirtableFields(patch) {\r\n  const out = {};\r\n  Object.keys(patch).forEach((k) => {\r\n    if (!AIRTABLE_FIELD_MAP[k]) throw new Error('UNKNOWN_FIELD ' + k);\r\n    if (patch[k] !== undefined) out[AIRTABLE_FIELD_MAP[k]] = patch[k];\r\n  });\r\n  return out;\r\n}\n\nfunction describeFailure(input, label) {\r\n  const j = input || {};\r\n  const e = j.error;\r\n  if (j.ok === false) {\r\n    const msg = j.message || (typeof e === 'string' ? e : '') || (j.errors || []).join('; ') || 'Validation failed';\r\n    return { source: label, code: typeof e === 'string' ? e : (j.code || 'VALIDATION_FAILED'), message: String(msg).slice(0, 500), retryable: false, httpStatus: 0 };\r\n  }\r\n  const obj = e && typeof e === 'object' ? e : j;\r\n  const status = Number(obj.httpCode || obj.statusCode || obj.status || (obj.response && obj.response.status) || 0) || 0;\r\n  let body = obj.description || obj.body || (obj.response && obj.response.body);\r\n  if (typeof body === 'string') {\r\n    try { body = JSON.parse(body); } catch (err) { body = {}; }\r\n  }\r\n  const cls = classifyHttpError(status, body);\r\n  const text = obj.message || (typeof e === 'string' ? e : '') || cls.message;\r\n  return { source: label, code: status ? cls.code : 'NODE_ERROR', message: String(text).slice(0, 500), retryable: cls.retryable, httpStatus: status };\r\n}\n\nfunction buildFailureFields(p) {\r\n  return toAirtableFields({\r\n    status: 'FAILED', failedFromState: p.failedFromState,\r\n    errorLog: appendErrorLog(p.existingLog, p.failure, p.now), lockedBy: '', lockedAt: null,\r\n  });\r\n}\n\nconst failure = describeFailure($input.first().json, \"Trigger Content\");\n\nconst recordId = (() => { try { return $('Record Ref').first().json.recordId; } catch (e) { return $('Create Record').first().json.id; } })();\nconst fields = Object.assign(buildFailureFields({ failure, existingLog: '', failedFromState: \"EXTRACTING\", now: new Date().toISOString() }), {});\nreturn [{ json: { recordId, failure, fields } }];\n"
+      },
+      "id": "4d8d07ca-cb56-5e0d-43f9-79db7e313020",
+      "name": "Fail: Trigger Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5040,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Mark Failed": {
+      "main": [
+        [
+          {
+            "node": "IF Notify Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Notify Failure": {
+      "main": [
+        [
+          {
+            "node": "Notify Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook: Retry Intake": {
+      "main": [
+        [
+          {
+            "node": "Retry Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry Validate": {
+      "main": [
+        [
+          {
+            "node": "IF Retry Request Valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Retry Request Valid": {
+      "main": [
+        [
+          {
+            "node": "Get Record (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 400 (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Record (Retry)": {
+      "main": [
+        [
+          {
+            "node": "Retry Decision",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 503 (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry Decision": {
+      "main": [
+        [
+          {
+            "node": "IF Retry Proceed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Retry Proceed": {
+      "main": [
+        [
+          {
+            "node": "Respond Retry Accepted",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Retry Skipped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond Retry Accepted": {
+      "main": [
+        [
+          {
+            "node": "Record Ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook: Submit Reel": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "IF Input Valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Input Valid": {
+      "main": [
+        [
+          {
+            "node": "Find Existing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Existing": {
+      "main": [
+        [
+          {
+            "node": "Dedup Decision",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 503",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedup Decision": {
+      "main": [
+        [
+          {
+            "node": "IF Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Duplicate": {
+      "main": [
+        [
+          {
+            "node": "Respond Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build New Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build New Record": {
+      "main": [
+        [
+          {
+            "node": "Create Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Record": {
+      "main": [
+        [
+          {
+            "node": "Verify Unique",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 502",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Unique": {
+      "main": [
+        [
+          {
+            "node": "Unique Decision",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fail: Verify Unique",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Verify Unique": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond 503 (Verify)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unique Decision": {
+      "main": [
+        [
+          {
+            "node": "IF Is Winner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Is Winner": {
+      "main": [
+        [
+          {
+            "node": "Respond Accepted",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete Duplicate Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Duplicate Record": {
+      "main": [
+        [
+          {
+            "node": "Respond Duplicate (Race)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond Accepted": {
+      "main": [
+        [
+          {
+            "node": "Record Ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record Ref": {
+      "main": [
+        [
+          {
+            "node": "Claim Extracting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim Extracting": {
+      "main": [
+        [
+          {
+            "node": "Build Apify Input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fail: Claim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Claim": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Apify Input": {
+      "main": [
+        [
+          {
+            "node": "Run Apify Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Apify Scraper": {
+      "main": [
+        [
+          {
+            "node": "Normalize Reel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fail: Apify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Apify": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Reel": {
+      "main": [
+        [
+          {
+            "node": "IF Extract OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Extract OK": {
+      "main": [
+        [
+          {
+            "node": "IF Needs STT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fail: Extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Extraction": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Needs STT": {
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Audio": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Audio": {
+      "main": [
+        [
+          {
+            "node": "Merge Source",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Source": {
+      "main": [
+        [
+          {
+            "node": "IF Source OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Source OK": {
+      "main": [
+        [
+          {
+            "node": "Save Source",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fail: Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Source": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Source": {
+      "main": [
+        [
+          {
+            "node": "Trigger Content Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fail: Save Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Save Source": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Content Workflow": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Fail: Trigger Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fail: Trigger Content": {
+      "main": [
+        [
+          {
+            "node": "Mark Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
