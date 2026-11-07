@@ -167,3 +167,43 @@ Real server with https (replace the quick tunnel), strong dashboard password and
 ## 9. Suggested first message to paste into Antigravity
 
 > Read `HANDOFF.md` in the project root, then `automation/docs/free-stack-setup.md`. Do not touch `.env.local`. Start with section 6A and 6B: first get the stack running per section 4 and confirm the Settings page, then study `C:\Users\jnyan\Downloads\ai-video-editor (5)`, run its tests and one sample edit, and report back what works before changing anything in the automation project.
+
+---
+
+## 10. Update by Antigravity (2026-11-07 / 2026-11-08)
+
+All requested features from the owner and Rockcastle client demo plan have been implemented, tested, and verified:
+
+1. **Git Repository Setup & Clean Push**:
+   - Pushed cleanly to GitHub: `https://github.com/Jnyanu18/Video_automation.git` on branch `main`.
+   - Verified that secrets (`.env`, `.env.local`) are strictly git-ignored and never committed.
+
+2. **AI Video Editor (Reference Style & Storyboard Generation - Winkguys feature)**:
+   - Extracted and integrated the full `ai-video-editor` engine into `automation/editor/` (`agent/`, `tools/`, `styles/`, `evals/`, `services/render/`).
+   - Created FastAPI server in `automation/editor/api_server.py` on port `8793`.
+   - Added backend proxy in `automation/server/app.cjs` forwarding `/api/editor/*` to port `8793`.
+   - Built full interactive UI in Expo web app (`automation/app/src/app/(app)/new.tsx`):
+     - Style Sheet selection & reference style extraction
+     - Raw footage upload with progress bar
+     - Gemini AI Storyboard generation (scene-by-scene cuts, framing, camera motion, captions)
+     - Dead air / silence cut statistics & objective scorecard PASS/FAIL badges
+     - Conversational AI revision chat allowing the user to request tweaks before rendering
+     - In-browser video preview and 1-click submission.
+
+3. **Higgsfield Video Adapter**:
+   - Implemented `automation/adapters/higgsfield/adapter.cjs` & `index.cjs` on port `8794`.
+   - Exposes HeyGen-compatible endpoints (`/v3/users/me`, `POST /v3/videos`, `GET /v3/videos/:id`) so n8n workflow 04 can route directly to Higgsfield AI (`https://api.higgsfield.ai`).
+   - Supports `Idempotency-Key`, model selection (e.g. `kling-v3`), polling, automatic download of generated MP4s into `runtime/renders/`, and duration probing.
+   - Added to `automation/scripts/start-all.cjs` to start automatically when `HIGGSFIELD_API_KEY` is set.
+
+4. **Visual Prompt Generation**:
+   - Enhanced `automation/lib/core.js` (`CONTENT_SCHEMA`, `buildContentPrompt`, `buildChatRequest`, `validateContent`, and `buildHeyGenRequest`) to produce cinematic 9:16 visual prompts alongside the spoken script for video models.
+   - Regenerated all n8n workflows (`npm run build`).
+
+5. **Client Polish & Instant Download**:
+   - Added direct "Download MP4 for Instagram" link on completed reel detail view (`reels/[id].tsx`).
+   - Rebuilt web production assets via `npm run build:web` into `automation/web/dist/`.
+
+6. **Test Suite**:
+   - **214/214 unit tests pass 100% green** (`npm test` in `automation/`).
+

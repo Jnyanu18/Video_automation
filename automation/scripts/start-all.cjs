@@ -36,7 +36,11 @@ if (env.PUBLISH_ADAPTER === 'postiz') {
 const mptPy = env.MPT_DIR && path.join(env.MPT_DIR, '.venv', process.platform === 'win32' ? 'Scripts' : 'bin', process.platform === 'win32' ? 'python.exe' : 'python');
 if (mptPy && fs.existsSync(mptPy)) start('mpt', ['main.py'], {}, env.MPT_DIR, mptPy);
 if (env.MPT_API_KEY) start('mpt-adapter', [path.join(ROOT, 'adapters', 'mpt', 'index.cjs')], {});
-else console.warn('MPT_API_KEY is empty; video generation will report an error until MoneyPrinterTurbo is configured in .env.local.');
+else if (!env.HIGGSFIELD_API_KEY) console.warn('Neither MPT_API_KEY nor HIGGSFIELD_API_KEY is configured in .env.local.');
+
+if (env.HIGGSFIELD_API_KEY) {
+  start('higgsfield-adapter', [path.join(ROOT, 'adapters', 'higgsfield', 'index.cjs')], { HIGGSFIELD_ADAPTER_PORT: '8794' });
+}
 const editorScript = path.join(ROOT, 'editor', 'api_server.py');
 if (fs.existsSync(editorScript)) {
   start('ai-editor', [editorScript], { EDITOR_PORT: '8793' }, path.join(ROOT, 'editor'), 'python');

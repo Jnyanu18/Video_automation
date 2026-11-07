@@ -134,8 +134,14 @@ export default function ReelScreen() {
             <View style={[styles.col, wide && { flex: 4 }]}>
               <Card>
                 <SectionTitle title="Video" />
-                {videoUri ? <VideoPlayer uri={videoUri} poster={reel.video?.thumbnailUrl} />
-                  : <T muted>{reel.video?.status ? `Video: ${reel.video.status.toLowerCase()}` : 'No video yet. It appears here once generation finishes.'}</T>}
+                {videoUri ? (
+                  <View style={{ gap: spacing.md, alignItems: 'center' }}>
+                    <VideoPlayer uri={videoUri} poster={reel.video?.thumbnailUrl} />
+                    <View style={{ width: '100%', maxWidth: 320, gap: spacing.xs }}>
+                      <LinkText href={videoUri}>Download MP4 for Instagram</LinkText>
+                    </View>
+                  </View>
+                ) : <T muted>{reel.video?.status ? `Video: ${reel.video.status.toLowerCase()}` : 'No video yet. It appears here once generation finishes.'}</T>}
                 {reel.publishedUrl ? <View style={{ marginTop: spacing.md }}><LinkText href={reel.publishedUrl}>View on Instagram</LinkText></View> : null}
               </Card>
 
