@@ -60,11 +60,12 @@ class IngestionQueue:
         try:
             with get_db(self.ws_path) as conn:
                 conn.execute(
-                    "INSERT OR REPLACE INTO job_queue (id, job_type, status, progress, payload) VALUES (?, ?, ?, ?, ?)",
-                    (item.id, "ingest_reel", item.status, item.progress, json.dumps({"source": item.source, "title": item.title}))
+                    "INSERT OR REPLACE INTO job_queue (id, queue_name, status, payload_json) VALUES (?, ?, ?, ?)",
+                    (item.id, "ingest_reel", item.status, json.dumps({"source": item.source, "title": item.title}))
                 )
         except Exception as e:
             log.warning("DB record failed: %s", e)
+
 
         # Submit task to executor
         self.executor.submit(self._process_item, item.id)
@@ -114,11 +115,12 @@ class IngestionQueue:
                     conn.execute(
                         """
                         INSERT OR REPLACE INTO reference_reels 
-                        (id, source_url, local_path, title, duration_seconds, analysis_json, status)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        (id, workspace_id, source_url, local_path, title, duration, analysis_json, status)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
                             folder_name,
+                            str(self.ws_path),
                             item.source,
                             str(local_video),
                             title,
@@ -128,6 +130,7 @@ class IngestionQueue:
                         )
                     )
             except Exception as e:
+
                 log.warning("DB insert failed for reel %s: %s", folder_name, e)
 
             with self._lock:
@@ -149,11 +152,12 @@ class IngestionQueue:
         try:
             with get_db(self.ws_path) as conn:
                 conn.execute(
-                    "UPDATE job_queue SET status = ?, progress = ?, error = ?, finished_at = CURRENT_TIMESTAMP WHERE id = ?",
-                    (item.status, item.progress, item.error, item.id)
+                    "UPDATE job_queue SET status = ?, error = ?, finished_at = CURRENT_TIMESTAMP WHERE id = ?",
+                    (item.status, item.error, item.id)
                 )
         except Exception:
             pass
+
 
     def get_status(self, item_id: str) -> Optional[IngestionItem]:
         with self._lock:
@@ -177,3 +181,8 @@ class IngestionQueue:
                 log.warning("Error reading cached reel %s: %s", cache_file.name, e)
 
         return analyses
+
+    def close(self):
+        """Cleanly shutdown executor threads."""
+        self.executor.shutdown(wait=False)
+

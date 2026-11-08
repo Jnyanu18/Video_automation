@@ -1,6 +1,6 @@
 -- ReelForge SQLite Schema
-PRAGMA journal_mode = WAL;
 PRAGMA foreign_keys = ON;
+
 
 CREATE TABLE IF NOT EXISTS workspaces (
     id TEXT PRIMARY KEY,

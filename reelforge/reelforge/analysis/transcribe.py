@@ -12,8 +12,17 @@ def transcribe_audio(video_path: Path | str, model_size: str = "base") -> Tuple[
     """Transcribe video audio and return (word_timings, full_text, speech_wpm)."""
     v = Path(video_path)
     try:
+        import av
+        if hasattr(av, "open") and not getattr(av, "_reelforge_patched", False):
+            _orig_open = av.open
+            def _safe_av_open(*args, **kwargs):
+                kwargs.pop("metadata_errors", None)
+                return _orig_open(*args, **kwargs)
+            av.open = _safe_av_open
+            av._reelforge_patched = True
         from faster_whisper import WhisperModel
     except ImportError:
+
         log.warning("faster-whisper is not installed. Skipping transcription.")
         return [], "", 0.0
 

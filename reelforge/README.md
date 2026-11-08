@@ -1,6 +1,6 @@
 # ReelForge: Local AI Video Editor
 
-> **ReelForge** is a local AI video editor replicating the creator workflow seen in the reference Instagram reel (Claude Desktop project folder workflow). Point it at a workspace folder, install tools with one message, feed it any number of reference reels to learn a style, drop in raw footage, review/tweak an interactive storyboard, and render finished 9:16 vertical reels locally.
+> **ReelForge** is a local AI video editor replicating the creator workflow seen in the reference Instagram reel (Claude Desktop project folder workflow). Point it at a workspace folder, install tools with one message, feed it any number of reference reels to learn an editing style, drop in raw footage, review/tweak an interactive storyboard, and render finished 9:16 vertical reels locally.
 
 ---
 
@@ -13,68 +13,69 @@ cd "new project - marketing automatio/reelforge"
 pip install -e .
 ```
 
-### 2. Start the Local Studio
-Launch the local server and web studio with one command:
+### 2. Verify Your Environment
+Check installed dependencies:
+```bash
+python -m reelforge.cli doctor
+```
+Or with the installed entrypoint:
+```bash
+reelforge doctor
+```
+
+### 3. Start the Local Studio
+Launch the local server and web studio:
 ```bash
 reelforge start
 ```
-This opens `http://127.0.0.1:8000` with the local studio interface.
-
-### 3. CLI Commands
-- `reelforge doctor`: Check local dependencies (FFmpeg, yt-dlp, faster-whisper, HyperFrames)
-- `reelforge install`: Confirm and install missing tools
-- `reelforge start --port 8000`: Start local studio
+Open `http://127.0.0.1:8000` in your browser.
 
 ---
 
-## 🏗️ Architecture & Features
+## 🏗️ Architecture & Verification Status
 
-### 1. Workspace Structure
-Default directory: `~/Desktop/AI Video Editor/`
-```text
-AI Video Editor/
-├── Raw Footage/       User's original source videos (never modified or deleted)
-├── Reference/         Reference reels downloaded via yt-dlp or dropped in
-├── Output/            Final 9:16 rendered MP4 videos
-└── .reelforge/        SQLite DB (reelforge.db), caches, styles/, logs/
-```
-
-### 2. One-Message Tool Setup
-Users can type `"Install these 4 tools and set them up in my workspace"` in plain English.
-- Checks FFmpeg, yt-dlp, faster-whisper, and HyperFrames.
-- **Safety**: Never runs installation commands without explicit user confirmation (`-y` or button click).
-
-### 3. Unlimited Reference Reels
-- Supports single URLs, bulk URLs, channel/playlist URLs, or dropped files.
-- No hard limit (scales from 1 to 200+ reels).
-- **Independent & Resumable Caching**: Each reel is downloaded, frames extracted at 2 fps (0.5s interval), transcribed via Whisper, analyzed for scene cuts (`gt(scene, 0.3)`), and cached in `.reelforge/cache/<reel_id>.json`. Adding the 200th reel never reprocesses the first 199.
-
-### 4. Hierarchical Map-Reduce Style Aggregator
-- Combines reference reel analyses in batches ($K=10$) into tree summaries.
-- Computes mathematical medians and modes for cut intervals, speech WPM, and loudness (LUFS).
-- Flags outliers instead of averaging them away.
-- Generates versioned `StyleSheet` (v1, v2...) with plain-English summaries and approval buttons.
-- Supports conversational revisions (e.g. `"make cuts faster and text yellow"`).
-
-### 5. Storyboard Before Render
-- Given raw footage + approved style sheet: transcribes speech and generates structured `StoryboardPlan` (default 6 scenes: hook -> value -> CTA).
-- UI displays scene cards with thumbnail timings, captions, camera motions (`punch_zoom_1.15x`, `center`), and transitions.
-- **NOTHING renders until the user clicks 'Generate video'**.
-- Plain-English revisions produce validated JSON patches with full Undo/Redo history.
-
-### 6. Deterministic Renderer
-- **Draft Mode**: Fast 540x960 rendering for rapid iteration.
-- **Final Mode**: Full 1080x1920 H.264 + AAC vertical video.
-- ASS subtitle burning with styled typography, casing, and positioning.
-- Background audio ducking and normalized loudness.
-- Primary renderer delegates to HyperFrames when configured, with transparent fallback to deterministic `FFmpegAssRenderer`.
+| Feature / Spec Item | Status | Verification Details & Real Commands |
+| :--- | :--- | :--- |
+| **Workspace Manager** | **VERIFIED** | Initializes `Raw Footage/`, `Reference/`, `Output/`, `.reelforge/`. Verified in `tests/test_stage1.py` and `tests/verify_e2e_real_files.py`. Raw footage is strictly read-only. |
+| **System Doctor** | **VERIFIED** | Live checks for FFmpeg, yt-dlp, faster-whisper, HyperFrames, and Anthropic API key. Command: `python -m reelforge.cli doctor`. |
+| **One-Message Installer** | **VERIFIED** | Confirmation-gated tool installer (`ToolInstaller.execute(confirm=True)`). Tested in `tests/test_stage1.py`. |
+| **Reference Ingestion Queue** | **VERIFIED** | Ingests URLs or files, extracts frames at 2 fps, runs scene detection and Whisper transcription, caches per reel in `.reelforge/cache/<reel_id>.json`. |
+| **Crash-Resume Queue** | **VERIFIED** | Verified with `python tests/verify_crash_resume.py`. Simulates process kill mid-batch; cached reels are preserved and remaining reels resume without reprocessing. |
+| **Hierarchical Map-Reduce Style Aggregator** | **VERIFIED** | Tested with 55 dummy reels and 5 real video files (`tests/verify_e2e_real_files.py`). Merges numeric cuts/WPM via mathematical medians/modes with bounded context. |
+| **Storyboard Planner & Editor** | **VERIFIED** | Generates `StoryboardPlan` with scene cards, out-durations, and camera motions. Revisions validated against `StoryboardPatch` schema with undo/redo history. |
+| **FFmpeg + ASS Subtitle Renderer** | **VERIFIED** | Verified via `ffprobe` in `tests/verify_e2e_real_files.py`. Produces 540x960 Drafts and 1080x1920 Final MP4s with punch zooms and burned-in styled subtitles. |
+| **HyperFrames Headless Renderer** | **VERIFIED** | Verified headlessly via `npx hyperframes render`. Renders 1080x1920 30fps H.264 video using headless Chrome (`chrome-headless-shell`). |
+| **FastAPI Backend & Chat Router** | **VERIFIED** | Tested with `pytest tests/test_server.py`. Serves REST endpoints and modern web studio at `http://127.0.0.1:8000`. |
 
 ---
 
-## 🧪 Testing
+## ⚠️ Explicit List of Stubbed / Heuristic Parts
 
-Run the full automated test suite:
+1. **Anthropic API Vision Evaluation (`reelforge/analysis/vision_eval.py`):**
+   - When `ANTHROPIC_API_KEY` is present, calls `claude-3-7-sonnet-20250219` to estimate font families, transitions, and motion styling from extracted frames.
+   - When `ANTHROPIC_API_KEY` is absent (offline/local mode), uses a deterministic heuristic fallback returning `"Inter"`, `"bold"`, and `"middle"` caption positioning.
+2. **Storyboard LLM Generation (`reelforge/storyboard/generator.py`):**
+   - With an API key, calls Anthropic Claude to craft hook-body-CTA scene rationale.
+   - Without an API key, falls back to a deterministic pacing slicer that cuts the footage into balanced scenes respecting the style sheet cut intervals.
+3. **Storyboard LLM Revision (`reelforge/storyboard/editor.py`):**
+   - With an API key, uses LLM to return a validated `StoryboardPatch` JSON.
+   - Without an API key, uses deterministic keyword heuristics (`"shorten intro"`, `"zoom"`, `"remove scene N"`).
+4. **yt-dlp Social Media Downloads Behind Login Gates:**
+   - yt-dlp works cleanly for public URLs and local files. Reference reels on platforms requiring active user session cookies (e.g. private Instagram accounts) will fail download; users must drop the video file directly into `Reference/` or provide public URLs.
+
+---
+
+## 🧪 Running Automated Tests
+
+Run the full pytest suite:
 ```bash
 pytest tests/ -v
 ```
-All 9 unit and integration tests pass green.
+Run the real video end-to-end audit:
+```bash
+python tests/verify_e2e_real_files.py
+```
+Run the crash-resume audit:
+```bash
+python tests/verify_crash_resume.py
+```

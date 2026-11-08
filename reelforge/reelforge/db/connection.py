@@ -10,11 +10,17 @@ def init_db(db_path: Path | str) -> sqlite3.Connection:
     p.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(p), check_same_thread=False, autocommit=False)
     conn.row_factory = sqlite3.Row
+    try:
+        conn.execute("PRAGMA journal_mode = WAL;")
+        conn.commit()
+    except Exception:
+        pass
     schema_file = Path(__file__).parent / "schema.sql"
     if schema_file.is_file():
         conn.executescript(schema_file.read_text(encoding="utf-8"))
         conn.commit()
     return conn
+
 
 class DBManager:
     def __init__(self, db_path: Path | str):
