@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReelForge — Local AI Video Editor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+            },
+            surface: {
+              base: '#0f1117',
+              card: '#181b24',
+              hover: '#222736',
+              border: '#2a2f42'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0d13; color: #f3f4f6; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .glass { background: rgba(24, 27, 36, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #2a2f42; border-radius: 9999px; }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden text-sm select-none">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="h-14 border-b border-surface-border bg-surface-base flex items-center justify-between px-6 z-20">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/20 font-bold text-base text-white">
+        ⚡
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="font-extrabold text-base tracking-tight text-white">ReelForge</span>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-surface-card border border-surface-border text-gray-400 font-mono">v1.0</span>
+      </div>
+    </div>
+
+    <!-- Active Workspace & Environment Badge -->
+    <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2 px-3 py-1 rounded-full bg-surface-card border border-surface-border text-xs text-gray-300">
+        <span class="text-gray-500">📁</span>
+        <span id="workspacePathDisplay" class="font-mono text-purple-300 truncate max-w-xs">~/Desktop/AI Video Editor</span>
+      </div>
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Local</span>
+      </div>
+    </div>
+
+    <!-- Right Quick Actions -->
+    <div class="flex items-center space-x-2">
+      <button onclick="runDoctorCheck()" class="px-3 py-1.5 rounded-lg bg-surface-card hover:bg-surface-hover border border-surface-border text-xs text-gray-300 font-medium transition flex items-center space-x-1.5">
+        <span>🩺</span>
+        <span>Doctor</span>
+      </button>
+      <button onclick="togglePromptsModal()" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition flex items-center space-x-1.5 shadow-sm shadow-purple-600/30">
+        <span>📋</span>
+        <span>Prompt Pack</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN STUDIO LAYOUT -->
+  <main class="flex-1 flex overflow-hidden">
+
+    <!-- LEFT SIDEBAR: WORKSPACE ASSETS & REELS -->
+    <aside class="w-80 border-r border-surface-border bg-surface-base flex flex-col overflow-hidden">
+      <!-- Section Tabs -->
+      <div class="p-3 border-b border-surface-border">
+        <div class="text-xs font-bold uppercase tracking-wider text-gray-400 px-2 py-1">Project Workspace</div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-3 space-y-4">
+        <!-- Raw Footage Folder -->
+        <div class="rounded-xl border border-surface-border bg-surface-card p-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-gray-300 flex items-center space-x-1.5">
+              <span>📹</span>
+              <span>Raw Footage</span>
+            </span>
+            <span id="rawFootageCount" class="text-xs font-mono px-1.5 py-0.5 rounded bg-surface-base text-gray-400">0</span>
+          </div>
+          <div id="rawFootageList" class="space-y-1.5 text-xs text-gray-400">
+            <div class="p-3 border border-dashed border-surface-border rounded-lg text-center text-gray-500 text-xs cursor-pointer hover:border-purple-500 transition" onclick="document.getElementById('rawUploadInput').click()">
+              Drag & drop video or click to upload
+            </div>
+          </div>
+          <input type="file" id="rawUploadInput" class="hidden" accept="video/*" onchange="handleRawUpload(event)">
+        </div>
+
+        <!-- Reference Reels Folder -->
+        <div class="rounded-xl border border-surface-border bg-surface-card p-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-gray-300 flex items-center space-x-1.5">
+              <span>🎯</span>
+              <span>Reference Reels</span>
+            </span>
+            <span id="referenceCount" class="text-xs font-mono px-1.5 py-0.5 rounded bg-surface-base text-gray-400">0</span>
+          </div>
+          <div id="referenceList" class="space-y-1.5 text-xs text-gray-400">
+            <div class="p-3 border border-dashed border-surface-border rounded-lg text-center text-gray-500 text-xs">
+              Paste URL or drop reels to study
+            </div>
+          </div>
+        </div>
+
+        <!-- Render Outputs -->
+        <div class="rounded-xl border border-surface-border bg-surface-card p-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-gray-300 flex items-center space-x-1.5">
+              <span>🎬</span>
+              <span>Output (9:16)</span>
+            </span>
+            <span id="outputCount" class="text-xs font-mono px-1.5 py-0.5 rounded bg-surface-base text-gray-400">0</span>
+          </div>
+          <div id="outputList" class="space-y-1.5 text-xs text-gray-400">
+            <div class="p-2 text-center text-gray-500 text-xs">No renders yet</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER CHAT & STORYBOARD STUDIO -->
+    <section class="flex-1 flex flex-col bg-surface-base overflow-hidden relative" id="dropZone" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+
+      <!-- CHAT MESSAGE FEED -->
+      <div id="chatFeed" class="flex-1 overflow-y-auto p-6 space-y-6">
+
+        <!-- Initial Greeting Screen (from reel) -->
+        <div id="greetingCard" class="max-w-2xl mx-auto text-center py-12 space-y-4">
+          <div class="inline-block p-3 rounded-2xl bg-purple-950/40 border border-purple-500/20 text-purple-400 text-2xl mb-2">
+            ✨
+          </div>
+          <h1 class="text-3xl font-extrabold text-white tracking-tight">Good evening</h1>
+          <p class="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+            ReelForge is your local AI video editor. Point to your workspace, install the 4 local tools, study reference reels to learn a style, and render finished 9:16 videos.
+          </p>
+
+          <!-- Tool chips (@-mentionable) -->
+          <div class="flex items-center justify-center gap-2 pt-2 flex-wrap">
+            <button onclick="insertToolMention('@HyperFrames')" class="px-3 py-1 rounded-full bg-surface-card hover:bg-surface-hover border border-surface-border text-xs text-purple-300 font-mono transition flex items-center space-x-1">
+              <span>🎨</span><span>@HyperFrames</span>
+            </button>
+            <button onclick="insertToolMention('@FFmpeg')" class="px-3 py-1 rounded-full bg-surface-card hover:bg-surface-hover border border-surface-border text-xs text-indigo-300 font-mono transition flex items-center space-x-1">
+              <span>✂️</span><span>@FFmpeg</span>
+            </button>
+            <button onclick="insertToolMention('@Whisper')" class="px-3 py-1 rounded-full bg-surface-card hover:bg-surface-hover border border-surface-border text-xs text-blue-300 font-mono transition flex items-center space-x-1">
+              <span>🎙️</span><span>@Whisper</span>
+            </button>
+            <button onclick="insertToolMention('@yt-dlp')" class="px-3 py-1 rounded-full bg-surface-card hover:bg-surface-hover border border-surface-border text-xs text-pink-300 font-mono transition flex items-center space-x-1">
+              <span>📥</span><span>@yt-dlp</span>
+            </button>
+          </div>
+
+          <!-- Suggested Starter Prompts -->
+          <div class="grid grid-cols-2 gap-3 max-w-lg mx-auto pt-6 text-left">
+            <div onclick="sendMessage('Install these 4 tools and set them up in my workspace')" class="p-3 rounded-xl bg-surface-card hover:bg-surface-hover border border-surface-border cursor-pointer transition">
+              <div class="font-semibold text-xs text-white">⚡ One-Message Setup</div>
+              <div class="text-gray-400 text-xs mt-1">"Install these 4 tools and set them up in my workspace"</div>
+            </div>
+            <div onclick="sendMessage('Build a style sheet from my reference reels')" class="p-3 rounded-xl bg-surface-card hover:bg-surface-hover border border-surface-border cursor-pointer transition">
+              <div class="font-semibold text-xs text-white">🎯 Study References</div>
+              <div class="text-gray-400 text-xs mt-1">"Build a style sheet from my reference reels"</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM INPUT BOX & ACTION BAR -->
+      <div class="p-4 bg-surface-base border-t border-surface-border">
+        <div class="max-w-4xl mx-auto">
+          <form onsubmit="handleChatSubmit(event)" class="relative flex items-center">
+            <input 
+              type="text" 
+              id="chatInput" 
+              placeholder="Ask ReelForge (e.g. 'Install tools', 'Study https://...', 'Make font bigger', 'Generate video')..." 
+              class="w-full pl-4 pr-28 py-3.5 rounded-2xl bg-surface-card border border-surface-border focus:border-purple-500 focus:outline-none text-white text-sm placeholder-gray-500 shadow-xl transition"
+            />
+            <div class="absolute right-2 flex items-center space-x-1.5">
+              <button type="button" onclick="document.getElementById('rawUploadInput').click()" title="Attach Raw Footage" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-surface-hover transition">
+                📎
+              </button>
+              <button type="submit" class="p-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow-md shadow-purple-600/30 transition flex items-center space-x-1">
+                <span>Send</span>
+                <span>↑</span>
+              </button>
+            </div>
+          </form>
+          <div class="text-[11px] text-gray-500 mt-2 text-center flex items-center justify-center space-x-3">
+            <span>Runs locally with FFmpeg + Whisper + HyperFrames</span>
+            <span>•</span>
+            <span>Raw footage is never deleted or altered</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL: PREVIEW & STYLE INSPECTOR -->
+    <aside id="rightPanel" class="w-96 border-l border-surface-border bg-surface-base flex flex-col overflow-hidden">
+      <!-- Header -->
+      <div class="p-3 border-b border-surface-border flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-gray-400 px-2 py-1">Video Preview</span>
+        <span id="previewQualityBadge" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-950/60 text-purple-300 border border-purple-500/20">9:16 Vertical</span>
+      </div>
+
+      <div class="flex-1 p-4 flex flex-col items-center justify-center bg-black/40">
+        <!-- 9:16 Video Player Card -->
+        <div class="w-full max-w-[240px] aspect-[9/16] bg-surface-card rounded-2xl border border-surface-border overflow-hidden relative shadow-2xl flex flex-col items-center justify-center">
+          <video id="previewPlayer" controls class="w-full h-full object-cover hidden"></video>
+          <div id="emptyPreviewPlaceholder" class="text-center p-4 space-y-2">
+            <span class="text-4xl text-gray-600">🎬</span>
+            <div class="text-xs font-medium text-gray-400">No Render Active</div>
+            <div class="text-[11px] text-gray-600">Draft or final 9:16 video will preview here</div>
+          </div>
+        </div>
+
+        <div id="renderActionBox" class="w-full mt-4 space-y-2 hidden">
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span>Render Progress:</span>
+            <span id="renderProgressText" class="font-mono text-purple-400">0%</span>
+          </div>
+          <div class="w-full bg-surface-card rounded-full h-2 overflow-hidden border border-surface-border">
+            <div id="renderProgressBar" class="bg-gradient-to-r from-purple-500 to-indigo-500 h-full w-0 transition-all duration-300"></div>
+          </div>
+          <a id="downloadRenderBtn" href="#" download class="block text-center w-full py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition shadow-lg shadow-purple-600/30">
+            ⬇️ Download MP4 for Instagram
+          </a>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- PROMPT PACK MODAL -->
+  <div id="promptsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-6">
+    <div class="bg-surface-card border border-surface-border rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-surface-border pb-3">
+        <h3 class="font-bold text-base text-white flex items-center space-x-2">
+          <span>📋</span><span>Comment-Gated Prompt Pack (from Reel)</span>
+        </h3>
+        <button onclick="togglePromptsModal()" class="text-gray-400 hover:text-white text-lg">✕</button>
+      </div>
+      <div class="space-y-3 max-h-[60vh] overflow-y-auto text-xs">
+        <div class="p-3 bg-surface-base rounded-xl border border-surface-border">
+          <div class="font-semibold text-purple-400 mb-1">Prompt 1: Setup Workspace & Tools</div>
+          <p class="text-gray-300 select-all font-mono text-[11px] bg-black/40 p-2 rounded">
+            Install these 4 tools and set them up in my workspace: HyperFrames, FFmpeg, Whisper, and yt-dlp. Confirm each is working locally.
+          </p>
+        </div>
+        <div class="p-3 bg-surface-base rounded-xl border border-surface-border">
+          <div class="font-semibold text-purple-400 mb-1">Prompt 2: Reference Reel Study & Style Sheet</div>
+          <p class="text-gray-300 select-all font-mono text-[11px] bg-black/40 p-2 rounded">
+            Study these reference reels: [paste URLs here]. Analyze cut intervals, fonts, karaoke subtitle timing, and sound design. Generate a versioned Style Sheet v1.
+          </p>
+        </div>
+        <div class="p-3 bg-surface-base rounded-xl border border-surface-border">
+          <div class="font-semibold text-purple-400 mb-1">Prompt 3: Storyboard & Rough Cut</div>
+          <p class="text-gray-300 select-all font-mono text-[11px] bg-black/40 p-2 rounded">
+            Using my approved style sheet and raw footage, draft a 6-scene storyboard. Tighten silences, make scene 1 a punchy hook, and add karaoke subtitles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let activeStyle = null;
+    let activeStoryboard = null;
+    let renderInterval = null;
+
+    async function init() {
+      await refreshWorkspace();
+      await refreshRawFootage();
+      await refreshReferences();
+    }
+
+    async function refreshWorkspace() {
+      try {
+        const res = await fetch('/api/workspace');
+        const data = await res.json();
+        document.getElementById('workspacePathDisplay').innerText = data.workspace_root || '~/Desktop/AI Video Editor';
+        document.getElementById('rawFootageCount').innerText = data.raw_footage_count || 0;
+        document.getElementById('referenceCount').innerText = data.reference_count || 0;
+        document.getElementById('outputCount').innerText = data.output_count || 0;
+      } catch (e) {
+        console.error("Workspace refresh error:", e);
+      }
+    }
+
+    async function refreshRawFootage() {
+      try {
+        const res = await fetch('/api/raw/list');
+        const files = await res.json();
+        const listEl = document.getElementById('rawFootageList');
+        if (files && files.length > 0) {
+          listEl.innerHTML = files.map(f => `
+            <div class="p-2 rounded-lg bg-surface-base border border-surface-border flex items-center justify-between">
+              <span class="truncate max-w-[160px] text-gray-200" title="${f.name}">${f.name}</span>
+              <span class="font-mono text-[10px] text-gray-500">${f.size_mb} MB</span>
+            </div>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    async function refreshReferences() {
+      try {
+        const res = await fetch('/api/reference/list');
+        const reels = await res.json();
+        const listEl = document.getElementById('referenceList');
+        if (reels && reels.length > 0) {
+          listEl.innerHTML = reels.map(r => `
+            <div class="p-2 rounded-lg bg-surface-base border border-surface-border">
+              <div class="font-semibold text-gray-300 truncate">${r.reel_id}</div>
+              <div class="text-[10px] text-gray-500 mt-1 flex justify-between">
+                <span>Cuts: ${r.cuts_count} (${r.avg_cut_interval}s)</span>
+                <span>${r.wpm} WPM</span>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {}
+    }
+
+    function insertToolMention(tool) {
+      const input = document.getElementById('chatInput');
+      input.value += (input.value ? ' ' : '') + tool + ' ';
+      input.focus();
+    }
+
+    function togglePromptsModal() {
+      const m = document.getElementById('promptsModal');
+      m.classList.toggle('hidden');
+    }
+
+    async function handleRawUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      appendMessage('user', `Attached raw footage: ${file.name}`);
+      try {
+        const res = await fetch('/api/raw/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        appendMessage('assistant', `Raw footage **${file.name}** uploaded successfully to your workspace. Drop any reference reels or ask me to draft a storyboard!`);
+        await refreshWorkspace();
+        await refreshRawFootage();
+      } catch (err) {
+        appendMessage('assistant', `Failed to upload raw footage: ${err}`);
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      if (e.dataTransfer.files.length > 0) {
+        const file = e.dataTransfer.files[0];
+        document.getElementById('rawUploadInput').files = e.dataTransfer.files;
+        handleRawUpload({ target: { files: [file] } });
+      }
+    }
+
+    async function runDoctorCheck() {
+      appendMessage('user', 'Run system doctor check');
+      try {
+        const res = await fetch('/api/doctor');
+        const doc = await res.json();
+        renderDoctorCard(doc);
+      } catch (err) {
+        appendMessage('assistant', `Doctor check failed: ${err}`);
+      }
+    }
+
+    async function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      sendMessage(text);
+    }
+
+    async function sendMessage(text) {
+      // Hide greeting once chat starts
+      const greeting = document.getElementById('greetingCard');
+      if (greeting) greeting.style.display = 'none';
+
+      appendMessage('user', text);
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+
+        if (data.type === 'action_required') {
+          renderActionRequiredCard(data);
+        } else if (data.type === 'doctor_report') {
+          renderDoctorCard(data.data);
+        } else if (data.type === 'style_created' || data.type === 'style_revised') {
+          renderStyleSheetCard(data.style, data.reply);
+        } else if (data.type === 'storyboard_created' || data.type === 'storyboard_revised') {
+          renderStoryboardCard(data.storyboard, data.reply);
+        } else if (data.type === 'render_ready') {
+          renderStartRenderCard(data.quality);
+        } else {
+          appendMessage('assistant', data.reply);
+        }
+      } catch (err) {
+        appendMessage('assistant', `Error communicating with ReelForge: ${err}`);
+      }
+    }
+
+    function appendMessage(sender, text) {
+      const feed = document.getElementById('chatFeed');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`;
+
+      if (sender === 'user') {
+        msgDiv.innerHTML = `
+          <div class="max-w-xl px-4 py-2.5 rounded-2xl bg-purple-600 text-white text-sm shadow-md">
+            ${text}
+          </div>
+        `;
+      } else {
+        msgDiv.innerHTML = `
+          <div class="max-w-2xl p-4 rounded-2xl bg-surface-card border border-surface-border text-gray-200 text-sm shadow-md space-y-2">
+            <div class="flex items-center space-x-2 text-xs text-purple-400 font-semibold mb-1">
+              <span>⚡ ReelForge</span>
+            </div>
+            <div>${text}</div>
+          </div>
+        `;
+      }
+      feed.appendChild(msgDiv);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function renderDoctorCard(doc) {
+      const feed = document.getElementById('chatFeed');
+      const card = document.createElement('div');
+      card.className = "max-w-2xl p-4 rounded-2xl bg-surface-card border border-surface-border space-y-3";
+
+      const toolsHtml = doc.tools.map(t => `
+        <div class="p-2.5 rounded-xl bg-surface-base border border-surface-border flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="${t.ok ? 'text-emerald-400' : 'text-rose-400'} text-base">${t.ok ? '✓' : '✗'}</span>
+            <div>
+              <div class="font-semibold text-xs text-white">${t.name}</div>
+              <div class="text-[11px] text-gray-400">${t.details || ''}</div>
+            </div>
+          </div>
+          ${!t.ok ? `<div class="text-[10px] font-mono px-2 py-1 rounded bg-rose-950/60 text-rose-300 border border-rose-500/20">${t.fix_command || 'Fix required'}</div>` : ''}
+        </div>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-white text-sm flex items-center space-x-2">
+            <span>🩺</span><span>Doctor Checklist</span>
+          </h4>
+          <span class="text-xs font-mono text-gray-400">${doc.summary}</span>
+        </div>
+        <div class="space-y-2">${toolsHtml}</div>
+      `;
+      feed.appendChild(card);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function renderActionRequiredCard(data) {
+      const feed = document.getElementById('chatFeed');
+      const card = document.createElement('div');
+      card.className = "max-w-2xl p-4 rounded-2xl bg-surface-card border border-surface-border space-y-3";
+      card.innerHTML = `
+        <div class="font-semibold text-sm text-white">⚙️ Tool Installation Confirmation</div>
+        <p class="text-xs text-gray-300">${data.reply}</p>
+        <div class="p-2 bg-surface-base rounded-xl font-mono text-[11px] text-gray-400 space-y-1">
+          ${(data.commands || []).map(c => `<div>$ ${c}</div>`).join('')}
+        </div>
+        <div class="flex space-x-2 pt-2">
+          <button onclick="executeToolInstall()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition">
+            Proceed with Installation
+          </button>
+        </div>
+      `;
+      feed.appendChild(card);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    async function executeToolInstall() {
+      appendMessage('user', 'Proceed with tool installation');
+      appendMessage('assistant', 'Running installer for FFmpeg, yt-dlp, faster-whisper, and HyperFrames...');
+      try {
+        const res = await fetch('/api/tools/install?confirm=true', { method: 'POST' });
+        const result = await res.json();
+        appendMessage('assistant', `Installation finished! Result: ${JSON.stringify(result)}`);
+        await runDoctorCheck();
+      } catch (e) {
+        appendMessage('assistant', `Install error: ${e}`);
+      }
+    }
+
+    function renderStyleSheetCard(style, reply) {
+      activeStyle = style;
+      const feed = document.getElementById('chatFeed');
+      const card = document.createElement('div');
+      card.className = "max-w-2xl p-5 rounded-2xl bg-surface-card border border-surface-border space-y-4 shadow-xl";
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-surface-border pb-3">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🎨</span>
+            <span class="font-bold text-white text-base">Your Style Sheet</span>
+            <span class="px-2 py-0.5 rounded-full bg-purple-950/60 text-purple-300 font-mono text-xs border border-purple-500/30">v${style.version}</span>
+          </div>
+          <span class="text-xs text-gray-400 font-mono">${style.reels_analyzed_count} Reels Analyzed</span>
+        </div>
+        <p class="text-xs text-gray-300">${style.summary}</p>
+        
+        <!-- Style Metrics Grid -->
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <div class="p-2.5 rounded-xl bg-surface-base border border-surface-border">
+            <span class="text-gray-500 text-[10px] block uppercase font-bold">Typography</span>
+            <span class="font-semibold text-white">${style.fonts.family} (${style.fonts.casing})</span>
+            <div class="flex items-center space-x-1 mt-1">
+              <div class="w-3 h-3 rounded-full border border-gray-600" style="background:${style.fonts.color_hex}"></div>
+              <span class="font-mono text-[10px] text-gray-400">${style.fonts.color_hex}</span>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-surface-base border border-surface-border">
+            <span class="text-gray-500 text-[10px] block uppercase font-bold">Pacing & Cuts</span>
+            <span class="font-semibold text-white">${style.pacing.avg_cut_interval_seconds}s per cut</span>
+            <span class="text-[10px] text-gray-400 block mt-1">${style.pacing.speech_wpm_median} WPM</span>
+          </div>
+          <div class="p-2.5 rounded-xl bg-surface-base border border-surface-border">
+            <span class="text-gray-500 text-[10px] block uppercase font-bold">Sound & Audio</span>
+            <span class="font-semibold text-white">Duck: ${style.sound.music_duck_db} dB</span>
+            <span class="text-[10px] text-gray-400 block mt-1">Target ${style.sound.target_lufs} LUFS</span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2 pt-2">
+          <button onclick="approveStyleSheet()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition">
+            ✓ Approve Style Sheet
+          </button>
+          <button onclick="promptStyleRevision()" class="px-4 py-2 rounded-xl bg-surface-base hover:bg-surface-hover border border-surface-border text-gray-300 font-semibold text-xs transition">
+            Request Changes
+          </button>
+        </div>
+      `;
+      feed.appendChild(card);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    async function approveStyleSheet() {
+      await fetch('/api/style/approve', { method: 'POST' });
+      appendMessage('assistant', 'Style sheet approved! Drop raw footage or ask me to draft a storyboard now.');
+    }
+
+    function promptStyleRevision() {
+      const feedback = prompt("What changes would you like to request on the style sheet? (e.g. 'make font yellow and cuts faster')");
+      if (feedback) {
+        sendMessage(feedback);
+      }
+    }
+
+    function renderStoryboardCard(storyboard, reply) {
+      activeStoryboard = storyboard;
+      const feed = document.getElementById('chatFeed');
+      const card = document.createElement('div');
+      card.className = "max-w-2xl p-5 rounded-2xl bg-surface-card border border-surface-border space-y-4 shadow-xl";
+
+      const scenesHtml = storyboard.scenes.map(s => `
+        <div class="p-3 rounded-xl bg-surface-base border border-surface-border flex items-start space-x-3">
+          <div class="w-7 h-7 rounded-lg bg-purple-950/60 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs shrink-0">
+            ${s.scene_number}
+          </div>
+          <div class="flex-1 space-y-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-mono text-gray-400">${s.src_start}s - ${s.src_end}s (${s.out_duration}s)</span>
+              <span class="font-mono text-purple-300 px-1.5 py-0.5 rounded bg-surface-card border border-surface-border text-[10px]">${s.camera_motion}</span>
+            </div>
+            <div class="font-semibold text-sm text-white">"${s.caption_text}"</div>
+            <div class="text-[11px] text-gray-400">${s.rationale}</div>
+          </div>
+        </div>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-surface-border pb-3">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">📋</span>
+            <span class="font-bold text-white text-base">${storyboard.title}</span>
+          </div>
+          <span class="text-xs text-purple-400 font-mono">${storyboard.target_duration}s Total</span>
+        </div>
+        <p class="text-xs text-gray-300">${reply}</p>
+        <div class="space-y-2 max-h-72 overflow-y-auto">${scenesHtml}</div>
+
+        <!-- Action Controls -->
+        <div class="flex items-center justify-between pt-3 border-t border-surface-border">
+          <div class="flex space-x-2">
+            <button onclick="undoStoryboard()" class="px-3 py-1.5 rounded-lg bg-surface-base hover:bg-surface-hover border border-surface-border text-xs text-gray-300 transition">↶ Undo</button>
+            <button onclick="redoStoryboard()" class="px-3 py-1.5 rounded-lg bg-surface-base hover:bg-surface-hover border border-surface-border text-xs text-gray-300 transition">↷ Redo</button>
+          </div>
+          <button onclick="triggerRender('draft')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30 transition flex items-center space-x-1.5">
+            <span>⚡</span><span>Generate Video</span>
+          </button>
+        </div>
+      `;
+      feed.appendChild(card);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    async function undoStoryboard() {
+      const res = await fetch('/api/storyboard/undo', { method: 'POST' });
+      if (res.ok) {
+        const sb = await res.json();
+        renderStoryboardCard(sb, 'Undid previous revision.');
+      }
+    }
+
+    async function redoStoryboard() {
+      const res = await fetch('/api/storyboard/redo', { method: 'POST' });
+      if (res.ok) {
+        const sb = await res.json();
+        renderStoryboardCard(sb, 'Redid revision.');
+      }
+    }
+
+    function renderStartRenderCard(quality) {
+      triggerRender(quality);
+    }
+
+    async function triggerRender(quality = 'draft') {
+      appendMessage('user', `Generate video in ${quality} mode`);
+      appendMessage('assistant', `Starting deterministic FFmpeg render (${quality === 'draft' ? '540x960 fast draft' : '1080x1920 final export'})...`);
+      
+      const resBox = document.getElementById('renderActionBox');
+      resBox.classList.remove('hidden');
+      document.getElementById('renderProgressBar').style.width = '20%';
+      document.getElementById('renderProgressText').innerText = '20%';
+
+      try {
+        const res = await fetch('/api/render/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ quality: quality })
+        });
+        const data = await res.json();
+        const jobId = data.job_id;
+
+        // Poll status
+        if (renderInterval) clearInterval(renderInterval);
+        renderInterval = setInterval(async () => {
+          const sRes = await fetch(`/api/render/status/${jobId}`);
+          if (sRes.ok) {
+            const job = await sRes.json();
+            document.getElementById('renderProgressBar').style.width = `${job.progress}%`;
+            document.getElementById('renderProgressText').innerText = `${job.progress}%`;
+
+            if (job.status === 'completed') {
+              clearInterval(renderInterval);
+              document.getElementById('previewQualityBadge').innerText = `${job.quality.toUpperCase()} • 9:16`;
+              const player = document.getElementById('previewPlayer');
+              player.src = `/api/render/download/${job.filename}`;
+              player.classList.remove('hidden');
+              document.getElementById('emptyPreviewPlaceholder').classList.add('hidden');
+              document.getElementById('downloadRenderBtn').href = `/api/render/download/${job.filename}`;
+              appendMessage('assistant', `Render complete! Finished 9:16 reel generated in ${job.render_time}s. You can preview it in the right pane or download directly.`);
+              await refreshWorkspace();
+            } else if (job.status === 'failed') {
+              clearInterval(renderInterval);
+              appendMessage('assistant', `Render failed: ${job.error}`);
+            }
+          }
+        }, 1500);
+
+      } catch (err) {
+        appendMessage('assistant', `Failed to start render: ${err}`);
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
