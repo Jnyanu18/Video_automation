@@ -52,8 +52,7 @@ Public internet ──► cloudflared tunnel ──► public-media :8792
 | MPT adapter | `automation/adapters/mpt/` | Faceless video fallback (MoneyPrinterTurbo) |
 | Postiz adapter | `automation/adapters/postiz/` | Instagram publishing |
 | Public media server | `automation/scripts/public-media.cjs` | Only safe thing to expose via tunnel |
-| Tests | `automation/test/` | 214 unit tests, all mock-based |
-| AI Editor Service | `automation/editor/` | Python FastAPI (:8793) wrapping Gemini agent & render |
+| Tests | `automation/test/` | 208 tests, all mock-based |
 
 ---
 
@@ -79,11 +78,8 @@ Public internet ──► cloudflared tunnel ──► public-media :8792
 The following has been run on a real Windows PC against real services:
 
 - **Reel URL → Script → Approval → MoneyPrinterTurbo video → Public HTTPS URL** (record `recF8d2ChFFdpdE9r`)
-- **Higgsfield Video Adapter** (:8794): HeyGen-compatible endpoint with Idempotency-Key handling, polling, and local caching
-- **Visual Prompt Generation**: Workflow 02 generates cinematic 9:16 prompts alongside spoken script
 - **Gemini AI video edit** on raw footage: silence cut, 9:16 reframe, scorecard FAIL→PASS in 89 s, preview MP4 produced
-- **Interactive Storyboard & Chat**: Expo UI allows editing scene cards and chatting with Gemini to revise cuts
-- **214 unit tests** green (mock-based, no API keys needed)
+- **208 unit tests** green (mock-based, no API keys needed)
 - **94 vitest** (web) + **246 pytest** (AI editor) all pass
 
 ---
@@ -242,10 +238,9 @@ python -m pytest agent/ tools/ evals/ services/ -q   # ~230 Python tests
 - [x] Gemini AI video editor (silence cut, reframe, captions)
 - [x] **Reference Style & AI Storyboard Editor** (inspired by [winkguys reel](https://www.instagram.com/reels/DfJ52pVzp67/))
 - [x] **Interactive Storyboard review & AI revision chat in Dashboard**
-- [x] **Higgsfield cinematic video adapter** (:8794 adapter ready, HeyGen-compatible)
-- [x] **Visual prompt** in AI script (Higgsfield-ready cinematic description)
-- [x] **Direct MP4 Download for Instagram** in Reel detail page
-- [ ] Real stock footage via Pixabay (user API key)
+- [ ] **Higgsfield cinematic video** (adapter built, needs API key)
+- [ ] **Visual prompt** in AI script (Higgsfield-ready cinematic description)
+- [ ] Real stock footage via Pixabay
 - [ ] Instagram publish (Postiz Cloud or Meta Graph API)
 - [ ] Content calendar / scheduling
 - [ ] Brand kits (voice, fonts, colours per client)

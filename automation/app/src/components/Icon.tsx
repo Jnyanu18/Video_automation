@@ -3,7 +3,7 @@ import Svg, { Path, Circle, Rect, Polyline, Line } from 'react-native-svg';
 
 export type IconName =
   | 'home' | 'film' | 'plus' | 'settings' | 'logout' | 'check' | 'x' | 'refresh' | 'play' | 'alert'
-  | 'back' | 'chevron' | 'search' | 'upload' | 'link' | 'external' | 'clock' | 'send' | 'edit' | 'sparkles'
+  | 'back' | 'chevron' | 'search' | 'upload' | 'download' | 'link' | 'external' | 'clock' | 'send' | 'edit' | 'sparkles'
   | 'inbox' | 'server';
 
 /** Stroke icons on a 24px grid (Feather-style), drawn with react-native-svg so they render identically on web and native. */
@@ -32,6 +32,7 @@ function render(name: IconName, p: any) {
     case 'chevron': return <Polyline {...p} points="9 18 15 12 9 6" />;
     case 'search': return <><Circle {...p} cx="11" cy="11" r="7" /><Line {...p} x1="21" y1="21" x2="16.65" y2="16.65" /></>;
     case 'upload': return <><Path {...p} d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><Polyline {...p} points="17 8 12 3 7 8" /><Line {...p} x1="12" y1="3" x2="12" y2="15" /></>;
+    case 'download': return <><Path {...p} d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><Polyline {...p} points="7 10 12 15 17 10" /><Line {...p} x1="12" y1="15" x2="12" y2="3" /></>;
     case 'link': return <><Path {...p} d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" /><Path {...p} d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" /></>;
     case 'external': return <><Path {...p} d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><Polyline {...p} points="15 3 21 3 21 9" /><Line {...p} x1="10" y1="14" x2="21" y2="3" /></>;
     case 'clock': return <><Circle {...p} cx="12" cy="12" r="9" /><Polyline {...p} points="12 7 12 12 15.5 14" /></>;

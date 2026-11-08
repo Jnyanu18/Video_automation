@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Linking, Platform, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Screen } from '../../../components/Screen';
 import {
@@ -138,7 +138,24 @@ export default function ReelScreen() {
                   <View style={{ gap: spacing.md, alignItems: 'center' }}>
                     <VideoPlayer uri={videoUri} poster={reel.video?.thumbnailUrl} />
                     <View style={{ width: '100%', maxWidth: 320, gap: spacing.xs }}>
-                      <LinkText href={videoUri}>Download MP4 for Instagram</LinkText>
+                      <Button
+                        label="Download MP4 for Instagram"
+                        icon="download"
+                        variant="primary"
+                        full
+                        onPress={() => {
+                          if (Platform.OS === 'web') {
+                            const a = document.createElement('a');
+                            a.href = videoUri;
+                            a.download = `${reel.title || reel.key || 'reel'}.mp4`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                          } else {
+                            Linking.openURL(videoUri);
+                          }
+                        }}
+                      />
                     </View>
                   </View>
                 ) : <T muted>{reel.video?.status ? `Video: ${reel.video.status.toLowerCase()}` : 'No video yet. It appears here once generation finishes.'}</T>}

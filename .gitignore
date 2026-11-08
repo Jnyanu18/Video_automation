@@ -41,3 +41,5 @@ desktop.ini
 .idea/
 *.suo
 *.user
+
+automation/editor/work/

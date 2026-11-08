@@ -85,7 +85,12 @@ function actionsFor(r, cfg, now) {
 }
 
 function relativeMedia(url, cfg) {
-  const prefix = cfg.publicBaseUrl ? cfg.publicBaseUrl + '/media/' : null;
+  if (typeof url !== 'string') return '';
+  const mRender = /\/render\/([a-f0-9]{32}\.mp4)$/.exec(url);
+  if (mRender) return '/render/' + mRender[1];
+  const mMedia = /\/media\/([a-f0-9]{32}\.mp4)$/.exec(url);
+  if (mMedia) return '/media/' + mMedia[1];
+  const prefix = cfg && cfg.publicBaseUrl ? cfg.publicBaseUrl + '/media/' : null;
   return prefix && url.startsWith(prefix) ? '/media/' + url.slice(prefix.length) : url;
 }
 

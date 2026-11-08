@@ -26,7 +26,7 @@ import httpx
 
 PROVIDERS = {
     "gemini": {"base_url": "https://generativelanguage.googleapis.com/v1beta/openai", "key_env": "GEMINI_API_KEY",
-               "model": "gemini-3.5-flash", "vision": True},
+               "model": "gemini-3.5-flash-lite", "vision": True},
     "openrouter": {"base_url": "https://openrouter.ai/api/v1", "key_env": "OPENROUTER_API_KEY",
                    "model": "meta-llama/llama-3.3-70b-instruct:free"},
     "ollama": {"base_url": "http://localhost:11434/v1", "key_env": None, "model": "qwen2.5:7b"},
@@ -177,6 +177,8 @@ class OpenAICompatClient:
         headers = {"Content-Type": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
+        fallbacks = ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-latest"]
+        fb_idx = 0
         for attempt in range(self.max_retries + 1):
             self.requests += 1
             try:
@@ -189,6 +191,13 @@ class OpenAICompatClient:
             if r.status_code == 200:
                 return r.json()
             detail = r.text[:400]
+            if r.status_code == 429 and ("Quota exceeded" in detail or "RESOURCE_EXHAUSTED" in detail) and fb_idx < len(fallbacks):
+                next_model = fallbacks[fb_idx]
+                fb_idx += 1
+                if next_model != body.get("model"):
+                    body["model"] = next_model
+                    self.model = next_model
+                    continue
             if r.status_code in (429, 500, 502, 503, 504) and attempt < self.max_retries:
                 wait = r.headers.get("retry-after")
                 self._sleep(min(float(wait), 60.0) if wait and wait.replace(".", "", 1).isdigit() else min(2 ** attempt * 2, 30))
