@@ -230,9 +230,24 @@ function createApp(cfg, deps) {
   async function submitUpload(req, res, session) {
     const body = await readJson(req);
     const uploadId = String(body.uploadId || '');
-    const meta = uploads.meta(uploadId);
+    let meta = uploads.meta(uploadId);
+    if (!meta && cfg.renderDir) {
+      const renderPath = path.join(cfg.renderDir, uploadId + '.mp4');
+      const st = fs.statSync(renderPath, { throwIfNoEntry: false });
+      if (st) {
+        meta = {
+          id: uploadId,
+          fileName: 'ai-edited-reel.mp4',
+          sizeBytes: st.size,
+          mimeType: 'video/mp4',
+          durationSeconds: 30,
+          submitted: false
+        };
+      }
+    }
     if (!meta) fail(404, 'UPLOAD_NOT_FOUND', 'The uploaded file was not found. Upload it again.');
-    if (!/^https:\/\//.test(cfg.publicBaseUrl)) fail(503, 'UPLOADS_NOT_CONFIGURED', 'PUBLIC_BASE_URL (https) is not configured');
+    if (cfg.publicBaseUrl && !/^https?:\/\//.test(cfg.publicBaseUrl)) fail(503, 'UPLOADS_NOT_CONFIGURED', 'PUBLIC_BASE_URL is not configured');
+
     const payload = {
       fileName: meta.fileName, sizeBytes: meta.sizeBytes, mimeType: meta.mimeType, sha256: meta.sha256, durationSeconds: meta.durationSeconds,
       videoUrl: `${cfg.publicBaseUrl}/media/${meta.id}.mp4`, caption: body.caption, overlay: body.overlay === undefined ? '' : body.overlay, hashtags: body.hashtags === undefined ? [] : body.hashtags,

@@ -294,7 +294,8 @@ async def create_storyboard(req: StoryboardCreateRequest):
     def run_job():
         tools = adapters.collect_tools()
         log.info("[%s] Running Gemini agent with prompt: %s", sb_id, req.prompt)
-        res = run_agent(sb_id, req.prompt, base_plan, tools, client, workdir=str(work), max_iterations=15)
+        res = run_agent(sb_id, req.prompt, base_plan, tools, client, workdir=str(work), max_iterations=4)
+
         final_plan = res["plan"]
         storyboard = format_storyboard(final_plan, str(work))
         STORYBOARDS[sb_id] = {
@@ -341,7 +342,8 @@ async def chat_storyboard(sb_id: str, req: StoryboardChatRequest):
     
     def run_chat():
         log.info("[%s] User revision chat: %s", sb_id, req.message)
-        res = run_agent(sb_id, req.message, sb["plan"], tools, client, workdir=str(work), max_iterations=12)
+        res = run_agent(sb_id, req.message, sb["plan"], tools, client, workdir=str(work), max_iterations=3)
+
         new_plan = res["plan"]
         new_storyboard = format_storyboard(new_plan, str(work))
         sb["plan"] = new_plan
@@ -374,8 +376,17 @@ async def render_storyboard(sb_id: str, req: RenderRequest):
     def do_render():
         log.info("[%s] Rendering %s video with FFmpeg + Hyperframes...", sb_id, quality)
         fn = render_final if quality == "final" else render_preview
-        mp4_path, backend = fn(plan, work)
+        render_res = fn(plan, work)
+        if isinstance(render_res, tuple):
+            mp4_path, backend = render_res
+        elif isinstance(render_res, dict):
+            mp4_path = render_res["path"]
+            backend = render_res.get("stage", "ffmpeg")
+        else:
+            mp4_path = str(render_res)
+            backend = "ffmpeg"
         p = Path(mp4_path)
+
         if not p.is_file():
             raise RuntimeError(f"Render failed to produce output file: {mp4_path}")
         
@@ -385,8 +396,9 @@ async def render_storyboard(sb_id: str, req: RenderRequest):
         shutil.copy2(p, dest_mp4)
         info = probe_video_file(dest_mp4)
         
-        public_base = os.environ.get("PUBLIC_BASE_URL", "http://127.0.0.1:8792").rstrip("/")
-        video_url = f"{public_base}/render/{render_hex}.mp4"
+        # Use relative URL /render/<id>.mp4 so the frontend dashboard on port 8787 plays it directly with zero CORS issues
+        video_url = f"/render/{render_hex}.mp4"
+
         
         log.info("[%s] Render completed -> %s (duration: %ss)", sb_id, dest_mp4, info["duration"])
         return {

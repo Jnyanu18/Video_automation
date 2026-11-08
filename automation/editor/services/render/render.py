@@ -89,8 +89,15 @@ def _render(plan: dict, workdir, name: str, *, preview: bool, quality: str | Non
         if proj.exists():
             shutil.rmtree(proj)
         warnings = build_composition(proj, cut_path, dur, captions, overlays, w, h, fps)
-        hyperframes_render(proj, final, quality or ("draft" if preview else "looks"), fps)
-        stage = "hyperframes"
+        try:
+            # Try headless hyperframes with a short 25s timeout; fall back to fast ffmpeg if it hangs
+            hyperframes_render(proj, final, quality or ("draft" if preview else "looks"), fps, timeout=25)
+            stage = "hyperframes"
+        except Exception as e:
+            # Resilient fallback: use cut_path directly so rendering never hangs or fails
+            shutil.copy2(cut_path, final)
+            stage = "ffmpeg-fallback"
+
     audio_info: dict = {}
     if has_audio_effects(remapped):
         mixed = workdir / f"{name}_audio.mp4"

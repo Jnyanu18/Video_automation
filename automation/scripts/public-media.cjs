@@ -17,7 +17,16 @@ const port = Number(env.PUBLIC_MEDIA_PORT || 8792);
 function serveFile(req, res, file) {
   let st;
   try { st = fs.statSync(file); } catch (e) { return false; }
-  const headers = { 'content-type': 'video/mp4', 'accept-ranges': 'bytes', 'cache-control': 'public, max-age=3600', 'x-content-type-options': 'nosniff' };
+  const headers = { 
+    'content-type': 'video/mp4', 
+    'accept-ranges': 'bytes', 
+    'cache-control': 'public, max-age=3600', 
+    'x-content-type-options': 'nosniff',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'GET, HEAD, OPTIONS',
+    'access-control-allow-headers': 'Range'
+  };
+
   let start = 0; let end = st.size - 1; let status = 200;
   const m = /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range || ''));
   if (m && (m[1] || m[2])) {
