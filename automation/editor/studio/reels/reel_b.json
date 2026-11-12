@@ -1,0 +1,144 @@
+{
+ "name": "reel-b-one-reel-five-jobs",
+ "voice": "andrew",
+ "rate": "+6%",
+ "music": {
+  "style": "drive",
+  "volume": 0.2,
+  "seed": 11
+ },
+ "scenes": [
+  {
+   "kind": "kinetic",
+   "theme": "dark",
+   "words": [
+    "One",
+    "reel.",
+    "Five",
+    "jobs."
+   ],
+   "accent": [
+    3
+   ],
+   "say": "One reel. Five jobs.",
+   "duration": 3.0,
+   "sfx": [
+    {
+     "name": "thud",
+     "at": 0.3,
+     "volume": 0.6
+    },
+    {
+     "name": "thud",
+     "at": 1.3,
+     "volume": 0.6
+    }
+   ]
+  },
+  {
+   "kind": "chat",
+   "theme": "light",
+   "title": "AILO agent",
+   "messages": [
+    {
+     "from": "user",
+     "text": "Make a reel from this link",
+     "at": 0.9
+    },
+    {
+     "from": "agent",
+     "text": "Done. Captions, diagrams and sound are in.",
+     "at": 3.6
+    },
+    {
+     "from": "agent",
+     "text": "Ready to render?",
+     "at": 6.2
+    },
+    {
+     "from": "user",
+     "text": "Approve",
+     "at": 7.6
+    }
+   ],
+   "say": "Now you just ask. Paste a link, and the agent does all five. Captions, animated diagrams, sound. You approve, then it renders.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 0.9
+    },
+    {
+     "name": "ding",
+     "at": 3.6,
+     "volume": 0.4
+    },
+    {
+     "name": "pop",
+     "at": 6.2
+    },
+    {
+     "name": "click",
+     "at": 7.6
+    }
+   ]
+  },
+  {
+   "kind": "stats",
+   "theme": "dark",
+   "title": "AILO *delivers*",
+   "items": [
+    {
+     "value": "68%",
+     "label": "of support tickets auto-resolved"
+    },
+    {
+     "value": "3.2x",
+     "label": "organic traffic in 6 months"
+    },
+    {
+     "value": "20 hrs",
+     "label": "saved every week"
+    }
+   ],
+   "sub": "From AILO client work",
+   "say": "AILO builds automation for small businesses. Sixty eight percent of support tickets resolved automatically. Three point two times the organic traffic.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 1.9
+    },
+    {
+     "name": "pop",
+     "at": 4.6
+    },
+    {
+     "name": "pop",
+     "at": 7.0
+    }
+   ]
+  },
+  {
+   "kind": "cta",
+   "theme": "light",
+   "lines": [
+    "*Automate* your",
+    "marketing."
+   ],
+   "button": "Book a free consultation",
+   "url": "accelerationlogics.com",
+   "say": "Automate your marketing with AILO. Book a free consultation.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.3,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 2.4,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

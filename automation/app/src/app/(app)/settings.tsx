@@ -1,70 +1,89 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Screen } from '../../components/Screen';
-import { Badge, Banner, Button, Card, ErrorState, SectionTitle, Skeleton, T } from '../../components/ui';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { Page, Row } from '../../components/Page';
+import { Badge, Banner, Button, Card, Chips, ErrorState, Field, Input, SectionTitle, Skeleton, T } from '../../components/ui';
 import { Icon } from '../../components/Icon';
-import { get, getBaseUrl, isWeb } from '../../api/client';
-import type { SettingsData } from '../../api/types';
+import { errorText, get, getBaseUrl, isWeb, request } from '../../api/client';
+import { editor } from '../../api/editor';
 import { useAuth } from '../../state/auth';
-import { useQuery } from '../../state/useQuery';
-import { spacing, statusTone, useTheme } from '../../theme';
-
-const NAMES: Record<string, string> = {
-  n8n: 'n8n workflows', airtable: 'Airtable', apify: 'Apify (reel scraping)', openai: 'OpenAI (writing)', heygen: 'HeyGen (video)', blotato: 'Blotato (Instagram)',
-};
+import { useToast } from '../../state/toast';
+import { spacing, useTheme } from '../../theme';
 
 export default function Settings() {
   const { colors } = useTheme();
+  const toast = useToast();
   const { signOut, user } = useAuth();
-  const [fresh, setFresh] = useState(0);
-  const { data, error, loading, refreshing, refresh, retry } = useQuery<SettingsData>(() => get('/api/settings' + (fresh ? '?refresh=1' : '')), [fresh], { live: false });
+  const [data, setData] = useState<any>(null);
+  const [styles_, setStyles] = useState<{ value: string; label: string }[]>([]);
+  const [style, setStyle] = useState('');
+  const [prompt, setPrompt] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
-  const w = data?.workflows;
-  const items = Object.entries(w?.integrations ?? {});
+  const load = useCallback(async () => {
+    try {
+      const [s, st] = await Promise.all([get('/api/editor/settings'), editor.styles()]);
+      setData(s); setStyle(s.settings.default_style); setPrompt(s.settings.default_prompt);
+      setStyles([...Object.values((st as any).presets), ...Object.values((st as any).custom)].map((p: any) => ({ value: p.name, label: p.name.replace(/_/g, ' ') })));
+      setError(null);
+    } catch (e) { setError(errorText(e)); }
+  }, []);
+  useEffect(() => { load(); }, [load]);
+
+  async function save() {
+    setSaving(true); setErr(null);
+    try { await request('PUT', '/api/editor/settings', { body: { default_style: style, default_prompt: prompt } }); await load(); toast('Defaults saved'); } catch (e) { setErr(errorText(e)); } finally { setSaving(false); }
+  }
+
+  if (error && !data) return <Page title="Settings"><ErrorState message={error} onRetry={load} /></Page>;
+  if (!data) return <Page title="Settings"><Skeleton height={200} /></Page>;
+  const t = data.thresholds;
+  const dirty = style !== data.settings.default_style || prompt !== data.settings.default_prompt;
 
   return (
-    <Screen title="Settings" subtitle="Connection health for every service in the pipeline." onRefresh={refresh} refreshing={refreshing} narrow
-      actions={<Button label="Re-check" icon="refresh" small onPress={() => setFresh((n) => n + 1)} />}>
-      {loading && !data ? <View style={{ gap: spacing.sm }}>{Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} height={64} style={{ borderRadius: 16 }} />)}</View> : null}
-      {error && !data ? <ErrorState message={error} onRetry={retry} /> : null}
+    <Page title="Settings" subtitle="Defaults for new edits, how the checks measure, and your session">
+      <SectionTitle title="Defaults for new edits" />
+      <Card style={{ gap: spacing.md }}>
+        <Field label="Default style"><Chips options={styles_} value={style} onChange={(v) => v && setStyle(v)} /></Field>
+        <Field label="Default editor instructions"><Input value={prompt} onChangeText={setPrompt} multiline /></Field>
+        {err ? <Banner tone="danger">{err}</Banner> : null}
+        <Button label="Save defaults" variant="primary" loading={saving} disabled={!dirty} onPress={save} />
+      </Card>
 
-      {data ? (
-        <>
-          {w?.ok === false ? <Banner tone="warning">Workflow layer unavailable: {w.error || 'unknown'}{w.message ? ` — ${w.message}` : ''}</Banner> : null}
-          <View>
-            <SectionTitle title="Integrations" />
-            <View style={{ gap: spacing.sm }}>
-              {items.length ? items.map(([key, i]) => (
-                <Card key={key}>
-                  <View style={styles.row}>
-                    <View style={{ flex: 1, gap: 2 }}>
-                      <T variant="h3">{NAMES[key] ?? key}</T>
-                      {i.message ? <T variant="small" muted>{i.message}</T> : null}
-                      {i.missing?.length ? <T variant="small" color={colors.warning}>Missing: {i.missing.join(', ')}</T> : null}
-                      {i.account && (i.account.username || i.account.name || i.account.id) ? <T variant="small" faint>Instagram: {i.account.username || i.account.name || i.account.id}</T> : null}
-                    </View>
-                    <Badge label={i.status === 'connected' ? 'Connected' : i.status === 'unconfigured' ? 'Not set up' : 'Error'} tone={statusTone(i.status)} dot />
-                  </View>
-                </Card>
-              )) : <Card><T muted>No integration data yet.</T></Card>}
-            </View>
-          </View>
+      <SectionTitle title="How the checks measure" />
+      <Card style={{ gap: spacing.sm }}>
+        {([
+          ['Hook: first word', `warn after ${t.hook_warn_seconds}s, fail after ${t.hook_fail_seconds}s of lead-in`],
+          ['Shortest segment', `${t.min_segment_seconds}s`],
+          ['Caption length', `${t.max_caption_chars} characters`],
+          ['Caption reading speed', `warn above ${t.caption_cps_warn}, fail above ${t.caption_cps_fail} characters per second`],
+          ['Loudness jump at a cut', `warn above ${t.loudness_jump_warn_db} dB, fail above ${t.loudness_jump_fail_db} dB`],
+          ['Browser (caption/overlay) render timeout', `${data.limits.hyperframes_timeout_s}s, then captions fall back to FFmpeg`],
+          ['Agent steps per request', String(data.limits.agent_max_iterations)],
+        ] as const).map(([k, v]) => (
+          <Row key={k} style={{ justifyContent: 'space-between' }}><T>{k}</T><T muted>{v}</T></Row>
+        ))}
+        <T variant="small" faint>Pause length and loudness targets come from the chosen style. These thresholds are set in code (evals/checks.py).</T>
+      </Card>
 
-          <View>
-            <SectionTitle title="Account" />
-            <Card style={{ gap: spacing.md }}>
-              <View style={styles.row}>
-                <Icon name="server" size={18} color={colors.textMuted} />
-                <T variant="small" muted style={{ flex: 1 }} numberOfLines={1}>{isWeb ? 'This server' : getBaseUrl()}</T>
-              </View>
-              <T variant="small" muted>Signed in as {user?.name || 'user'}.</T>
-              <Button label="Sign out" icon="logout" onPress={signOut} />
-            </Card>
-          </View>
-        </>
-      ) : null}
-    </Screen>
+      <SectionTitle title="Services" />
+      <Card style={{ gap: spacing.sm }}>
+        <Row style={{ justifyContent: 'space-between' }}><T>LLM provider</T><Badge label={`${data.llm.provider}: ${data.llm.status.replace('_', ' ')}`} tone={data.llm.status === 'ONLINE' ? 'success' : 'warning'} dot /></Row>
+        <T variant="small" muted>{data.llm.detail}</T>
+        <Row style={{ justifyContent: 'space-between' }}><T>Publishing adapter</T><T muted>{data.publishing.adapter}</T></Row>
+        <Row style={{ justifyContent: 'space-between' }}><T>Public media URL</T><T muted>{data.publishing.public_base_url ?? 'not set (needed to publish)'}</T></Row>
+      </Card>
+
+      <SectionTitle title="Account & session" />
+      <Card style={{ gap: spacing.md }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
+          <Icon name="server" size={18} color={colors.textMuted} />
+          <T variant="small" muted style={{ flex: 1 }}>{isWeb ? 'This studio server' : getBaseUrl()}</T>
+        </View>
+        <T variant="small" muted>Signed in as {user?.name || 'Director'}.</T>
+        <Button label="Sign out" icon="logout" onPress={signOut} />
+      </Card>
+    </Page>
   );
 }
-
-const styles = StyleSheet.create({ row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md } });

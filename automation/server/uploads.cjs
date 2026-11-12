@@ -123,6 +123,19 @@ function createUploads(cfg) {
     return streamFile(path.join(cfg.renderDir, id + '.mp4'), 'video/mp4', req, res);
   }
 
+  // A finished render from the editor, described exactly like a staged upload (real size, hash and duration, never guessed).
+  async function describeRender(id) {
+    if (!ID_RE.test(id) || !cfg.renderDir) return null;
+    const p = path.join(cfg.renderDir, id + '.mp4');
+    const st = await fs.promises.stat(p).catch(() => null);
+    if (!st || !st.isFile()) return null;
+    const probe = await probeMp4(p).catch(() => ({ ok: false }));
+    if (!probe.ok) return null;
+    const hash = crypto.createHash('sha256');
+    await pipeline(fs.createReadStream(p), hash);
+    return { id, fileName: 'ai-edited-reel.mp4', sizeBytes: st.size, sha256: hash.digest('hex'), mimeType: probe.mimeType || 'video/mp4', durationSeconds: probe.durationSeconds, submitted: false, isRender: true };
+  }
+
   function streamFile(p, mimeType, req, res) {
     let st;
     try {
@@ -160,7 +173,7 @@ function createUploads(cfg) {
     return true;
   }
 
-  return { stage, setSubmitted, remove, cleanup, serve, serveRender, meta: readMeta, ID_RE };
+  return { stage, setSubmitted, remove, cleanup, serve, serveRender, describeRender, meta: readMeta, ID_RE };
 }
 
 module.exports = { createUploads, sanitizeFileName };

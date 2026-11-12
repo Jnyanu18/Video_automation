@@ -14,7 +14,7 @@ test('editor service files are in place', () => {
 });
 
 test('preset styles have required fields', () => {
-  const serverPath = path.resolve(__dirname, '..', 'editor', 'api_server.py');
+  const serverPath = path.resolve(__dirname, '..', 'editor', 'studio', 'presets.py');
   const content = fs.readFileSync(serverPath, 'utf8');
   assert.ok(content.includes('viral_hook_fast_pace'), 'contains viral_hook_fast_pace preset');
   assert.ok(content.includes('educational_talking_head'), 'contains educational_talking_head preset');
@@ -22,10 +22,12 @@ test('preset styles have required fields', () => {
   assert.ok(content.includes('karaoke'), 'supports karaoke caption style');
 });
 
-test('app.cjs proxies /api/editor/ routes to port 8793', () => {
-  const appPath = path.resolve(__dirname, '..', 'server', 'app.cjs');
-  const content = fs.readFileSync(appPath, 'utf8');
-  assert.ok(content.includes("p.startsWith('/api/editor/')"), 'app.cjs checks /api/editor/');
-  assert.ok(content.includes('8793'), 'targets port 8793');
-  assert.ok(content.includes('EDITOR_SERVICE_UNAVAILABLE'), 'handles unavailable service gracefully');
+test('app.cjs delegates /api/editor/ routes to the editor proxy (port 8793 by default)', () => {
+  const root = path.resolve(__dirname, '..', 'server');
+  const app = fs.readFileSync(path.join(root, 'app.cjs'), 'utf8');
+  const proxy = fs.readFileSync(path.join(root, 'editor-proxy.cjs'), 'utf8');
+  const cfg = fs.readFileSync(path.join(root, 'config.cjs'), 'utf8');
+  assert.ok(app.includes("p.startsWith('/api/editor/')") && app.includes('editorProxy'), 'app.cjs routes /api/editor/');
+  assert.ok(cfg.includes('8793'), 'config defaults to port 8793');
+  assert.ok(proxy.includes('EDITOR_SERVICE_UNAVAILABLE'), 'handles an unavailable service gracefully');
 });

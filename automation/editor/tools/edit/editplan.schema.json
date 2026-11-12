@@ -390,6 +390,36 @@
               }
             }
           }
+        },
+        "sfx": {
+          "type": "array",
+          "description": "Sound effects. 'at' is SOURCE seconds (output seconds once time_base=output).",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "path",
+              "at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "at": {
+                "type": "number",
+                "minimum": 0
+              },
+              "volume_db": {
+                "type": "number"
+              }
+            }
+          }
         }
       }
     }
@@ -485,7 +515,8 @@
             "broll",
             "lower-third",
             "title",
-            "graphic"
+            "graphic",
+            "diagram"
           ]
         },
         "start": {

@@ -25,7 +25,7 @@ WORDS = (mkwords("So um I think it is important to be honest.", 0.0)
 TR = {"words": WORDS}
 
 def test_tools_interface():
-    assert set(V.TOOLS) == {"suggest_broll_slots", "add_overlay", "add_title", "add_lower_third"}
+    assert set(V.TOOLS) == {"suggest_broll_slots", "add_overlay", "add_title", "add_lower_third", "add_diagram"}
     for t in V.TOOLS.values():
         assert callable(t["fn"]) and t["description"] and t["input_schema"]["type"] == "object"
 

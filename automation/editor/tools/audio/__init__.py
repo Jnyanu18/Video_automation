@@ -1,5 +1,6 @@
 """Audio tools (music, ducking, loudness, mute). Exposes TOOLS: dict[str, ToolSpec]."""
-from .tools import GENERATED, add_music, duck_music_under_speech, mute_segments, normalize_loudness
+from .tools import (GENERATED, add_music, add_sfx, duck_music_under_speech, list_sfx, mute_segments,
+                    normalize_loudness, remove_sfx)
 
 _NUM = {"type": "number"}
 
@@ -42,5 +43,28 @@ TOOLS = {
             "required": ["ranges"]},
     },
 }
+
+TOOLS.update({
+    "list_sfx": {
+        "fn": list_sfx,
+        "description": "List the studio's CC0 sound effects (whoosh, riser, drop, pop, ...) with category and length. "
+                       "Call this before add_sfx; never invent an effect name.",
+        "input_schema": {"type": "object", "properties": {
+            "category": {"type": "string", "enum": ["impact", "transition", "ui", "fx"]}}},
+    },
+    "add_sfx": {
+        "fn": add_sfx,
+        "description": "Place one sound effect at a SOURCE time in seconds (e.g. a whoosh on the hook's first word, a riser "
+                       "before a reveal, a pop on a caption). It plays over the voice. Only use names from list_sfx.",
+        "input_schema": {"type": "object", "properties": {
+            "name": {"type": "string"}, "at": {"type": "number"}, "volume_db": {"type": "number", "default": -8}},
+            "required": ["name", "at"]},
+    },
+    "remove_sfx": {
+        "fn": remove_sfx,
+        "description": "Remove placed sound effects by id; omit ids to clear all of them.",
+        "input_schema": {"type": "object", "properties": {"ids": {"type": "array", "items": {"type": "string"}}}},
+    },
+})
 
 __all__ = ["TOOLS"]

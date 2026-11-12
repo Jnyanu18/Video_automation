@@ -178,6 +178,25 @@ def _clip(item: dict, segs: list[dict]) -> list[dict]:
     return pieces
 
 
+# Overlays that animate in (titles, lower-thirds, text cards, diagrams) must stay ONE piece when a silence cut falls inside
+# them: splitting would replay the entrance animation after the cut. Footage overlays (b-roll) still split per segment.
+CONTINUOUS_KINDS = ("title", "lower-third", "graphic", "diagram")
+
+
+def _span_to_output(item: dict, segs: list[dict]) -> list[dict]:
+    first = next((sg for sg in segs if sg["src_end"] > item["start"] + EPS), None)
+    last = next((sg for sg in reversed(segs) if sg["src_start"] < item["end"] - EPS), None)
+    if first is None or last is None:
+        return []
+    a = _map_in_segment(first, max(item["start"], first["src_start"]))
+    b = _map_in_segment(last, min(item["end"], last["src_end"]))
+    if b - a <= EPS:
+        return []
+    p = dict(item)
+    p["start"], p["end"] = a, b
+    return [p]
+
+
 def source_to_output_segs(segs: list[dict], t: float) -> float | None:
     for sg in segs:
         if sg["src_start"] - EPS <= t <= sg["src_end"] + EPS:
@@ -196,13 +215,23 @@ def remap_to_output(plan: dict) -> dict:
             continue
         items = []
         for it in sorted(plan.get(key) or [], key=lambda x: (x["start"], x["end"])):
-            items.extend(_clip(it, segs))
+            if key == "overlays" and it.get("kind") in CONTINUOUS_KINDS:
+                items.extend(_span_to_output(it, segs))
+            else:
+                items.extend(_clip(it, segs))
         new[key] = items
     if (plan.get("audio") or {}).get("mute"):
         items = []
         for it in sorted(plan["audio"]["mute"], key=lambda x: (x["start"], x["end"])):
             items.extend(_clip(it, segs))
         new["audio"]["mute"] = items
+    if (plan.get("audio") or {}).get("sfx"):  # point events: keep those that land in kept footage, at their output time
+        placed = []
+        for fx in plan["audio"]["sfx"]:
+            o = source_to_output_segs(segs, float(fx["at"]))
+            if o is not None:
+                placed.append({**fx, "at": o})
+        new["audio"]["sfx"] = placed
     rf = new.get("reframe")
     if rf and rf.get("track"):
         tr = []

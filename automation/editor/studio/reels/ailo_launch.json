@@ -1,0 +1,256 @@
+{
+ "name": "ailo-marketing-automation-launch",
+ "scenes": [
+  {
+   "kind": "headline",
+   "theme": "light",
+   "duration": 3.0,
+   "lines": [
+    "Still editing",
+    "reels",
+    "*by hand?*"
+   ]
+  },
+  {
+   "kind": "pills",
+   "theme": "dark",
+   "duration": 3.8,
+   "title": "Every reel means",
+   "items": [
+    "Cutting",
+    "Captions",
+    "Animations",
+    "Sound",
+    "Posting"
+   ],
+   "typed": "Every. Single. Time."
+  },
+  {
+   "kind": "orb",
+   "theme": "dark",
+   "duration": 3.0,
+   "lines": [
+    "*Not* anymore."
+   ],
+   "sub": "Meet AILO Marketing Automation"
+  },
+  {
+   "kind": "demo",
+   "theme": "light",
+   "duration": 6.0,
+   "title": "Paste a link. *Done.*",
+   "card_title": "New reel",
+   "input": "instagram.com/reel/your-idea",
+   "button": "Edit it",
+   "steps": [
+    "Transcript ready",
+    "Silences cut",
+    "Captions added",
+    "Diagrams animated",
+    "Sound mixed"
+   ],
+   "sub": "Ready for your review"
+  },
+  {
+   "kind": "approval",
+   "theme": "dark",
+   "duration": 4.2,
+   "title": "You *approve.*",
+   "card_title": "Final render",
+   "waiting": "Waiting for your approval",
+   "button": "Approve",
+   "sub": "Then it renders. Nothing goes out without you.",
+   "done": "Approved. Rendering now."
+  },
+  {
+   "kind": "stats",
+   "theme": "light",
+   "duration": 4.2,
+   "title": "Real *results*",
+   "items": [
+    {
+     "value": "68%",
+     "label": "of support tickets auto-resolved"
+    },
+    {
+     "value": "3.2x",
+     "label": "organic traffic in 6 months"
+    },
+    {
+     "value": "20 hrs",
+     "label": "saved every week"
+    }
+   ],
+   "sub": "From AILO client work"
+  },
+  {
+   "kind": "cta",
+   "theme": "dark",
+   "duration": 4.0,
+   "lines": [
+    "*Automate* your",
+    "marketing."
+   ],
+   "button": "Book a free consultation",
+   "url": "accelerationlogics.com"
+  }
+ ],
+ "sfx": [
+  {
+   "name": "whoosh",
+   "at": 2.8
+  },
+  {
+   "name": "whoosh",
+   "at": 6.6
+  },
+  {
+   "name": "whoosh",
+   "at": 9.6
+  },
+  {
+   "name": "whoosh",
+   "at": 15.6
+  },
+  {
+   "name": "whoosh",
+   "at": 19.8
+  },
+  {
+   "name": "whoosh",
+   "at": 24.0
+  },
+  {
+   "name": "pop",
+   "at": 3.4,
+   "volume": 0.4,
+   "length": 0.6
+  },
+  {
+   "name": "pop",
+   "at": 3.7,
+   "volume": 0.4,
+   "length": 0.6
+  },
+  {
+   "name": "pop",
+   "at": 4.0,
+   "volume": 0.4,
+   "length": 0.6
+  },
+  {
+   "name": "pop",
+   "at": 4.3,
+   "volume": 0.4,
+   "length": 0.6
+  },
+  {
+   "name": "pop",
+   "at": 4.6,
+   "volume": 0.4,
+   "length": 0.6
+  },
+  {
+   "name": "typing",
+   "at": 5.05,
+   "volume": 0.35,
+   "length": 1.1
+  },
+  {
+   "name": "subdrop",
+   "at": 6.85,
+   "volume": 0.7,
+   "length": 1.5
+  },
+  {
+   "name": "chime",
+   "at": 7.6,
+   "volume": 0.45,
+   "length": 1.5
+  },
+  {
+   "name": "typing",
+   "at": 10.7,
+   "volume": 0.35,
+   "length": 0.8
+  },
+  {
+   "name": "click",
+   "at": 11.7,
+   "volume": 0.6,
+   "length": 0.5
+  },
+  {
+   "name": "tick",
+   "at": 12.15,
+   "volume": 0.45,
+   "length": 0.4
+  },
+  {
+   "name": "tick",
+   "at": 12.55,
+   "volume": 0.45,
+   "length": 0.4
+  },
+  {
+   "name": "tick",
+   "at": 12.95,
+   "volume": 0.45,
+   "length": 0.4
+  },
+  {
+   "name": "tick",
+   "at": 13.35,
+   "volume": 0.45,
+   "length": 0.4
+  },
+  {
+   "name": "tick",
+   "at": 13.75,
+   "volume": 0.45,
+   "length": 0.4
+  },
+  {
+   "name": "click",
+   "at": 17.6,
+   "volume": 0.6,
+   "length": 0.5
+  },
+  {
+   "name": "ding",
+   "at": 17.75,
+   "volume": 0.5,
+   "length": 1.5
+  },
+  {
+   "name": "pop",
+   "at": 20.4,
+   "volume": 0.5,
+   "length": 0.6
+  },
+  {
+   "name": "pop",
+   "at": 20.95,
+   "volume": 0.5,
+   "length": 0.6
+  },
+  {
+   "name": "pop",
+   "at": 21.5,
+   "volume": 0.5,
+   "length": 0.6
+  },
+  {
+   "name": "stamp",
+   "at": 25.3,
+   "volume": 0.6,
+   "length": 1.0
+  },
+  {
+   "name": "sparkle",
+   "at": 25.8,
+   "volume": 0.4,
+   "length": 1.5
+  }
+ ]
+}

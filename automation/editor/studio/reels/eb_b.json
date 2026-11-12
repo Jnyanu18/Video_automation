@@ -1,0 +1,138 @@
+{
+ "name": "einstein-box-b-mummy-im-bored",
+ "brand": {
+  "font": "Nunito",
+  "accent": "#ff5a5f",
+  "accent_light": "#d81d24",
+  "light": "#fff3e3",
+  "dark": "#1a0a0b",
+  "navy": "#5a1014",
+  "ink_dark": "#fff6e8",
+  "ink_light": "#1c1417"
+ },
+ "voice": "prabhat",
+ "rate": "+4%",
+ "music": {
+  "style": "drive",
+  "volume": 0.17,
+  "seed": 8
+ },
+ "scenes": [
+  {
+   "kind": "kinetic",
+   "theme": "light",
+   "words": [
+    "Mummy,",
+    "I'm",
+    "bored."
+   ],
+   "accent": [
+    2
+   ],
+   "say": "Mummy, I'm bored.",
+   "duration": 2.8,
+   "sfx": [
+    {
+     "name": "boing",
+     "at": 1.4,
+     "volume": 0.5
+    }
+   ]
+  },
+  {
+   "kind": "chat",
+   "theme": "light",
+   "title": "6 pm at home",
+   "messages": [
+    {
+     "from": "user",
+     "text": "Can I watch TV?",
+     "at": 0.8
+    },
+    {
+     "from": "agent",
+     "text": "Better idea. Open your Einstein Box.",
+     "at": 2.6
+    },
+    {
+     "from": "user",
+     "text": "Dinosaurs?!",
+     "at": 5.0
+    },
+    {
+     "from": "agent",
+     "text": "Dinosaur world. Let's read together.",
+     "at": 6.4
+    }
+   ],
+   "say": "Instead of TV, open your Einstein Box. A new world to explore every month. This one is dinosaurs.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 0.8
+    },
+    {
+     "name": "pop",
+     "at": 2.6
+    },
+    {
+     "name": "pop",
+     "at": 5.0
+    },
+    {
+     "name": "ding",
+     "at": 6.4,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "photos",
+   "theme": "light",
+   "title": "Books. Games. *Puzzles.*",
+   "images": [
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month4.png",
+     "label": "Dinosaur world"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month3.png",
+     "label": "Bugs and beetles"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month5.png",
+     "label": "Birds"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/home-img-left-03.jpg",
+     "label": "Ages 3 to 4"
+    }
+   ],
+   "say": "Delightful books, learning games and puzzles, every month."
+  },
+  {
+   "kind": "cta",
+   "theme": "dark",
+   "lines": [
+    "Less TV.",
+    "*More mind.*"
+   ],
+   "button": "See the offer",
+   "url": "einsteinbox.in",
+   "sub": "India's #1 Early Learning Program",
+   "say": "Less TV. More mind. Einstein Box.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.1,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 1.8,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

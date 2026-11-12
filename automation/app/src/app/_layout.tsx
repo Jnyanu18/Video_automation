@@ -36,6 +36,17 @@ function Gate() {
 export default function RootLayout() {
   const { isDark, colors } = useTheme();
   const [loaded] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
+
+  useEffect(() => {
+    if (typeof document !== 'undefined' && !document.getElementById('growthos-google-fonts')) {
+      const link = document.createElement('link');
+      link.id = 'growthos-google-fonts';
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap';
+      document.head.appendChild(link);
+    }
+  }, []);
+
   if (!loaded) return <View style={{ flex: 1, backgroundColor: colors.bg }} />;
   return (
     <SafeAreaProvider>

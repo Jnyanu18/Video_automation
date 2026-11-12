@@ -6,6 +6,8 @@ import json
 import shutil
 from pathlib import Path
 
+from . import diagrams
+
 # GSAP must come from a local file: CDNs are blocked in the sandbox/worker.
 _HERE = Path(__file__).resolve().parent
 GSAP_CANDIDATES = [
@@ -79,6 +81,50 @@ def _stage_asset(src: str, proj: Path, name: str) -> str | None:
     return f"assets/{dst.name}"
 
 
+def _check_script(doc: str) -> None:
+    """A JS syntax error in the generated page makes the renderer play NO animation (not even karaoke) without any message.
+    Parse the script with node before it is written, so that failure is loud."""
+    import re
+    import subprocess
+    import tempfile
+    node = shutil.which("node")
+    if not node:
+        return
+    scripts = re.findall(r"<script>(.*?)</script>", doc, re.S)
+    if not scripts:
+        return
+    with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
+        f.write(scripts[-1])
+        path = f.name
+    try:
+        r = subprocess.run([node, "--check", path], capture_output=True, text=True, timeout=20)
+    finally:
+        Path(path).unlink(missing_ok=True)
+    if r.returncode != 0:
+        detail = [ln for ln in r.stderr.splitlines() if ln.strip()][:3]
+        raise ValueError("the generated animation script has a syntax error: " + " | ".join(detail))
+
+
+def _place(prm: dict, h: int, px, wide_margin: float = 60) -> str:
+    """Inline style that puts a title/graphic card at params.y (fraction of height), instead of the default centre."""
+    y = prm.get("y")
+    if y is None:
+        y = {"top": 0.18, "bottom": 0.78}.get(prm.get("position"))
+    if y is None:
+        return ""
+    y = min(max(float(y), 0.04), 0.96)
+    return f"inset:auto;left:{px(wide_margin)};right:{px(wide_margin)};top:{y * 100:.1f}%;transform:translateY(-50%);"
+
+
+def _text_style(prm: dict, px) -> str:
+    parts = []
+    if prm.get("size"):
+        parts.append(f"font-size:{px(float(prm['size']))}")
+    if prm.get("box"):
+        parts.append("background:rgba(0,0,0,.6);padding:.25em .6em;border-radius:.3em;display:inline-block")
+    return ";".join(parts)
+
+
 def build_composition(proj: Path, cut_video: Path, duration: float, captions: list[dict],
                       overlays: list[dict], w: int, h: int, fps: float) -> list[str]:
     """Write proj/index.html. captions/overlays must already be in OUTPUT time. Returns warnings."""
@@ -97,6 +143,7 @@ def build_composition(proj: Path, cut_video: Path, duration: float, captions: li
         els.append(f'<div id="{idn}" class="clip {cls}" data-start="{_num(st)}" data-duration="{_num(en - st)}" '
                    f'data-track-index="{{TRACK}}" style="{extra_style}">{inner}</div>')
 
+    dia_windows: list[list[float]] = []
     # --- overlays (below captions in z-order) ---
     for i, o in enumerate(_clamp(overlays, duration)):
         kind, prm = o.get("kind"), o.get("params") or {}
@@ -116,19 +163,30 @@ def build_composition(proj: Path, cut_video: Path, duration: float, captions: li
             js.append(f'tl.from("#{oid}",{{opacity:0,duration:0.2}},{_num(st)});')
         elif kind == "title":
             sub = f'<div class="sub">{_esc(prm["subtitle"])}</div>' if prm.get("subtitle") else ""
-            clip(oid, st, en, "ov-title", f'<div class="ti" id="{oid}i"><div class="tt">{_esc(prm.get("text", o.get("asset", "")))}</div>{sub}</div>')
+            clip(oid, st, en, "ov-title", f'<div class="ti" id="{oid}i"><div class="tt" style="{_text_style(prm, px)}">{_esc(prm.get("text", o.get("asset", "")))}</div>{sub}</div>',
+                 _place(prm, h, px))
             js.append(f'tl.from("#{oid}i",{{y:{40 * s:.0f},opacity:0,duration:0.4,ease:"power3.out"}},{_num(st)});')
         elif kind == "lower-third":
             _sub = prm.get("subtitle") or prm.get("title")
             sub = f'<div class="sub">{_esc(_sub)}</div>' if _sub else ""
             clip(oid, st, en, "ov-lt", f'<div class="lt" id="{oid}i"><div class="tt">{_esc(prm.get("name", prm.get("text", o.get("asset", ""))))}</div>{sub}</div>')
             js.append(f'tl.from("#{oid}i",{{x:{-80 * s:.0f},opacity:0,duration:0.4,ease:"power3.out"}},{_num(st)});')
+        elif kind == "diagram":
+            try:
+                inner, tweens = diagrams.render(prm, oid, st, en, px)
+            except diagrams.DiagramError as e:
+                warnings.append(f"overlay {o.get('id')}: diagram not drawn: {e}")
+                continue
+            clip(oid, st, en, "ov-dia", f'<div class="dg" id="{oid}p">{inner}</div>')
+            js.extend(tweens)
+            dia_windows.append([st, en])  # (only used to decide whether the diagram CSS is needed)
         elif kind == "graphic":
             ref = _stage_asset(str(o.get("asset", "")), proj, oid) if o.get("asset") else None
             if ref and Path(ref).suffix in IMAGE_EXT:
                 clip(oid, st, en, "ov-gfx", f'<img id="{oid}i" src="{ref}" style="max-width:100%;max-height:100%"/>')
             elif prm.get("text"):
-                clip(oid, st, en, "ov-gfx", f'<div class="tt" id="{oid}i">{_esc(prm["text"])}</div>')
+                clip(oid, st, en, "ov-gfx", f'<div class="tt" id="{oid}i" style="{_text_style(prm, px)}">{_esc(prm["text"])}</div>',
+                     _place(prm, h, px))
             else:
                 warnings.append(f"overlay {o.get('id')}: graphic has no image asset or params.text (block ids unsupported)")
                 continue
@@ -158,7 +216,7 @@ def build_composition(proj: Path, cut_video: Path, duration: float, captions: li
                 ws, we = max(float(wd["start"]), c["start"]), min(float(wd["end"]), c["end"])
                 if we - ws < 0.02:
                     continue
-                js.append(f'tl.to("#{cid}w{k}",{{color:"{KARAOKE_ACTIVE}",scale:1.14,duration:0.06,ease:"power2.out"}},{_num(ws)});')
+                js.append(f'tl.to("#{cid}w{k}",{{color:"{KARAOKE_ACTIVE}",scale:1.08,duration:0.06,ease:"power2.out"}},{_num(ws)});')
                 js.append(f'tl.to("#{cid}w{k}",{{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"}},{_num(we)});')
             continue
         clip(cid, c["start"], c["end"], "cap", f'<span class="ct" id="{cid}t" style="{css}">{_esc(c["text"])}</span>')
@@ -167,6 +225,7 @@ def build_composition(proj: Path, cut_video: Path, duration: float, captions: li
     body = "\n  ".join(els)
     body = body.replace("{TRACK}", "1")  # Studio lane only; paint order is z-index
 
+    dia_css = diagrams.css(px, w, h) if dia_windows else ""
     doc = f"""<!doctype html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width={w}, height={h}"/>
 <script src="vendor/gsap.min.js"></script>
@@ -184,19 +243,22 @@ html,body{{width:{w}px;height:{h}px;overflow:hidden;background:#000;font-family:
 .lt{{background:rgba(0,0,0,.6);border-left:{px(8)} solid #ff7a00;padding:{px(16)} {px(28)}}}
 .lt .tt{{font-size:{px(44)}}}
 .cap{{position:absolute;left:0;right:0;bottom:{h * 0.12:.0f}px;z-index:10;text-align:center;padding:0 {px(110)}}}
-.ct{{display:inline-block;font-size:{px(64)};line-height:1.2}}
-.w{{display:inline-block;transform-origin:50% 70%}}
+.ct{{display:inline-block;font-size:{px(64)};line-height:1.2;word-spacing:.1em}}
+.w{{display:inline-block;transform-origin:50% 70%;margin:0 .06em}}
+{dia_css}
 </style></head><body>
 <div id="stage" data-composition-id="edit" data-start="0" data-duration="{_num(duration)}" data-width="{w}" data-height="{h}" data-fps="{fps:g}">
   <video id="main" class="clip" data-start="0" data-duration="{_num(duration)}" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
   {body}
 </div>
 <script>
+gsap.defaults({{lazy:false}});  // frame capture reads the page right after a seek: no deferred writes
 const tl = gsap.timeline({{paused:true}});
 {chr(10).join(js)}
 window.__timelines = window.__timelines || {{}};
 window.__timelines["edit"] = tl;
 </script></body></html>"""
+    _check_script(doc)
     (proj / "index.html").write_text(doc)
     (proj / "meta.json").write_text(json.dumps({"name": "edit"}))
     return warnings

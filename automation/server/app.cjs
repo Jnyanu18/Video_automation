@@ -13,6 +13,7 @@ const { createN8n } = require('./n8n.cjs');
 const { createUploads } = require('./uploads.cjs');
 const { createStore, createHub } = require('./events.cjs');
 const views = require('./views.cjs');
+const { createEditorProxy } = require('./editor-proxy.cjs');
 
 const ACTIONS = ['edit', 'approve', 'reject', 'regenerate', 'retry', 'publish', 'resume'];
 const ID_RE = /^rec[A-Za-z0-9]{6,30}$/;
@@ -40,6 +41,7 @@ function createApp(cfg, deps) {
   const n8n = createN8n(cfg, deps.fetch);
   const auth = createAuth(cfg);
   const uploads = createUploads(cfg);
+  const editorProxy = createEditorProxy(cfg, deps.fetch);
   const store = createStore(cfg, airtable);
   const hub = createHub(cfg, store);
   const inflight = new Set();
@@ -231,38 +233,25 @@ function createApp(cfg, deps) {
     const body = await readJson(req);
     const uploadId = String(body.uploadId || '');
     let meta = uploads.meta(uploadId);
-    if (!meta && cfg.renderDir) {
-      const renderPath = path.join(cfg.renderDir, uploadId + '.mp4');
-      const st = fs.statSync(renderPath, { throwIfNoEntry: false });
-      if (st) {
-        meta = {
-          id: uploadId,
-          fileName: 'ai-edited-reel.mp4',
-          sizeBytes: st.size,
-          mimeType: 'video/mp4',
-          durationSeconds: 30,
-          submitted: false
-        };
-      }
-    }
+    if (!meta) meta = await uploads.describeRender(uploadId);
     if (!meta) fail(404, 'UPLOAD_NOT_FOUND', 'The uploaded file was not found. Upload it again.');
     if (cfg.publicBaseUrl && !/^https?:\/\//.test(cfg.publicBaseUrl)) fail(503, 'UPLOADS_NOT_CONFIGURED', 'PUBLIC_BASE_URL is not configured');
 
     const payload = {
       fileName: meta.fileName, sizeBytes: meta.sizeBytes, mimeType: meta.mimeType, sha256: meta.sha256, durationSeconds: meta.durationSeconds,
-      videoUrl: `${cfg.publicBaseUrl}/media/${meta.id}.mp4`, caption: body.caption, overlay: body.overlay === undefined ? '' : body.overlay, hashtags: body.hashtags === undefined ? [] : body.hashtags,
+      videoUrl: `${cfg.publicBaseUrl}/${meta.isRender ? 'render' : 'media'}/${meta.id}.mp4`, caption: body.caption, overlay: body.overlay === undefined ? '' : body.overlay, hashtags: body.hashtags === undefined ? [] : body.hashtags,
       niche: body.niche, brandVoice: body.brandVoice, brandVoiceNotes: body.brandVoiceNotes, submittedBy: session.name,
     };
     const local = core.buildUploadRecord(payload, cfg.core, new Date().toISOString());
     if (!local.ok) fail(400, 'INVALID_UPLOAD', 'Some details are invalid', { errors: local.errors });
     return withLock('upload:' + uploadId, async () => {
-      uploads.setSubmitted(uploadId, true);
+      if (!meta.isRender) uploads.setSubmitted(uploadId, true);
       const r = await n8n.call('internal', 'reels/upload', payload);
       const created = r.status === 201;
       const dup = r.status === 200 && r.body && r.body.duplicate === true;
       if (created) hub.poke();
-      else if (dup) await uploads.remove(uploadId);
-      else if (!(r.body && r.body.error === 'N8N_TIMEOUT')) uploads.setSubmitted(uploadId, false);
+      else if (dup) { if (!meta.isRender) await uploads.remove(uploadId); }
+      else if (!meta.isRender && !(r.body && r.body.error === 'N8N_TIMEOUT')) uploads.setSubmitted(uploadId, false);
       return sendJson(res, r.status, r.body);
     });
   }
@@ -337,29 +326,7 @@ function createApp(cfg, deps) {
       auth.revoke(session);
       return sendJson(res, 200, { ok: true }, { 'set-cookie': auth.cookie('', 0) });
     }
-    if (p.startsWith('/api/editor/')) {
-      const editorUrl = 'http://127.0.0.1:8793' + p + (url.search || '');
-      try {
-        let body;
-        if (method === 'POST' || method === 'PUT') {
-          const rawBody = await readJson(req);
-          if (rawBody && typeof rawBody.uploadId === 'string' && /^[a-f0-9]{32}$/.test(rawBody.uploadId)) {
-            rawBody.video_path = path.join(cfg.uploadDir, rawBody.uploadId + '.mp4');
-          }
-          body = JSON.stringify(rawBody);
-        }
-        const f = deps.fetch || fetch;
-        const resp = await f(editorUrl, {
-          method,
-          headers: { 'content-type': 'application/json' },
-          body,
-        });
-        const json = await resp.json().catch(() => ({ ok: false, error: 'INVALID_JSON' }));
-        return sendJson(res, resp.status, json);
-      } catch (e) {
-        return sendJson(res, 502, { ok: false, error: 'EDITOR_SERVICE_UNAVAILABLE', message: 'AI Editor service is not running on port 8793 (' + e.message + ')' });
-      }
-    }
+    if (p.startsWith('/api/editor/')) return editorProxy(req, res, url);
     if (method === 'GET') {
       if (p === '/api/summary') return summary(res);
       if (p === '/api/reels') return listReels(res, url.searchParams);

@@ -13,7 +13,7 @@ TOOLS = {
     "cut_silences": {
         "fn": cut_silences,
         "description": "Remove silent ranges (source seconds, e.g. from detect_silences) from the kept footage. "
-                       "Only silences >= min_silence are cut; padding keeps a little air around speech.",
+                       "Only silences >= min_silence are cut; padding keeps a little air around speech. After `transcribe` the cuts snap to the gaps between words, so call transcribe first.",
         "input_schema": {"type": "object", "properties": {
             "silences": {"type": "array", "items": _RANGE},
             "min_silence": {"type": "number", "default": 0.5},
@@ -41,6 +41,7 @@ TOOLS = {
             "style": {"type": "string", "enum": _STYLES},
             "mode": {"type": "string", "enum": ["replace", "append"], "default": "replace"},
             "max_words": {"type": "integer"},
+            "max_chars": {"type": "integer", "default": 42}, "min_duration": {"type": "number", "default": 0.9, "description": "shortest time a caption stays on screen; shorter lines are joined to a neighbour so they can be read"},
             "from_transcript": {"type": "boolean", "description": "use the saved transcript from transcribe instead of passing words (use this for anything longer than a minute)"}}},
     },
     "style_captions": {

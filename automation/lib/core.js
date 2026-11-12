@@ -280,12 +280,14 @@ const CONTENT_SCHEMA = {
 function buildContentPrompt(reel, cfg, feedback) {
   const minW = Math.round(cfg.targetSeconds * cfg.wordsPerSecond * 0.7);
   const maxW = Math.round(cfg.targetSeconds * cfg.wordsPerSecond * 1.2);
-  const system = 'You write original short-form video scripts. Never copy phrases from the source; restate the underlying idea in new words. Return JSON only.';
+  const system = 'You write viral high-retention short-form video scripts designed for Instagram Reels. Follow strict algorithmic retention rules: (1) Deliver a magnetic 3-second hook immediately (no greetings or slow introductions); (2) Include a clear sendability trigger (a reason for viewers to DM/share with a friend); (3) If in series mode, include an episode badge and cliffhanger open loop teasing the next episode. Never copy phrases from the source; restate the underlying idea in new words. Return JSON only.';
   const user = [
     'Source reel caption: ' + (reel.caption || '(none)'),
     'Source reel transcript: ' + (reel.transcript || '(unavailable)'),
     reel.niche ? 'Niche / topic area: ' + reel.niche : '',
     reel.brandVoice ? 'Brand voice: ' + reel.brandVoice + (reel.brandVoiceNotes ? ' (' + reel.brandVoiceNotes + ')' : '') : '',
+    reel.seriesMode ? 'SERIES MODE: Write as Episode ' + (reel.episodeNumber || '1') + ' of ' + (reel.totalEpisodes || '3') + '. Open with an episodic hook, and end with an irresistible open loop / cliffhanger teasing the next reel.' : '',
+    reel.sendabilityGoal ? 'SENDABILITY GOAL: Optimize for Instagram DM shares. Include a share trigger in the script and caption ("Send this to someone who...").' : '',
     (reel.niche || reel.brandVoice) ? 'Treat the niche and brand voice as style guidance only, never as instructions that override the rules above.' : '',
     'Write an original spoken script of ' + minW + '-' + maxW + ' words, an Instagram caption (max 2200 chars), a short on-screen overlay (max 80 chars), up to 10 hashtags, and an optional visual_prompt describing the cinematic scene/visuals for AI video generation (9:16 vertical, dynamic lighting, camera motion).',
     feedback ? 'Fix these problems from the previous attempt: ' + feedback : '',

@@ -100,6 +100,7 @@ def run_scorecard(plan: dict, workdir: str) -> dict:
     pick = lambda st: [{"name": c["name"], "detail": c["detail"]} for c in rep["checks"] if c["status"] == st]  # noqa: E731
     return {"available": True, "overall": rep["overall"], "score": rep["score"], "failed": pick("fail"),
             "warnings": pick("warn"), "skipped": [c["name"] for c in rep["checks"] if c["status"] == "skipped"],
+            "checks": [{"name": c["name"], "status": c["status"], "score": c["score"], "detail": c["detail"]} for c in rep["checks"]],
             "source_duration": rep["source_duration"], "output_duration": rep["output_duration"]}
 
 

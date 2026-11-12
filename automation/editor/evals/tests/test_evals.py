@@ -22,7 +22,8 @@ GOOD = [(0.0, 2.0), (3.0, 5.0), (5.5, 7.0)]  # cuts exactly on speech/silence (=
 
 
 def good_captions():
-    return [{"id": "c1", "text": "hello there everyone", "start": 0.2, "end": 1.8, "style": "clean"}]
+    return [{"id": "c1", "text": "hello there everyone", "start": 0.2, "end": 1.8, "style": "clean"},
+            {"id": "c2", "text": "send this to a friend", "start": 5.0, "end": 6.4, "style": "clean"}]
 
 
 def test_good_plan_passes(vid):

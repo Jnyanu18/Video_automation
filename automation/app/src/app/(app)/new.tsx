@@ -1,53 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 import { Screen } from '../../components/Screen';
-import { Badge, Banner, Button, Card, Chips, Field, Input, Picker, T } from '../../components/ui';
+import { Banner, Button, Card, Chips, Field, Input, Picker, T } from '../../components/ui';
 import { Icon } from '../../components/Icon';
-import { VideoPlayer } from '../../components/VideoPlayer';
 import { errorText, get, post, uploadVideo } from '../../api/client';
+import { editor } from '../../api/editor';
 import type { Options, UploadInfo } from '../../api/types';
 import { useQuery } from '../../state/useQuery';
 import { useToast } from '../../state/toast';
 import { font, radius, spacing, useTheme } from '../../theme';
 
 type Mode = 'url' | 'editor' | 'upload';
-
-interface Scene {
-  scene_number: number;
-  type: string;
-  timestamp_output: string;
-  source_range: string;
-  duration: number;
-  action: string;
-  framing: string;
-  camera_motion: string;
-  caption: string;
-  caption_style: string;
-}
-
-interface StoryboardData {
-  title: string;
-  duration: {
-    original_seconds: number;
-    output_seconds: number;
-    removed_seconds: number;
-    reduction_percent: number;
-  };
-  scenes_count: number;
-  scenes: Scene[];
-  sound_design: {
-    ducking_enabled: boolean;
-    target_lufs: number;
-  };
-  scorecard: {
-    status: string;
-    score: number;
-    failed_checks: string[];
-    warnings: string[];
-  };
-}
 
 const val = (x: string | { value: string }) => (typeof x === 'string' ? x : x.value);
 const tagsOf = (s: string) => s.split(/[\s,]+/).filter(Boolean).map((t) => (t.startsWith('#') ? t : '#' + t));
@@ -56,7 +21,7 @@ export default function NewReel() {
   const router = useRouter();
   const toast = useToast();
   const { colors } = useTheme();
-  const [mode, setMode] = useState<Mode>('url');
+  const [mode, setMode] = useState<Mode>('editor');
   const { data: options } = useQuery<Options>(() => get('/api/options'), [], { live: false });
 
   // shared fields
@@ -80,15 +45,31 @@ export default function NewReel() {
   const [tags, setTags] = useState('');
 
   // AI Video Editor mode fields
-  const [editorStyle, setEditorStyle] = useState('viral_hook_fast_pace');
+  const params = useLocalSearchParams<{ style?: string }>();
+  const [editorStyle, setEditorStyle] = useState(params.style || 'viral_hook_fast_pace');
   const [editorPrompt, setEditorPrompt] = useState('Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add karaoke captions.');
-  const [storyboardId, setStoryboardId] = useState<string | null>(null);
-  const [storyboard, setStoryboard] = useState<StoryboardData | null>(null);
-  const [chatMessage, setChatMessage] = useState('');
-  const [chatting, setChatting] = useState(false);
-  const [rendering, setRendering] = useState(false);
-  const [renderedUrl, setRenderedUrl] = useState<string | null>(null);
-  const [renderedId, setRenderedId] = useState<string | null>(null);
+  const [seriesMode, setSeriesMode] = useState(false);
+  const [sendabilityFocus, setSendabilityFocus] = useState(true);
+  const [styleList, setStyleList] = useState<{ value: string; label: string }[]>([]);
+  const [footage, setFootage] = useState<{ path: string; name: string; size_mb: number }[]>([]);
+  const [footagePath, setFootagePath] = useState('');
+  const [editorUrl, setEditorUrl] = useState('');
+  const [director, setDirector] = useState<'auto' | 'manual'>('auto');
+  const [note, setNote] = useState('');
+
+  useEffect(() => {
+    get('/api/editor/settings').then((r: any) => {
+      if (!params.style) setEditorStyle(r.settings.default_style);
+      setEditorPrompt(r.settings.default_prompt);
+    }).catch(() => undefined);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (mode !== 'editor') return;
+    editor.styles().then((r: any) => setStyleList([...Object.values(r.presets), ...Object.values(r.custom)].map((p: any) => ({ value: p.name, label: p.name.replace(/_/g, ' ') })))).catch(() => undefined);
+    editor.footage().then((r) => setFootage(r.files)).catch(() => undefined);
+  }, [mode]);
+  useEffect(() => { if (params.style) { setEditorStyle(params.style); setMode('editor'); } }, [params.style]);
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -118,7 +99,7 @@ export default function NewReel() {
     if (res.canceled || !res.assets?.[0]) return;
     const a = res.assets[0];
     const f = { name: a.name, type: a.mimeType || 'video/mp4', uri: a.uri, blob: Platform.OS === 'web' ? (a.file as Blob | undefined) : undefined };
-    setPicked(f); setStaged(null); setProgress(0); setStoryboard(null); setRenderedUrl(null);
+    setPicked(f); setStaged(null); setFootagePath(''); setProgress(0);
     try {
       const up = await uploadVideo(f, setProgress);
       setStaged(up);
@@ -128,19 +109,17 @@ export default function NewReel() {
   }
 
   async function generateStoryboard() {
-    if (!staged) return setError('Choose and upload your raw footage first.');
+    const link = editorUrl.trim();
+    if (!link && !staged && !footagePath) return setError('Paste a link, upload a video, or pick a file from the raw-footage folder.');
+    if (link && !/^https:\/\//i.test(link)) return setError('The link must start with https://');
     setBusy(true); setError(null);
     try {
-      const res = await post('/api/editor/storyboard/create', {
-        uploadId: staged.uploadId,
-        style: editorStyle,
-        prompt: editorPrompt,
-      });
-      if (res && res.data) {
-        setStoryboardId(res.storyboard_id);
-        setStoryboard(res.data.storyboard);
-        toast('AI Storyboard generated by Gemini.');
-      }
+      const source = link ? { url: link } : staged ? { uploadId: staged.uploadId } : { video_path: footagePath };
+      const res = director === 'auto'
+        ? await editor.autoEdit({ ...source, style: editorStyle, instruction: note.trim() })
+        : await editor.createStoryboard({ ...source, style: editorStyle, prompt: editorPrompt, series_mode: seriesMode, sendability_focus: sendabilityFocus });
+      toast(director === 'auto' ? 'The director is working on your reel.' : 'The editor is drafting your storyboard.');
+      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
     } catch (e) {
       setError(errorText(e));
     } finally {
@@ -148,44 +127,10 @@ export default function NewReel() {
     }
   }
 
-  async function sendRevisionChat() {
-    if (!storyboardId || !chatMessage.trim()) return;
-    setChatting(true); setError(null);
-    try {
-      const res = await post(`/api/editor/storyboard/${storyboardId}/chat`, { message: chatMessage.trim() });
-      if (res && res.data) {
-        setStoryboard(res.data.storyboard);
-        setChatMessage('');
-        toast('Storyboard revised.');
-      }
-    } catch (e) {
-      setError(errorText(e));
-    } finally {
-      setChatting(false);
-    }
-  }
-
-  async function renderVideo() {
-    if (!storyboardId) return;
-    setRendering(true); setError(null);
-    try {
-      const res = await post(`/api/editor/storyboard/${storyboardId}/render`, { quality: 'final' });
-      if (res && res.render) {
-        setRenderedUrl(res.render.video_url);
-        setRenderedId(res.render.render_id);
-        toast('Video rendered successfully with FFmpeg + Hyperframes!');
-      }
-    } catch (e) {
-      setError(errorText(e));
-    } finally {
-      setRendering(false);
-    }
-  }
-
   async function submitUpload() {
-    const targetUploadId = renderedId || staged?.uploadId;
-    if (!targetUploadId) return setError('Choose or render a video first.');
-    const targetCaption = caption.trim() || storyboard?.scenes[0]?.caption || 'Original AI Edited Reel';
+    const targetUploadId = staged?.uploadId;
+    if (!targetUploadId) return setError('Choose a video first.');
+    const targetCaption = caption.trim() || 'Original reel';
     setBusy(true); setError(null);
     try {
       done(await post('/api/reels/upload', {
@@ -205,9 +150,9 @@ export default function NewReel() {
       {/* Mode switcher tabs */}
       <View style={[styles.seg, { backgroundColor: colors.surfaceAlt }]}>
         {([
-          { key: 'url', label: 'From link', icon: 'link' },
-          { key: 'editor', label: 'AI Video Editor', icon: 'sparkles' },
+          { key: 'editor', label: 'Auto-edit', icon: 'sparkles' },
           { key: 'upload', label: 'Upload ready video', icon: 'upload' },
+          { key: 'url', label: 'AI avatar remake', icon: 'link' },
         ] as const).map((m) => (
           <Pressable
             key={m.key}
@@ -253,155 +198,66 @@ export default function NewReel() {
           </>
         ) : null}
 
-        {/* MODE 2: AI Video Editor (Reel feature: Reference Style + Raw Footage -> Storyboard -> Render) */}
+        {/* MODE 2: Auto-edit. A link or a file in; a reviewable storyboard out. */}
         {mode === 'editor' ? (
           <>
             <Banner tone="info">
-              Drop raw camera footage and pick a reference style. Gemini analyzes silences, cuts, and writes a Storyboard first for your review before rendering.
+              Paste a link or add a video. The director transcribes it, tightens the cut, then plans the hook, animated diagrams, zooms and sound effects. You review the storyboard and approve before anything is rendered.
             </Banner>
 
-            {/* Step 1: Style Preset */}
-            <Field label="Editing Style Sheet" hint="Controls pacing, cut frequency, pause tightening and caption layout.">
-              <Chips
-                options={[
-                  { value: 'viral_hook_fast_pace', label: '⚡ Viral Hook (Cuts <1.8s)' },
-                  { value: 'educational_talking_head', label: '🎓 Educational Story' },
-                  { value: 'cinematic_punch', label: '🎬 Cinematic Punch' },
-                ]}
-                value={editorStyle}
-                onChange={setEditorStyle}
-              />
+            <Field label="Link to a video" hint="Instagram, YouTube, TikTok and similar. Only use videos you own or have permission to edit.">
+              <Input value={editorUrl} onChangeText={(v) => { setEditorUrl(v); if (v.trim()) { setStaged(null); setPicked(null); setFootagePath(''); } }}
+                placeholder="https://www.instagram.com/reel/…" autoCapitalize="none" autoCorrect={false} keyboardType="url" />
             </Field>
 
-            {/* Step 2: Raw Footage Upload */}
-            <Field label="Raw Footage" hint="Upload unedited camera recording (MP4 or MOV).">
+            <Field label="Or a video file" hint="MP4 or MOV from your computer.">
               <Pressable accessibilityRole="button" onPress={uploading ? undefined : chooseFile}
                 style={({ hovered }: any) => [styles.drop, { borderColor: staged ? colors.success : hovered ? colors.primary : colors.border, backgroundColor: colors.surfaceAlt }]}>
                 <Icon name={staged ? 'check' : 'upload'} size={22} color={staged ? colors.success : colors.primary} />
                 <View style={{ flex: 1 }}>
-                  <T variant="h3" numberOfLines={1}>{picked ? picked.name : 'Choose raw footage'}</T>
+                  <T variant="h3" numberOfLines={1}>{picked ? picked.name : 'Choose a video'}</T>
                   <T variant="small" muted>
-                    {uploading ? `Uploading… ${progress}%` : staged ? `Uploaded · ${Math.round(staged.durationSeconds)}s · ${(staged.sizeBytes / 1048576).toFixed(1)} MB` : 'Tap to browse raw video'}
+                    {uploading ? `Uploading… ${progress}%` : staged ? `Uploaded · ${Math.round(staged.durationSeconds)}s · ${(staged.sizeBytes / 1048576).toFixed(1)} MB` : 'Tap to browse'}
                   </T>
                 </View>
               </Pressable>
               {uploading ? <View style={[styles.bar, { backgroundColor: colors.border }]}><View style={[styles.barFill, { width: `${progress}%`, backgroundColor: colors.primary }]} /></View> : null}
             </Field>
 
-            {/* Step 3: Editor Prompt */}
-            <Field label="Editor Instructions" hint="What should Gemini focus on?">
-              <Input value={editorPrompt} onChangeText={setEditorPrompt} multiline style={{ minHeight: 60 }} />
+            {footage.length ? (
+              <Field label="Or footage already on this computer" hint="Files in the raw-footage folder">
+                <Picker value={footagePath} placeholder="Choose a file" onChange={(v) => { setFootagePath(v); if (v) { setStaged(null); setPicked(null); setEditorUrl(''); } }}
+                  options={footage.map((f) => ({ value: f.path, label: f.name, sub: `${f.size_mb} MB` }))} />
+              </Field>
+            ) : null}
+
+            <Field label="Editing style" hint="Sets pacing, pause length, caption look and loudness.">
+              <Chips options={styleList.length ? styleList : [{ value: editorStyle, label: editorStyle.replace(/_/g, ' ') }]} value={editorStyle} onChange={(v) => v && setEditorStyle(v)} />
             </Field>
 
-            {/* Button: Generate Storyboard */}
-            {!storyboard ? (
-              <Button
-                label="Generate AI Storyboard"
-                variant="primary"
-                icon="sparkles"
-                full
-                loading={busy}
-                disabled={!staged || uploading}
-                onPress={generateStoryboard}
-              />
-            ) : null}
+            <Field label="Who decides the edit?">
+              <Chips<'auto' | 'manual'> options={[{ value: 'auto', label: 'The director (recommended)' }, { value: 'manual', label: 'I will describe it' }]} value={director} onChange={(v) => v && setDirector(v)} />
+            </Field>
 
-            {/* Step 4: Storyboard Display */}
-            {storyboard ? (
-              <View style={[styles.storyboardBox, { borderColor: colors.border, backgroundColor: colors.surfaceAlt }]}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <T variant="h2">📋 AI Storyboard</T>
-                  <Badge
-                    label={`Scorecard: ${storyboard.scorecard.status}`}
-                    tone={storyboard.scorecard.status === 'PASS' ? 'success' : 'warning'}
-                  />
-                </View>
-
-                {/* Duration stats */}
-                <View style={[styles.statRow, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-                  <View style={styles.statCol}>
-                    <T variant="small" muted>Raw Duration</T>
-                    <T variant="h3">{storyboard.duration.original_seconds}s</T>
-                  </View>
-                  <View style={styles.statCol}>
-                    <T variant="small" muted>Edited Duration</T>
-                    <T variant="h3" color={colors.primary}>{storyboard.duration.output_seconds}s</T>
-                  </View>
-                  <View style={styles.statCol}>
-                    <T variant="small" muted>Dead Air Cut</T>
-                    <T variant="h3" color={colors.success}>-{storyboard.duration.removed_seconds}s ({storyboard.duration.reduction_percent}%)</T>
-                  </View>
-                </View>
-
-                {/* Scene Cards */}
-                <T variant="label" muted style={{ marginTop: 8 }}>SCENE BREAKDOWN ({storyboard.scenes.length} CUTS)</T>
-                <View style={{ gap: 8 }}>
-                  {storyboard.scenes.map((s) => (
-                    <View key={s.scene_number} style={[styles.sceneCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <T variant="h3">#{s.scene_number} · {s.type}</T>
-                        <T variant="label" color={colors.primary}>{s.timestamp_output}</T>
-                      </View>
-                      <T variant="body">{s.action}</T>
-                      <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginTop: 4 }}>
-                        <Badge label={s.framing} tone="info" />
-                        <Badge label={s.camera_motion} tone="neutral" />
-                        <Badge label={s.caption_style} tone="neutral" />
-                      </View>
-                      {s.caption && s.caption !== '(No speech overlay)' ? (
-                        <View style={[styles.captionPreview, { backgroundColor: colors.surfaceAlt }]}>
-                          <T variant="small" color={colors.primary}>💬 "{s.caption}"</T>
-                        </View>
-                      ) : null}
-                    </View>
-                  ))}
-                </View>
-
-                {/* Chat revision gate */}
-                <Field label="Request Storyboard Changes" hint="Direct Gemini to tweak cuts, captions, pacing or zoom before rendering.">
-                  <View style={{ flexDirection: 'row', gap: 8 }}>
-                    <Input
-                      value={chatMessage}
-                      onChangeText={setChatMessage}
-                      placeholder="e.g. Cut 2 more seconds of silence, make hook punchier..."
-                      style={{ flex: 1 }}
-                    />
-                    <Button
-                      label="Revise"
-                      variant="secondary"
-                      loading={chatting}
-                      disabled={!chatMessage.trim() || chatting}
-                      onPress={sendRevisionChat}
-                    />
-                  </View>
+            {director === 'auto' ? (
+              <Field label="Notes for the director (optional)" hint="For example: focus on the pricing claim, keep it under 45 seconds.">
+                <Input value={note} onChangeText={setNote} multiline style={{ minHeight: 60 }} />
+              </Field>
+            ) : (
+              <>
+                <Field label="Editor instructions" hint="The agent edits with tools from this description. It can lose track on long, multi-step requests.">
+                  <Input value={editorPrompt} onChangeText={setEditorPrompt} multiline style={{ minHeight: 60 }} />
                 </Field>
+                <Field label="Growth options">
+                  <Chips<'dm' | 'series'> options={[{ value: 'dm', label: sendabilityFocus ? 'Share trigger: on' : 'Share trigger: off' }, { value: 'series', label: seriesMode ? 'Series mode: on' : 'Series mode: off' }]}
+                    value="" onChange={(v) => { if (v === 'dm') setSendabilityFocus(!sendabilityFocus); if (v === 'series') setSeriesMode(!seriesMode); }} />
+                </Field>
+              </>
+            )}
 
-                {/* Step 5: Render Button */}
-                {!renderedUrl ? (
-                  <Button
-                    label="Render Final Video (FFmpeg + Hyperframes)"
-                    variant="primary"
-                    icon="play"
-                    full
-                    loading={rendering}
-                    onPress={renderVideo}
-                  />
-                ) : (
-                  <View style={{ gap: spacing.md, marginTop: 8 }}>
-                    <Banner tone="success">Render ready! Watch preview below:</Banner>
-                    <VideoPlayer uri={renderedUrl} />
-                    <Button
-                      label="Submit for Approval & Publish"
-                      variant="primary"
-                      icon="send"
-                      full
-                      loading={busy}
-                      onPress={submitUpload}
-                    />
-                  </View>
-                )}
-              </View>
-            ) : null}
+            <Button label={director === 'auto' ? 'Auto-edit this video' : 'Generate storyboard'} variant="primary" icon="sparkles" full loading={busy}
+              disabled={uploading} onPress={generateStoryboard} />
+            <T variant="small" faint>Runs in the background; the next screen shows each step. Nothing is rendered or published until you approve.</T>
 
             {error ? <Banner tone="danger">{error}</Banner> : null}
           </>

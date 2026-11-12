@@ -152,7 +152,11 @@ def test_adapter_uses_real_agent_when_present(monkeypatch):
     assert out["backend"] == "real" and out["reply"] == "real reply" and calls["args"][1] == "hi"
     # auto mode without API key falls back to fake even if the module exists
     monkeypatch.setenv("EDITOR_AGENT", "auto")
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    for key in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "EDITOR_LLM"):  # a real .env may be loaded by other tests
+        monkeypatch.delenv(key, raising=False)
+    oc = sys.modules.get("agent.openai_compat")
+    if oc is not None:  # make_client_from_env() re-reads the .env file on every call; keep the test independent of the developer's keys
+        monkeypatch.setattr(oc, "load_dotenv", lambda *a, **k: {})
     assert adapters.run_agent("p1", "hi", {"notes": ""}, tools={})["backend"] == "fake"
 
 

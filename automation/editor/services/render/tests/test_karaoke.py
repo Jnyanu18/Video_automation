@@ -42,7 +42,7 @@ def test_composition_has_one_span_and_two_tweens_per_word(tmp_path, dark_clip):
     assert warns == []
     assert all(f'id="cap0w{k}"' in html for k in range(3))
     assert html.count('tl.to("#cap0w1"') == 2                       # light up, then back to white
-    assert 'tl.to("#cap0w1",{color:"#ffd400",scale:1.14,duration:0.06,ease:"power2.out"},0.800)' in html
+    assert 'tl.to("#cap0w1",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},0.800)' in html
 
 
 def test_karaoke_without_words_falls_back_with_warning(tmp_path, dark_clip):

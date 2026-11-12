@@ -1,93 +1,92 @@
 import { Platform, useColorScheme } from 'react-native';
 
-const light = {
-  bg: '#F5F6FA',
-  surface: '#FFFFFF',
-  surfaceAlt: '#F0F2F8',
-  border: '#E4E7EF',
-  text: '#12151F',
-  textMuted: '#5F6678',
-  textFaint: '#8A91A3',
-  primary: '#5B4BEA',
-  primaryPressed: '#4A3BD1',
-  primarySoft: '#EEEBFF',
+/**
+ * GrowthOS Design System — Cinematic Dark Interface
+ * Primary Palette:
+ * - Background: #090A0C
+ * - Sidebar: #0C0E11
+ * - Primary Panel (Surface): #111317
+ * - Secondary Panel (SurfaceAlt): #15181D
+ * - Primary Accent (Cinematic Orange): #FF5A1F
+ * - Accent Hover: #FF7845
+ * - Primary Text: #F3F4F5
+ * - Secondary Text: #9299A3
+ * - Borders: #252930
+ * - Success: #70D6A1
+ * - Warning: #F2C36B
+ * - Error: #FF7777
+ */
+
+const dark = {
+  bg: '#090A0C',
+  sidebar: '#0C0E11',
+  surface: '#111317',
+  surfaceAlt: '#15181D',
+  border: '#252930',
+  borderLight: '#323742',
+  text: '#F3F4F5',
+  textMuted: '#9299A3',
+  textFaint: '#606773',
+  primary: '#FF5A1F',
+  primaryPressed: '#FF7845',
+  primarySoft: '#2B140B',
   onPrimary: '#FFFFFF',
-  success: '#12805C',
-  successSoft: '#E3F6EE',
-  warning: '#A55A00',
-  warningSoft: '#FFF1DA',
-  danger: '#C62F3E',
-  dangerSoft: '#FDE8EA',
-  info: '#1D5FD6',
-  infoSoft: '#E4EEFF',
-  overlay: 'rgba(12,14,24,0.5)',
-  shadow: '#1B1F3B',
-};
-
-export type Colors = typeof light;
-
-const dark: Colors = {
-  bg: '#0C0E16',
-  surface: '#151824',
-  surfaceAlt: '#1D2131',
-  border: '#272C3F',
-  text: '#F1F3FA',
-  textMuted: '#A3AABF',
-  textFaint: '#7A8198',
-  primary: '#8B7FFF',
-  primaryPressed: '#9E94FF',
-  primarySoft: '#25214A',
-  onPrimary: '#0C0E16',
-  success: '#43D9A0',
-  successSoft: '#123327',
-  warning: '#FFB84D',
-  warningSoft: '#3A2A10',
-  danger: '#FF7A87',
-  dangerSoft: '#3D1B21',
-  info: '#6EA5FF',
-  infoSoft: '#16284A',
-  overlay: 'rgba(0,0,0,0.65)',
+  success: '#70D6A1',
+  successSoft: '#122D20',
+  warning: '#F2C36B',
+  warningSoft: '#332711',
+  danger: '#FF7777',
+  dangerSoft: '#381616',
+  info: '#4EA8DE',
+  infoSoft: '#112536',
+  overlay: 'rgba(0, 0, 0, 0.75)',
   shadow: '#000000',
 };
 
+// GrowthOS defaults to Cinematic Dark mode
+const light = { ...dark };
+
+export type Colors = typeof dark;
+
 export const spacing = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32 } as const;
-export const radius = { sm: 8, md: 12, lg: 16, pill: 999 } as const;
+export const radius = { sm: 6, md: 8, lg: 12, pill: 999 } as const;
 
 export const font = {
-  regular: 'Inter_400Regular',
-  medium: 'Inter_500Medium',
-  semibold: 'Inter_600SemiBold',
-  bold: 'Inter_700Bold',
+  regular: Platform.select({ web: "Inter, -apple-system, sans-serif", default: "System" }),
+  medium: Platform.select({ web: "Inter, -apple-system, sans-serif", default: "System" }),
+  semibold: Platform.select({ web: "'Space Grotesk', Inter, -apple-system, sans-serif", default: "System" }),
+  bold: Platform.select({ web: "'Space Grotesk', Inter, -apple-system, sans-serif", default: "System" }),
+  mono: Platform.select({ web: "'DM Mono', 'Fira Code', Consolas, monospace", default: "Courier" }),
 } as const;
 
 export const type = {
-  h1: { fontFamily: font.bold, fontSize: 26, lineHeight: 32, letterSpacing: -0.4 },
-  h2: { fontFamily: font.semibold, fontSize: 18, lineHeight: 24, letterSpacing: -0.2 },
-  h3: { fontFamily: font.semibold, fontSize: 15, lineHeight: 20 },
-  body: { fontFamily: font.regular, fontSize: 15, lineHeight: 22 },
-  small: { fontFamily: font.regular, fontSize: 13, lineHeight: 18 },
-  label: { fontFamily: font.medium, fontSize: 13, lineHeight: 18 },
-  stat: { fontFamily: font.bold, fontSize: 30, lineHeight: 34, letterSpacing: -0.6 },
+  h1: { fontFamily: font.bold, fontSize: 24, lineHeight: 30, letterSpacing: -0.5, fontWeight: '700' as const },
+  h2: { fontFamily: font.semibold, fontSize: 18, lineHeight: 24, letterSpacing: -0.3, fontWeight: '600' as const },
+  h3: { fontFamily: font.semibold, fontSize: 14, lineHeight: 20, letterSpacing: -0.2, fontWeight: '600' as const },
+  body: { fontFamily: font.regular, fontSize: 14, lineHeight: 21, fontWeight: '400' as const },
+  small: { fontFamily: font.regular, fontSize: 12, lineHeight: 17, fontWeight: '400' as const },
+  caption: { fontFamily: font.regular, fontSize: 11, lineHeight: 15, fontWeight: '400' as const },
+  label: { fontFamily: font.medium, fontSize: 12, lineHeight: 16, letterSpacing: 0.2, fontWeight: '500' as const },
+  stat: { fontFamily: font.bold, fontSize: 28, lineHeight: 32, letterSpacing: -0.8, fontWeight: '700' as const },
+  mono: { fontFamily: font.mono, fontSize: 12, lineHeight: 16, fontWeight: '400' as const },
 } as const;
 
-export const BREAKPOINT_WIDE = 900;
-export const MAX_CONTENT_WIDTH = 1080;
+export const BREAKPOINT_WIDE = 960;
+export const MAX_CONTENT_WIDTH = 1440;
 
 export function useTheme(): { colors: Colors; isDark: boolean } {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  return { colors: isDark ? dark : light, isDark };
+  return { colors: dark, isDark: true };
 }
 
 export const shadow = (c: Colors, level: 1 | 2 = 1) =>
   Platform.select({
-    web: { boxShadow: level === 1 ? `0 1px 2px ${c.shadow}14, 0 1px 3px ${c.shadow}0F` : `0 8px 24px ${c.shadow}22` } as any,
+    web: { boxShadow: level === 1 ? `0 1px 3px rgba(0,0,0,0.4)` : `0 8px 24px rgba(0,0,0,0.6)` } as any,
     default: {
-      shadowColor: c.shadow,
-      shadowOpacity: level === 1 ? 0.07 : 0.16,
-      shadowRadius: level === 1 ? 4 : 14,
-      shadowOffset: { width: 0, height: level === 1 ? 1 : 6 },
-      elevation: level === 1 ? 1 : 6,
+      shadowColor: '#000000',
+      shadowOpacity: level === 1 ? 0.3 : 0.6,
+      shadowRadius: level === 1 ? 3 : 12,
+      shadowOffset: { width: 0, height: level === 1 ? 1 : 4 },
+      elevation: level === 1 ? 2 : 8,
     },
   });
 
@@ -108,16 +107,21 @@ export function statusTone(s?: string): Tone {
     case 'PUBLISHED':
     case 'VIDEO_COMPLETED':
     case 'connected':
+    case 'PASS':
       return 'success';
     case 'AWAITING_APPROVAL':
     case 'unconfigured':
+    case 'NEEDS_REVIEW':
+    case 'WARN':
       return 'warning';
     case 'FAILED':
     case 'REJECTED':
     case 'error':
+    case 'FAIL':
       return 'danger';
     case 'SUBMITTED':
     case 'APPROVED':
+    case 'running':
       return 'info';
     default:
       return 'neutral';

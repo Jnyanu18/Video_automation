@@ -663,3 +663,44 @@ test('rendered videos are served at /render/<id>.mp4 with range support; unknown
   assert.equal(await part.text(), '234');
   assert.equal((await fetch(b.base + '/render/' + 'b'.repeat(32) + '.mp4')).status, 404);
 });
+
+test('an editor render enters the approval pipeline with its real duration and /render URL (hash-deduplicated)', async () => {
+  const renderDir = fs.mkdtempSync(path.join(tmp, 'renders-'));
+  const id = 'c'.repeat(32);
+  fs.writeFileSync(path.join(renderDir, id + '.mp4'), mp4(21));
+  const b = await startBackend({ RENDER_DIR: renderDir });
+  extraApps.push(b.app);
+  const login = await fetch(b.base + '/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: PASSWORD }) });
+  const cookie = login.headers.get('set-cookie').split(';')[0];
+  const csrf = (await login.json()).csrfToken;
+  const post = (p, body) => fetch(b.base + p, { method: 'POST', headers: { cookie, 'x-csrf-token': csrf, 'content-type': 'application/json' }, body: JSON.stringify(body) });
+
+  const bad = 'd'.repeat(32);
+  assert.equal((await post('/api/reels/upload', { uploadId: bad, caption: 'Launch day. Save it.' })).status, 404);
+
+  const sub = await post('/api/reels/upload', { uploadId: id, caption: 'Rendered in the studio. Save it.' });
+  assert.equal(sub.status, 201, await sub.clone().text());
+  const rec = (await sub.json()).recordId;
+  const d = (await (await fetch(b.base + '/api/reels/' + rec, { headers: { cookie } })).json()).reel;
+  assert.equal(d.status, 'AWAITING_APPROVAL');
+  assert.equal(d.video.url, `https://reels.example.test/render/${id}.mp4`);
+  assert.equal(d.video.duration, 21, 'duration is probed from the file, not assumed');
+  assert.equal(d.upload.sizeBytes, fs.statSync(path.join(renderDir, id + '.mp4')).size, 'size is read from the file');
+  // submitting the same render again is a duplicate, not a second record
+  const again = await post('/api/reels/upload', { uploadId: id, caption: 'Rendered in the studio. Save it.' });
+  assert.equal((await again.json()).duplicate, true);
+  assert.ok(fs.existsSync(path.join(renderDir, id + '.mp4')), 'the render file is never deleted by the bridge');
+});
+
+test('a render that is not a valid video is refused instead of being invented', async () => {
+  const renderDir = fs.mkdtempSync(path.join(tmp, 'renders-'));
+  const id = 'e'.repeat(32);
+  fs.writeFileSync(path.join(renderDir, id + '.mp4'), Buffer.from('not a video'));
+  const b = await startBackend({ RENDER_DIR: renderDir });
+  extraApps.push(b.app);
+  const login = await fetch(b.base + '/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: PASSWORD }) });
+  const cookie = login.headers.get('set-cookie').split(';')[0];
+  const csrf = (await login.json()).csrfToken;
+  const r = await fetch(b.base + '/api/reels/upload', { method: 'POST', headers: { cookie, 'x-csrf-token': csrf, 'content-type': 'application/json' }, body: JSON.stringify({ uploadId: id, caption: 'Launch day. Save it.' }) });
+  assert.equal(r.status, 404);
+});

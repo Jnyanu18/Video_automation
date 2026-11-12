@@ -113,6 +113,16 @@ export function StatusBadge({ status }: { status?: string }) {
   return <Badge label={label} tone={statusTone(status)} dot />;
 }
 
+export function Pill({ label, tone = 'neutral', style }: { label?: string; tone?: Tone; style?: StyleProp<ViewStyle> }) {
+  const { colors } = useTheme();
+  const c = toneColors(colors, tone);
+  return (
+    <View style={[styles.badge, { backgroundColor: c.bg }, style]}>
+      <Text style={{ fontFamily: font.medium, fontSize: 11, color: c.fg }} numberOfLines={1}>{label}</Text>
+    </View>
+  );
+}
+
 /* ---------------------------------------------------------------- Inputs */
 
 export function Field({ label, hint, error, children }: { label: string; hint?: string; error?: string | null; children: React.ReactNode }) {

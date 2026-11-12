@@ -15,7 +15,7 @@ from pathlib import Path
 
 def has_audio_effects(plan: dict) -> bool:
     a = plan.get("audio") or {}
-    return bool(a.get("mute") or a.get("music") or a.get("loudness"))
+    return bool(a.get("mute") or a.get("music") or a.get("loudness") or a.get("sfx"))
 
 
 def _run(cmd: list[str]) -> subprocess.CompletedProcess:
@@ -53,8 +53,8 @@ def _duck_params(duck: dict, voice_peak_db: float | None = None) -> str:
             f"release={float(duck.get('release_ms', 400)):.0f}:makeup=1")
 
 
-def build_mix_graph(plan: dict, duration: float, has_voice: bool, voice_peak_db: float | None = None) -> tuple[str, list[str], str]:
-    """Returns (filter_complex, extra_input_args, output_label). Input 0 = the video file (voice), input 1 = music."""
+def _build_base_graph(plan: dict, duration: float, has_voice: bool, voice_peak_db: float | None = None) -> tuple[str, list[str], str]:
+    """Voice + music (+ducking). Input 0 = the video file (voice), input 1 = music when present."""
     a = plan.get("audio") or {}
     parts: list[str] = []
     voice = None
@@ -93,6 +93,28 @@ def build_mix_graph(plan: dict, duration: float, has_voice: bool, voice_peak_db:
     else:
         parts.append(f"{voice}[music]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[mix]")
     return ";".join(parts), extra, "[mix]"
+
+
+def build_mix_graph(plan: dict, duration: float, has_voice: bool, voice_peak_db: float | None = None) -> tuple[str, list[str], str]:
+    """Returns (filter_complex, extra_input_args, output_label). Input 0 = the video file (voice), then music (if any),
+    then one input per sound effect. Effects are delayed to their OUTPUT time and mixed on top (never ducked)."""
+    graph, extra, label = _build_base_graph(plan, duration, has_voice, voice_peak_db)
+    a = plan.get("audio") or {}
+    fx = [x for x in a.get("sfx") or [] if x.get("path") and 0 <= float(x.get("at", 0)) < duration]
+    if not fx:
+        return graph, extra, label
+    first = 1 + (1 if a.get("music") else 0)
+    parts = [graph] if graph else []
+    labels = [label] if label else []
+    for i, x in enumerate(fx):
+        ms = int(round(float(x["at"]) * 1000))
+        extra += ["-i", x["path"]]
+        parts.append(f"[{first + i}:a]aresample=48000,aformat=channel_layouts=stereo,"
+                     f"volume={float(x.get('volume_db', -8)):.2f}dB,adelay={ms}|{ms}[sfx{i}]")
+        labels.append(f"[sfx{i}]")
+    parts.append("".join(labels) + f"amix=inputs={len(labels)}:duration=longest:normalize=0,"
+                 f"atrim=0:{duration:.3f},alimiter=limit=0.95[mixfx]")
+    return ";".join(parts), extra, "[mixfx]"
 
 
 def measure_loudness(path: str | Path) -> dict:

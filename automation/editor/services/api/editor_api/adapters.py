@@ -35,10 +35,33 @@ def collect_tools() -> dict:
     return tools
 
 
+def _anthropic_client():
+    """Claude as the editor's brain. Needs ANTHROPIC_API_KEY (an API key from console.anthropic.com; a Claude chat or
+    Claude Code subscription is a different thing and does not work here). Model: EDITOR_LLM_MODEL, default claude-sonnet-5-5."""
+    key = os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        return None
+    try:
+        import anthropic
+        client = anthropic.Anthropic(api_key=key)
+        client.model = os.environ.get("EDITOR_LLM_MODEL") or "claude-sonnet-5-5"
+        return client
+    except Exception as e:
+        log.warning("anthropic client unavailable: %s", e)
+        return None
+
+
 def _make_client():
     _ensure_repo_on_path()
-    from agent.openai_compat import make_client_from_env  # EDITOR_LLM=groq|gemini|openrouter|ollama|custom
-    llm = make_client_from_env()
+    try:
+        from agent.openai_compat import load_dotenv, make_client_from_env  # EDITOR_LLM=gemini|openrouter|ollama|custom|anthropic
+        load_dotenv()
+        if (os.environ.get("EDITOR_LLM") or "").lower() == "anthropic":
+            return _anthropic_client()
+        llm = make_client_from_env()
+    except ImportError as e:  # agent package missing or shadowed: fall through to the Anthropic client / fake
+        log.info("openai-compatible client unavailable: %s", e)
+        llm = None
     if llm is not None:
         return llm
     if not os.environ.get("ANTHROPIC_API_KEY"):

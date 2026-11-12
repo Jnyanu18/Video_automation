@@ -1,106 +1,130 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Screen } from '../../components/Screen';
-import { Banner, Button, Card, EmptyState, ErrorState, SectionTitle, Skeleton, T } from '../../components/ui';
-import { ReelRowCard } from '../../components/ReelParts';
-import { Icon, IconName } from '../../components/Icon';
-import { get } from '../../api/client';
-import type { Summary } from '../../api/types';
-import { useQuery } from '../../state/useQuery';
-import { radius, spacing, toneColors, Tone, useTheme } from '../../theme';
+import { Page, Row } from '../../components/Page';
+import { Badge, Banner, Button, Card, EmptyState, ErrorState, SectionTitle, Skeleton, T } from '../../components/ui';
+import { Stat } from '../../components/studio';
+import { errorText } from '../../api/client';
+import { editor, when } from '../../api/editor';
+import { usePoll } from '../../state/usePoll';
+import { Tone, spacing, useTheme } from '../../theme';
 
-const TILES: { key: keyof Summary['totals']; label: string; status: string; tone: Tone; icon: IconName }[] = [
-  { key: 'awaitingApproval', label: 'Needs review', status: 'AWAITING_APPROVAL', tone: 'warning', icon: 'clock' },
-  { key: 'readyToPublish', label: 'Ready to publish', status: 'VIDEO_COMPLETED', tone: 'success', icon: 'send' },
-  { key: 'generating', label: 'Generating', status: 'APPROVED', tone: 'info', icon: 'sparkles' },
-  { key: 'published', label: 'Published', status: 'PUBLISHED', tone: 'success', icon: 'check' },
-  { key: 'failed', label: 'Failed', status: 'FAILED', tone: 'danger', icon: 'alert' },
-  { key: 'rejected', label: 'Rejected', status: 'REJECTED', tone: 'neutral', icon: 'x' },
-];
+const svcTone = (s: string): Tone => (s === 'ONLINE' ? 'success' : s === 'STANDBY' ? 'neutral' : s === 'OFFLINE' || s === 'NOT_FOUND' || s === 'ERROR' ? 'danger' : 'warning');
 
-export default function Dashboard() {
+export default function CommandCenter() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { data, error, loading, refreshing, refresh, retry } = useQuery<Summary>(() => get('/api/summary'), []);
+  const [ov, setOv] = useState<any>(null);
+  const [health, setHealth] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const needsReview = data?.totals.awaitingApproval ?? 0;
+  const load = useCallback(async () => {
+    const [o, h] = await Promise.allSettled([editor.overview(), editor.health()]);
+    if (o.status === 'fulfilled') { setOv(o.value); setError(null); } else setError(errorText(o.reason));
+    if (h.status === 'fulfilled') setHealth(h.value);
+  }, []);
+  useEffect(() => { load(); }, [load]);
+  usePoll(load, true, 5000);
+
+  if (error && !ov) return <Page title="Command Center"><ErrorState message={error} onRetry={load} /></Page>;
+  if (!ov) return <Page title="Command Center" subtitle="Autonomous video production"><Skeleton height={100} /><Skeleton height={160} /></Page>;
+
+  const k = ov.kpis;
+  const empty = k.storyboards === 0;
+  const issues: string[] = health?.summary?.core_issues ?? [];
 
   return (
-    <Screen
-      title="Dashboard"
-      subtitle="Here's where your reels stand."
-      onRefresh={refresh}
-      refreshing={refreshing}
-      actions={<Button label="New reel" icon="plus" variant="primary" small onPress={() => router.navigate('/new')} />}
-    >
-      {error && !data ? <ErrorState message={error} onRetry={retry} /> : null}
-
-      {loading && !data ? (
-        <View style={styles.grid}>
-          {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} height={92} style={styles.tileSkeleton} />)}
-        </View>
+    <Page title="Command Center" subtitle="What is in the pipeline, what needs you, and what is healthy">
+      {issues.length ? (
+        <Banner tone="warning">
+          Setup needed before the editor can run end to end: {issues.join(', ')}. Open Integrations for details.
+        </Banner>
       ) : null}
 
-      {data ? (
+      {k.awaiting_approval > 0 ? (
+        <Card onPress={() => router.push('/storyboard')} style={{ borderColor: colors.warning }}>
+          <Row style={{ justifyContent: 'space-between' }}>
+            <View style={{ flex: 1, minWidth: 220 }}>
+              <T variant="h2">{k.awaiting_approval} storyboard{k.awaiting_approval > 1 ? 's' : ''} waiting for your approval</T>
+              <T muted>Nothing is rendered in final quality until you approve it.</T>
+            </View>
+            <Button label="Review now" variant="primary" icon="layers" onPress={() => router.push('/storyboard')} />
+          </Row>
+        </Card>
+      ) : null}
+
+      <Row style={{ alignItems: 'stretch' }}>
+        <Stat label="In pipeline" value={k.in_pipeline} sub={`${k.storyboards} storyboards in total`} />
+        <Stat label="Awaiting approval" value={k.awaiting_approval} tone={k.awaiting_approval ? 'warning' : undefined} />
+        <Stat label="Rendered" value={k.rendered} sub={k.rendering ? `${k.rendering} rendering now` : undefined} />
+        <Stat label="Scheduled" value={k.scheduled} />
+        <Stat label="Published" value={k.published} />
+        <Stat label="Avg scorecard" value={k.avg_score === null ? '—' : Math.round(k.avg_score * 100) + '%'} sub={k.failed ? `${k.failed} failed item(s)` : undefined} tone={k.failed ? 'danger' : undefined} />
+      </Row>
+
+      {empty ? (
+        <EmptyState icon="film" title="Your pipeline is empty"
+          message="Start with raw footage. The editor drafts a cut, you review and approve it, then it renders and publishes."
+          action={<Button label="Start a new edit" variant="primary" icon="plus" onPress={() => router.push('/new')} />} />
+      ) : (
         <>
-          {data.stuck ? <Banner tone="warning">{data.stuck} reel{data.stuck === 1 ? ' looks' : 's look'} stuck. Open {data.stuck === 1 ? 'it' : 'them'} and use Retry or Resume.</Banner> : null}
-          {needsReview > 0 ? (
-            <Card onPress={() => router.navigate({ pathname: '/reels', params: { status: 'AWAITING_APPROVAL' } })} style={{ backgroundColor: colors.primarySoft }}>
-              <View style={styles.cta}>
-                <View style={{ flex: 1 }}>
-                  <T variant="h2" color={colors.primary}>{needsReview} reel{needsReview === 1 ? '' : 's'} waiting for your review</T>
-                  <T muted>Check the script and caption, then approve to start video generation.</T>
-                </View>
-                <Icon name="chevron" size={20} color={colors.primary} />
-              </View>
-            </Card>
-          ) : null}
-
-          <View style={styles.grid}>
-            {TILES.map((t) => {
-              const c = toneColors(colors, t.tone);
-              return (
-                <View key={t.key} style={styles.tileCell}>
-                  <Card onPress={() => router.navigate({ pathname: '/reels', params: { status: t.status } })} accessibilityLabel={`${t.label}: ${data.totals[t.key] || 0}`}>
-                    <View style={styles.tileTop}>
-                      <View style={[styles.tileIcon, { backgroundColor: c.bg }]}><Icon name={t.icon} size={16} color={c.fg} /></View>
-                      <T variant="small" muted style={{ flex: 1 }} numberOfLines={1}>{t.label}</T>
-                    </View>
-                    <T variant="stat" style={{ marginTop: spacing.sm }}>{data.totals[t.key] || 0}</T>
-                  </Card>
-                </View>
-              );
-            })}
-          </View>
-
-          <View>
-            <SectionTitle title="Recent activity" right={<Button label="View all" variant="ghost" small onPress={() => router.navigate('/reels')} />} />
-            {data.recent?.length ? (
-              <View style={{ gap: spacing.sm }}>
-                {data.recent.map((r) => (
-                  <ReelRowCard key={r.id} reel={{ id: r.id, title: r.title, status: r.status, sourceType: r.sourceType, updatedAt: r.at, error: r.error }}
-                    onPress={() => router.navigate({ pathname: '/reels/[id]', params: { id: r.id } })} />
-                ))}
-              </View>
-            ) : (
-              <Card>
-                <EmptyState icon="film" title="No reels yet" message="Paste an Instagram reel link or upload a video to get started."
-                  action={<Button label="Create your first reel" variant="primary" icon="plus" onPress={() => router.navigate('/new')} />} />
+          <SectionTitle title="Pipeline" />
+          <Row style={{ alignItems: 'stretch' }}>
+            {ov.pipeline.map((p: any) => (
+              <Card key={p.key} style={[styles.stage, p.alert && { borderColor: colors.warning }]}>
+                <T variant="stat" color={p.alert ? colors.warning : colors.text}>{p.count}</T>
+                <T variant="label" muted>{p.label.toUpperCase()}</T>
               </Card>
-            )}
-          </View>
+            ))}
+          </Row>
         </>
-      ) : null}
-    </Screen>
+      )}
+
+      <View style={styles.cols}>
+        <View style={{ flex: 1, minWidth: 300, gap: spacing.md }}>
+          <SectionTitle title="Recent activity" />
+          <Card>
+            {ov.recent_activity.length === 0 ? <T muted>Nothing has happened yet.</T> : ov.recent_activity.map((e: any, i: number) => (
+              <View key={i} style={[styles.event, { borderBottomColor: colors.border }]}>
+                <T variant="small" faint style={{ width: 96 }}>{when(e.ts)}</T>
+                <T style={{ flex: 1 }}>{e.message}</T>
+              </View>
+            ))}
+          </Card>
+          {ov.next_scheduled.length ? (
+            <>
+              <SectionTitle title="Next scheduled posts" />
+              <Card>{ov.next_scheduled.map((p: any) => (
+                <Row key={p.id} style={{ justifyContent: 'space-between', paddingVertical: 4 }}>
+                  <T>{p.title}</T><T variant="small" muted>{when(p.scheduled_at)}</T>
+                </Row>
+              ))}</Card>
+            </>
+          ) : null}
+        </View>
+
+        <View style={{ flex: 1, minWidth: 300, gap: spacing.md }}>
+          <SectionTitle title="System health" right={health ? <Badge label={`${health.summary.online}/${health.summary.total} online`} tone={health.summary.core_ready ? 'success' : 'warning'} dot /> : undefined} />
+          <Card>
+            {!health ? <Skeleton height={120} /> : health.services.map((s: any) => (
+              <View key={s.id} style={[styles.event, { borderBottomColor: colors.border }]}>
+                <View style={{ flex: 1 }}>
+                  <T variant="h3">{s.name}</T>
+                  <T variant="small" muted numberOfLines={2}>{s.detail}</T>
+                </View>
+                <Badge label={s.status.replace('_', ' ')} tone={svcTone(s.status)} dot />
+              </View>
+            ))}
+          </Card>
+          <Button label="Quick start: new edit" icon="plus" onPress={() => router.push('/new')} />
+        </View>
+      </View>
+    </Page>
   );
 }
 
 const styles = StyleSheet.create({
-  grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -spacing.xs - 2 },
-  tileCell: { width: '50%', minWidth: 170, flexGrow: 1, flexBasis: 200, padding: spacing.xs + 2 },
-  tileSkeleton: { width: '46%', margin: spacing.xs + 2, borderRadius: radius.lg, flexGrow: 1 },
-  tileTop: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  tileIcon: { width: 28, height: 28, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
-  cta: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  stage: { flexGrow: 1, flexBasis: 120, minWidth: 110, alignItems: 'flex-start' },
+  cols: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.lg, alignItems: 'flex-start' },
+  event: { flexDirection: 'row', gap: spacing.md, alignItems: 'center', paddingVertical: 8, borderBottomWidth: 1 },
 });

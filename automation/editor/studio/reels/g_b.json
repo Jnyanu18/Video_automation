@@ -1,0 +1,139 @@
+{
+ "name": "gritstones-b-where-did-you-get-that",
+ "brand": {
+  "font": "Outfit",
+  "accent": "#2ee6c5",
+  "accent_light": "#0c7a6b",
+  "light": "#f4f4f1",
+  "dark": "#0e0f10",
+  "navy": "#17302d",
+  "ink_dark": "#f4f4f1",
+  "ink_light": "#16191a"
+ },
+ "voice": "neerja",
+ "rate": "+5%",
+ "music": {
+  "style": "pulse",
+  "volume": 0.2,
+  "seed": 17
+ },
+ "scenes": [
+  {
+   "kind": "kinetic",
+   "theme": "light",
+   "words": [
+    "Where",
+    "did you",
+    "get that?"
+   ],
+   "accent": [
+    2
+   ],
+   "say": "Where did you get that?",
+   "duration": 3.0,
+   "sfx": [
+    {
+     "name": "boing",
+     "at": 1.5,
+     "volume": 0.45
+    }
+   ]
+  },
+  {
+   "kind": "chat",
+   "theme": "light",
+   "title": "Group chat",
+   "messages": [
+    {
+     "from": "user",
+     "text": "Bro, where is that jacket from?",
+     "at": 0.7
+    },
+    {
+     "from": "agent",
+     "text": "Gritstones.",
+     "at": 2.4
+    },
+    {
+     "from": "user",
+     "text": "Delivery?",
+     "at": 3.5
+    },
+    {
+     "from": "agent",
+     "text": "3 to 4 days. Cash on delivery works.",
+     "at": 4.6
+    }
+   ],
+   "say": "Where is that jacket from? Gritstones. Delivery in three to four days, and cash on delivery works.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 0.7
+    },
+    {
+     "name": "pop",
+     "at": 2.4
+    },
+    {
+     "name": "pop",
+     "at": 3.5
+    },
+    {
+     "name": "ding",
+     "at": 4.6,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "photos",
+   "theme": "dark",
+   "tall": true,
+   "duration": 7.0,
+   "images": [
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/premium-black-quilted-puff_2.jpg",
+     "label": "Quilted puffer jacket"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/vintage-black-washed-cargo_2.jpg",
+     "label": "Washed cargo jeans"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/white-self-waffle-henley-t_1.jpg",
+     "label": "Waffle henley"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/olive-ottoman-long-sleeve-_2.jpg",
+     "label": "Hooded henley tee"
+    }
+   ],
+   "say": "Quilted puffer jackets, washed cargo jeans, waffle henleys. And easy returns within seven days."
+  },
+  {
+   "kind": "cta",
+   "theme": "light",
+   "lines": [
+    "Look sharp.",
+    "*Stay comfy.*"
+   ],
+   "button": "Shop gritstones.com",
+   "url": "gritstones.com",
+   "sub": "7 days easy returns and exchange",
+   "say": "Look sharp. Stay comfy. Gritstones.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.1,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 1.8,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

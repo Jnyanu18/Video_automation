@@ -25,7 +25,8 @@ def song(tmp_path_factory):
 
 
 def test_registry():
-    assert set(TOOLS) == {"add_music", "duck_music_under_speech", "normalize_loudness", "mute_segments"}
+    assert set(TOOLS) == {"add_music", "duck_music_under_speech", "normalize_loudness", "mute_segments",
+                          "list_sfx", "add_sfx", "remove_sfx"}
     for spec in TOOLS.values():
         json.dumps(spec["input_schema"])
         assert spec["description"]

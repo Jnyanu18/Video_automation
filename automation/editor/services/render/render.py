@@ -8,6 +8,7 @@ import subprocess
 import time
 from pathlib import Path
 
+from .ass_fallback import burn_captions
 from .audio import apply_audio, has_audio_effects
 from .composition import build_composition
 from .cut import cut_and_reframe, probe
@@ -18,6 +19,16 @@ APP = Path(__file__).resolve().parents[2] / "app"  # where the hyperframes CLI i
 
 class RenderError(RuntimeError):
     pass
+
+
+def _hf_timeout(preview: bool) -> int:
+    """Seconds the browser render may take. A real 30s reel needs minutes, so the default is generous
+    (override with HYPERFRAMES_TIMEOUT / HYPERFRAMES_PREVIEW_TIMEOUT)."""
+    key, default = ("HYPERFRAMES_PREVIEW_TIMEOUT", "600") if preview else ("HYPERFRAMES_TIMEOUT", "900")
+    try:
+        return max(10, int(os.environ.get(key, default)))
+    except ValueError:
+        return int(default)
 
 
 def _validate(plan: dict) -> None:
@@ -37,7 +48,9 @@ def _browser_env() -> dict:
     env = dict(os.environ)
     if not env.get("HYPERFRAMES_BROWSER_PATH"):
         # Prefer chrome-headless-shell (BeginFrame fast path), else system Chrome (screenshot path).
-        for cand in (shutil.which("chrome-headless-shell"), "/usr/bin/chrome-headless-shell", "/usr/bin/google-chrome"):
+        win = [os.path.join(os.environ.get(v, ""), "Google", "Chrome", "Application", "chrome.exe")
+               for v in ("PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA")] if os.name == "nt" else []
+        for cand in (shutil.which("chrome-headless-shell"), "/usr/bin/chrome-headless-shell", "/usr/bin/google-chrome", *win):
             if cand and Path(cand).exists():
                 env["HYPERFRAMES_BROWSER_PATH"] = cand
                 break
@@ -88,16 +101,28 @@ def _render(plan: dict, workdir, name: str, *, preview: bool, quality: str | Non
         proj = workdir / f"{name}_hf"
         if proj.exists():
             shutil.rmtree(proj)
-        warnings = build_composition(proj, cut_path, dur, captions, overlays, w, h, fps)
         try:
-            # Try headless hyperframes with a short 25s timeout; fall back to fast ffmpeg if it hangs
-            hyperframes_render(proj, final, quality or ("draft" if preview else "looks"), fps, timeout=25)
+            warnings = build_composition(proj, cut_path, dur, captions, overlays, w, h, fps)
+            hyperframes_render(proj, final, quality or ("draft" if preview else "looks"), fps, timeout=_hf_timeout(preview))
             stage = "hyperframes"
         except Exception as e:
-            # Resilient fallback: use cut_path directly so rendering never hangs or fails
-            shutil.copy2(cut_path, final)
-            stage = "ffmpeg-fallback"
-
+            reason = str(e).strip().splitlines()[-1][:300] if str(e).strip() else type(e).__name__
+            if captions:
+                try:  # never drop captions silently: burn them in with FFmpeg and say what could not be drawn
+                    burn_captions(cut_path, captions, w, h, final, workdir / f"{name}_ass",
+                                  preset="ultrafast" if preview else "veryfast", crf=28 if preview else 18)
+                    stage = "ffmpeg-ass-fallback"
+                    warnings.append(f"HyperFrames render failed ({reason}); captions were burned in with the FFmpeg fallback"
+                                    + ("; title/lower-third/b-roll overlays were NOT drawn" if overlays else ""))
+                except Exception as e2:
+                    shutil.copy2(cut_path, final)
+                    stage = "ffmpeg-fallback"
+                    warnings.append(f"HyperFrames render failed ({reason}) and the caption fallback failed ({e2}); "
+                                    "the video has NO captions or overlays")
+            else:
+                shutil.copy2(cut_path, final)
+                stage = "ffmpeg-fallback"
+                warnings.append(f"HyperFrames render failed ({reason}); overlays were NOT drawn")
     audio_info: dict = {}
     if has_audio_effects(remapped):
         mixed = workdir / f"{name}_audio.mp4"

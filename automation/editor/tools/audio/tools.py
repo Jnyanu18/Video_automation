@@ -13,7 +13,9 @@ import subprocess
 from pathlib import Path
 
 from tools.edit._common import clone, out
-from tools.edit.timeline import EPS, normalize_keep, output_duration
+from tools.edit.timeline import EPS, normalize_keep, output_duration, source_to_output
+
+from . import sfx as sfxlib
 
 AUDIO_EXT = {".mp3", ".wav", ".m4a", ".aac", ".flac", ".ogg", ".opus"}
 
@@ -160,3 +162,53 @@ def mute_segments(plan: dict, ranges: list, mode: str = "append", **_) -> dict:
     if not audio:
         new.pop("audio")
     return out(new, {"muted_ranges": len(merged), "muted_seconds": round(sum(b - a for a, b in merged), 3)}, warnings)
+
+
+def list_sfx(plan: dict, category: str | None = None, **_) -> dict:
+    """List the studio's CC0 sound effects (name, category, length). Does not change the plan."""
+    items = sfxlib.catalog(with_duration=True)
+    if category:
+        items = [i for i in items if i["category"] == category]
+    placed = (plan.get("audio") or {}).get("sfx") or []
+    return out(clone(plan), {"count": len(items), "sfx": [{k: i[k] for k in ("name", "category", "duration")} for i in items],
+                             "placed": placed})
+
+
+def add_sfx(plan: dict, name: str, at: float, volume_db: float = -8.0, **_) -> dict:
+    """Place a sound effect at a SOURCE time (seconds). It plays over the voice (not ducked) and follows the edit:
+    if the moment is cut away the effect is dropped at render time, so only place it inside kept footage."""
+    p = sfxlib.resolve(name)
+    if float(at) < 0:
+        raise ValueError("at must be >= 0")
+    if not -40 <= float(volume_db) <= 6:
+        raise ValueError("volume_db must be between -40 and 6")
+    dur = (plan.get("source") or {}).get("duration")
+    if dur and float(at) > float(dur):
+        raise ValueError(f"at={at} is past the end of the source ({float(dur):.2f}s)")
+    warnings: list[str] = []
+    if plan.get("keep") and source_to_output(plan, float(at)) is None:
+        warnings.append(f"{float(at):.2f}s lies in a cut region; this effect will not be heard until that footage is kept")
+    new = clone(plan)
+    lst = new.setdefault("audio", {}).setdefault("sfx", [])
+    n = 1 + max((int(str(x.get("id", "s0"))[1:] or 0) for x in lst if str(x.get("id", "")).startswith("s")), default=0)
+    item = {"id": f"s{n}", "name": p.stem, "path": str(p), "at": round(float(at), 3), "volume_db": float(volume_db)}
+    lst.append(item)
+    lst.sort(key=lambda x: x["at"])
+    return out(new, {"sfx": item, "total": len(lst)}, warnings)
+
+
+def remove_sfx(plan: dict, ids: list | None = None, **_) -> dict:
+    """Remove placed sound effects by id (omit ids to clear them all)."""
+    new = clone(plan)
+    audio = new.get("audio") or {}
+    cur = audio.get("sfx") or []
+    keep = [] if not ids else [x for x in cur if x.get("id") not in set(ids)]
+    removed = len(cur) - len(keep)
+    if keep:
+        audio["sfx"] = keep
+    else:
+        audio.pop("sfx", None)
+    if not audio:
+        new.pop("audio", None)
+    warnings = [] if removed else ["no matching sound effects were placed"]
+    return out(new, {"removed": removed, "remaining": len(keep)}, warnings)

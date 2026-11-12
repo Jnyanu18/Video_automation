@@ -9,7 +9,7 @@ from .styles import CAPTION_STYLES, DEFAULT_STYLE
 _SENT_END = re.compile(r"[.!?]$")
 
 
-def _group_words(words: list[dict], max_words: int, max_gap: float, max_chars: int) -> list[dict]:
+def _group_words(words: list[dict], max_words: int, max_gap: float, max_chars: int, min_dur: float = 0.8) -> list[dict]:
     groups, cur = [], []
     def flush():
         if cur:
@@ -24,12 +24,50 @@ def _group_words(words: list[dict], max_words: int, max_gap: float, max_chars: i
         if _SENT_END.search(w["word"].strip()):
             flush()
     flush()
+    return _linger(_merge_flashes(groups, max_gap, max_chars, min_dur))
+
+
+def _linger(groups: list[dict], target_cps: float = 18.0, max_extra: float = 0.4) -> list[dict]:
+    """Keep a fast line on screen a little after the last word is spoken (never into the next line), so it can be read."""
+    for i, g in enumerate(groups):
+        need = len(g["text"]) / target_cps - (g["end"] - g["start"])
+        if need <= 0:
+            continue
+        room = (groups[i + 1]["start"] - 0.03 if i + 1 < len(groups) else g["end"] + max_extra) - g["end"]
+        g["end"] = round(g["end"] + max(0.0, min(need, max_extra, room)), 3)
+    return groups
+
+
+def _merge_flashes(groups: list[dict], max_gap: float, max_chars: int, min_dur: float) -> list[dict]:
+    """A caption that is on screen for less than min_dur cannot be read. Join it to a neighbour when they are close in time
+    and the result still fits max_chars; a lone short line after a long pause stays as it is."""
+    i = 0
+    while i < len(groups):
+        g = groups[i]
+        if g["end"] - g["start"] >= min_dur:
+            i += 1
+            continue
+        cand = []
+        if i + 1 < len(groups):
+            cand.append((groups[i + 1]["start"] - g["end"], i, i + 1))
+        if i > 0:
+            cand.append((g["start"] - groups[i - 1]["end"], i - 1, i))
+        cand = [c for c in cand if c[0] <= max_gap and not _SENT_END.search(groups[c[1]]["text"].strip())  # never merge across a sentence end
+                and len(groups[c[1]]["text"]) + 1 + len(groups[c[2]]["text"]) <= max_chars]
+        if not cand:
+            i += 1
+            continue
+        _, a, b = min(cand)
+        A, B = groups[a], groups[b]
+        groups[a:b + 1] = [{"text": A["text"] + " " + B["text"], "start": A["start"], "end": B["end"], "words": A["words"] + B["words"]}]
+        i = max(a, 0)
     return groups
 
 
 def set_captions(plan: dict, captions: list | None = None, words: list | None = None, style: str | None = None,
                  mode: str = "replace", max_words: int | None = None, max_gap: float = 0.6,
-                 max_chars: int = 42, from_transcript: bool = False, workdir: str | None = None, **_) -> dict:
+                 max_chars: int = 42, from_transcript: bool = False, workdir: str | None = None,
+                 min_duration: float = 0.9, **_) -> dict:
     """Set captions from explicit [{text,start,end}] or word timings [{word,start,end}] (source seconds).
 
     from_transcript=true reads the words that `transcribe` saved to <workdir>/transcript.json, so a long video does not
@@ -66,7 +104,7 @@ def set_captions(plan: dict, captions: list | None = None, words: list | None = 
                 continue
             ws.append({"word": str(w["word"]), "start": float(w["start"]), "end": float(w["end"])})
         ws.sort(key=lambda w: w["start"])
-        items = _group_words(ws, mw, max_gap, max_chars)
+        items = _group_words(ws, mw, max_gap, max_chars, min_dur=float(min_duration))
     else:
         items = []
         for c in captions:

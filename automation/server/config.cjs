@@ -49,6 +49,8 @@ function loadConfig(env) {
       maxRecords: num(env.HISTORY_MAX_RECORDS, 2000),
     },
     publicBaseUrl,
+    editorUrl: strip(env.EDITOR_URL) || 'http://127.0.0.1:8793',
+    editorTimeoutMs: num(env.EDITOR_TIMEOUT_MS, 120000),
     uploadDir: path.resolve(env.UPLOAD_DIR || path.join(__dirname, 'storage')),
     renderDir: path.resolve(env.RENDER_DIR || path.join(__dirname, '..', 'runtime', 'renders')),
     webDir: path.resolve(env.WEB_DIR || path.join(__dirname, '..', 'web', 'dist')),

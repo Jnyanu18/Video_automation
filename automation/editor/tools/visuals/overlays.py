@@ -7,7 +7,7 @@ from pathlib import Path
 
 from . import snippets
 
-KINDS = ("broll", "lower-third", "title", "graphic")
+KINDS = ("broll", "lower-third", "title", "graphic", "diagram")
 
 
 def _next_id(plan: dict) -> str:
@@ -58,7 +58,7 @@ def add_overlay(plan: dict, kind: str, start: float, end: float, asset: str = ""
     new.setdefault("overlays", []).append(overlay)
     new["overlays"].sort(key=lambda o: (o["start"], o["id"]))
     result = {"overlay": overlay}
-    if workdir and kind != "broll":
+    if workdir and kind not in ("broll", "diagram"):
         out = Path(workdir) / "overlays"
         out.mkdir(parents=True, exist_ok=True)
         o = plan.get("output", {})
@@ -72,11 +72,19 @@ def add_overlay(plan: dict, kind: str, start: float, end: float, asset: str = ""
 
 
 def add_title(plan: dict, text: str, start: float = 0.0, end: float | None = None, subtitle: str = "",
-              style: str = "clean", position: str = "center", workdir: str | None = None, **_) -> dict:
+              style: str = "clean", position: str = "center", y: float | None = None, size: float | None = None,
+              box: bool = False, workdir: str | None = None, **_) -> dict:
+    """Title card. y = vertical centre of the card as a fraction of the frame height (0 top .. 1 bottom; overrides position),
+    size = font size in px on a 1080-wide frame (default 72), box = dark rounded box behind the text for legibility."""
     if not str(text).strip():
         return _fail(plan, "title text is empty")
     end = start + 3.0 if end is None else end
     p = {"text": text, "subtitle": subtitle, "style": style, "position": position}
+    for k, v in (("y", y), ("size", size)):
+        if v is not None:
+            p[k] = float(v)
+    if box:
+        p["box"] = True
     return add_overlay(plan, "title", start, end, "title", p, workdir)
 
 
@@ -87,3 +95,26 @@ def add_lower_third(plan: dict, name: str, start: float, end: float | None = Non
     end = start + 4.0 if end is None else end
     p = {"name": name, "subtitle": subtitle, "style": style}
     return add_overlay(plan, "lower-third", start, end, "lower-third", p, workdir)
+
+
+def add_diagram(plan: dict, template: str, start: float, end: float, workdir: str | None = None, **kw) -> dict:
+    """Animated explainer diagram over SOURCE time start..end, drawn in a panel below a talking head's face.
+    Templates and their fields:
+      flow    steps:[2-5 short labels]                      e.g. ["Ask","Preview","Approve","Done"]
+      versus  left,right:{tag,text,value 0..1,tone good|bad}  e.g. EASY (value 1) vs HARD (value 0.3)
+      counter value:number, suffix:"+", caption:"users"      a number counting up
+      brands  top:[names], top_caption, bottom, bottom_caption  "big names do X; we do Y"
+      shift   from:"Click through menus", to:"Just ask an agent"
+    Keep every text short; show it for 3 to 8 seconds, never over a hook title."""
+    from services.render.diagrams import DiagramError, validate
+    prm = {"template": template}
+    for k in ("steps", "left", "right", "value", "suffix", "caption", "top", "top_caption", "bottom", "bottom_caption", "from", "to", "scene"):
+        if k in kw and kw[k] is not None:
+            prm[k] = kw[k]
+    try:
+        validate(prm, float(end) - float(start))
+    except DiagramError as e:
+        return _fail(plan, f"diagram not added: {e}")
+    if float(end) - float(start) < 2.0:
+        return _fail(plan, "a diagram needs at least 2 seconds on screen to be understood")
+    return add_overlay(plan, "diagram", start, end, "diagram", prm, workdir)
