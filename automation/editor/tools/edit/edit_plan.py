@@ -16,6 +16,24 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 # Timebase resolution: microsecond precision + frame indexing
 TIME_EPSILON = 1e-4
 
+# Re-export Layer 1, Layer 2, Layer 3 Models and Adapters
+from .creative_plan import CreativeBrief, CreativeBeat, StyleGuide, CreativePlan  # noqa: F401
+from .canonical_plan import (  # noqa: F401
+    CanonicalEditPlan,
+    TimebaseConfig,
+    SourceAsset,
+    TimelineClip,
+    CaptionGroup,
+    OverlayItem,
+    SFXCue,
+    AudioComposition,
+    PatchOperation,
+    EditorialPatch,
+    PatchRecord,
+)
+from .render_plan import RenderPlan, compile_render_plan  # noqa: F401
+from .adapters import to_legacy_dict, from_legacy_dict  # noqa: F401
+
 class EditPlanError(ValueError):
     """Raised when an EditPlan violation or invalid operation occurs."""
     pass
@@ -307,3 +325,14 @@ class EditPlanManager:
             self.cursor += 1
             return self.current
         return None
+
+    def to_canonical(self) -> CanonicalEditPlan:
+        """Convert current active legacy plan to a validated CanonicalEditPlan."""
+        return from_legacy_dict(self.current)
+
+    @classmethod
+    def from_canonical(cls, canonical: CanonicalEditPlan) -> EditPlanManager:
+        """Create an EditPlanManager instance from a CanonicalEditPlan."""
+        legacy_dict = to_legacy_dict(canonical)
+        return cls(legacy_dict)
+
