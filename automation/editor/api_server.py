@@ -1408,7 +1408,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             raise HTTPException(400, f"Unknown action: {req.action}")
 
     @app.get("/api/editor/qa/inspect")
-    def get_qa_inspect(video_path: Optional[str] = None, render_id: Optional[str] = None):
+    def get_qa_inspect(video_path: Optional[str] = None, render_id: Optional[str] = None, ai_review: bool = False):
         vpath = None
         if video_path:
             vpath = resolve_media(video_path)
@@ -1424,7 +1424,14 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             raise HTTPException(404, "No rendered video found to inspect. Run a render first, or provide video_path or render_id.")
         
         rep = inspect_rendered_mp4(str(vpath))
-        return {"ok": True, "report": rep.to_dict()}
+        rep_dict = rep.to_dict()
+        if ai_review and (os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")):
+            try:
+                rev = ave_integration.review_video_with_gemini(str(vpath), {"product": "AILO AI Video Editor", "tone": "authentic", "duration_seconds": int(rep.duration)})
+                rep_dict["ai_review"] = rev.get("score")
+            except Exception as e:
+                log.warning("AVE Gemini AI review skipped: %s", e)
+        return {"ok": True, "report": rep_dict}
 
     @app.get("/api/editor/styles/dna")
     def get_styles_dna():
@@ -1535,6 +1542,82 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     def post_editing_memory_import(req: MemoryImportReq):
         cnt = memory_store.import_from_csv(req.csv_data)
         return {"ok": True, "imported_count": cnt, "total_records": len(memory_store.records)}
+
+    # ------------------------------------------------------------ Agentic Video Editor (AVE) Integration
+    from studio import ave_integration
+
+    class AVEPreprocessReq(BaseModel):
+        footage_dir: str
+        output_path: Optional[str] = None
+
+    class AVEPipelineReq(BaseModel):
+        footage_dir: str
+        brief: Dict[str, Any] = Field(default_factory=lambda: {"product": "AILO AI Video Editor", "tone": "authentic", "duration_seconds": 30})
+        pipeline: str = "ugc-ad"
+        style: Optional[str] = "dtc-testimonial"
+        human_approval: bool = False
+
+    class AVEReviewReq(BaseModel):
+        video_path: str
+        brief: Dict[str, Any] = Field(default_factory=lambda: {"product": "AILO AI Video Editor", "tone": "authentic", "duration_seconds": 30})
+
+    @app.get("/api/editor/ave/status")
+    def get_ave_status():
+        available = ave_integration.is_ave_available()
+        return {
+            "ok": True,
+            "available": available,
+            "pipelines": ave_integration.list_pipelines() if available else [],
+            "styles": ave_integration.list_styles() if available else [],
+        }
+
+    @app.post("/api/editor/ave/preprocess")
+    def post_ave_preprocess(req: AVEPreprocessReq):
+        try:
+            p = resolve_media(req.footage_dir)
+            if not p.is_dir():
+                # Allow raw footage fallback
+                raw_root = _find_up("raw footage", REPO_ROOT)
+                if raw_root and (raw_root / req.footage_dir).is_dir():
+                    p = raw_root / req.footage_dir
+                else:
+                    raise HTTPException(404, f"Footage directory not found: {req.footage_dir}")
+            res = ave_integration.preprocess_footage_dir(p, req.output_path)
+            return {"ok": True, "index": res}
+        except Exception as e:
+            raise HTTPException(500, f"AVE Preprocess failed: {e}")
+
+    @app.post("/api/editor/ave/pipeline")
+    def post_ave_pipeline(req: AVEPipelineReq):
+        try:
+            p = resolve_media(req.footage_dir)
+            if not p.is_dir():
+                raw_root = _find_up("raw footage", REPO_ROOT)
+                if raw_root and (raw_root / req.footage_dir).is_dir():
+                    p = raw_root / req.footage_dir
+                else:
+                    raise HTTPException(404, f"Footage directory not found: {req.footage_dir}")
+            res = ave_integration.run_agentic_edit(
+                footage_dir=p,
+                brief_data=req.brief,
+                pipeline_name=req.pipeline,
+                style_name=req.style,
+                human_approval=req.human_approval,
+            )
+            return res
+        except Exception as e:
+            raise HTTPException(500, f"AVE Pipeline failed: {e}")
+
+    @app.post("/api/editor/ave/review")
+    def post_ave_review(req: AVEReviewReq):
+        try:
+            vpath = resolve_media(req.video_path)
+            if not vpath.is_file():
+                raise HTTPException(404, f"Video not found: {req.video_path}")
+            res = ave_integration.review_video_with_gemini(str(vpath), req.brief)
+            return res
+        except Exception as e:
+            raise HTTPException(500, f"AVE Review failed: {e}")
 
     return app
 

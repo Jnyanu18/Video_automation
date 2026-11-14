@@ -14,11 +14,13 @@ export default function RenderQAScreen() {
   const [qaReport, setQaReport] = useState<any>(null);
   const [inspecting, setInspecting] = useState(false);
   const [repairing, setRepairing] = useState(false);
+  const [aiReviewing, setAiReviewing] = useState(false);
 
-  async function loadQA() {
-    setInspecting(true);
+  async function loadQA(withAiReview = false) {
+    if (withAiReview) setAiReviewing(true);
+    else setInspecting(true);
     try {
-      const res = await get('/api/editor/qa/inspect');
+      const res = await get(`/api/editor/qa/inspect${withAiReview ? '?ai_review=true' : ''}`);
       if (res?.report) {
         setQaReport(res.report);
       }
@@ -26,6 +28,7 @@ export default function RenderQAScreen() {
       console.warn('QA inspect fallback:', err);
     } finally {
       setInspecting(false);
+      setAiReviewing(false);
     }
   }
 
@@ -79,13 +82,20 @@ export default function RenderQAScreen() {
               </T>
             </View>
 
-            <View style={{ flexDirection: 'row', gap: spacing.sm }}>
+            <View style={{ flexDirection: 'row', gap: spacing.sm, flexWrap: 'wrap' }}>
               <Button
                 label={inspecting ? 'Inspecting...' : 'Re-Inspect Video'}
                 variant="secondary"
                 icon="refresh"
                 loading={inspecting}
-                onPress={loadQA}
+                onPress={() => loadQA(false)}
+              />
+              <Button
+                label={aiReviewing ? 'Analyzing with Gemini...' : 'AI Multimodal Review'}
+                variant="secondary"
+                icon="cpu"
+                loading={aiReviewing}
+                onPress={() => loadQA(true)}
               />
               {report.critical_count > 0 || report.major_count > 0 ? (
                 <Button
@@ -141,6 +151,56 @@ export default function RenderQAScreen() {
             </View>
           </View>
         </Card>
+
+        {/* AI Multimodal Review Scorecard (AVE Integration) */}
+        {report.ai_review && (
+          <Card style={{ padding: spacing.xl, borderColor: colors.primary }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.sm }}>
+              <SectionTitle title="Agentic Multimodal Review (Gemini 3.1 Pro)" />
+              <Badge label={`OVERALL AI: ${Math.round((report.ai_review.overall || 0) * 100)}%`} tone="info" dot />
+            </View>
+            <View style={styles.metricsGrid}>
+              <View style={styles.metricCell}>
+                <T variant="caption" muted>ADHERENCE TO BRIEF</T>
+                <T variant="stat" style={{ fontSize: 22, color: colors.success }}>
+                  {Math.round((report.ai_review.adherence || 0) * 100)}%
+                </T>
+                <T variant="small" muted>Product & audience match</T>
+              </View>
+
+              <View style={styles.metricCell}>
+                <T variant="caption" muted>PACING & HOOK</T>
+                <T variant="stat" style={{ fontSize: 22, color: colors.warning }}>
+                  {Math.round((report.ai_review.pacing || 0) * 100)}%
+                </T>
+                <T variant="small" muted>Cut rhythm & energy arc</T>
+              </View>
+
+              <View style={styles.metricCell}>
+                <T variant="caption" muted>VISUAL QUALITY</T>
+                <T variant="stat" style={{ fontSize: 22 }}>
+                  {Math.round((report.ai_review.visual_quality || 0) * 100)}%
+                </T>
+                <T variant="small" muted>Framing & composition</T>
+              </View>
+
+              <View style={styles.metricCell}>
+                <T variant="caption" muted>WATCHABILITY</T>
+                <T variant="stat" style={{ fontSize: 22, color: colors.primary }}>
+                  {Math.round((report.ai_review.watchability || 0) * 100)}%
+                </T>
+                <T variant="small" muted>Retention likelihood</T>
+              </View>
+            </View>
+
+            {report.ai_review.feedback ? (
+              <View style={{ marginTop: spacing.lg, padding: spacing.md, backgroundColor: colors.surfaceAlt, borderRadius: radius.md, borderLeftWidth: 3, borderLeftColor: colors.primary }}>
+                <T variant="label" style={{ color: colors.primary, marginBottom: 4 }}>Actionable Editorial Feedback:</T>
+                <T variant="body" style={{ lineHeight: 22 }}>{report.ai_review.feedback}</T>
+              </View>
+            ) : null}
+          </Card>
+        )}
 
         {/* Defects & Findings Breakdown */}
         <SectionTitle title="Inspection Findings & Defect Classification" />

@@ -122,6 +122,12 @@ export const editor = {
   schedule: (body: Record<string, unknown>) => post<{ item: PublishItem }>('/api/editor/publishing/schedule', body),
   pubAction: (id: string, action: 'cancel' | 'retry' | 'confirm-retry') => post(`/api/editor/publishing/${id}/${action}`),
   metrics: (id: string, body: Record<string, unknown>) => request('PUT', `/api/editor/publishing/${id}/metrics`, { body }),
+
+  // Agentic Video Editor (AVE) Multi-Agent Engine
+  aveStatus: () => get<{ ok: boolean; available: boolean; pipelines: any[]; styles: any[] }>('/api/editor/ave/status'),
+  avePreprocess: (body: { footage_dir: string; output_path?: string }) => post<{ ok: boolean; index: any }>('/api/editor/ave/preprocess', body),
+  avePipeline: (body: { footage_dir: string; brief?: Record<string, unknown>; pipeline?: string; style?: string; human_approval?: boolean }) => post<any>('/api/editor/ave/pipeline', body),
+  aveReview: (body: { video_path: string; brief?: Record<string, unknown> }) => post<any>('/api/editor/ave/review', body),
 };
 
 export const when = (ts?: number | null) => (ts ? new Date(ts * 1000).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
