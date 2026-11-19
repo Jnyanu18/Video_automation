@@ -12,6 +12,7 @@ from __future__ import annotations
 import base64
 import json
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
@@ -93,22 +94,38 @@ class KitRenderer:
         )
 
     def prepare(self, job_dir: Path) -> None:
-        """Lay out a job directory from the kit without copying node_modules.
+        """Lay out a film project, which is NOT a copy of the kit.
 
-        node_modules is hundreds of megabytes; copying it per job would dominate
-        the run time. The kit's own copy is reused in place via NODE_PATH and by
-        running render.mjs from the kit root with --project.
+        render.mjs defines the shape: a project holds its own `src/film.tsx`
+        (plus optional `public/`, `score.py`, `plan.md`), and the kit supplies
+        `Root.tsx`, `src/kit/*`, the Geist fonts and node_modules through the
+        `@film` / `@kit` webpack aliases. Copying the kit's `src/` in here
+        instead was wrong: it duplicated kit internals and still rendered the
+        kit's own sample film, because without `--project` the renderer treats
+        the kit as the project.
         """
         job_dir.mkdir(parents=True, exist_ok=True)
-        for rel in ("src", "public", "package.json", "tsconfig.json",
-                    "score.py", "scorelib.py", "gate.py"):
-            src = self.kit_root / rel
-            dst = job_dir / rel
-            if dst.exists() or not src.exists():
-                continue
-            if src.is_dir():
-                shutil.copytree(src, dst)
-            else:
+        (job_dir / "src").mkdir(exist_ok=True)
+        (job_dir / "public").mkdir(exist_ok=True)
+
+        # Seed the film entry so a render works before Claude has written one.
+        #
+        # The sample lives in the kit's examples/ and imports '../src/kit/core'
+        # relatively. From a project directory that path does not exist, so the
+        # relative kit imports are rewritten to the '@kit/*' alias that
+        # render.mjs and tsconfig both already define. A project's film.tsx must
+        # always import the kit through '@kit/...'.
+        film = job_dir / "src" / "film.tsx"
+        seed = self.kit_root / "examples" / "sample-film.tsx"
+        if not film.exists() and seed.exists():
+            text = seed.read_text(encoding="utf-8")
+            text = re.sub(r"(['\"])(?:\.\./)+src/kit/", r"\1@kit/", text)
+            film.write_text(text, encoding="utf-8")
+
+        # score.py builds the soundtrack and imports scorelib from beside it.
+        for rel in ("score.py", "scorelib.py"):
+            src, dst = self.kit_root / rel, job_dir / rel
+            if src.exists() and not dst.exists():
                 shutil.copy2(src, dst)
 
     def build_audio(self, job_dir: Path) -> str:
@@ -122,8 +139,9 @@ class KitRenderer:
             raise ValueError("render_stills needs at least one time")
         if len(times) > MAX_STILLS_PER_CALL:
             raise ValueError(f"at most {MAX_STILLS_PER_CALL} stills per call")
-        cmd = ["node", str(self.kit_root / "render.mjs"), "--stills",
-               *[f"{t:g}" for t in times], "--format", "jpeg", "--width", str(STILL_WIDTH)]
+        cmd = ["node", str(self.kit_root / "render.mjs"), "--project", str(job_dir),
+               "--stills", *[f"{t:g}" for t in times],
+               "--format", "jpeg", "--width", str(STILL_WIDTH)]
         p = self._run(job_dir, cmd)
         if p.returncode != 0:
             raise RuntimeError(f"render_stills failed:\n{p.stderr.strip()}")
@@ -139,7 +157,8 @@ class KitRenderer:
         safe = Path(name).name
         if not safe.endswith(".mp4"):
             safe += ".mp4"
-        cmd = ["node", str(self.kit_root / "render.mjs"), "--final", "--name", safe, "--json"]
+        cmd = ["node", str(self.kit_root / "render.mjs"), "--project", str(job_dir),
+               "--final", "--name", safe, "--json"]
         p = self._run(job_dir, cmd)
         line = next((l for l in reversed(p.stdout.splitlines()) if l.strip().startswith("{")), "")
         if not line:

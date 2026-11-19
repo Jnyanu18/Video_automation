@@ -37,13 +37,22 @@ if (!existsSync(filmEntry)) throw new Error(`film entry not found: ${filmEntry}`
 const out = resolve(project, 'out');
 mkdirSync(resolve(out, 'stills'), {recursive: true});
 
-// Public dir: a project's own public/ overlaid on the kit's shared fonts (Geist). The kit itself uses public/ directly.
+// Public dir: a project's own public/ overlaid on the kit's shared assets. The kit itself uses public/ directly.
+//
+// Every shared asset is copied, not just the Geist fonts: kit components reference
+// other files too (core.tsx uses grain.png), and copying fonts alone made any
+// project render die with a 404 on grain.png rather than a readable error.
+// soundtrack.wav is excluded because it is per-film output that score.py writes;
+// inheriting the kit's would silently score a project with the wrong audio.
+const SHARED_SKIP = /^soundtrack\.wav$/i;
 let publicDir = resolve(kit, 'public');
 if (projectArg) {
   publicDir = resolve(out, '.public');
   rmSync(publicDir, {recursive: true, force: true});
   mkdirSync(publicDir, {recursive: true});
-  for (const f of readdirSync(resolve(kit, 'public'))) if (/^Geist/.test(f)) cpSync(resolve(kit, 'public', f), resolve(publicDir, f));
+  for (const f of readdirSync(resolve(kit, 'public'))) {
+    if (!SHARED_SKIP.test(f)) cpSync(resolve(kit, 'public', f), resolve(publicDir, f), {recursive: true});
+  }
   if (existsSync(resolve(project, 'public'))) cpSync(resolve(project, 'public'), publicDir, {recursive: true});
 }
 
