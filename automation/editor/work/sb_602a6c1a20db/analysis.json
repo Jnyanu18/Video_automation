@@ -1,0 +1,701 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\009b7275bb3d5db436a705d891e549f9.mp4",
+  "probe": {
+    "duration": 25.4,
+    "width": 1080,
+    "height": 1920,
+    "fps": 30.0,
+    "has_video": true,
+    "has_audio": true,
+    "video_codec": "h264",
+    "audio_codec": "aac"
+  },
+  "silences": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\009b7275bb3d5db436a705d891e549f9.mp4",
+    "duration": 25.4,
+    "noise_db": -35,
+    "min_len": 0.5,
+    "silences": [
+      {
+        "start": 24.346,
+        "end": 25.4
+      }
+    ],
+    "speech": [
+      {
+        "start": 0.0,
+        "end": 24.346
+      }
+    ],
+    "silence_total": 1.054,
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_602a6c1a20db\\silences.json"
+  },
+  "scenes": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\009b7275bb3d5db436a705d891e549f9.mp4",
+    "duration": 25.4,
+    "threshold": 0.3,
+    "cuts": [],
+    "scenes": [
+      {
+        "index": 0,
+        "start": 0.0,
+        "end": 25.4
+      }
+    ],
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_602a6c1a20db\\scenes.json"
+  },
+  "transcript": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\009b7275bb3d5db436a705d891e549f9.mp4",
+    "backend": "faster-whisper",
+    "status": "ok",
+    "language": "en",
+    "words": [
+      {
+        "word": "Hello",
+        "start": 0.0,
+        "end": 0.44
+      },
+      {
+        "word": "everyone,",
+        "start": 0.44,
+        "end": 0.92
+      },
+      {
+        "word": "as",
+        "start": 1.18,
+        "end": 1.32
+      },
+      {
+        "word": "we",
+        "start": 1.32,
+        "end": 1.42
+      },
+      {
+        "word": "celebrate",
+        "start": 1.42,
+        "end": 1.92
+      },
+      {
+        "word": "Diwali,",
+        "start": 1.92,
+        "end": 2.28
+      },
+      {
+        "word": "the",
+        "start": 2.64,
+        "end": 2.74
+      },
+      {
+        "word": "Festival",
+        "start": 2.74,
+        "end": 3.1
+      },
+      {
+        "word": "of",
+        "start": 3.1,
+        "end": 3.32
+      },
+      {
+        "word": "Light,",
+        "start": 3.32,
+        "end": 3.5
+      },
+      {
+        "word": "let's",
+        "start": 3.9,
+        "end": 4.2
+      },
+      {
+        "word": "remember",
+        "start": 4.2,
+        "end": 4.46
+      },
+      {
+        "word": "that",
+        "start": 4.46,
+        "end": 4.7
+      },
+      {
+        "word": "knowledge",
+        "start": 4.7,
+        "end": 5.04
+      },
+      {
+        "word": "dispels",
+        "start": 5.04,
+        "end": 5.58
+      },
+      {
+        "word": "darkness",
+        "start": 5.58,
+        "end": 6.02
+      },
+      {
+        "word": "just",
+        "start": 6.02,
+        "end": 6.36
+      },
+      {
+        "word": "like",
+        "start": 6.36,
+        "end": 6.64
+      },
+      {
+        "word": "lamps",
+        "start": 6.64,
+        "end": 7.02
+      },
+      {
+        "word": "brighten",
+        "start": 7.02,
+        "end": 7.32
+      },
+      {
+        "word": "our",
+        "start": 7.32,
+        "end": 7.5
+      },
+      {
+        "word": "homes.",
+        "start": 7.5,
+        "end": 7.84
+      },
+      {
+        "word": "May",
+        "start": 8.66,
+        "end": 9.1
+      },
+      {
+        "word": "this",
+        "start": 9.1,
+        "end": 9.28
+      },
+      {
+        "word": "season",
+        "start": 9.28,
+        "end": 9.66
+      },
+      {
+        "word": "inspire",
+        "start": 9.66,
+        "end": 10.12
+      },
+      {
+        "word": "curiosity,",
+        "start": 10.12,
+        "end": 10.84
+      },
+      {
+        "word": "foster",
+        "start": 11.3,
+        "end": 11.62
+      },
+      {
+        "word": "growth,",
+        "start": 11.62,
+        "end": 11.92
+      },
+      {
+        "word": "and",
+        "start": 12.32,
+        "end": 12.46
+      },
+      {
+        "word": "bring",
+        "start": 12.46,
+        "end": 12.66
+      },
+      {
+        "word": "peace",
+        "start": 12.66,
+        "end": 12.94
+      },
+      {
+        "word": "to",
+        "start": 12.94,
+        "end": 13.12
+      },
+      {
+        "word": "your",
+        "start": 13.12,
+        "end": 13.26
+      },
+      {
+        "word": "studies",
+        "start": 13.26,
+        "end": 13.56
+      },
+      {
+        "word": "and",
+        "start": 13.56,
+        "end": 13.82
+      },
+      {
+        "word": "careers.",
+        "start": 13.82,
+        "end": 14.24
+      },
+      {
+        "word": "Wishing",
+        "start": 15.24,
+        "end": 15.7
+      },
+      {
+        "word": "you",
+        "start": 15.7,
+        "end": 15.9
+      },
+      {
+        "word": "a",
+        "start": 15.9,
+        "end": 16.0
+      },
+      {
+        "word": "joyous",
+        "start": 16.0,
+        "end": 16.42
+      },
+      {
+        "word": "Diwali",
+        "start": 16.42,
+        "end": 16.78
+      },
+      {
+        "word": "filled",
+        "start": 16.78,
+        "end": 17.08
+      },
+      {
+        "word": "with",
+        "start": 17.08,
+        "end": 17.36
+      },
+      {
+        "word": "learning,",
+        "start": 17.36,
+        "end": 17.62
+      },
+      {
+        "word": "harmony,",
+        "start": 18.12,
+        "end": 18.46
+      },
+      {
+        "word": "and",
+        "start": 18.76,
+        "end": 18.96
+      },
+      {
+        "word": "bright",
+        "start": 18.96,
+        "end": 19.18
+      },
+      {
+        "word": "opportunities.",
+        "start": 19.18,
+        "end": 19.84
+      },
+      {
+        "word": "Stay",
+        "start": 20.72,
+        "end": 21.36
+      },
+      {
+        "word": "motivated",
+        "start": 21.36,
+        "end": 21.92
+      },
+      {
+        "word": "and",
+        "start": 21.92,
+        "end": 22.36
+      },
+      {
+        "word": "let",
+        "start": 22.36,
+        "end": 22.52
+      },
+      {
+        "word": "the",
+        "start": 22.52,
+        "end": 22.68
+      },
+      {
+        "word": "light",
+        "start": 22.68,
+        "end": 22.86
+      },
+      {
+        "word": "of",
+        "start": 22.86,
+        "end": 23.02
+      },
+      {
+        "word": "education",
+        "start": 23.02,
+        "end": 23.48
+      },
+      {
+        "word": "guide",
+        "start": 23.48,
+        "end": 23.84
+      },
+      {
+        "word": "your",
+        "start": 23.84,
+        "end": 24.04
+      },
+      {
+        "word": "path.",
+        "start": 24.04,
+        "end": 24.3
+      }
+    ],
+    "segments": [
+      {
+        "text": "Hello everyone, as we celebrate Diwali, the Festival of Light, let's remember that knowledge",
+        "start": 0.0,
+        "end": 5.04,
+        "words": [
+          {
+            "word": "Hello",
+            "start": 0.0,
+            "end": 0.44
+          },
+          {
+            "word": "everyone,",
+            "start": 0.44,
+            "end": 0.92
+          },
+          {
+            "word": "as",
+            "start": 1.18,
+            "end": 1.32
+          },
+          {
+            "word": "we",
+            "start": 1.32,
+            "end": 1.42
+          },
+          {
+            "word": "celebrate",
+            "start": 1.42,
+            "end": 1.92
+          },
+          {
+            "word": "Diwali,",
+            "start": 1.92,
+            "end": 2.28
+          },
+          {
+            "word": "the",
+            "start": 2.64,
+            "end": 2.74
+          },
+          {
+            "word": "Festival",
+            "start": 2.74,
+            "end": 3.1
+          },
+          {
+            "word": "of",
+            "start": 3.1,
+            "end": 3.32
+          },
+          {
+            "word": "Light,",
+            "start": 3.32,
+            "end": 3.5
+          },
+          {
+            "word": "let's",
+            "start": 3.9,
+            "end": 4.2
+          },
+          {
+            "word": "remember",
+            "start": 4.2,
+            "end": 4.46
+          },
+          {
+            "word": "that",
+            "start": 4.46,
+            "end": 4.7
+          },
+          {
+            "word": "knowledge",
+            "start": 4.7,
+            "end": 5.04
+          }
+        ]
+      },
+      {
+        "text": "dispels darkness just like lamps brighten our homes.",
+        "start": 5.04,
+        "end": 7.84,
+        "words": [
+          {
+            "word": "dispels",
+            "start": 5.04,
+            "end": 5.58
+          },
+          {
+            "word": "darkness",
+            "start": 5.58,
+            "end": 6.02
+          },
+          {
+            "word": "just",
+            "start": 6.02,
+            "end": 6.36
+          },
+          {
+            "word": "like",
+            "start": 6.36,
+            "end": 6.64
+          },
+          {
+            "word": "lamps",
+            "start": 6.64,
+            "end": 7.02
+          },
+          {
+            "word": "brighten",
+            "start": 7.02,
+            "end": 7.32
+          },
+          {
+            "word": "our",
+            "start": 7.32,
+            "end": 7.5
+          },
+          {
+            "word": "homes.",
+            "start": 7.5,
+            "end": 7.84
+          }
+        ]
+      },
+      {
+        "text": "May this season inspire curiosity, foster growth, and bring peace to your studies and",
+        "start": 8.66,
+        "end": 13.82,
+        "words": [
+          {
+            "word": "May",
+            "start": 8.66,
+            "end": 9.1
+          },
+          {
+            "word": "this",
+            "start": 9.1,
+            "end": 9.28
+          },
+          {
+            "word": "season",
+            "start": 9.28,
+            "end": 9.66
+          },
+          {
+            "word": "inspire",
+            "start": 9.66,
+            "end": 10.12
+          },
+          {
+            "word": "curiosity,",
+            "start": 10.12,
+            "end": 10.84
+          },
+          {
+            "word": "foster",
+            "start": 11.3,
+            "end": 11.62
+          },
+          {
+            "word": "growth,",
+            "start": 11.62,
+            "end": 11.92
+          },
+          {
+            "word": "and",
+            "start": 12.32,
+            "end": 12.46
+          },
+          {
+            "word": "bring",
+            "start": 12.46,
+            "end": 12.66
+          },
+          {
+            "word": "peace",
+            "start": 12.66,
+            "end": 12.94
+          },
+          {
+            "word": "to",
+            "start": 12.94,
+            "end": 13.12
+          },
+          {
+            "word": "your",
+            "start": 13.12,
+            "end": 13.26
+          },
+          {
+            "word": "studies",
+            "start": 13.26,
+            "end": 13.56
+          },
+          {
+            "word": "and",
+            "start": 13.56,
+            "end": 13.82
+          }
+        ]
+      },
+      {
+        "text": "careers.",
+        "start": 13.82,
+        "end": 14.24,
+        "words": [
+          {
+            "word": "careers.",
+            "start": 13.82,
+            "end": 14.24
+          }
+        ]
+      },
+      {
+        "text": "Wishing you a joyous Diwali filled with learning, harmony, and bright opportunities.",
+        "start": 15.24,
+        "end": 19.84,
+        "words": [
+          {
+            "word": "Wishing",
+            "start": 15.24,
+            "end": 15.7
+          },
+          {
+            "word": "you",
+            "start": 15.7,
+            "end": 15.9
+          },
+          {
+            "word": "a",
+            "start": 15.9,
+            "end": 16.0
+          },
+          {
+            "word": "joyous",
+            "start": 16.0,
+            "end": 16.42
+          },
+          {
+            "word": "Diwali",
+            "start": 16.42,
+            "end": 16.78
+          },
+          {
+            "word": "filled",
+            "start": 16.78,
+            "end": 17.08
+          },
+          {
+            "word": "with",
+            "start": 17.08,
+            "end": 17.36
+          },
+          {
+            "word": "learning,",
+            "start": 17.36,
+            "end": 17.62
+          },
+          {
+            "word": "harmony,",
+            "start": 18.12,
+            "end": 18.46
+          },
+          {
+            "word": "and",
+            "start": 18.76,
+            "end": 18.96
+          },
+          {
+            "word": "bright",
+            "start": 18.96,
+            "end": 19.18
+          },
+          {
+            "word": "opportunities.",
+            "start": 19.18,
+            "end": 19.84
+          }
+        ]
+      },
+      {
+        "text": "Stay motivated and let the light of education guide your path.",
+        "start": 20.72,
+        "end": 24.3,
+        "words": [
+          {
+            "word": "Stay",
+            "start": 20.72,
+            "end": 21.36
+          },
+          {
+            "word": "motivated",
+            "start": 21.36,
+            "end": 21.92
+          },
+          {
+            "word": "and",
+            "start": 21.92,
+            "end": 22.36
+          },
+          {
+            "word": "let",
+            "start": 22.36,
+            "end": 22.52
+          },
+          {
+            "word": "the",
+            "start": 22.52,
+            "end": 22.68
+          },
+          {
+            "word": "light",
+            "start": 22.68,
+            "end": 22.86
+          },
+          {
+            "word": "of",
+            "start": 22.86,
+            "end": 23.02
+          },
+          {
+            "word": "education",
+            "start": 23.02,
+            "end": 23.48
+          },
+          {
+            "word": "guide",
+            "start": 23.48,
+            "end": 23.84
+          },
+          {
+            "word": "your",
+            "start": 23.84,
+            "end": 24.04
+          },
+          {
+            "word": "path.",
+            "start": 24.04,
+            "end": 24.3
+          }
+        ]
+      }
+    ],
+    "text": "Hello everyone, as we celebrate Diwali, the Festival of Light, let's remember that knowledge dispels darkness just like lamps brighten our homes. May this season inspire curiosity, foster growth, and bring peace to your studies and careers. Wishing you a joyous Diwali filled with learning, harmony, and bright opportunities. Stay motivated and let the light of education guide your path.",
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_602a6c1a20db\\transcript.json"
+  }
+}

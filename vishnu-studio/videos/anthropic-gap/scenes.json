@@ -1,0 +1,24 @@
+[
+ {
+  "scene": "climb",
+  "at": "theres a",
+  "bg": "#f4f2ee",
+  "section": "the gap is a height: three thin platforms to climb, goal, interview, check",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "anthropic-gap",
+   "parts": {
+    "gap": "huge gap", "devs": "devs at", "else": "everyone else", "most": "most people", "guide": "anthropics own", "opposite": "the opposite",
+    "s1": "start with", "c1": "start with", "done": "done looks",
+    "s2": "not sure", "c2": "not sure", "say": "say interview", "asks": "it asks",
+    "s3": "then give", "c3": "then give", "green": "turn green", "finished": "its finished",
+    "goal3": "goal interview", "interview3": "interview check", "check3": "check thats",
+    "top": "thats the gap", "five": "the gap", "comment": "comment guide"
+   }
+  }
+ }
+]

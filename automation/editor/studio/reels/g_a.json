@@ -1,0 +1,140 @@
+{
+ "name": "gritstones-a-comfort-meets-style",
+ "brand": {
+  "font": "Outfit",
+  "accent": "#2ee6c5",
+  "accent_light": "#0c7a6b",
+  "light": "#f4f4f1",
+  "dark": "#0e0f10",
+  "navy": "#17302d",
+  "ink_dark": "#f4f4f1",
+  "ink_light": "#16191a"
+ },
+ "voice": "prabhat",
+ "rate": "+4%",
+ "music": {
+  "style": "drive",
+  "volume": 0.2,
+  "seed": 31
+ },
+ "scenes": [
+  {
+   "kind": "kinetic",
+   "theme": "dark",
+   "words": [
+    "Comfort",
+    "meets",
+    "style."
+   ],
+   "accent": [
+    2
+   ],
+   "say": "Comfort meets style.",
+   "duration": 3.0,
+   "sfx": [
+    {
+     "name": "thud",
+     "at": 0.3,
+     "volume": 0.6
+    },
+    {
+     "name": "thud",
+     "at": 1.2,
+     "volume": 0.6
+    }
+   ]
+  },
+  {
+   "kind": "photos",
+   "theme": "light",
+   "tall": true,
+   "duration": 8.4,
+   "images": [
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/white-self-waffle-henley-t_2.jpg",
+     "label": "Waffle henley"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/olive-ottoman-long-sleeve-_1.jpg",
+     "label": "Hooded henley tee"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/steel-grey-6-multi-pocket-_1.jpg",
+     "label": "Multi-pocket cargos"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/premium-black-quilted-puff_1.jpg",
+     "label": "Quilted puffer jacket"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/vintage-black-washed-cargo_1.jpg",
+     "label": "Washed cargo jeans"
+    },
+    {
+     "src": "J:/ai editor/clients/gritstones/assets/black-mens-minimalist-stre_2.jpg",
+     "label": "Street style track pants"
+    }
+   ],
+   "say": "Waffle henleys. Hooded tees. Cargos. Puffer jackets. New arrivals from Gritstones."
+  },
+  {
+   "kind": "stats",
+   "theme": "dark",
+   "title": "The *easy* part",
+   "items": [
+    {
+     "value": "Free",
+     "label": "shipping above Rs 1,200"
+    },
+    {
+     "value": "7 days",
+     "label": "easy returns and exchange"
+    },
+    {
+     "value": "COD",
+     "label": "cash on delivery available"
+    }
+   ],
+   "sub": "",
+   "say": "Free shipping above twelve hundred rupees. Seven days easy returns and exchange. And cash on delivery.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 1.0
+    },
+    {
+     "name": "pop",
+     "at": 3.4
+    },
+    {
+     "name": "pop",
+     "at": 5.6
+    }
+   ]
+  },
+  {
+   "kind": "cta",
+   "theme": "dark",
+   "lines": [
+    "Dress the",
+    "*part.*"
+   ],
+   "button": "Shop new arrivals",
+   "url": "gritstones.com",
+   "sub": "Buy any 2, get 15% off. Buy any 3, get 20% off.",
+   "say": "Shop the new arrivals at gritstones dot com. Buy any two, get fifteen percent off.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.3,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 2.1,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

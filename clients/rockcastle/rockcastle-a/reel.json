@@ -1,0 +1,501 @@
+{
+  "name": "rockcastle-a-events-dont-just-happen",
+  "brand": {
+    "font": "Montserrat",
+    "accent": "#ff9a1f",
+    "accent_light": "#b85a00",
+    "light": "#faf6f0",
+    "dark": "#0b0b0b",
+    "navy": "#2f1c06",
+    "ink_dark": "#faf6f0",
+    "ink_light": "#141414"
+  },
+  "voice": "ryan",
+  "rate": "+4%",
+  "music": {
+    "style": "drive",
+    "volume": 0.21,
+    "seed": 41
+  },
+  "scenes": [
+    {
+      "kind": "kinetic",
+      "theme": "dark",
+      "words": [
+        "Events",
+        "don't",
+        "just",
+        "happen."
+      ],
+      "accent": [
+        3
+      ],
+      "say": "Events don't just happen.",
+      "duration": 3.0,
+      "sfx": [
+        {
+          "name": "thud",
+          "at": 0.3,
+          "volume": 0.6
+        },
+        {
+          "name": "thud",
+          "at": 1.6,
+          "volume": 0.6
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo0.mp3",
+        "start": 0.25,
+        "duration": 2.184
+      },
+      "_chunks": [
+        [
+          {
+            "text": "Events",
+            "start": 0.35,
+            "end": 0.734625
+          },
+          {
+            "text": "don't",
+            "start": 0.746625,
+            "end": 0.938916
+          },
+          {
+            "text": "just",
+            "start": 0.950958,
+            "end": 1.143249
+          }
+        ],
+        [
+          {
+            "text": "happen",
+            "start": 1.155291,
+            "end": 1.587999
+          }
+        ]
+      ],
+      "_wt": [
+        0.35,
+        0.746625,
+        0.950958,
+        1.155291
+      ]
+    },
+    {
+      "kind": "clips",
+      "theme": "dark",
+      "title": "Someone *builds* them",
+      "clips": [
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 21.75,
+          "label": "The floor",
+          "_file": "assets/clip_1_0.mp4"
+        },
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 103.4,
+          "label": "The stage",
+          "_file": "assets/clip_1_1.mp4"
+        },
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 151.0,
+          "label": "The crew",
+          "_file": "assets/clip_1_2.mp4"
+        },
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 157.0,
+          "label": "Final touches",
+          "_file": "assets/clip_1_3.mp4"
+        }
+      ],
+      "say": "Somebody plans every detail. Designs the space. And builds it, piece by piece.",
+      "_vo": {
+        "file": "assets/vo1.mp3",
+        "start": 0.25,
+        "duration": 7.608
+      },
+      "duration": 8.41,
+      "_chunks": [
+        [
+          {
+            "text": "Somebody",
+            "start": 0.35,
+            "end": 0.854791
+          },
+          {
+            "text": "plans",
+            "start": 0.866833,
+            "end": 1.263458
+          },
+          {
+            "text": "every",
+            "start": 1.2755,
+            "end": 1.503875
+          }
+        ],
+        [
+          {
+            "text": "detail",
+            "start": 1.515875,
+            "end": 2.1168329999999997
+          }
+        ],
+        [
+          {
+            "text": "Designs",
+            "start": 2.94425,
+            "end": 3.485125
+          },
+          {
+            "text": "the",
+            "start": 3.497125,
+            "end": 3.58125
+          },
+          {
+            "text": "space",
+            "start": 3.59325,
+            "end": 4.170166
+          }
+        ],
+        [
+          {
+            "text": "And",
+            "start": 4.9995,
+            "end": 5.215833
+          },
+          {
+            "text": "builds",
+            "start": 5.227875,
+            "end": 5.504333
+          },
+          {
+            "text": "it",
+            "start": 5.516333,
+            "end": 5.696624
+          }
+        ],
+        [
+          {
+            "text": "piece",
+            "start": 5.900958,
+            "end": 6.177416
+          },
+          {
+            "text": "by",
+            "start": 6.189416,
+            "end": 6.417791
+          },
+          {
+            "text": "piece",
+            "start": 6.429791,
+            "end": 7.030749
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "clips",
+      "theme": "dark",
+      "title": "Then the room comes *alive*",
+      "duration": 6.0,
+      "clips": [
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 70.0,
+          "label": "The detail",
+          "_file": "assets/clip_2_0.mp4"
+        },
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 97.1,
+          "label": "The audience",
+          "_file": "assets/clip_2_1.mp4"
+        },
+        {
+          "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+          "start": 167.4,
+          "label": "The team",
+          "_file": "assets/clip_2_2.mp4"
+        }
+      ],
+      "say": "Then the doors open, and the room comes alive.",
+      "_vo": {
+        "file": "assets/vo2.mp3",
+        "start": 0.25,
+        "duration": 3.456
+      },
+      "_chunks": [
+        [
+          {
+            "text": "Then",
+            "start": 0.35,
+            "end": 0.554333
+          },
+          {
+            "text": "the",
+            "start": 0.566333,
+            "end": 0.650458
+          },
+          {
+            "text": "doors",
+            "start": 0.6625,
+            "end": 0.975
+          }
+        ],
+        [
+          {
+            "text": "open",
+            "start": 0.987,
+            "end": 1.323541
+          }
+        ],
+        [
+          {
+            "text": "and",
+            "start": 1.539916,
+            "end": 1.660124
+          },
+          {
+            "text": "the",
+            "start": 1.672125,
+            "end": 1.74425
+          },
+          {
+            "text": "room",
+            "start": 1.75625,
+            "end": 2.0206660000000003
+          }
+        ],
+        [
+          {
+            "text": "comes",
+            "start": 2.032708,
+            "end": 2.285124
+          },
+          {
+            "text": "alive",
+            "start": 2.297125,
+            "end": 2.874041
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "stats",
+      "theme": "dark",
+      "title": "Rockcastle *by numbers*",
+      "items": [
+        {
+          "value": "3000+",
+          "label": "events"
+        },
+        {
+          "value": "120+",
+          "label": "clients"
+        },
+        {
+          "value": "5",
+          "label": "countries"
+        },
+        {
+          "value": "1M+",
+          "label": "smiles"
+        }
+      ],
+      "sub": "10+ years of experience",
+      "say": "Over three thousand events. A hundred and twenty clients. Five countries. A million smiles.",
+      "sfx": [
+        {
+          "name": "pop",
+          "at": 1.0
+        },
+        {
+          "name": "pop",
+          "at": 2.6
+        },
+        {
+          "name": "pop",
+          "at": 4.2
+        },
+        {
+          "name": "pop",
+          "at": 5.6
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo3.mp3",
+        "start": 0.25,
+        "duration": 8.952
+      },
+      "duration": 9.75,
+      "_chunks": [
+        [
+          {
+            "text": "Over",
+            "start": 0.35,
+            "end": 0.6144160000000001
+          },
+          {
+            "text": "three",
+            "start": 0.626458,
+            "end": 0.902916
+          },
+          {
+            "text": "thousand",
+            "start": 0.914916,
+            "end": 1.347624
+          }
+        ],
+        [
+          {
+            "text": "events",
+            "start": 1.359625,
+            "end": 1.888458
+          }
+        ],
+        [
+          {
+            "text": "A",
+            "start": 2.715875,
+            "end": 2.836083
+          },
+          {
+            "text": "hundred",
+            "start": 2.848083,
+            "end": 3.196624
+          },
+          {
+            "text": "and",
+            "start": 3.208666,
+            "end": 3.280791
+          }
+        ],
+        [
+          {
+            "text": "twenty",
+            "start": 3.292791,
+            "end": 3.605291
+          },
+          {
+            "text": "clients",
+            "start": 3.617291,
+            "end": 4.290374
+          }
+        ],
+        [
+          {
+            "text": "Five",
+            "start": 5.119708,
+            "end": 5.552416
+          },
+          {
+            "text": "countries",
+            "start": 5.564416,
+            "end": 6.225457
+          }
+        ],
+        [
+          {
+            "text": "A",
+            "start": 7.054791,
+            "end": 7.174999
+          },
+          {
+            "text": "million",
+            "start": 7.187,
+            "end": 7.631708
+          },
+          {
+            "text": "smiles",
+            "start": 7.64375,
+            "end": 8.364916
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "cta",
+      "theme": "dark",
+      "lines": [
+        "Plan your next",
+        "event with *us.*"
+      ],
+      "button": "Let's talk",
+      "url": "rockcastle.in",
+      "sub": "Experiences unlimited",
+      "say": "Plan your next event with Rockcastle. Experiences, unlimited.",
+      "sfx": [
+        {
+          "name": "stamp",
+          "at": 1.3,
+          "volume": 0.6
+        },
+        {
+          "name": "sparkle",
+          "at": 2.1,
+          "volume": 0.35
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo4.mp3",
+        "start": 0.25,
+        "duration": 5.472
+      },
+      "duration": 6.62,
+      "_chunks": [
+        [
+          {
+            "text": "Plan",
+            "start": 0.35,
+            "end": 0.6024160000000001
+          },
+          {
+            "text": "your",
+            "start": 0.6144160000000001,
+            "end": 0.746624
+          },
+          {
+            "text": "next",
+            "start": 0.758666,
+            "end": 1.0711659999999998
+          }
+        ],
+        [
+          {
+            "text": "event",
+            "start": 1.0831659999999999,
+            "end": 1.371624
+          },
+          {
+            "text": "with",
+            "start": 1.383666,
+            "end": 1.503874
+          },
+          {
+            "text": "Rockcastle",
+            "start": 1.515875,
+            "end": 2.261083
+          }
+        ],
+        [
+          {
+            "text": "Experiences",
+            "start": 3.088458,
+            "end": 4.013958000000001
+          }
+        ],
+        [
+          {
+            "text": "unlimited",
+            "start": 4.218249999999999,
+            "end": 4.879291
+          }
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+[
+ {
+  "w": "The",
+  "s": 0.1,
+  "e": 0.22,
+  "src": 0.1,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "US",
+  "s": 0.22,
+  "e": 0.45,
+  "src": 0.22,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "just",
+  "s": 0.45,
+  "e": 0.7,
+  "src": 0.45,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "banned",
+  "s": 0.7,
+  "e": 1.1,
+  "src": 0.7,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "a",
+  "s": 1.1,
+  "e": 1.2,
+  "src": 1.1,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "Chinese",
+  "s": 1.2,
+  "e": 1.6,
+  "src": 1.2,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "AI.",
+  "s": 1.6,
+  "e": 1.95,
+  "src": 1.6,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "Was",
+  "s": 2.3,
+  "e": 2.5,
+  "src": 2.3,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "that",
+  "s": 2.5,
+  "e": 2.75,
+  "src": 2.5,
+  "spk": "his",
+  "q": false
+ },
+ {
+  "w": "fair?",
+  "s": 2.75,
+  "e": 3.2,
+  "src": 2.75,
+  "spk": "his",
+  "q": false
+ }
+]

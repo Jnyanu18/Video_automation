@@ -1,0 +1,5 @@
+.env
+.env.local
+runtime/
+node_modules/
+server/storage/

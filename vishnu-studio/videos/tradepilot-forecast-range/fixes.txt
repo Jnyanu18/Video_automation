@@ -1,0 +1,1 @@
+words.json: 'Chronos' -> 'Kronos', 'TradePilot' -> 'TRADEPILOT' (script words), 2026-11-04, fifth script. LISTEN to how the voice says Kronos and TradePilot.

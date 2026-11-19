@@ -1,0 +1,112 @@
+{
+ "clip": "sample-arcade",
+ "version": "v3",
+ "segments": [
+  {
+   "out": 0.0,
+   "src": 0.0,
+   "len": 5.9,
+   "idle": true
+  },
+  {
+   "out": 5.9,
+   "src": 12.012,
+   "len": 3.9,
+   "idle": true
+  },
+  {
+   "out": 9.8,
+   "src": 10.0333,
+   "len": 8.6333,
+   "idle": false
+  },
+  {
+   "out": 18.4333,
+   "src": 21.7667,
+   "len": 1.1333,
+   "idle": false
+  },
+  {
+   "out": 19.5667,
+   "src": 24.5333,
+   "len": 1.5667,
+   "idle": false
+  },
+  {
+   "out": 21.1333,
+   "src": 23.8238,
+   "len": 2.8667,
+   "idle": true
+  },
+  {
+   "out": 24.0,
+   "src": 26.8333,
+   "len": 5.9333,
+   "idle": false
+  },
+  {
+   "out": 29.9333,
+   "src": 33.1333,
+   "len": 4.7667,
+   "idle": false
+  },
+  {
+   "out": 34.7,
+   "src": 36.2362,
+   "len": 2.4667,
+   "idle": true
+  },
+  {
+   "out": 37.1667,
+   "src": 0.0,
+   "len": 2.5333,
+   "idle": true
+  }
+ ],
+ "intro": null,
+ "outro": {
+  "t": 37.286667,
+  "dur": 1.207,
+  "text": "Follow for more AI news."
+ },
+ "total": 39.7,
+ "frames": 1191,
+ "items": [
+  {
+   "type": "el",
+   "text": "Xbox has a new CEO, a cheaper Game Pass, and a brand-new Xbox Labs. So what's happening to Xbox?"
+  },
+  {
+   "type": "el",
+   "text": "Asha Sharma took over as CEO in February, after Phil Spencer retired."
+  },
+  {
+   "type": "his",
+   "text": "is Xbox losing its identity or preparing for the future of gaming? I would think it's gonna be a very strong fight with PlayStation."
+  },
+  {
+   "type": "his",
+   "text": "gaming is not going anywhere."
+  },
+  {
+   "type": "his",
+   "text": "People will still love to play games."
+  },
+  {
+   "type": "el",
+   "text": "And Microsoft owns some of the biggest studios in gaming."
+  },
+  {
+   "type": "his",
+   "text": "Making games is now even more cheaper compared to what we used to have. I think Xbox will have a lot more titles than they used to. They just need to prepare to capture the market before PlayStation guys get them."
+  },
+  {
+   "type": "el",
+   "text": "Team Xbox or Team PlayStation? Comment below."
+  },
+  {
+   "type": "el",
+   "text": "Follow for more AI news."
+  }
+ ]
+}

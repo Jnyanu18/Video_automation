@@ -1,0 +1,14 @@
+{
+  "recipe": "ai-demo-reel-large-corner-v1",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "fontFamily": "Bahnschrift, Arial, sans-serif",
+  "colors": {"background": "#0d0d0d", "text": "#f7f8fa", "accent": "#bed3da", "activeWord": "#b5d4df"},
+  "title": {"left": 68, "right": 88, "top": 95, "eyebrowSize": 27, "headingSize": 64, "detailSize": 32},
+  "hook": {"left": 66, "right": 95, "top": 154, "fontSize": 94},
+  "rehook": {"left": 68, "right": 88, "top": 114, "fontSize": 74},
+  "presenter": {"left": 0, "bottom": 0, "width": 828, "height": 1012, "referenceMirrorX": true, "targetRectangleFraction": 0.4040972222},
+  "captions": {"left": 74, "right": 105, "top": 1620, "fontSize": 51, "lineHeight": 1.22, "fontWeight": 600},
+  "presenterCaptions": {"left": 620, "right": 70, "top": 1620, "fontSize": 47, "lineHeight": 1.22, "fontWeight": 600},
+  "motion": {"cameraEase": [0.35, 0, 0.2, 1], "entranceEase": [0.22, 1, 0.36, 1], "titleFadeSeconds": 0.2666666667, "titleMoveSeconds": 0.4, "titleMovePixels": 16, "presenterInSeconds": 0.2333333333, "presenterOutSeconds": 0.2666666667, "clickSeconds": 0.48, "clickDiameter": 70},
+  "output": {"videoCodec": "h264", "audioCodec": "aac", "pixelFormat": "yuv420p", "colorSpace": "bt709", "colorRange": "tv", "faststart": true}
+}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1080, height=1920"/>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0a0a0e}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:'Poppins',sans-serif}
+.scene{position:absolute;inset:0}
+.scene.dark{background:radial-gradient(900px 700px at 50% 38%, #1e1e5a 0%, #0a0a0e 70%);color:#f4f5ff}
+.scene.light{background:radial-gradient(900px 700px at 50% 30%, #ffffff 0%, #f4f5ff 75%);color:#0a0a1a}
+.stack{position:absolute;left:90px;right:90px;top:168px;height:1162px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:26px;text-align:center}
+.stack.low{top:980px;height:350px;justify-content:flex-start}
+.ln{font-size:128px;font-weight:800;line-height:1.02;letter-spacing:-0.035em}
+.ln.small{font-size:70px;font-weight:700;margin-bottom:10px}
+.w{display:inline-block;margin:0 .13em}.hl.ac{color:#ff8a4c}.scene.light .hl.ac,.scene.light .num{color:#cf5415}
+.sub{font-size:44px;font-weight:500;opacity:.75;line-height:1.25;max-width:880px}
+.pill{width:760px;padding:26px 0;border-radius:999px;font-size:50px;font-weight:600;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.22)}
+.typed{font-size:72px;font-weight:800;color:#ff8a4c;margin-top:18px;clip-path:inset(0 100% 0 0);letter-spacing:-0.02em}
+.orbwrap{position:absolute;left:0;right:0;top:420px;height:480px}
+.orb{position:absolute;left:390px;top:130px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 38% 34%, #ffd2b4 0%, #ff8a4c 38%, #b3470f 100%);box-shadow:0 0 120px 40px rgba(255,138,76,.55)}
+.ring{position:absolute;left:390px;top:130px;width:300px;height:300px;border-radius:50%;border:3px solid #ff8a4c}
+.card{width:860px;border-radius:44px;padding:44px 46px;background:#fff;color:#0a0a1a;box-shadow:0 40px 90px rgba(10,10,40,.22);text-align:left;display:flex;flex-direction:column;gap:22px}
+.scene.dark .card{background:#15152b;color:#f4f5ff;box-shadow:0 40px 90px rgba(0,0,0,.55);border:1.5px solid rgba(255,255,255,.12)}
+.chead{font-size:34px;font-weight:700;opacity:.55;letter-spacing:.02em;text-transform:uppercase}
+.field{height:96px;border-radius:24px;border:2.5px solid rgba(10,10,40,.16);display:flex;align-items:center;padding:0 28px;font-size:38px;font-weight:500;overflow:hidden;white-space:nowrap}
+.ftext{display:inline-block;clip-path:inset(0 100% 0 0)}
+.btn{align-self:flex-start;padding:22px 52px;border-radius:999px;background:#ff8a4c;color:#0a0a1a;font-size:42px;font-weight:700}
+.btn.ok{background:#2a2a3a;color:#fff;align-self:center;padding:26px 90px}
+.status{font-size:46px;font-weight:600}.status.dn{opacity:0;color:#38d27a;margin-top:-76px}
+.steps{display:flex;flex-direction:column;gap:14px}
+.step{font-size:40px;font-weight:600;display:flex;align-items:center;gap:20px}
+.chk{width:52px;height:52px;border-radius:50%;background:#38d27a;color:#0a0a1a;display:inline-flex;align-items:center;justify-content:center;font-size:32px;font-weight:800}
+.stat{width:860px;border-radius:36px;padding:30px 44px;background:#fff;box-shadow:0 30px 70px rgba(10,10,40,.16);display:flex;align-items:center;gap:36px;text-align:left}
+.num{font-size:104px;font-weight:800;color:#ff8a4c;letter-spacing:-0.04em;min-width:300px}
+.lab{font-size:38px;font-weight:600;line-height:1.2;color:#0a0a1a}
+.cbtn{margin-top:20px;padding:30px 70px;border-radius:999px;background:#ff8a4c;color:#0a0a1a;font-size:50px;font-weight:700}
+.url{font-size:46px;font-weight:600;opacity:.85;letter-spacing:.01em}
+.wipe{position:absolute;left:0;right:0;top:0;height:1920px;background:#ff8a4c;z-index:50}
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="28.20" data-width="1080" data-height="1920">
+<div id="s0" class="clip scene light" data-start="0.00" data-duration="3.00" data-track-index="0"><div class="stack"><div class="ln"><span class="w hl">Still</span><span class="w hl">editing</span></div><div class="ln"><span class="w hl">reels</span></div><div class="ln"><span class="w hl ac">by</span><span class="w hl ac">hand?</span></div></div></div>
+<div id="s1" class="clip scene dark" data-start="3.00" data-duration="3.80" data-track-index="1"><div class="stack"><div class="ln small"><span class="w hl">Every</span><span class="w hl">reel</span><span class="w hl">means</span></div><div class="pill">Cutting</div><div class="pill">Captions</div><div class="pill">Animations</div><div class="pill">Sound</div><div class="pill">Posting</div><div class="typed">Every. Single. Time.</div></div></div>
+<div id="s2" class="clip scene dark" data-start="6.80" data-duration="3.00" data-track-index="2"><div class="orbwrap"><div class="orb"></div><div class="ring r1"></div><div class="ring r2"></div></div><div class="stack low"><div class="ln"><span class="w hl ac">Not</span><span class="w hl">anymore.</span></div><div class="sub">Meet AILO Marketing Automation</div></div></div>
+<div id="s3" class="clip scene light" data-start="9.80" data-duration="6.00" data-track-index="3"><div class="stack"><div class="ln small"><span class="w hl">Paste</span><span class="w hl">a</span><span class="w hl">link.</span><span class="w hl ac">Done.</span></div><div class="card"><div class="chead">New reel</div><div class="field"><span class="ftext">instagram.com/reel/your-idea</span></div><div class="btn">Edit it</div><div class="steps"><div class="step"><span class="chk">✓</span>Transcript ready</div><div class="step"><span class="chk">✓</span>Silences cut</div><div class="step"><span class="chk">✓</span>Captions added</div><div class="step"><span class="chk">✓</span>Diagrams animated</div><div class="step"><span class="chk">✓</span>Sound mixed</div></div></div><div class="sub">Ready for your review</div></div></div>
+<div id="s4" class="clip scene dark" data-start="15.80" data-duration="4.20" data-track-index="4"><div class="stack"><div class="ln"><span class="w hl">You</span><span class="w hl ac">approve.</span></div><div class="card"><div class="chead">Final render</div><div class="status wt">Waiting for your approval</div><div class="status dn">Approved. Rendering now.</div><div class="btn ok">Approve</div></div><div class="sub">Then it renders. Nothing goes out without you.</div></div></div>
+<div id="s5" class="clip scene light" data-start="20.00" data-duration="4.20" data-track-index="5"><div class="stack"><div class="ln small"><span class="w hl">Real</span><span class="w hl ac">results</span></div><div class="stat"><div class="num">68%</div><div class="lab">of support tickets auto-resolved</div></div><div class="stat"><div class="num">3.2x</div><div class="lab">organic traffic in 6 months</div></div><div class="stat"><div class="num">20 hrs</div><div class="lab">saved every week</div></div><div class="sub">From AILO client work</div></div></div>
+<div id="s6" class="clip scene dark" data-start="24.20" data-duration="4.00" data-track-index="6"><div class="stack"><div class="ln"><span class="w hl ac">Automate</span><span class="w hl">your</span></div><div class="ln"><span class="w hl">marketing.</span></div><div class="cbtn">Book a free consultation</div><div class="url">accelerationlogics.com</div></div></div>
+<div id="wipe1" class="clip wipe" data-start="2.70" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe2" class="clip wipe" data-start="6.50" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe3" class="clip wipe" data-start="9.50" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe4" class="clip wipe" data-start="15.50" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe5" class="clip wipe" data-start="19.70" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe6" class="clip wipe" data-start="23.90" data-duration="0.62" data-track-index="30"></div>
+<audio id="sfx0" src="assets/whoosh.wav" data-start="2.80" data-duration="2.00" data-volume="0.6" data-track-index="40"></audio>
+<audio id="sfx1" src="assets/whoosh.wav" data-start="6.60" data-duration="2.00" data-volume="0.6" data-track-index="41"></audio>
+<audio id="sfx2" src="assets/whoosh.wav" data-start="9.60" data-duration="2.00" data-volume="0.6" data-track-index="42"></audio>
+<audio id="sfx3" src="assets/whoosh.wav" data-start="15.60" data-duration="2.00" data-volume="0.6" data-track-index="43"></audio>
+<audio id="sfx4" src="assets/whoosh.wav" data-start="19.80" data-duration="2.00" data-volume="0.6" data-track-index="44"></audio>
+<audio id="sfx5" src="assets/whoosh.wav" data-start="24.00" data-duration="2.00" data-volume="0.6" data-track-index="45"></audio>
+<audio id="sfx6" src="assets/pop.wav" data-start="3.40" data-duration="0.60" data-volume="0.4" data-track-index="46"></audio>
+<audio id="sfx7" src="assets/pop.wav" data-start="3.70" data-duration="0.60" data-volume="0.4" data-track-index="47"></audio>
+<audio id="sfx8" src="assets/pop.wav" data-start="4.00" data-duration="0.60" data-volume="0.4" data-track-index="48"></audio>
+<audio id="sfx9" src="assets/pop.wav" data-start="4.30" data-duration="0.60" data-volume="0.4" data-track-index="49"></audio>
+<audio id="sfx10" src="assets/pop.wav" data-start="4.60" data-duration="0.60" data-volume="0.4" data-track-index="50"></audio>
+<audio id="sfx11" src="assets/typing.wav" data-start="5.05" data-duration="1.10" data-volume="0.35" data-track-index="51"></audio>
+<audio id="sfx12" src="assets/subdrop.wav" data-start="6.85" data-duration="1.50" data-volume="0.7" data-track-index="52"></audio>
+<audio id="sfx13" src="assets/chime.wav" data-start="7.60" data-duration="1.50" data-volume="0.45" data-track-index="53"></audio>
+<audio id="sfx14" src="assets/typing.wav" data-start="10.70" data-duration="0.80" data-volume="0.35" data-track-index="54"></audio>
+<audio id="sfx15" src="assets/click.wav" data-start="11.70" data-duration="0.50" data-volume="0.6" data-track-index="55"></audio>
+<audio id="sfx16" src="assets/tick.wav" data-start="12.15" data-duration="0.40" data-volume="0.45" data-track-index="56"></audio>
+<audio id="sfx17" src="assets/tick.wav" data-start="12.55" data-duration="0.40" data-volume="0.45" data-track-index="57"></audio>
+<audio id="sfx18" src="assets/tick.wav" data-start="12.95" data-duration="0.40" data-volume="0.45" data-track-index="58"></audio>
+<audio id="sfx19" src="assets/tick.wav" data-start="13.35" data-duration="0.40" data-volume="0.45" data-track-index="59"></audio>
+<audio id="sfx20" src="assets/tick.wav" data-start="13.75" data-duration="0.40" data-volume="0.45" data-track-index="60"></audio>
+<audio id="sfx21" src="assets/click.wav" data-start="17.60" data-duration="0.50" data-volume="0.6" data-track-index="61"></audio>
+<audio id="sfx22" src="assets/ding.wav" data-start="17.75" data-duration="1.50" data-volume="0.5" data-track-index="62"></audio>
+<audio id="sfx23" src="assets/pop.wav" data-start="20.40" data-duration="0.60" data-volume="0.5" data-track-index="63"></audio>
+<audio id="sfx24" src="assets/pop.wav" data-start="20.95" data-duration="0.60" data-volume="0.5" data-track-index="64"></audio>
+<audio id="sfx25" src="assets/pop.wav" data-start="21.50" data-duration="0.60" data-volume="0.5" data-track-index="65"></audio>
+<audio id="sfx26" src="assets/stamp.wav" data-start="25.30" data-duration="1.00" data-volume="0.6" data-track-index="66"></audio>
+<audio id="sfx27" src="assets/sparkle.wav" data-start="25.80" data-duration="1.50" data-volume="0.4" data-track-index="67"></audio>
+</div>
+<script>
+gsap.defaults({lazy: false});
+const tl = gsap.timeline({paused: true});
+tl.fromTo("#s0 .w", {scale: 1.05, filter: "blur(1.5px)"}, {scale: 1, filter: "blur(0px)", duration: 0.4, stagger: 0.05, ease: "power3.out"}, 0);
+tl.fromTo("#s1", {opacity: 0}, {opacity: 1, duration: 0.01}, 3.00);
+tl.fromTo("#s1 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 3.05);
+tl.fromTo("#s1 .pill", {opacity: 0, x: -140, scale: 0.9}, {opacity: 1, x: 0, scale: 1, duration: 0.4, stagger: 0.28, ease: "back.out(1.6)"}, 3.35);
+tl.fromTo("#s1 .typed", {clipPath: "inset(0 100% 0 0)", opacity: 1}, {clipPath: "inset(0 0% 0 0)", duration: 1.10, ease: "steps(20)"}, 5.05);
+tl.fromTo("#s2", {opacity: 0}, {opacity: 1, duration: 0.01}, 6.80);
+tl.fromTo("#s2 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 6.88);
+tl.fromTo("#s2 .orb", {scale: 0.2, opacity: 0}, {scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.4)"}, 6.85);
+tl.fromTo("#s2 .ring", {scale: 0.4, opacity: 0.9}, {scale: 2.4, opacity: 0, duration: 1.3, stagger: 0.35, ease: "power2.out"}, 7.30);
+tl.fromTo("#s2 .sub", {opacity: 0, y: 24}, {opacity: 1, y: 0, duration: 0.5}, 8.30);
+tl.fromTo("#s3", {opacity: 0}, {opacity: 1, duration: 0.01}, 9.80);
+tl.fromTo("#s3 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 9.85);
+tl.fromTo("#s3 .card", {opacity: 0, y: 60, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out"}, 10.10);
+tl.fromTo("#s3 .ftext", {clipPath: "inset(0 100% 0 0)"}, {clipPath: "inset(0 0% 0 0)", duration: 0.8, ease: "steps(28)"}, 10.70);
+tl.fromTo("#s3 .btn", {scale: 1}, {scale: 0.92, duration: 0.1, yoyo: true, repeat: 1, ease: "power1.inOut"}, 11.70);
+tl.fromTo("#s3 .step", {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.35, stagger: 0.4, ease: "power2.out"}, 12.00);
+tl.fromTo("#s3 .chk", {scale: 0}, {scale: 1, duration: 0.3, stagger: 0.4, ease: "back.out(2.5)"}, 12.15);
+tl.fromTo("#s3 .sub", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.45}, 14.20);
+tl.fromTo("#s4", {opacity: 0}, {opacity: 1, duration: 0.01}, 15.80);
+tl.fromTo("#s4 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 15.85);
+tl.fromTo("#s4 .card", {opacity: 0, y: 60, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out"}, 16.20);
+tl.fromTo("#s4 .btn", {scale: 1}, {scale: 0.9, duration: 0.1, yoyo: true, repeat: 1}, 17.60);
+tl.fromTo("#s4 .btn", {backgroundColor: "#2a2a3a"}, {backgroundColor: "#38d27a", duration: 0.25}, 17.70);
+tl.fromTo("#s4 .wt", {opacity: 1}, {opacity: 0, duration: 0.12}, 17.75);
+tl.fromTo("#s4 .dn", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.3}, 17.85);
+tl.fromTo("#s4 .sub", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.45}, 18.10);
+tl.fromTo("#s5", {opacity: 0}, {opacity: 1, duration: 0.01}, 20.00);
+tl.fromTo("#s5 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 20.05);
+tl.fromTo("#s5 .stat", {opacity: 0, y: 70, scale: 0.94}, {opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.55, ease: "back.out(1.3)"}, 20.40);
+tl.fromTo("#s5 .sub", {opacity: 0}, {opacity: 1, duration: 0.4}, 22.35);
+tl.fromTo("#s6", {opacity: 0}, {opacity: 1, duration: 0.01}, 24.20);
+tl.fromTo("#s6 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 24.28);
+tl.fromTo("#s6 .cbtn", {opacity: 0, scale: 0.8}, {opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)"}, 25.30);
+tl.fromTo("#s6 .url", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.45}, 25.80);
+tl.fromTo("#wipe1", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 2.70);
+tl.fromTo("#wipe1", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 3.02);
+tl.fromTo("#wipe2", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 6.50);
+tl.fromTo("#wipe2", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 6.82);
+tl.fromTo("#wipe3", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 9.50);
+tl.fromTo("#wipe3", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 9.82);
+tl.fromTo("#wipe4", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 15.50);
+tl.fromTo("#wipe4", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 15.82);
+tl.fromTo("#wipe5", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 19.70);
+tl.fromTo("#wipe5", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 20.02);
+tl.fromTo("#wipe6", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 23.90);
+tl.fromTo("#wipe6", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 24.22);
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+tl.seek(0);
+</script></body></html>

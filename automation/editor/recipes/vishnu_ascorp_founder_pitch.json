@@ -1,0 +1,212 @@
+{
+  "title": "Vishnu / Ascorp founder pitch",
+  "description": "Transcript-timed retention edit: hook title, lower-third, explanatory text cards, 3 zooms, 4 sound effects, closing share line.",
+  "steps": [
+    {
+      "tool": "transcribe",
+      "input": {}
+    },
+    {
+      "tool": "detect_silences",
+      "input": {
+        "noise_db": -22.0,
+        "min_len": 0.25
+      }
+    },
+    {
+      "tool": "cut_silences",
+      "input": {
+        "silences": "$silences",
+        "min_silence": 0.25,
+        "padding": 0.05
+      }
+    },
+    {
+      "tool": "set_captions",
+      "input": {
+        "from_transcript": true,
+        "style": "karaoke",
+        "max_words": 6,
+        "max_chars": 46
+      }
+    },
+    {
+      "tool": "add_title",
+      "input": {
+        "text": "AI in your product is easy. Trusting it is hard.",
+        "start": 0.0,
+        "end": 2.6,
+        "y": 0.3,
+        "size": 52,
+        "box": true,
+        "style": "bold"
+      }
+    },
+    {
+      "tool": "add_lower_third",
+      "input": {
+        "name": "Vishnu",
+        "subtitle": "Founder, Ascorp",
+        "start": 0.6,
+        "end": 4.6
+      }
+    },
+    {
+      "tool": "add_diagram",
+      "input": {
+        "template": "counter",
+        "start": 4.9,
+        "end": 9.4,
+        "value": 2600,
+        "suffix": "+",
+        "caption": "users on Trade Palette, an AI agent in TradingView"
+      }
+    },
+    {
+      "tool": "add_diagram",
+      "input": {
+        "template": "versus",
+        "start": 10.3,
+        "end": 20.8,
+        "left": {
+          "tag": "EASY",
+          "text": "Put AI inside a product",
+          "value": 1.0,
+          "tone": "good"
+        },
+        "right": {
+          "tag": "HARD",
+          "text": "Trust it to act without breaking anything",
+          "value": 0.3,
+          "tone": "bad"
+        }
+      }
+    },
+    {
+      "tool": "add_diagram",
+      "input": {
+        "template": "brands",
+        "start": 22.0,
+        "end": 30.5,
+        "top": [
+          "AWS",
+          "Google Cloud"
+        ],
+        "top_caption": "build their own AI agents",
+        "bottom": "Ascorp",
+        "bottom_caption": "the AI agent for everyone else"
+      }
+    },
+    {
+      "tool": "add_diagram",
+      "input": {
+        "template": "flow",
+        "start": 31.4,
+        "end": 38.6,
+        "steps": [
+          "Ask",
+          "Preview the change",
+          "Approve",
+          "Done"
+        ]
+      }
+    },
+    {
+      "tool": "add_diagram",
+      "input": {
+        "template": "counter",
+        "start": 41.0,
+        "end": 44.8,
+        "value": 1,
+        "suffix": "",
+        "caption": "customer already live, since September"
+      }
+    },
+    {
+      "tool": "add_diagram",
+      "input": {
+        "template": "shift",
+        "start": 46.0,
+        "end": 55.0,
+        "from": "Click through menus",
+        "to": "Just ask an agent"
+      }
+    },
+    {
+      "tool": "add_zoom",
+      "input": {
+        "start": 15.1,
+        "end": 17.2,
+        "scale": 1.12,
+        "cx": 0.5,
+        "cy": 0.38
+      }
+    },
+    {
+      "tool": "add_zoom",
+      "input": {
+        "start": 31.2,
+        "end": 33.2,
+        "scale": 1.12,
+        "cx": 0.5,
+        "cy": 0.38
+      }
+    },
+    {
+      "tool": "add_zoom",
+      "input": {
+        "start": 45.5,
+        "end": 47.5,
+        "scale": 1.12,
+        "cx": 0.5,
+        "cy": 0.38
+      }
+    },
+    {
+      "tool": "add_sfx",
+      "input": {
+        "name": "whoosh",
+        "at": 0.6
+      }
+    },
+    {
+      "tool": "add_sfx",
+      "input": {
+        "name": "pop",
+        "at": 8.0
+      }
+    },
+    {
+      "tool": "add_sfx",
+      "input": {
+        "name": "riser",
+        "at": 14.2
+      }
+    },
+    {
+      "tool": "add_sfx",
+      "input": {
+        "name": "pop",
+        "at": 35.4
+      }
+    },
+    {
+      "tool": "add_title",
+      "input": {
+        "text": "Send this to a founder building with AI.",
+        "start": 58.4,
+        "end": 60.4,
+        "y": 0.3,
+        "size": 52,
+        "box": true,
+        "style": "bold"
+      }
+    },
+    {
+      "tool": "normalize_loudness",
+      "input": {
+        "target_lufs": -14
+      }
+    }
+  ]
+}

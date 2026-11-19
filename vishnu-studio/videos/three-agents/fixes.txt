@@ -1,0 +1,1 @@
+﻿Display fixes in words.json (2026-11-06): Metas -> Meta's, XAI's -> xAI's, Grockbot and Brockbot -> Grok Bot (one word entry each), dots -> Dots, muse -> Muse, comment -> Comment, agent -> AGENT. LISTEN to how the voice says Grok Bot (heard as Grockbot / Brockbot) and the [curious] and [laughs softly] cues.

@@ -1,0 +1,6 @@
+action,category,kind,bytes,files,path,reason
+MOVE,SCRATCH,dir,389965824,11578,ailo-15s,"user requested removal of ailo-15s"
+MOVE,SCRATCH,dir,38797312,37,ailo-cinematic-product-reel,"user requested removal of ailo-cinematic-product-reel"
+MOVE,SCRATCH,dir,0,0,ailo-contrast-reel,"user requested removal of ailo-contrast-reel"
+MOVE,SCRATCH,dir,3250585,35,ailo-da0-reel,"user requested removal of ailo-da0-reel"
+MOVE,SCRATCH,dir,42257612,92,ailo-editor-reel,"user requested removal of ailo-editor-reel"

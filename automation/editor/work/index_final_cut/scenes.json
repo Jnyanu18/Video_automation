@@ -1,0 +1,13 @@
+{
+  "video": "J:\\ai editor\\automation\\editor\\services\\api\\.data\\projects\\1007131c-9001-4654-beaf-2c8e8da4bb3f\\work\\final_cut.mp4",
+  "duration": 15.155,
+  "threshold": 0.3,
+  "cuts": [],
+  "scenes": [
+    {
+      "index": 0,
+      "start": 0.0,
+      "end": 15.155
+    }
+  ]
+}

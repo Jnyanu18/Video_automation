@@ -1,0 +1,32 @@
+{
+ "clip": "sample",
+ "version": "sample",
+ "source": "<raw take file name>",
+ "crop_x": 0,
+ "lo": 0,
+ "segments": [
+  {
+   "out": 0,
+   "src": 0,
+   "len": 5.5
+  }
+ ],
+ "speed": 1,
+ "gap": 0.18,
+ "intro": null,
+ "outro": {
+  "t": 3.6,
+  "dur": 1.6,
+  "text": "Follow for more AI news."
+ },
+ "srcEnd": 5.5,
+ "total": 5.5,
+ "frames": 165,
+ "items": [
+  {
+   "type": "his",
+   "q": false,
+   "text": "The US just banned a Chinese AI. Was that fair?"
+  }
+ ]
+}

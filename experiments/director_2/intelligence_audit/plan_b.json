@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "title": "Keynote & Industry Highlight Cut",
+  "source": {
+    "path": "J:\\ai editor\\raw footage\\event_source.mp4",
+    "duration": 84.776,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25.0,
+    "codec": "av1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 25.0
+  },
+  "keep": [
+    {
+      "id": "k_1",
+      "start": 5.92,
+      "end": 10.0,
+      "name": "scene_05: Conference opening scale"
+    },
+    {
+      "id": "k_2",
+      "start": 10.0,
+      "end": 12.2,
+      "name": "scene_06: Speaker presentation focus"
+    },
+    {
+      "id": "k_3",
+      "start": 12.2,
+      "end": 14.4,
+      "name": "scene_07: Audience engagement"
+    },
+    {
+      "id": "k_4",
+      "start": 18.68,
+      "end": 20.92,
+      "name": "scene_12: Keynote stage view"
+    },
+    {
+      "id": "k_5",
+      "start": 24.2,
+      "end": 26.4,
+      "name": "scene_16: Industry panel discussion"
+    },
+    {
+      "id": "k_6",
+      "start": 27.44,
+      "end": 29.6,
+      "name": "scene_18: Delegate interaction"
+    },
+    {
+      "id": "k_7",
+      "start": 35.08,
+      "end": 37.24,
+      "name": "scene_24: Main hall showcase"
+    },
+    {
+      "id": "k_8",
+      "start": 40.48,
+      "end": 42.72,
+      "name": "scene_28: Thought leadership highlight"
+    },
+    {
+      "id": "k_9",
+      "start": 51.44,
+      "end": 53.64,
+      "name": "scene_37: Strategic overview"
+    },
+    {
+      "id": "k_10",
+      "start": 63.52,
+      "end": 67.8,
+      "name": "scene_45: Extended audience and stage shot"
+    },
+    {
+      "id": "k_11",
+      "start": 74.32,
+      "end": 79.72,
+      "name": "scene_52: Grand plenary session"
+    }
+  ],
+  "zooms": [],
+  "sfx": [
+    {
+      "id": "sfx_1",
+      "name": "none",
+      "at": 0.0,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_2",
+      "name": "none",
+      "at": 4.08,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_3",
+      "name": "none",
+      "at": 6.28,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_4",
+      "name": "none",
+      "at": 8.48,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_5",
+      "name": "none",
+      "at": 10.72,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_6",
+      "name": "none",
+      "at": 12.92,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_7",
+      "name": "none",
+      "at": 15.08,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_8",
+      "name": "none",
+      "at": 17.24,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_9",
+      "name": "none",
+      "at": 19.48,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_10",
+      "name": "none",
+      "at": 21.68,
+      "volume": 0.7
+    },
+    {
+      "id": "sfx_11",
+      "name": "none",
+      "at": 25.96,
+      "volume": 0.7
+    }
+  ],
+  "captions": [
+    {
+      "text": "Dubai Diamond Conference 2022 | Future of Diamonds",
+      "start": 1.0,
+      "end": 5.0,
+      "style": "lower_third"
+    },
+    {
+      "text": "Shaping the Global Industry",
+      "start": 74.32,
+      "end": 78.5,
+      "style": "closing_takeaway"
+    }
+  ],
+  "style_ref": "educational_masterclass",
+  "notes": "Designed for corporate stakeholders and industry professionals. Utilizes longer, deliberate scene durations (2.5s - 5.4s) to emphasize event scale, keynote presentations, and professional atmosphere.",
+  "unsupported_elements_excluded": [
+    "Ultra-short 1-second rapid cuts",
+    "Heavy visual effect transitions"
+  ],
+  "confidence": 0.92,
+  "target_duration": 36.0
+}

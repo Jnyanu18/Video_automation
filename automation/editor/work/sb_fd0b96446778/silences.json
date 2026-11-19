@@ -1,0 +1,59 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+  "duration": 15.128,
+  "noise_db": -35,
+  "min_len": 0.5,
+  "silences": [
+    {
+      "start": 1.563,
+      "end": 2.36
+    },
+    {
+      "start": 2.516,
+      "end": 3.112
+    },
+    {
+      "start": 3.112,
+      "end": 4.144
+    },
+    {
+      "start": 6.851,
+      "end": 8.625
+    },
+    {
+      "start": 11.365,
+      "end": 12.536
+    },
+    {
+      "start": 12.795,
+      "end": 13.486
+    }
+  ],
+  "speech": [
+    {
+      "start": 0.0,
+      "end": 1.563
+    },
+    {
+      "start": 2.36,
+      "end": 2.516
+    },
+    {
+      "start": 4.144,
+      "end": 6.851
+    },
+    {
+      "start": 8.625,
+      "end": 11.365
+    },
+    {
+      "start": 12.536,
+      "end": 12.795
+    },
+    {
+      "start": 13.486,
+      "end": 15.128
+    }
+  ],
+  "silence_total": 6.061
+}

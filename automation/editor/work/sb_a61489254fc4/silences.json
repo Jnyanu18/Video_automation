@@ -1,0 +1,51 @@
+{
+  "video": "J:\\ai editor\\raw footage\\vishnu\\DfNqPECzXSq.mp4",
+  "duration": 60.992,
+  "noise_db": -35,
+  "min_len": 0.25,
+  "silences": [
+    {
+      "start": 0.0,
+      "end": 0.365
+    },
+    {
+      "start": 9.603,
+      "end": 9.912
+    },
+    {
+      "start": 26.011,
+      "end": 26.323
+    },
+    {
+      "start": 51.429,
+      "end": 51.726
+    },
+    {
+      "start": 60.478,
+      "end": 60.763
+    }
+  ],
+  "speech": [
+    {
+      "start": 0.365,
+      "end": 9.603
+    },
+    {
+      "start": 9.912,
+      "end": 26.011
+    },
+    {
+      "start": 26.323,
+      "end": 51.429
+    },
+    {
+      "start": 51.726,
+      "end": 60.478
+    },
+    {
+      "start": 60.763,
+      "end": 60.992
+    }
+  ],
+  "silence_total": 1.568
+}

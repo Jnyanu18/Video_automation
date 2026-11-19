@@ -1,0 +1,38 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+  "duration": 15.128,
+  "threshold": 0.3,
+  "cuts": [
+    4.211,
+    5.845,
+    8.061,
+    12.194
+  ],
+  "scenes": [
+    {
+      "index": 0,
+      "start": 0.0,
+      "end": 4.211
+    },
+    {
+      "index": 1,
+      "start": 4.211,
+      "end": 5.845
+    },
+    {
+      "index": 2,
+      "start": 5.845,
+      "end": 8.061
+    },
+    {
+      "index": 3,
+      "start": 8.061,
+      "end": 12.194
+    },
+    {
+      "index": 4,
+      "start": 12.194,
+      "end": 15.128
+    }
+  ]
+}

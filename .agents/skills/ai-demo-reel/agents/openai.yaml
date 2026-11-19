@@ -1,0 +1,6 @@
+interface:
+  display_name: "AI Demo Reel"
+  short_description: "Result-first tutorials with real UI and corner presenter"
+  default_prompt: "Use $ai-demo-reel and its portable style contract to make a result-first tutorial with real UI, recorded narration, the large grounded corner layout when a presenter is requested, and verified local playback."
+policy:
+  allow_implicit_invocation: true

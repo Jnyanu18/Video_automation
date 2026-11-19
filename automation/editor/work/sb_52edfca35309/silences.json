@@ -1,0 +1,31 @@
+{
+  "video": "J:\\ai editor\\raw footage\\ingested\\Instagram_DagCLF8yhJj.mp4",
+  "duration": 31.375,
+  "noise_db": -22,
+  "min_len": 0.25,
+  "silences": [
+    {
+      "start": 0.87,
+      "end": 1.551
+    },
+    {
+      "start": 18.345,
+      "end": 18.635
+    }
+  ],
+  "speech": [
+    {
+      "start": 0.0,
+      "end": 0.87
+    },
+    {
+      "start": 1.551,
+      "end": 18.345
+    },
+    {
+      "start": 18.635,
+      "end": 31.375
+    }
+  ],
+  "silence_total": 0.971
+}

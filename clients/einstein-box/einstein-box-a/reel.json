@@ -1,0 +1,608 @@
+{
+  "name": "einstein-box-a-less-tv-more-brain",
+  "brand": {
+    "font": "Nunito",
+    "accent": "#ff5a5f",
+    "accent_light": "#d81d24",
+    "light": "#fff3e3",
+    "dark": "#1a0a0b",
+    "navy": "#5a1014",
+    "ink_dark": "#fff6e8",
+    "ink_light": "#1c1417"
+  },
+  "voice": "neerja",
+  "rate": "+3%",
+  "music": {
+    "style": "chill",
+    "volume": 0.22,
+    "seed": 21
+  },
+  "scenes": [
+    {
+      "kind": "kinetic",
+      "theme": "dark",
+      "words": [
+        "Less",
+        "TV.",
+        "More",
+        "brain."
+      ],
+      "accent": [
+        3
+      ],
+      "say": "Less TV. More brain.",
+      "duration": 4.35,
+      "sfx": [
+        {
+          "name": "thud",
+          "at": 0.3,
+          "volume": 0.6
+        },
+        {
+          "name": "thud",
+          "at": 1.2,
+          "volume": 0.6
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo0.mp3",
+        "start": 0.25,
+        "duration": 3.552
+      },
+      "_chunks": [
+        [
+          {
+            "text": "Less",
+            "start": 0.35,
+            "end": 0.762625
+          },
+          {
+            "text": "TV",
+            "start": 0.77475,
+            "end": 1.272333
+          }
+        ],
+        [
+          {
+            "text": "More",
+            "start": 2.120375,
+            "end": 2.484458
+          },
+          {
+            "text": "brain",
+            "start": 2.496583,
+            "end": 2.957749
+          }
+        ]
+      ],
+      "_wt": [
+        0.35,
+        0.77475,
+        2.120375,
+        2.496583
+      ]
+    },
+    {
+      "kind": "photos",
+      "theme": "light",
+      "title": "A new *world* every month",
+      "images": [
+        {
+          "src": "J:/ai editor/clients/einstein-box/assets/3yrs_Month1.png",
+          "label": "Plant world",
+          "_file": "assets/img_1_0.png"
+        },
+        {
+          "src": "J:/ai editor/clients/einstein-box/assets/3yrs_Month2.png",
+          "label": "Places around me",
+          "_file": "assets/img_1_1.png"
+        },
+        {
+          "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month3.png",
+          "label": "Bugs and beetles",
+          "_file": "assets/img_1_2.png"
+        },
+        {
+          "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month4.png",
+          "label": "Dinosaur world",
+          "_file": "assets/img_1_3.png"
+        },
+        {
+          "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month5.png",
+          "label": "Birds",
+          "_file": "assets/img_1_4.png"
+        },
+        {
+          "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month6.png",
+          "label": "The human body",
+          "_file": "assets/img_1_5.png"
+        }
+      ],
+      "say": "Every month, your child gets a box with two books and three learning activities. Plants, dinosaurs, birds, even the human body.",
+      "_vo": {
+        "file": "assets/vo1.mp3",
+        "start": 0.25,
+        "duration": 10.296
+      },
+      "duration": 11.1,
+      "_chunks": [
+        [
+          {
+            "text": "Every",
+            "start": 0.35,
+            "end": 0.77475
+          },
+          {
+            "text": "month",
+            "start": 0.786875,
+            "end": 1.22375
+          }
+        ],
+        [
+          {
+            "text": "your",
+            "start": 1.44225,
+            "end": 1.648541
+          },
+          {
+            "text": "child",
+            "start": 1.660666,
+            "end": 2.024749
+          },
+          {
+            "text": "gets",
+            "start": 2.036875,
+            "end": 2.328125
+          }
+        ],
+        [
+          {
+            "text": "a",
+            "start": 2.340291,
+            "end": 2.400957
+          },
+          {
+            "text": "box",
+            "start": 2.413125,
+            "end": 2.837875
+          },
+          {
+            "text": "with",
+            "start": 2.85,
+            "end": 3.032041
+          }
+        ],
+        [
+          {
+            "text": "two",
+            "start": 3.044166,
+            "end": 3.165541
+          },
+          {
+            "text": "books",
+            "start": 3.177666,
+            "end": 3.541749
+          },
+          {
+            "text": "and",
+            "start": 3.553875,
+            "end": 3.748041
+          }
+        ],
+        [
+          {
+            "text": "three",
+            "start": 3.760208,
+            "end": 4.039333
+          },
+          {
+            "text": "learning",
+            "start": 4.051458,
+            "end": 4.512624
+          },
+          {
+            "text": "activities",
+            "start": 4.52475,
+            "end": 5.313583
+          }
+        ],
+        [
+          {
+            "text": "Plants",
+            "start": 6.161666,
+            "end": 6.707791
+          }
+        ],
+        [
+          {
+            "text": "dinosaurs",
+            "start": 6.817,
+            "end": 7.678666
+          }
+        ],
+        [
+          {
+            "text": "birds",
+            "start": 7.787875,
+            "end": 8.273291
+          }
+        ],
+        [
+          {
+            "text": "even",
+            "start": 8.382541,
+            "end": 8.722332
+          },
+          {
+            "text": "the",
+            "start": 8.734458,
+            "end": 8.819416
+          },
+          {
+            "text": "human",
+            "start": 8.831541,
+            "end": 9.195624
+          }
+        ],
+        [
+          {
+            "text": "body",
+            "start": 9.20775,
+            "end": 9.668916
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "versus2",
+      "theme": "dark",
+      "old": {
+        "tag": "Other boxes",
+        "items": [
+          "Craft focused",
+          "Books not important",
+          "Just keeps kids busy"
+        ]
+      },
+      "new": {
+        "tag": "Einstein Box",
+        "items": [
+          "Learning and creativity",
+          "A love for books",
+          "IQ enhancing activities"
+        ]
+      },
+      "new_at_word": "Einstein",
+      "say": "Other boxes keep kids busy. Einstein Box builds a love for books, and activities that grow their mind.",
+      "sfx": [
+        {
+          "name": "chime",
+          "at": 4.0,
+          "volume": 0.4
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo2.mp3",
+        "start": 0.25,
+        "duration": 8.256
+      },
+      "duration": 9.06,
+      "_chunks": [
+        [
+          {
+            "text": "Other",
+            "start": 0.35,
+            "end": 0.689791
+          },
+          {
+            "text": "boxes",
+            "start": 0.7019580000000001,
+            "end": 1.2116660000000001
+          },
+          {
+            "text": "keep",
+            "start": 1.2237909999999999,
+            "end": 1.490791
+          }
+        ],
+        [
+          {
+            "text": "kids",
+            "start": 1.502916,
+            "end": 1.830582
+          },
+          {
+            "text": "busy",
+            "start": 1.842708,
+            "end": 2.291749
+          }
+        ],
+        [
+          {
+            "text": "Einstein",
+            "start": 3.139791,
+            "end": 3.819416
+          },
+          {
+            "text": "Box",
+            "start": 3.831541,
+            "end": 4.207749
+          },
+          {
+            "text": "builds",
+            "start": 4.219916,
+            "end": 4.535457
+          }
+        ],
+        [
+          {
+            "text": "a",
+            "start": 4.547583,
+            "end": 4.608249
+          },
+          {
+            "text": "love",
+            "start": 4.620375,
+            "end": 4.8995
+          },
+          {
+            "text": "for",
+            "start": 4.911666,
+            "end": 5.081582
+          }
+        ],
+        [
+          {
+            "text": "books",
+            "start": 5.093708,
+            "end": 5.494208
+          }
+        ],
+        [
+          {
+            "text": "and",
+            "start": 5.615541,
+            "end": 5.833999
+          },
+          {
+            "text": "activities",
+            "start": 5.846125,
+            "end": 6.501458
+          },
+          {
+            "text": "that",
+            "start": 6.513583,
+            "end": 6.719874
+          }
+        ],
+        [
+          {
+            "text": "grow",
+            "start": 6.732041,
+            "end": 7.011166
+          },
+          {
+            "text": "their",
+            "start": 7.023291,
+            "end": 7.193207
+          },
+          {
+            "text": "mind",
+            "start": 7.205333,
+            "end": 7.642208
+          }
+        ]
+      ],
+      "new_at": 2.99
+    },
+    {
+      "kind": "headline",
+      "theme": "light",
+      "lines": [
+        "No more searching",
+        "for new stuff",
+        "*every month.*"
+      ],
+      "size": 104,
+      "sub": "A parent review on einsteinbox.in",
+      "say": "As one parent put it: no more searching for new stuff every month. Super convenient, and high quality.",
+      "_vo": {
+        "file": "assets/vo3.mp3",
+        "start": 0.25,
+        "duration": 8.304
+      },
+      "duration": 9.1,
+      "_chunks": [
+        [
+          {
+            "text": "As",
+            "start": 0.35,
+            "end": 0.6291249999999999
+          },
+          {
+            "text": "one",
+            "start": 0.64125,
+            "end": 0.896125
+          },
+          {
+            "text": "parent",
+            "start": 0.90825,
+            "end": 1.272333
+          }
+        ],
+        [
+          {
+            "text": "put",
+            "start": 1.284458,
+            "end": 1.466499
+          },
+          {
+            "text": "it",
+            "start": 1.478625,
+            "end": 1.709208
+          }
+        ],
+        [
+          {
+            "text": "no",
+            "start": 1.89125,
+            "end": 2.15825
+          },
+          {
+            "text": "more",
+            "start": 2.170375,
+            "end": 2.42525
+          },
+          {
+            "text": "searching",
+            "start": 2.437375,
+            "end": 2.910666
+          }
+        ],
+        [
+          {
+            "text": "for",
+            "start": 2.922833,
+            "end": 3.056333
+          },
+          {
+            "text": "new",
+            "start": 3.068458,
+            "end": 3.274749
+          },
+          {
+            "text": "stuff",
+            "start": 3.286875,
+            "end": 3.650958
+          }
+        ],
+        [
+          {
+            "text": "every",
+            "start": 3.663125,
+            "end": 3.990791
+          },
+          {
+            "text": "month",
+            "start": 4.002916,
+            "end": 4.427666
+          }
+        ],
+        [
+          {
+            "text": "Super",
+            "start": 5.263583,
+            "end": 5.748999
+          },
+          {
+            "text": "convenient",
+            "start": 5.761166,
+            "end": 6.477166
+          }
+        ],
+        [
+          {
+            "text": "and",
+            "start": 6.610666,
+            "end": 6.829124
+          },
+          {
+            "text": "high",
+            "start": 6.84125,
+            "end": 7.120375
+          },
+          {
+            "text": "quality",
+            "start": 7.132541,
+            "end": 7.702916
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "cta",
+      "theme": "dark",
+      "lines": [
+        "Invest in your",
+        "child's *mind.*"
+      ],
+      "button": "See the offer",
+      "url": "einsteinbox.in",
+      "sub": "India's #1 Early Learning Program",
+      "say": "Invest in your child's mind. Start with Einstein Box.",
+      "sfx": [
+        {
+          "name": "stamp",
+          "at": 1.2,
+          "volume": 0.6
+        },
+        {
+          "name": "sparkle",
+          "at": 2.0,
+          "volume": 0.35
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo4.mp3",
+        "start": 0.25,
+        "duration": 5.496
+      },
+      "duration": 6.65,
+      "_chunks": [
+        [
+          {
+            "text": "Invest",
+            "start": 0.35,
+            "end": 0.932541
+          },
+          {
+            "text": "in",
+            "start": 0.944666,
+            "end": 1.066041
+          },
+          {
+            "text": "your",
+            "start": 1.078166,
+            "end": 1.260207
+          }
+        ],
+        [
+          {
+            "text": "child's",
+            "start": 1.272333,
+            "end": 1.697083
+          },
+          {
+            "text": "mind",
+            "start": 1.709208,
+            "end": 2.133958
+          }
+        ],
+        [
+          {
+            "text": "Start",
+            "start": 2.982041,
+            "end": 3.503874
+          },
+          {
+            "text": "with",
+            "start": 3.516,
+            "end": 3.722291
+          },
+          {
+            "text": "Einstein",
+            "start": 3.734458,
+            "end": 4.353374
+          }
+        ],
+        [
+          {
+            "text": "Box",
+            "start": 4.365541,
+            "end": 4.899541
+          }
+        ]
+      ]
+    }
+  ]
+}

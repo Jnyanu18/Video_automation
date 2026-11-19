@@ -1,0 +1,4 @@
+interface:
+  display_name: "Large Presenter Teaching Reels"
+  short_description: "Large moving presenter with readable teaching visuals"
+  default_prompt: "Use $large-presenter-teaching-reels to enlarge my moving presenter, teach with clear examples and complete the ending while preserving approved footage."

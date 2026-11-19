@@ -1,0 +1,68 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 360
+PlayResY: 640
+ScaledBorderAndShadow: yes
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Default,Arial,21,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,1,2,37,37,77,1
+Style: Karaoke,Arial,21,&H0000D4FF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,1,2,37,37,77,1
+
+[Events]
+Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text
+Dialogue: 0,0:00:00.40,0:00:01.60,Karaoke,,0,0,0,,{\k52}HERE {\k14}I {\k20}SEE, {\k18}{\k16}I'M
+Dialogue: 0,0:00:01.60,0:00:02.48,Karaoke,,0,0,0,,{\k26}VISHNU, {\k12}{\k16}I'M {\k14}READY {\k20}TO,
+Dialogue: 0,0:00:02.60,0:00:03.12,Karaoke,,0,0,0,,{\k10}AND {\k16}I'M {\k10}THE {\k16}SOLE
+Dialogue: 0,0:00:03.12,0:00:04.22,Karaoke,,0,0,0,,{\k36}FOUNDER {\k32}OF {\k42}ASCORP.
+Dialogue: 0,0:00:04.70,0:00:05.52,Karaoke,,0,0,0,,{\k28}I'VE {\k14}BUILT {\k20}TRADE {\k20}PALETTE
+Dialogue: 0,0:00:05.52,0:00:06.56,Karaoke,,0,0,0,,{\k24}AND {\k20}AI {\k32}AGENT {\k28}INSIDE
+Dialogue: 0,0:00:06.56,0:00:07.56,Karaoke,,0,0,0,,{\k34}TRADING {\k22}VIEW {\k26}AND {\k18}GIVE
+Dialogue: 0,0:00:07.56,0:00:08.06,Karaoke,,0,0,0,,{\k18}IT {\k6}TO {\k14}MORE {\k12}THAN
+Dialogue: 0,0:00:08.06,0:00:09.18,Karaoke,,0,0,0,,{\k72}2600 {\k40}USERS.
+Dialogue: 0,0:00:09.57,0:00:10.67,Karaoke,,0,0,0,,{\k28}BUILDING {\k18}THAT {\k38}ACTUALLY {\k26}TAUGHT
+Dialogue: 0,0:00:10.67,0:00:11.55,Karaoke,,0,0,0,,{\k22}ME {\k16}THAT {\k26}PUTTING {\k24}AN
+Dialogue: 0,0:00:11.55,0:00:12.93,Karaoke,,0,0,0,,{\k20}AI {\k70}INSIDE {\k20}A {\k28}PRODUCT
+Dialogue: 0,0:00:12.93,0:00:13.89,Karaoke,,0,0,0,,{\k24}IS {\k28}ACTUALLY {\k18}THE {\k26}EASY
+Dialogue: 0,0:00:13.89,0:00:14.19,Karaoke,,0,0,0,,{\k30}PART.
+Dialogue: 0,0:00:14.75,0:00:15.71,Karaoke,,0,0,0,,{\k12}THE {\k20}HARD {\k20}PART {\k44}IS
+Dialogue: 0,0:00:15.71,0:00:16.63,Karaoke,,0,0,0,,{\k20}TO {\k28}TRUST {\k22}THAT {\k22}AI
+Dialogue: 0,0:00:16.63,0:00:17.79,Karaoke,,0,0,0,,{\k34}AGENT {\k26}TO {\k30}ACTUALLY {\k26}DO
+Dialogue: 0,0:00:17.79,0:00:18.75,Karaoke,,0,0,0,,{\k26}THINGS {\k22}FOR {\k14}YOUR {\k34}USERS
+Dialogue: 0,0:00:18.75,0:00:20.07,Karaoke,,0,0,0,,{\k40}INSIDE {\k22}YOUR {\k36}PRODUCT {\k34}WITHOUT
+Dialogue: 0,0:00:20.07,0:00:20.83,Karaoke,,0,0,0,,{\k42}BREAKING {\k34}ANYTHING.
+Dialogue: 0,0:00:21.39,0:00:22.55,Karaoke,,0,0,0,,{\k10}BIG {\k36}COMPANIES {\k30}LIKE {\k40}AWS
+Dialogue: 0,0:00:22.55,0:00:23.53,Karaoke,,0,0,0,,{\k34}AND {\k20}GOOGLE {\k28}CLOUD {\k16}ARE
+Dialogue: 0,0:00:23.53,0:00:24.85,Karaoke,,0,0,0,,{\k50}BUILDING {\k32}THEIR {\k20}OWN {\k30}AI
+Dialogue: 0,0:00:24.85,0:00:25.29,Karaoke,,0,0,0,,{\k44}AGENTS.
+Dialogue: 0,0:00:25.83,0:00:26.89,Karaoke,,0,0,0,,{\k49}WELL, {\k10}{\k18}MOST {\k20}OF {\k10}OUR
+Dialogue: 0,0:00:26.89,0:00:29.07,Karaoke,,0,0,0,,{\k36}COMPANIES {\k42}CUT {\k96}ASCORP {\k44}IS
+Dialogue: 0,0:00:29.07,0:00:30.01,Karaoke,,0,0,0,,{\k16}THE {\k24}AI {\k28}AGENT {\k26}FOR
+Dialogue: 0,0:00:30.01,0:00:30.31,Karaoke,,0,0,0,,{\k30}THEM.
+Dialogue: 0,0:00:30.79,0:00:31.77,Karaoke,,0,0,0,,{\k4}THE {\k20}USERS {\k34}JUST {\k40}ASK
+Dialogue: 0,0:00:31.77,0:00:33.45,Karaoke,,0,0,0,,{\k48}AND {\k58}VERB {\k36}SHOWS {\k26}THEM
+Dialogue: 0,0:00:33.45,0:00:34.23,Karaoke,,0,0,0,,{\k28}WHAT {\k24}IT {\k10}IS {\k16}GOING
+Dialogue: 0,0:00:34.23,0:00:34.79,Karaoke,,0,0,0,,{\k16}TO {\k40}CHANGE.
+Dialogue: 0,0:00:34.97,0:00:35.77,Karaoke,,0,0,0,,{\k2}AND {\k28}ONLY {\k26}AFTER {\k24}THEY
+Dialogue: 0,0:00:35.77,0:00:37.11,Karaoke,,0,0,0,,{\k30}SAY {\k32}YES, {\k22}{\k12}IT {\k38}JUST
+Dialogue: 0,0:00:37.11,0:00:38.01,Karaoke,,0,0,0,,{\k24}GOES {\k24}AHEAD {\k18}AND {\k24}DOES
+Dialogue: 0,0:00:38.01,0:00:38.33,Karaoke,,0,0,0,,{\k32}IT.
+Dialogue: 0,0:00:38.57,0:00:39.59,Karaoke,,0,0,0,,{\k22}WE'RE {\k18}LIVES {\k22}IN {\k40}SEPTEMBER
+Dialogue: 0,0:00:39.59,0:00:40.37,Karaoke,,0,0,0,,{\k30}AND {\k16}SO {\k32}FAR.
+Dialogue: 0,0:00:40.51,0:00:41.13,Karaoke,,0,0,0,,{\k14}HAVE {\k28}ONE {\k20}LIVE
+Dialogue: 0,0:00:41.13,0:00:43.01,Karaoke,,0,0,0,,{\k40}CUSTOMER {\k58}DEPLOYED {\k36}IN, {\k16}{\k38}DEPLOYED
+Dialogue: 0,0:00:43.01,0:00:44.33,Karaoke,,0,0,0,,{\k42}ASCORP {\k36}INTO {\k20}THAT {\k34}PRODUCT.
+Dialogue: 0,0:00:45.05,0:00:46.49,Karaoke,,0,0,0,,{\k28}SO {\k28}I'M {\k24}BETTING {\k64}HEAVILY
+Dialogue: 0,0:00:46.49,0:00:47.77,Karaoke,,0,0,0,,{\k42}ON {\k30}THE {\k32}FUTURE {\k24}WHERE
+Dialogue: 0,0:00:47.77,0:00:49.07,Karaoke,,0,0,0,,{\k38}PEOPLE {\k44}WILL {\k20}NO {\k28}LONGER
+Dialogue: 0,0:00:49.07,0:00:50.69,Karaoke,,0,0,0,,{\k38}CLICK {\k50}ON {\k42}ANYTHING {\k32}TO
+Dialogue: 0,0:00:50.69,0:00:51.03,Karaoke,,0,0,0,,{\k18}GET {\k16}INSIDE
+Dialogue: 0,0:00:51.03,0:00:51.11,Karaoke,,0,0,0,,{\k8}INSIDE
+Dialogue: 0,0:00:51.11,0:00:52.68,Karaoke,,0,0,0,,{\k106}INSIDE {\k16}A {\k34}PRODUCT.
+Dialogue: 0,0:00:52.68,0:00:54.24,Karaoke,,0,0,0,,{\k68}THEY'RE {\k12}JUST {\k50}OPEN {\k26}AN
+Dialogue: 0,0:00:54.24,0:00:55.26,Karaoke,,0,0,0,,{\k34}AGENT {\k24}AND {\k26}ASK {\k18}WHAT
+Dialogue: 0,0:00:55.26,0:00:56.08,Karaoke,,0,0,0,,{\k16}THEY {\k18}WANT {\k28}TO {\k20}DO
+Dialogue: 0,0:00:56.08,0:00:57.28,Karaoke,,0,0,0,,{\k28}AND {\k30}GET {\k32}THINGS {\k30}DONE.
+Dialogue: 0,0:00:57.96,0:00:59.26,Karaoke,,0,0,0,,{\k6}SO {\k76}LOOKING {\k26}FORWARD {\k22}TO
+Dialogue: 0,0:00:59.26,0:00:59.80,Karaoke,,0,0,0,,{\k16}HEAR {\k20}FROM {\k18}YOU.

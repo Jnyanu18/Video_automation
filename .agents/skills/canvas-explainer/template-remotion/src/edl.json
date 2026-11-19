@@ -1,0 +1,47 @@
+{
+ "clip": "sample",
+ "version": "v1",
+ "segments": [
+  {
+   "out": 0.0,
+   "src": 0.0,
+   "len": 3.0,
+   "idle": true
+  },
+  {
+   "out": 3.0,
+   "src": 10.0,
+   "len": 4.0,
+   "idle": false
+  },
+  {
+   "out": 7.0,
+   "src": 0.0,
+   "len": 2.0,
+   "idle": true
+  }
+ ],
+ "intro": null,
+ "outro": {
+  "t": 7.1,
+  "dur": 1.2,
+  "text": "Follow for more AI news."
+ },
+ "srcEnd": 9.0,
+ "total": 9.0,
+ "frames": 270,
+ "items": [
+  {
+   "type": "el",
+   "text": "OpenAI just bought a drug-discovery startup."
+  },
+  {
+   "type": "his",
+   "text": "Could AI find medicine faster? I would think yes."
+  },
+  {
+   "type": "el",
+   "text": "Follow for more AI news."
+  }
+ ]
+}

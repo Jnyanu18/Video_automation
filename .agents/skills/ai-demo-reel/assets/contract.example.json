@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Illustrative 50-second contract. Replace sources, measured durations, words and windows for the real project. Not release evidence.",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "frames": 1500,
+  "audio": "media/narration.wav",
+  "scenes": [
+    {"from": 0, "frames": 303, "kind": "result", "source": "media/result.mp4", "sourceStartSeconds": 0, "playbackRate": 1, "sourceDurationSeconds": 10.1},
+    {"from": 303, "frames": 991, "kind": "walkthrough", "source": "media/walkthrough.mp4", "sourceStartSeconds": 0, "playbackRate": 1, "sourceDurationSeconds": 33.1},
+    {"from": 1294, "frames": 206, "kind": "closing", "source": "media/closing.mp4", "sourceStartSeconds": 0, "playbackRate": 1, "sourceDurationSeconds": 7}
+  ],
+  "presenter": {"enabled": true, "left": 0, "bottom": 0, "width": 828, "height": 1012, "mirror": true, "preparedFrames": 488, "framesDir": "media/avatar-frames"},
+  "presenterWindows": [
+    {"from": 303, "frames": 152, "packedStart": 0},
+    {"from": 704, "frames": 165, "packedStart": 152},
+    {"from": 1294, "frames": 171, "packedStart": 317}
+  ],
+  "captionPages": [],
+  "captionsExpected": true,
+  "protectedFiles": []
+}

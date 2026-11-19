@@ -1,0 +1,51 @@
+[
+  {
+    "id": "01-amount",
+    "start": 0.0,
+    "end": 4.165,
+    "words": "you can launch",
+    "desc": ""
+  },
+  {
+    "id": "02-terminal",
+    "start": 4.165,
+    "end": 5.844,
+    "words": "it works",
+    "desc": ""
+  },
+  {
+    "id": "03-receipt",
+    "start": 5.844,
+    "end": 7.844,
+    "words": "then hosting",
+    "desc": ""
+  },
+  {
+    "id": "04-warning",
+    "start": 7.844,
+    "end": 10.766,
+    "words": "and the free",
+    "desc": ""
+  },
+  {
+    "id": "05-receipt",
+    "start": 10.766,
+    "end": 37.658,
+    "words": "here's the honest",
+    "desc": ""
+  },
+  {
+    "id": "06-amount",
+    "start": 37.658,
+    "end": 43.396,
+    "words": "the one thing",
+    "desc": ""
+  },
+  {
+    "id": "07-end",
+    "start": 43.396,
+    "end": 48.15,
+    "words": "comment stack",
+    "desc": ""
+  }
+]

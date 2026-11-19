@@ -1,0 +1,30 @@
+# --- build & caches ---
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+dist/
+.cache/
+
+# --- secrets ---
+.env
+.env.local
+*.key
+
+# --- large media: covered by .restructure manifests + move logs, not by git ---
+*.mp4
+*.mov
+*.webm
+*.avi
+*.wav
+*.mp3
+*.m4a
+
+# --- vendor clones with their own upstreams (live in J:\_vendor) ---
+agentic-video-editor/
+
+# --- machine state ---
+Thumbs.db
+.DS_Store

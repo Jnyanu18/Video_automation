@@ -1,0 +1,46 @@
+{
+ "sample": true,
+ "clip": "sample",
+ "version": "v6",
+ "note": "TINY SAMPLE SPINE (no media). scripts/build_spine.py overwrites edl.json, words.json and vo_env.json for a real clip.",
+ "source": "<your take>.MP4",
+ "crop_x": 0,
+ "segments": [
+  {
+   "out": 0,
+   "src": 0,
+   "len": 12.0
+  }
+ ],
+ "speed": 1.1,
+ "gap": 0.18,
+ "outro": {
+  "t": 9.3,
+  "dur": 2.4,
+  "text": "Follow for more AI news."
+ },
+ "total": 12.0,
+ "frames": 360,
+ "items": [
+  {
+   "type": "his",
+   "q": false,
+   "text": "AI writes code now. Should you still learn it?"
+  },
+  {
+   "type": "his",
+   "q": true,
+   "text": "Why learn CS if AI can code?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "Because you still decide what to build."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "Would you still pick CS? Tell me in the comments."
+  }
+ ]
+}

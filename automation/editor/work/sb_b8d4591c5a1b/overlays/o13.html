@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
+      body { font-family: "Helvetica Neue", Arial, "DejaVu Sans", sans-serif; }
+      #card { position: absolute; left: 142px; bottom: 213px; display: flex; align-items: stretch; gap: 35px;
+              background: rgba(15,15,15,0.88); border-radius: 24px; padding: 39px 64px 39px 42px;
+              box-shadow: 0 6px 32px rgba(0,0,0,.25); max-width: 864px; }
+      #accent { width: 17px; border-radius: 5px; background: #ff7a1a; transform-origin: top; }
+      #name { font-size: 85px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em; line-height: 1.15; }
+      #role { font-size: 53px; font-weight: 400; color: #c9c9c9; margin-top: 7px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="lower-third-o13" data-start="0" data-duration="4.0"
+         data-width="1080" data-height="1920">
+      <div id="card" class="clip" data-start="0" data-duration="4.0" data-track-index="0">
+        <div id="accent"></div>
+        <div><div id="name">Vishnu</div><div id="role">Founder, Ascorp</div></div>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      gsap.set("#card", { x: -540, opacity: 0 });
+      gsap.set("#accent", { scaleY: 0 });
+      tl.to("#card", { x: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, 0.05);
+      tl.to("#accent", { scaleY: 1, duration: 0.4, ease: "power2.out" }, 0.35);
+      tl.to("#card", { x: -540, opacity: 0, duration: 0.3, ease: "power3.in" }, 3.65);
+      window.__timelines["lower-third-o13"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

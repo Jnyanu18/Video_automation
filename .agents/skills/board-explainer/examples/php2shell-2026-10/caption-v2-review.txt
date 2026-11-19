@@ -1,0 +1,11 @@
+2 PHP bugs. Save this before your next deploy.
+
+PHP2Shell can let someone run code on your server without a login. In the Reel, I explain both bugs with memory lockers.
+
+One leaves unfinished data treated as valid. The other keeps an old pointer after its data is freed.
+
+Default settings aren't a safety net. PHP's maintainers confirmed exploitation on affected setups.
+
+Patched releases: 8.2.35, 8.3.36, 8.4.27 and 8.5.12, or a newer patched release for your branch. Restart PHP workers after updating. On managed hosting, ask your host to confirm the fix.
+
+#PHP #CyberSecurity #WebDevelopment

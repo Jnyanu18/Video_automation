@@ -1,0 +1,16 @@
+﻿start
+ok white-self-waffle-henley-t_1.jpg
+retry 1 https://cdn.shopify.com/s/files/1/0274/0086/3853/files/GSHN-2H-01-WHT_af9e3363-60be-4613-b657-ad184f2005c9-min.png?v=1743859714&width=900 : The underlying connection was closed: An unexpected error occurred on a send.
+retry 2 https://cdn.shopify.com/s/files/1/0274/0086/3853/files/GSHN-2H-01-WHT_af9e3363-60be-4613-b657-ad184f2005c9-min.png?v=1743859714&width=900 : The underlying connection was closed: An unexpected error occurred on a send.
+ok white-self-waffle-henley-t_2.jpg
+ok premium-black-quilted-puff_1.jpg
+ok premium-black-quilted-puff_2.jpg
+ok steel-grey-6-multi-pocket-_1.jpg
+ok steel-grey-6-multi-pocket-_2.jpg
+ok black-mens-minimalist-stre_1.jpg
+ok black-mens-minimalist-stre_2.jpg
+ok olive-ottoman-long-sleeve-_1.jpg
+ok olive-ottoman-long-sleeve-_2.jpg
+ok vintage-black-washed-cargo_1.jpg
+ok vintage-black-washed-cargo_2.jpg
+DONE

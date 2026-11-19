@@ -1,0 +1,59 @@
+{
+ "clip": "sample-retro",
+ "version": "v5",
+ "source": "<your-take>.mp4",
+ "segments": [
+  {
+   "out": 0,
+   "src": 0,
+   "len": 35.766666666666666
+  }
+ ],
+ "intro": null,
+ "outro": {
+  "t": 34.507246,
+  "dur": 0.959,
+  "text": "Follow for more AI news.",
+  "silent": true
+ },
+ "srcEnd": 35.766666666666666,
+ "total": 35.766666666666666,
+ "frames": 1073,
+ "items": [
+  {
+   "type": "his",
+   "q": false,
+   "text": "Seattle to Delhi in one hour on a rocket? Hell yeah, I will ride that."
+  },
+  {
+   "type": "his",
+   "q": true,
+   "text": "what is SpaceX trying to do?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "imagine a rocket, if you can reuse it as a plane and you don't have to throw the plane away when you reach your destination, isn't that the best thing?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "You take your car out from your home, you go to a grocery store, you don't leave your car there. You have to bring it back home and then go back tomorrow for the grocery shopping again, right? Imagine you have to buy a car every time you go to the grocery shopping. It doesn't make sense."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "going to buy a car every time. What they're trying to do is, they're building the best usable rocket."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "If they can do that, you can go to Seattle to New Delhi, New Delhi to Mexico in less than an hour."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "And I think in 10 years, everything will be like that. That's what I would say."
+  }
+ ]
+}

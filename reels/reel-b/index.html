@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1080, height=1920"/>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0a0a0e}
+#root{--acc:#ff8a4c;position:relative;width:1080px;height:1920px;overflow:hidden;font-family:'Poppins',sans-serif}
+.scene{position:absolute;inset:0}
+.scene.dark{background:radial-gradient(900px 700px at 50% 38%, #1e1e5a 0%, #0a0a0e 70%);color:#f4f5ff}
+.scene.light{background:radial-gradient(900px 700px at 50% 30%, #ffffff 0%, #f4f5ff 75%);color:#0a0a1a}
+.stack{position:absolute;left:90px;right:90px;top:168px;height:1162px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:26px;text-align:center}
+.stack.low{top:980px;height:350px;justify-content:flex-start}
+.ln{font-size:128px;font-weight:800;line-height:1.02;letter-spacing:-0.035em}
+.ln.small{font-size:70px;font-weight:700;margin-bottom:10px}
+.w{display:inline-block;margin:0 .13em}.hl.ac{color:#ff8a4c}.scene.light .hl.ac,.scene.light .num{color:#cf5415}
+.sub{font-size:44px;font-weight:500;opacity:.75;line-height:1.25;max-width:880px}
+.pill{width:760px;padding:26px 0;border-radius:999px;font-size:50px;font-weight:600;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.22)}
+.typed{font-size:72px;font-weight:800;color:#ff8a4c;margin-top:18px;clip-path:inset(0 100% 0 0);letter-spacing:-0.02em}
+.orbwrap{position:absolute;left:0;right:0;top:420px;height:480px}
+.orb{position:absolute;left:390px;top:130px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 38% 34%, #ffd2b4 0%, #ff8a4c 38%, #b3470f 100%);box-shadow:0 0 120px 40px rgba(255,138,76,.55)}
+.ring{position:absolute;left:390px;top:130px;width:300px;height:300px;border-radius:50%;border:3px solid #ff8a4c}
+.card{width:860px;border-radius:44px;padding:44px 46px;background:#fff;color:#0a0a1a;box-shadow:0 40px 90px rgba(10,10,40,.22);text-align:left;display:flex;flex-direction:column;gap:22px}
+.scene.dark .card{background:#15152b;color:#f4f5ff;box-shadow:0 40px 90px rgba(0,0,0,.55);border:1.5px solid rgba(255,255,255,.12)}
+.chead{font-size:34px;font-weight:700;opacity:.55;letter-spacing:.02em;text-transform:uppercase}
+.field{height:96px;border-radius:24px;border:2.5px solid rgba(10,10,40,.16);display:flex;align-items:center;padding:0 28px;font-size:38px;font-weight:500;overflow:hidden;white-space:nowrap}
+.ftext{display:inline-block;clip-path:inset(0 100% 0 0)}
+.btn{align-self:flex-start;padding:22px 52px;border-radius:999px;background:#ff8a4c;color:#0a0a1a;font-size:42px;font-weight:700}
+.btn.ok{background:#2a2a3a;color:#fff;align-self:center;padding:26px 90px}
+.status{font-size:46px;font-weight:600}.status.dn{opacity:0;color:#38d27a;margin-top:-76px}
+.steps{display:flex;flex-direction:column;gap:14px}
+.step{font-size:40px;font-weight:600;display:flex;align-items:center;gap:20px}
+.chk{width:52px;height:52px;border-radius:50%;background:#38d27a;color:#0a0a1a;display:inline-flex;align-items:center;justify-content:center;font-size:32px;font-weight:800}
+.stat{width:860px;border-radius:36px;padding:30px 44px;background:#fff;box-shadow:0 30px 70px rgba(10,10,40,.16);display:flex;align-items:center;gap:36px;text-align:left}
+.num{font-size:104px;font-weight:800;color:#cf5415;letter-spacing:-0.04em;min-width:300px}
+.lab{font-size:38px;font-weight:600;line-height:1.2;color:#0a0a1a}
+.cbtn{margin-top:20px;padding:30px 70px;border-radius:999px;background:#ff8a4c;color:#0a0a1a;font-size:50px;font-weight:700}
+.url{font-size:46px;font-weight:600;opacity:.85;letter-spacing:.01em}
+.stack.hascap{height:880px}.stack.low.hascap{top:640px;height:380px}
+.kin{gap:0}.kw{font-size:190px;font-weight:900;line-height:1.0;letter-spacing:-0.05em}.kw.ac{color:#ff8a4c}
+.scene.light .kw.ac{color:#cf5415}
+.chathead{font-size:40px;font-weight:700;display:flex;align-items:center;gap:14px;opacity:.9}
+.dot{width:20px;height:20px;border-radius:50%;background:#38d27a}
+.chat{width:900px;display:flex;flex-direction:column;gap:22px}
+.bub{max-width:700px;padding:26px 34px;border-radius:44px;font-size:42px;font-weight:600;line-height:1.25;text-align:left}
+.bub.user{align-self:flex-end;background:#ff8a4c;color:#0a0a1a;border-bottom-right-radius:12px}
+.bub.agent{align-self:flex-start;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);border-bottom-left-radius:12px}
+.scene.light .bub.agent{background:#fff;border:1.5px solid rgba(10,10,40,.12);box-shadow:0 12px 30px rgba(10,10,40,.1)}
+.vs{width:930px;display:flex;flex-direction:column;gap:34px}
+.col{border-radius:40px;padding:36px 42px;display:flex;flex-direction:column;gap:18px;text-align:left}
+.col.old{background:rgba(255,255,255,.06);border:2px dashed rgba(255,255,255,.28)}
+.col.new{background:#ff8a4c;color:#0a0a1a}
+.vtag{font-size:34px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.vrow{font-size:52px;font-weight:700;line-height:1.15}
+.col.old .vrow{text-decoration:line-through;text-decoration-thickness:4px;opacity:.85}
+.fl{display:flex;flex-direction:column;align-items:center;gap:0}
+.fn{display:flex;align-items:center;gap:30px;width:760px;padding:12px 30px;border-radius:999px;background:rgba(255,255,255,.09);border:2px solid rgba(255,255,255,.2)}
+.fic{width:84px;height:84px;border-radius:50%;background:#ff8a4c;color:#0a0a1a;font-size:46px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.flab{font-size:50px;font-weight:700}
+.fcon{height:38px;width:6px}.fline{width:6px;height:38px;background:#ff8a4c;transform-origin:top}
+.cap{position:absolute;left:70px;right:70px;top:1090px;height:200px}
+.cl{position:absolute;left:0;right:0;top:0;text-align:center;font-size:78px;font-weight:800;letter-spacing:-0.02em;line-height:1.12;opacity:0;text-shadow:0 4px 24px rgba(0,0,0,.35)}
+.scene.light .cl{text-shadow:none;--acc:#cf5415}
+.cw{display:inline-block;margin:0 .12em}
+.wipe{position:absolute;left:0;right:0;top:0;height:1920px;background:#ff8a4c;z-index:50}
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="26.82" data-width="1080" data-height="1920">
+<div id="s0" class="clip scene dark" data-start="0.00" data-duration="3.00" data-track-index="0"><div class="stack hascap kin"><div class="kw">One</div><div class="kw">reel.</div><div class="kw">Five</div><div class="kw ac">jobs.</div></div><div class="cap"><div class="cl"><span class="cw">One</span><span class="cw">reel</span></div><div class="cl"><span class="cw">Five</span><span class="cw">jobs</span></div></div></div>
+<div id="s1" class="clip scene light" data-start="3.00" data-duration="9.44" data-track-index="1"><div class="stack hascap"><div class="chathead"><span class="dot"></span>AILO agent</div><div class="chat"><div class="bub user">Make a reel from this link</div><div class="bub agent">Done. Captions, diagrams and sound are in.</div><div class="bub agent">Ready to render?</div><div class="bub user">Approve</div></div></div><div class="cap"><div class="cl"><span class="cw">Now</span><span class="cw">you</span><span class="cw">just</span></div><div class="cl"><span class="cw">ask</span></div><div class="cl"><span class="cw">Paste</span><span class="cw">a</span><span class="cw">link</span></div><div class="cl"><span class="cw">and</span><span class="cw">the</span><span class="cw">agent</span></div><div class="cl"><span class="cw">does</span><span class="cw">all</span><span class="cw">five</span></div><div class="cl"><span class="cw">Captions</span></div><div class="cl"><span class="cw">animated</span><span class="cw">diagrams</span></div><div class="cl"><span class="cw">sound</span></div><div class="cl"><span class="cw">You</span><span class="cw">approve</span></div><div class="cl"><span class="cw">then</span><span class="cw">it</span><span class="cw">renders</span></div></div></div>
+<div id="s2" class="clip scene dark" data-start="12.44" data-duration="9.46" data-track-index="2"><div class="stack hascap"><div class="ln small"><span class="w hl">AILO</span><span class="w hl ac">delivers</span></div><div class="stat"><div class="num">68%</div><div class="lab">of support tickets auto-resolved</div></div><div class="stat"><div class="num">3.2x</div><div class="lab">organic traffic in 6 months</div></div><div class="stat"><div class="num">20 hrs</div><div class="lab">saved every week</div></div><div class="sub">From AILO client work</div></div><div class="cap"><div class="cl"><span class="cw">AILO</span><span class="cw">builds</span><span class="cw">automation</span></div><div class="cl"><span class="cw">for</span><span class="cw">small</span><span class="cw">businesses</span></div><div class="cl"><span class="cw">Sixty</span><span class="cw">eight</span><span class="cw">percent</span></div><div class="cl"><span class="cw">of</span><span class="cw">support</span><span class="cw">tickets</span></div><div class="cl"><span class="cw">resolved</span><span class="cw">automatically</span></div><div class="cl"><span class="cw">Three</span><span class="cw">point</span><span class="cw">two</span></div><div class="cl"><span class="cw">times</span><span class="cw">the</span><span class="cw">organic</span></div><div class="cl"><span class="cw">traffic</span></div></div></div>
+<div id="s3" class="clip scene light" data-start="21.90" data-duration="4.92" data-track-index="3"><div class="stack hascap"><div class="ln"><span class="w hl ac">Automate</span><span class="w hl">your</span></div><div class="ln"><span class="w hl">marketing.</span></div><div class="cbtn">Book a free consultation</div><div class="url">accelerationlogics.com</div></div><div class="cap"><div class="cl"><span class="cw">Automate</span><span class="cw">your</span><span class="cw">marketing</span></div><div class="cl"><span class="cw">with</span><span class="cw">AILO</span></div><div class="cl"><span class="cw">Book</span><span class="cw">a</span><span class="cw">free</span></div><div class="cl"><span class="cw">consultation</span></div></div></div>
+<div id="wipe1" class="clip wipe" data-start="2.70" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe2" class="clip wipe" data-start="12.14" data-duration="0.62" data-track-index="30"></div>
+<div id="wipe3" class="clip wipe" data-start="21.60" data-duration="0.62" data-track-index="30"></div>
+<audio id="vo0" src="assets/vo0.mp3" data-start="0.25" data-duration="1.97" data-volume="1" data-track-index="20"></audio>
+<audio id="vo1" src="assets/vo1.mp3" data-start="3.25" data-duration="8.64" data-volume="1" data-track-index="21"></audio>
+<audio id="vo2" src="assets/vo2.mp3" data-start="12.69" data-duration="8.66" data-volume="1" data-track-index="22"></audio>
+<audio id="vo3" src="assets/vo3.mp3" data-start="22.15" data-duration="3.77" data-volume="1" data-track-index="23"></audio>
+<audio id="music" src="assets/music.wav" data-start="0" data-duration="26.82" data-volume="0.2" data-track-index="10"></audio>
+<audio id="sfx0" src="assets/whoosh.wav" data-start="2.72" data-duration="0.60" data-volume="0.45" data-track-index="40"></audio>
+<audio id="sfx1" src="assets/whoosh.wav" data-start="12.16" data-duration="0.60" data-volume="0.45" data-track-index="41"></audio>
+<audio id="sfx2" src="assets/whoosh.wav" data-start="21.62" data-duration="0.60" data-volume="0.45" data-track-index="42"></audio>
+<audio id="sfx3" src="assets/thud.wav" data-start="0.30" data-duration="0.80" data-volume="0.6" data-track-index="43"></audio>
+<audio id="sfx4" src="assets/thud.wav" data-start="1.30" data-duration="0.80" data-volume="0.6" data-track-index="44"></audio>
+<audio id="sfx5" src="assets/pop.wav" data-start="3.90" data-duration="0.80" data-volume="0.5" data-track-index="45"></audio>
+<audio id="sfx6" src="assets/ding.wav" data-start="6.60" data-duration="0.80" data-volume="0.4" data-track-index="46"></audio>
+<audio id="sfx7" src="assets/pop.wav" data-start="9.20" data-duration="0.80" data-volume="0.5" data-track-index="47"></audio>
+<audio id="sfx8" src="assets/click.wav" data-start="10.60" data-duration="0.80" data-volume="0.5" data-track-index="48"></audio>
+<audio id="sfx9" src="assets/pop.wav" data-start="14.34" data-duration="0.80" data-volume="0.5" data-track-index="49"></audio>
+<audio id="sfx10" src="assets/pop.wav" data-start="17.04" data-duration="0.80" data-volume="0.5" data-track-index="50"></audio>
+<audio id="sfx11" src="assets/pop.wav" data-start="19.44" data-duration="0.80" data-volume="0.5" data-track-index="51"></audio>
+<audio id="sfx12" src="assets/stamp.wav" data-start="23.20" data-duration="0.80" data-volume="0.6" data-track-index="52"></audio>
+<audio id="sfx13" src="assets/sparkle.wav" data-start="24.30" data-duration="0.80" data-volume="0.35" data-track-index="53"></audio>
+</div>
+<script>
+gsap.defaults({lazy: false});
+const tl = gsap.timeline({paused: true});
+tl.fromTo("#s0 .w", {scale: 1.05, filter: "blur(1.5px)"}, {scale: 1, filter: "blur(0px)", duration: 0.4, stagger: 0.05, ease: "power3.out"}, 0);
+tl.fromTo("#s0 .kw:nth-child(1)", {scale: 1.18}, {scale: 1, duration: 0.35, ease: "power3.out"}, 0);
+tl.fromTo("#s0 .kw:nth-child(2)", {opacity: 0, scale: 1.7, y: -40}, {opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(1.7)"}, 0.52);
+tl.fromTo("#s0 .kw:nth-child(3)", {opacity: 0, scale: 1.7, y: -40}, {opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(1.7)"}, 1.24);
+tl.fromTo("#s0 .kw:nth-child(4)", {opacity: 0, scale: 1.7, y: -40}, {opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(1.7)"}, 1.42);
+tl.fromTo("#s0 .cl:nth-child(1)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 0.34);
+tl.fromTo("#s0 .cl:nth-child(1)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 0.94);
+tl.fromTo("#s0 .cl:nth-child(1) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 0.34);
+tl.fromTo("#s0 .cl:nth-child(1) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 0.52);
+tl.fromTo("#s0 .cl:nth-child(2)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 1.24);
+tl.fromTo("#s0 .cl:nth-child(2)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 1.99);
+tl.fromTo("#s0 .cl:nth-child(2) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 1.24);
+tl.fromTo("#s0 .cl:nth-child(2) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 1.42);
+tl.fromTo("#s1", {opacity: 0}, {opacity: 1, duration: 0.01}, 3.00);
+tl.fromTo("#s1 .chathead", {opacity: 0, y: -20}, {opacity: 1, y: 0, duration: 0.4}, 3.10);
+tl.fromTo("#s1 .bub:nth-child(1)", {opacity: 0, y: 50, scale: 0.88}, {opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "back.out(1.5)"}, 3.90);
+tl.fromTo("#s1 .bub:nth-child(2)", {opacity: 0, y: 50, scale: 0.88}, {opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "back.out(1.5)"}, 6.60);
+tl.fromTo("#s1 .bub:nth-child(3)", {opacity: 0, y: 50, scale: 0.88}, {opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "back.out(1.5)"}, 9.20);
+tl.fromTo("#s1 .bub:nth-child(4)", {opacity: 0, y: 50, scale: 0.88}, {opacity: 1, y: 0, scale: 1, duration: 0.38, ease: "back.out(1.5)"}, 10.60);
+tl.fromTo("#s1 .cl:nth-child(1)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 3.34);
+tl.fromTo("#s1 .cl:nth-child(1)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 3.67);
+tl.fromTo("#s1 .cl:nth-child(1) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 3.34);
+tl.fromTo("#s1 .cl:nth-child(1) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 3.45);
+tl.fromTo("#s1 .cl:nth-child(1) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 3.53);
+tl.fromTo("#s1 .cl:nth-child(2)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 3.76);
+tl.fromTo("#s1 .cl:nth-child(2)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 4.25);
+tl.fromTo("#s1 .cl:nth-child(2) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 3.76);
+tl.fromTo("#s1 .cl:nth-child(3)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 4.54);
+tl.fromTo("#s1 .cl:nth-child(3)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 5.26);
+tl.fromTo("#s1 .cl:nth-child(3) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 4.54);
+tl.fromTo("#s1 .cl:nth-child(3) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 4.75);
+tl.fromTo("#s1 .cl:nth-child(3) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 4.79);
+tl.fromTo("#s1 .cl:nth-child(4)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 5.41);
+tl.fromTo("#s1 .cl:nth-child(4)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 5.85);
+tl.fromTo("#s1 .cl:nth-child(4) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 5.41);
+tl.fromTo("#s1 .cl:nth-child(4) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 5.48);
+tl.fromTo("#s1 .cl:nth-child(4) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 5.57);
+tl.fromTo("#s1 .cl:nth-child(5)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 5.94);
+tl.fromTo("#s1 .cl:nth-child(5)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 6.84);
+tl.fromTo("#s1 .cl:nth-child(5) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 5.94);
+tl.fromTo("#s1 .cl:nth-child(5) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 6.14);
+tl.fromTo("#s1 .cl:nth-child(5) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 6.29);
+tl.fromTo("#s1 .cl:nth-child(6)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 7.11);
+tl.fromTo("#s1 .cl:nth-child(6)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 7.75);
+tl.fromTo("#s1 .cl:nth-child(6) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 7.11);
+tl.fromTo("#s1 .cl:nth-child(7)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 7.84);
+tl.fromTo("#s1 .cl:nth-child(7)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 9.03);
+tl.fromTo("#s1 .cl:nth-child(7) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 7.84);
+tl.fromTo("#s1 .cl:nth-child(7) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 8.26);
+tl.fromTo("#s1 .cl:nth-child(8)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 9.12);
+tl.fromTo("#s1 .cl:nth-child(8)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 9.68);
+tl.fromTo("#s1 .cl:nth-child(8) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 9.12);
+tl.fromTo("#s1 .cl:nth-child(9)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 9.95);
+tl.fromTo("#s1 .cl:nth-child(9)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 10.69);
+tl.fromTo("#s1 .cl:nth-child(9) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 9.95);
+tl.fromTo("#s1 .cl:nth-child(9) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 10.10);
+tl.fromTo("#s1 .cl:nth-child(10)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 10.82);
+tl.fromTo("#s1 .cl:nth-child(10)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 11.66);
+tl.fromTo("#s1 .cl:nth-child(10) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 10.82);
+tl.fromTo("#s1 .cl:nth-child(10) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 10.94);
+tl.fromTo("#s1 .cl:nth-child(10) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 11.06);
+tl.fromTo("#s2", {opacity: 0}, {opacity: 1, duration: 0.01}, 12.44);
+tl.fromTo("#s2 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 12.49);
+tl.fromTo("#s2 .stat", {opacity: 0, y: 70, scale: 0.94}, {opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.55, ease: "back.out(1.3)"}, 12.84);
+tl.fromTo("#s2 .sub", {opacity: 0}, {opacity: 1, duration: 0.4}, 14.79);
+tl.fromTo("#s2 .cl:nth-child(1)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 12.78);
+tl.fromTo("#s2 .cl:nth-child(1)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 14.00);
+tl.fromTo("#s2 .cl:nth-child(1) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 12.78);
+tl.fromTo("#s2 .cl:nth-child(1) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 13.17);
+tl.fromTo("#s2 .cl:nth-child(1) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 13.50);
+tl.fromTo("#s2 .cl:nth-child(2)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 14.09);
+tl.fromTo("#s2 .cl:nth-child(2)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 15.24);
+tl.fromTo("#s2 .cl:nth-child(2) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 14.09);
+tl.fromTo("#s2 .cl:nth-child(2) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 14.25);
+tl.fromTo("#s2 .cl:nth-child(2) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 14.52);
+tl.fromTo("#s2 .cl:nth-child(3)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 15.52);
+tl.fromTo("#s2 .cl:nth-child(3)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 16.30);
+tl.fromTo("#s2 .cl:nth-child(3) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 15.52);
+tl.fromTo("#s2 .cl:nth-child(3) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 15.91);
+tl.fromTo("#s2 .cl:nth-child(3) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 16.02);
+tl.fromTo("#s2 .cl:nth-child(4)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 16.39);
+tl.fromTo("#s2 .cl:nth-child(4)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 17.21);
+tl.fromTo("#s2 .cl:nth-child(4) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 16.39);
+tl.fromTo("#s2 .cl:nth-child(4) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 16.49);
+tl.fromTo("#s2 .cl:nth-child(4) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 16.91);
+tl.fromTo("#s2 .cl:nth-child(5)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 17.30);
+tl.fromTo("#s2 .cl:nth-child(5)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 18.65);
+tl.fromTo("#s2 .cl:nth-child(5) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 17.30);
+tl.fromTo("#s2 .cl:nth-child(5) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 17.84);
+tl.fromTo("#s2 .cl:nth-child(6)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 18.95);
+tl.fromTo("#s2 .cl:nth-child(6)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 19.63);
+tl.fromTo("#s2 .cl:nth-child(6) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 18.95);
+tl.fromTo("#s2 .cl:nth-child(6) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 19.11);
+tl.fromTo("#s2 .cl:nth-child(6) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 19.46);
+tl.fromTo("#s2 .cl:nth-child(7)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 19.72);
+tl.fromTo("#s2 .cl:nth-child(7)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 20.44);
+tl.fromTo("#s2 .cl:nth-child(7) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 19.72);
+tl.fromTo("#s2 .cl:nth-child(7) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 20.07);
+tl.fromTo("#s2 .cl:nth-child(7) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 20.15);
+tl.fromTo("#s2 .cl:nth-child(8)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 20.53);
+tl.fromTo("#s2 .cl:nth-child(8)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 21.14);
+tl.fromTo("#s2 .cl:nth-child(8) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 20.53);
+tl.fromTo("#s3", {opacity: 0}, {opacity: 1, duration: 0.01}, 21.90);
+tl.fromTo("#s3 .w", {opacity: 0, y: 40, filter: "blur(10px)"}, {opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, stagger: 0.07, ease: "power3.out"}, 21.98);
+tl.fromTo("#s3 .cbtn", {opacity: 0, scale: 0.8}, {opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)"}, 23.00);
+tl.fromTo("#s3 .url", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.45}, 23.50);
+tl.fromTo("#s3 .cl:nth-child(1)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 22.24);
+tl.fromTo("#s3 .cl:nth-child(1)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 23.24);
+tl.fromTo("#s3 .cl:nth-child(1) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 22.24);
+tl.fromTo("#s3 .cl:nth-child(1) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 22.62);
+tl.fromTo("#s3 .cl:nth-child(1) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 22.74);
+tl.fromTo("#s3 .cl:nth-child(2)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 23.33);
+tl.fromTo("#s3 .cl:nth-child(2)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 24.13);
+tl.fromTo("#s3 .cl:nth-child(2) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 23.33);
+tl.fromTo("#s3 .cl:nth-child(2) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 23.49);
+tl.fromTo("#s3 .cl:nth-child(3)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 24.41);
+tl.fromTo("#s3 .cl:nth-child(3)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 24.78);
+tl.fromTo("#s3 .cl:nth-child(3) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 24.41);
+tl.fromTo("#s3 .cl:nth-child(3) .cw:nth-child(2)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 24.57);
+tl.fromTo("#s3 .cl:nth-child(3) .cw:nth-child(3)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 24.63);
+tl.fromTo("#s3 .cl:nth-child(4)", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.14}, 24.87);
+tl.fromTo("#s3 .cl:nth-child(4)", {opacity: 1}, {opacity: 0, duration: 0.05, immediateRender: false}, 25.69);
+tl.fromTo("#s3 .cl:nth-child(4) .cw:nth-child(1)", {color: "inherit"}, {color: "var(--acc)", duration: 0.06}, 24.87);
+tl.fromTo("#wipe1", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 2.70);
+tl.fromTo("#wipe1", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 3.02);
+tl.fromTo("#wipe2", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 12.14);
+tl.fromTo("#wipe2", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 12.46);
+tl.fromTo("#wipe3", {y: 1920}, {y: 0, duration: 0.26, ease: "power3.in"}, 21.60);
+tl.fromTo("#wipe3", {y: 0}, {y: -1920, duration: 0.3, ease: "power3.out", immediateRender: false}, 21.92);
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+tl.seek(0);
+</script></body></html>

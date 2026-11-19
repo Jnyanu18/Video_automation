@@ -1,0 +1,114 @@
+[
+ {
+  "id": "hook",
+  "start": 0,
+  "end": 2.08,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "split",
+  "start": 2.08,
+  "end": 3.01,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "one-codebase",
+  "start": 3.01,
+  "end": 5.08,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "old-way",
+  "start": 5.08,
+  "end": 9.0,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "two-bills",
+  "start": 9.0,
+  "end": 9.84,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "not-anymore",
+  "start": 9.84,
+  "end": 11.02,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "frameworks",
+  "start": 11.02,
+  "end": 14.92,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "same-release",
+  "start": 14.92,
+  "end": 17.04,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "go-native",
+  "start": 17.04,
+  "end": 19.74,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "swift-kotlin",
+  "start": 19.74,
+  "end": 21.39,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "hardware",
+  "start": 21.39,
+  "end": 23.38,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "chips",
+  "start": 23.38,
+  "end": 27.15,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "native-stamp",
+  "start": 27.15,
+  "end": 28.56,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "everything-else",
+  "start": 28.56,
+  "end": 31.11,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "build-once",
+  "start": 31.11,
+  "end": 32.51,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "stack",
+  "start": 32.51,
+  "end": 38.3,
+  "words": "",
+  "desc": ""
+ }
+]

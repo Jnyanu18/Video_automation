@@ -1,0 +1,2470 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\692501b84744b87f5c74b5b8e7e22788.mp4",
+  "probe": {
+    "duration": 64.617,
+    "width": 720,
+    "height": 1280,
+    "fps": 30.0,
+    "has_video": true,
+    "has_audio": true,
+    "video_codec": "h264",
+    "audio_codec": "aac"
+  },
+  "silences": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\692501b84744b87f5c74b5b8e7e22788.mp4",
+    "duration": 64.617,
+    "noise_db": -35,
+    "min_len": 0.5,
+    "silences": [],
+    "speech": [
+      {
+        "start": 0.0,
+        "end": 64.617
+      }
+    ],
+    "silence_total": 0,
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_ef008b9c0785\\silences.json"
+  },
+  "scenes": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\692501b84744b87f5c74b5b8e7e22788.mp4",
+    "duration": 64.617,
+    "threshold": 0.3,
+    "cuts": [
+      5.333,
+      7.6,
+      16.667,
+      19.2,
+      28.133,
+      30.533,
+      34.133,
+      35.4,
+      47.7,
+      49.1,
+      61.967
+    ],
+    "scenes": [
+      {
+        "index": 0,
+        "start": 0.0,
+        "end": 5.333
+      },
+      {
+        "index": 1,
+        "start": 5.333,
+        "end": 7.6
+      },
+      {
+        "index": 2,
+        "start": 7.6,
+        "end": 16.667
+      },
+      {
+        "index": 3,
+        "start": 16.667,
+        "end": 19.2
+      },
+      {
+        "index": 4,
+        "start": 19.2,
+        "end": 28.133
+      },
+      {
+        "index": 5,
+        "start": 28.133,
+        "end": 30.533
+      },
+      {
+        "index": 6,
+        "start": 30.533,
+        "end": 34.133
+      },
+      {
+        "index": 7,
+        "start": 34.133,
+        "end": 35.4
+      },
+      {
+        "index": 8,
+        "start": 35.4,
+        "end": 47.7
+      },
+      {
+        "index": 9,
+        "start": 47.7,
+        "end": 49.1
+      },
+      {
+        "index": 10,
+        "start": 49.1,
+        "end": 61.967
+      },
+      {
+        "index": 11,
+        "start": 61.967,
+        "end": 64.617
+      }
+    ],
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_ef008b9c0785\\scenes.json"
+  },
+  "transcript": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\692501b84744b87f5c74b5b8e7e22788.mp4",
+    "backend": "faster-whisper",
+    "status": "ok",
+    "language": "en",
+    "words": [
+      {
+        "word": "All",
+        "start": 0.0,
+        "end": 0.2
+      },
+      {
+        "word": "the",
+        "start": 0.2,
+        "end": 0.36
+      },
+      {
+        "word": "top",
+        "start": 0.36,
+        "end": 0.48
+      },
+      {
+        "word": "creators",
+        "start": 0.48,
+        "end": 0.86
+      },
+      {
+        "word": "are",
+        "start": 0.86,
+        "end": 1.08
+      },
+      {
+        "word": "editing",
+        "start": 1.08,
+        "end": 1.38
+      },
+      {
+        "word": "with",
+        "start": 1.38,
+        "end": 1.66
+      },
+      {
+        "word": "Claude,",
+        "start": 1.66,
+        "end": 1.98
+      },
+      {
+        "word": "but",
+        "start": 2.14,
+        "end": 2.22
+      },
+      {
+        "word": "no",
+        "start": 2.22,
+        "end": 2.42
+      },
+      {
+        "word": "one",
+        "start": 2.42,
+        "end": 2.54
+      },
+      {
+        "word": "is",
+        "start": 2.54,
+        "end": 2.7
+      },
+      {
+        "word": "showing",
+        "start": 2.7,
+        "end": 2.86
+      },
+      {
+        "word": "you",
+        "start": 2.86,
+        "end": 3.06
+      },
+      {
+        "word": "the",
+        "start": 3.06,
+        "end": 3.2
+      },
+      {
+        "word": "process.",
+        "start": 3.2,
+        "end": 3.54
+      },
+      {
+        "word": "So",
+        "start": 3.82,
+        "end": 3.84
+      },
+      {
+        "word": "here",
+        "start": 3.84,
+        "end": 4.18
+      },
+      {
+        "word": "is",
+        "start": 4.18,
+        "end": 4.32
+      },
+      {
+        "word": "the",
+        "start": 4.32,
+        "end": 4.4
+      },
+      {
+        "word": "step",
+        "start": 4.4,
+        "end": 4.62
+      },
+      {
+        "word": "by",
+        "start": 4.62,
+        "end": 4.74
+      },
+      {
+        "word": "step",
+        "start": 4.74,
+        "end": 4.9
+      },
+      {
+        "word": "tutorial",
+        "start": 4.9,
+        "end": 5.28
+      },
+      {
+        "word": "to",
+        "start": 5.28,
+        "end": 5.54
+      },
+      {
+        "word": "create",
+        "start": 5.54,
+        "end": 5.8
+      },
+      {
+        "word": "the",
+        "start": 5.8,
+        "end": 6.08
+      },
+      {
+        "word": "whole",
+        "start": 6.08,
+        "end": 6.28
+      },
+      {
+        "word": "editing",
+        "start": 6.28,
+        "end": 6.58
+      },
+      {
+        "word": "pipeline.",
+        "start": 6.58,
+        "end": 7.02
+      },
+      {
+        "word": "Step",
+        "start": 7.16,
+        "end": 7.24
+      },
+      {
+        "word": "1.",
+        "start": 7.24,
+        "end": 7.48
+      },
+      {
+        "word": "Download",
+        "start": 7.64,
+        "end": 7.9
+      },
+      {
+        "word": "the",
+        "start": 7.9,
+        "end": 8.18
+      },
+      {
+        "word": "Claude",
+        "start": 8.18,
+        "end": 8.48
+      },
+      {
+        "word": "desktop",
+        "start": 8.48,
+        "end": 8.8
+      },
+      {
+        "word": "app.",
+        "start": 8.8,
+        "end": 9.06
+      },
+      {
+        "word": "Create",
+        "start": 9.22,
+        "end": 9.36
+      },
+      {
+        "word": "a",
+        "start": 9.36,
+        "end": 9.58
+      },
+      {
+        "word": "folder",
+        "start": 9.58,
+        "end": 9.82
+      },
+      {
+        "word": "called",
+        "start": 9.82,
+        "end": 10.12
+      },
+      {
+        "word": "AI",
+        "start": 10.12,
+        "end": 10.56
+      },
+      {
+        "word": "Video",
+        "start": 10.56,
+        "end": 10.9
+      },
+      {
+        "word": "Editor",
+        "start": 10.9,
+        "end": 11.26
+      },
+      {
+        "word": "with",
+        "start": 11.26,
+        "end": 11.7
+      },
+      {
+        "word": "3",
+        "start": 11.7,
+        "end": 11.92
+      },
+      {
+        "word": "inside.",
+        "start": 11.92,
+        "end": 12.36
+      },
+      {
+        "word": "Raw",
+        "start": 12.62,
+        "end": 12.86
+      },
+      {
+        "word": "footage,",
+        "start": 12.86,
+        "end": 13.16
+      },
+      {
+        "word": "reference",
+        "start": 13.58,
+        "end": 13.86
+      },
+      {
+        "word": "and",
+        "start": 13.86,
+        "end": 14.26
+      },
+      {
+        "word": "export.",
+        "start": 14.26,
+        "end": 14.72
+      },
+      {
+        "word": "Open",
+        "start": 14.98,
+        "end": 15.18
+      },
+      {
+        "word": "it",
+        "start": 15.18,
+        "end": 15.44
+      },
+      {
+        "word": "into",
+        "start": 15.44,
+        "end": 15.82
+      },
+      {
+        "word": "a",
+        "start": 15.82,
+        "end": 15.94
+      },
+      {
+        "word": "local",
+        "start": 15.94,
+        "end": 16.22
+      },
+      {
+        "word": "chat.",
+        "start": 16.22,
+        "end": 16.54
+      },
+      {
+        "word": "Step",
+        "start": 16.86,
+        "end": 16.96
+      },
+      {
+        "word": "2.",
+        "start": 16.96,
+        "end": 17.28
+      },
+      {
+        "word": "We",
+        "start": 17.56,
+        "end": 17.66
+      },
+      {
+        "word": "need",
+        "start": 17.66,
+        "end": 17.84
+      },
+      {
+        "word": "to",
+        "start": 17.84,
+        "end": 17.96
+      },
+      {
+        "word": "add",
+        "start": 17.96,
+        "end": 18.16
+      },
+      {
+        "word": "some",
+        "start": 18.16,
+        "end": 18.48
+      },
+      {
+        "word": "free",
+        "start": 18.48,
+        "end": 18.8
+      },
+      {
+        "word": "tools,",
+        "start": 18.8,
+        "end": 19.06
+      },
+      {
+        "word": "hyper",
+        "start": 19.3,
+        "end": 19.52
+      },
+      {
+        "word": "frame",
+        "start": 19.52,
+        "end": 19.8
+      },
+      {
+        "word": "for",
+        "start": 19.8,
+        "end": 20.02
+      },
+      {
+        "word": "motion",
+        "start": 20.02,
+        "end": 20.32
+      },
+      {
+        "word": "graphics",
+        "start": 20.32,
+        "end": 20.62
+      },
+      {
+        "word": "like",
+        "start": 20.62,
+        "end": 20.9
+      },
+      {
+        "word": "this,",
+        "start": 20.9,
+        "end": 21.12
+      },
+      {
+        "word": "ppmg,",
+        "start": 21.36,
+        "end": 21.94
+      },
+      {
+        "word": "for",
+        "start": 22.24,
+        "end": 22.3
+      },
+      {
+        "word": "cuts",
+        "start": 22.3,
+        "end": 22.58
+      },
+      {
+        "word": "and",
+        "start": 22.58,
+        "end": 22.98
+      },
+      {
+        "word": "editing.",
+        "start": 22.98,
+        "end": 23.36
+      },
+      {
+        "word": "Whisper",
+        "start": 23.52,
+        "end": 23.84
+      },
+      {
+        "word": "for",
+        "start": 23.84,
+        "end": 24.14
+      },
+      {
+        "word": "captions",
+        "start": 24.14,
+        "end": 24.5
+      },
+      {
+        "word": "and",
+        "start": 24.5,
+        "end": 25.02
+      },
+      {
+        "word": "whitey",
+        "start": 25.02,
+        "end": 25.48
+      },
+      {
+        "word": "dlp",
+        "start": 25.48,
+        "end": 25.96
+      },
+      {
+        "word": "to",
+        "start": 25.96,
+        "end": 26.18
+      },
+      {
+        "word": "download",
+        "start": 26.18,
+        "end": 26.52
+      },
+      {
+        "word": "the",
+        "start": 26.52,
+        "end": 26.84
+      },
+      {
+        "word": "video",
+        "start": 26.84,
+        "end": 27.12
+      },
+      {
+        "word": "and",
+        "start": 27.12,
+        "end": 27.46
+      },
+      {
+        "word": "study",
+        "start": 27.46,
+        "end": 27.86
+      },
+      {
+        "word": "this.",
+        "start": 27.86,
+        "end": 28.06
+      },
+      {
+        "word": "So",
+        "start": 28.06,
+        "end": 28.26
+      },
+      {
+        "word": "these",
+        "start": 28.26,
+        "end": 28.52
+      },
+      {
+        "word": "tools",
+        "start": 28.52,
+        "end": 28.76
+      },
+      {
+        "word": "will",
+        "start": 28.76,
+        "end": 29.02
+      },
+      {
+        "word": "make",
+        "start": 29.02,
+        "end": 29.24
+      },
+      {
+        "word": "Claude",
+        "start": 29.24,
+        "end": 29.56
+      },
+      {
+        "word": "very",
+        "start": 29.56,
+        "end": 29.82
+      },
+      {
+        "word": "powerful.",
+        "start": 29.82,
+        "end": 30.48
+      },
+      {
+        "word": "Paste",
+        "start": 30.58,
+        "end": 30.74
+      },
+      {
+        "word": "the",
+        "start": 30.74,
+        "end": 30.92
+      },
+      {
+        "word": "links",
+        "start": 30.92,
+        "end": 31.08
+      },
+      {
+        "word": "with",
+        "start": 31.08,
+        "end": 31.4
+      },
+      {
+        "word": "the",
+        "start": 31.4,
+        "end": 31.54
+      },
+      {
+        "word": "prompt",
+        "start": 31.54,
+        "end": 31.88
+      },
+      {
+        "word": "and",
+        "start": 31.88,
+        "end": 32.22
+      },
+      {
+        "word": "Claude",
+        "start": 32.22,
+        "end": 32.58
+      },
+      {
+        "word": "will",
+        "start": 32.58,
+        "end": 32.68
+      },
+      {
+        "word": "install",
+        "start": 32.68,
+        "end": 33.02
+      },
+      {
+        "word": "all",
+        "start": 33.02,
+        "end": 33.52
+      },
+      {
+        "word": "these",
+        "start": 33.52,
+        "end": 33.78
+      },
+      {
+        "word": "tools.",
+        "start": 33.78,
+        "end": 34.08
+      },
+      {
+        "word": "Step",
+        "start": 34.18,
+        "end": 34.28
+      },
+      {
+        "word": "3.",
+        "start": 34.28,
+        "end": 34.56
+      },
+      {
+        "word": "Style.",
+        "start": 35.0,
+        "end": 35.18
+      },
+      {
+        "word": "Give",
+        "start": 35.44,
+        "end": 35.58
+      },
+      {
+        "word": "Claude",
+        "start": 35.58,
+        "end": 36.0
+      },
+      {
+        "word": "3",
+        "start": 36.0,
+        "end": 36.2
+      },
+      {
+        "word": "to",
+        "start": 36.2,
+        "end": 36.36
+      },
+      {
+        "word": "5",
+        "start": 36.36,
+        "end": 36.68
+      },
+      {
+        "word": "reels",
+        "start": 36.68,
+        "end": 37.0
+      },
+      {
+        "word": "from",
+        "start": 37.0,
+        "end": 37.16
+      },
+      {
+        "word": "a",
+        "start": 37.16,
+        "end": 37.3
+      },
+      {
+        "word": "creator",
+        "start": 37.3,
+        "end": 37.7
+      },
+      {
+        "word": "you'd",
+        "start": 37.7,
+        "end": 38.04
+      },
+      {
+        "word": "real",
+        "start": 38.04,
+        "end": 38.2
+      },
+      {
+        "word": "like.",
+        "start": 38.2,
+        "end": 38.44
+      },
+      {
+        "word": "Then",
+        "start": 38.72,
+        "end": 38.9
+      },
+      {
+        "word": "it",
+        "start": 38.9,
+        "end": 39.22
+      },
+      {
+        "word": "will",
+        "start": 39.22,
+        "end": 39.36
+      },
+      {
+        "word": "break",
+        "start": 39.36,
+        "end": 39.6
+      },
+      {
+        "word": "down",
+        "start": 39.6,
+        "end": 39.82
+      },
+      {
+        "word": "the",
+        "start": 39.82,
+        "end": 40.04
+      },
+      {
+        "word": "editing",
+        "start": 40.04,
+        "end": 40.44
+      },
+      {
+        "word": "style",
+        "start": 40.44,
+        "end": 40.76
+      },
+      {
+        "word": "from",
+        "start": 40.76,
+        "end": 41.14
+      },
+      {
+        "word": "fonts",
+        "start": 41.14,
+        "end": 41.66
+      },
+      {
+        "word": "to",
+        "start": 41.66,
+        "end": 41.9
+      },
+      {
+        "word": "sound",
+        "start": 41.9,
+        "end": 42.24
+      },
+      {
+        "word": "design.",
+        "start": 42.24,
+        "end": 42.62
+      },
+      {
+        "word": "And",
+        "start": 42.94,
+        "end": 43.06
+      },
+      {
+        "word": "then",
+        "start": 43.06,
+        "end": 43.26
+      },
+      {
+        "word": "give",
+        "start": 43.26,
+        "end": 43.64
+      },
+      {
+        "word": "it",
+        "start": 43.64,
+        "end": 43.86
+      },
+      {
+        "word": "this",
+        "start": 43.86,
+        "end": 44.06
+      },
+      {
+        "word": "prompt",
+        "start": 44.06,
+        "end": 44.4
+      },
+      {
+        "word": "and",
+        "start": 44.4,
+        "end": 44.66
+      },
+      {
+        "word": "it",
+        "start": 44.66,
+        "end": 44.86
+      },
+      {
+        "word": "will",
+        "start": 44.86,
+        "end": 45.0
+      },
+      {
+        "word": "give",
+        "start": 45.0,
+        "end": 45.16
+      },
+      {
+        "word": "you",
+        "start": 45.16,
+        "end": 45.38
+      },
+      {
+        "word": "a",
+        "start": 45.38,
+        "end": 45.66
+      },
+      {
+        "word": "style",
+        "start": 45.66,
+        "end": 46.16
+      },
+      {
+        "word": "shape.",
+        "start": 46.16,
+        "end": 46.36
+      },
+      {
+        "word": "It",
+        "start": 46.56,
+        "end": 46.68
+      },
+      {
+        "word": "works",
+        "start": 46.68,
+        "end": 46.92
+      },
+      {
+        "word": "like",
+        "start": 46.92,
+        "end": 47.16
+      },
+      {
+        "word": "a",
+        "start": 47.16,
+        "end": 47.3
+      },
+      {
+        "word": "charm",
+        "start": 47.3,
+        "end": 47.56
+      },
+      {
+        "word": "every",
+        "start": 47.56,
+        "end": 48.06
+      },
+      {
+        "word": "time.",
+        "start": 48.06,
+        "end": 48.3
+      },
+      {
+        "word": "Step",
+        "start": 48.56,
+        "end": 48.7
+      },
+      {
+        "word": "4.",
+        "start": 48.7,
+        "end": 48.96
+      },
+      {
+        "word": "Drop",
+        "start": 49.28,
+        "end": 49.44
+      },
+      {
+        "word": "in",
+        "start": 49.44,
+        "end": 49.66
+      },
+      {
+        "word": "your",
+        "start": 49.66,
+        "end": 49.82
+      },
+      {
+        "word": "raw",
+        "start": 49.82,
+        "end": 50.0
+      },
+      {
+        "word": "footage",
+        "start": 50.0,
+        "end": 50.32
+      },
+      {
+        "word": "and",
+        "start": 50.32,
+        "end": 50.68
+      },
+      {
+        "word": "send",
+        "start": 50.68,
+        "end": 50.9
+      },
+      {
+        "word": "this",
+        "start": 50.9,
+        "end": 51.22
+      },
+      {
+        "word": "prompt.",
+        "start": 51.22,
+        "end": 51.62
+      },
+      {
+        "word": "Then",
+        "start": 51.84,
+        "end": 51.98
+      },
+      {
+        "word": "Claude",
+        "start": 51.98,
+        "end": 52.6
+      },
+      {
+        "word": "will",
+        "start": 52.6,
+        "end": 52.74
+      },
+      {
+        "word": "give",
+        "start": 52.74,
+        "end": 52.86
+      },
+      {
+        "word": "you",
+        "start": 52.86,
+        "end": 53.02
+      },
+      {
+        "word": "a",
+        "start": 53.02,
+        "end": 53.14
+      },
+      {
+        "word": "storyboard",
+        "start": 53.14,
+        "end": 53.7
+      },
+      {
+        "word": "first",
+        "start": 53.7,
+        "end": 54.1
+      },
+      {
+        "word": "before",
+        "start": 54.1,
+        "end": 54.56
+      },
+      {
+        "word": "generating",
+        "start": 54.56,
+        "end": 54.98
+      },
+      {
+        "word": "the",
+        "start": 54.98,
+        "end": 55.36
+      },
+      {
+        "word": "video.",
+        "start": 55.36,
+        "end": 55.62
+      },
+      {
+        "word": "Here",
+        "start": 55.62,
+        "end": 56.02
+      },
+      {
+        "word": "you",
+        "start": 56.02,
+        "end": 56.4
+      },
+      {
+        "word": "can",
+        "start": 56.4,
+        "end": 56.54
+      },
+      {
+        "word": "give",
+        "start": 56.54,
+        "end": 56.74
+      },
+      {
+        "word": "it",
+        "start": 56.74,
+        "end": 56.92
+      },
+      {
+        "word": "changes",
+        "start": 56.92,
+        "end": 57.24
+      },
+      {
+        "word": "like",
+        "start": 57.24,
+        "end": 57.58
+      },
+      {
+        "word": "make",
+        "start": 57.58,
+        "end": 58.0
+      },
+      {
+        "word": "the",
+        "start": 58.0,
+        "end": 58.24
+      },
+      {
+        "word": "font",
+        "start": 58.24,
+        "end": 58.48
+      },
+      {
+        "word": "bigger.",
+        "start": 58.48,
+        "end": 58.86
+      },
+      {
+        "word": "And",
+        "start": 59.14,
+        "end": 59.24
+      },
+      {
+        "word": "then",
+        "start": 59.24,
+        "end": 59.42
+      },
+      {
+        "word": "you",
+        "start": 59.42,
+        "end": 59.72
+      },
+      {
+        "word": "get",
+        "start": 59.72,
+        "end": 59.88
+      },
+      {
+        "word": "your",
+        "start": 59.88,
+        "end": 60.08
+      },
+      {
+        "word": "final",
+        "start": 60.08,
+        "end": 60.52
+      },
+      {
+        "word": "video.",
+        "start": 60.52,
+        "end": 60.9
+      },
+      {
+        "word": "That's",
+        "start": 61.2,
+        "end": 61.44
+      },
+      {
+        "word": "the",
+        "start": 61.44,
+        "end": 61.54
+      },
+      {
+        "word": "workflow.",
+        "start": 61.54,
+        "end": 61.86
+      },
+      {
+        "word": "Comment",
+        "start": 62.08,
+        "end": 62.24
+      },
+      {
+        "word": "at",
+        "start": 62.24,
+        "end": 62.46
+      },
+      {
+        "word": "it",
+        "start": 62.46,
+        "end": 62.56
+      },
+      {
+        "word": "and",
+        "start": 62.56,
+        "end": 62.8
+      },
+      {
+        "word": "I'll",
+        "start": 62.8,
+        "end": 63.04
+      },
+      {
+        "word": "send",
+        "start": 63.04,
+        "end": 63.22
+      },
+      {
+        "word": "you",
+        "start": 63.22,
+        "end": 63.36
+      },
+      {
+        "word": "the",
+        "start": 63.36,
+        "end": 63.5
+      },
+      {
+        "word": "full",
+        "start": 63.5,
+        "end": 63.76
+      },
+      {
+        "word": "prompts.",
+        "start": 63.76,
+        "end": 64.16
+      }
+    ],
+    "segments": [
+      {
+        "text": "All the top creators are editing with Claude, but no one is showing you",
+        "start": 0.0,
+        "end": 3.06,
+        "words": [
+          {
+            "word": "All",
+            "start": 0.0,
+            "end": 0.2
+          },
+          {
+            "word": "the",
+            "start": 0.2,
+            "end": 0.36
+          },
+          {
+            "word": "top",
+            "start": 0.36,
+            "end": 0.48
+          },
+          {
+            "word": "creators",
+            "start": 0.48,
+            "end": 0.86
+          },
+          {
+            "word": "are",
+            "start": 0.86,
+            "end": 1.08
+          },
+          {
+            "word": "editing",
+            "start": 1.08,
+            "end": 1.38
+          },
+          {
+            "word": "with",
+            "start": 1.38,
+            "end": 1.66
+          },
+          {
+            "word": "Claude,",
+            "start": 1.66,
+            "end": 1.98
+          },
+          {
+            "word": "but",
+            "start": 2.14,
+            "end": 2.22
+          },
+          {
+            "word": "no",
+            "start": 2.22,
+            "end": 2.42
+          },
+          {
+            "word": "one",
+            "start": 2.42,
+            "end": 2.54
+          },
+          {
+            "word": "is",
+            "start": 2.54,
+            "end": 2.7
+          },
+          {
+            "word": "showing",
+            "start": 2.7,
+            "end": 2.86
+          },
+          {
+            "word": "you",
+            "start": 2.86,
+            "end": 3.06
+          }
+        ]
+      },
+      {
+        "text": "the process.",
+        "start": 3.06,
+        "end": 3.54,
+        "words": [
+          {
+            "word": "the",
+            "start": 3.06,
+            "end": 3.2
+          },
+          {
+            "word": "process.",
+            "start": 3.2,
+            "end": 3.54
+          }
+        ]
+      },
+      {
+        "text": "So here is the step by step tutorial to create the whole editing pipeline.",
+        "start": 3.82,
+        "end": 7.02,
+        "words": [
+          {
+            "word": "So",
+            "start": 3.82,
+            "end": 3.84
+          },
+          {
+            "word": "here",
+            "start": 3.84,
+            "end": 4.18
+          },
+          {
+            "word": "is",
+            "start": 4.18,
+            "end": 4.32
+          },
+          {
+            "word": "the",
+            "start": 4.32,
+            "end": 4.4
+          },
+          {
+            "word": "step",
+            "start": 4.4,
+            "end": 4.62
+          },
+          {
+            "word": "by",
+            "start": 4.62,
+            "end": 4.74
+          },
+          {
+            "word": "step",
+            "start": 4.74,
+            "end": 4.9
+          },
+          {
+            "word": "tutorial",
+            "start": 4.9,
+            "end": 5.28
+          },
+          {
+            "word": "to",
+            "start": 5.28,
+            "end": 5.54
+          },
+          {
+            "word": "create",
+            "start": 5.54,
+            "end": 5.8
+          },
+          {
+            "word": "the",
+            "start": 5.8,
+            "end": 6.08
+          },
+          {
+            "word": "whole",
+            "start": 6.08,
+            "end": 6.28
+          },
+          {
+            "word": "editing",
+            "start": 6.28,
+            "end": 6.58
+          },
+          {
+            "word": "pipeline.",
+            "start": 6.58,
+            "end": 7.02
+          }
+        ]
+      },
+      {
+        "text": "Step 1.",
+        "start": 7.16,
+        "end": 7.48,
+        "words": [
+          {
+            "word": "Step",
+            "start": 7.16,
+            "end": 7.24
+          },
+          {
+            "word": "1.",
+            "start": 7.24,
+            "end": 7.48
+          }
+        ]
+      },
+      {
+        "text": "Download the Claude desktop app.",
+        "start": 7.64,
+        "end": 9.06,
+        "words": [
+          {
+            "word": "Download",
+            "start": 7.64,
+            "end": 7.9
+          },
+          {
+            "word": "the",
+            "start": 7.9,
+            "end": 8.18
+          },
+          {
+            "word": "Claude",
+            "start": 8.18,
+            "end": 8.48
+          },
+          {
+            "word": "desktop",
+            "start": 8.48,
+            "end": 8.8
+          },
+          {
+            "word": "app.",
+            "start": 8.8,
+            "end": 9.06
+          }
+        ]
+      },
+      {
+        "text": "Create a folder called AI Video Editor with 3 inside.",
+        "start": 9.22,
+        "end": 12.36,
+        "words": [
+          {
+            "word": "Create",
+            "start": 9.22,
+            "end": 9.36
+          },
+          {
+            "word": "a",
+            "start": 9.36,
+            "end": 9.58
+          },
+          {
+            "word": "folder",
+            "start": 9.58,
+            "end": 9.82
+          },
+          {
+            "word": "called",
+            "start": 9.82,
+            "end": 10.12
+          },
+          {
+            "word": "AI",
+            "start": 10.12,
+            "end": 10.56
+          },
+          {
+            "word": "Video",
+            "start": 10.56,
+            "end": 10.9
+          },
+          {
+            "word": "Editor",
+            "start": 10.9,
+            "end": 11.26
+          },
+          {
+            "word": "with",
+            "start": 11.26,
+            "end": 11.7
+          },
+          {
+            "word": "3",
+            "start": 11.7,
+            "end": 11.92
+          },
+          {
+            "word": "inside.",
+            "start": 11.92,
+            "end": 12.36
+          }
+        ]
+      },
+      {
+        "text": "Raw footage, reference and export.",
+        "start": 12.62,
+        "end": 14.72,
+        "words": [
+          {
+            "word": "Raw",
+            "start": 12.62,
+            "end": 12.86
+          },
+          {
+            "word": "footage,",
+            "start": 12.86,
+            "end": 13.16
+          },
+          {
+            "word": "reference",
+            "start": 13.58,
+            "end": 13.86
+          },
+          {
+            "word": "and",
+            "start": 13.86,
+            "end": 14.26
+          },
+          {
+            "word": "export.",
+            "start": 14.26,
+            "end": 14.72
+          }
+        ]
+      },
+      {
+        "text": "Open it into a local chat.",
+        "start": 14.98,
+        "end": 16.54,
+        "words": [
+          {
+            "word": "Open",
+            "start": 14.98,
+            "end": 15.18
+          },
+          {
+            "word": "it",
+            "start": 15.18,
+            "end": 15.44
+          },
+          {
+            "word": "into",
+            "start": 15.44,
+            "end": 15.82
+          },
+          {
+            "word": "a",
+            "start": 15.82,
+            "end": 15.94
+          },
+          {
+            "word": "local",
+            "start": 15.94,
+            "end": 16.22
+          },
+          {
+            "word": "chat.",
+            "start": 16.22,
+            "end": 16.54
+          }
+        ]
+      },
+      {
+        "text": "Step 2.",
+        "start": 16.86,
+        "end": 17.28,
+        "words": [
+          {
+            "word": "Step",
+            "start": 16.86,
+            "end": 16.96
+          },
+          {
+            "word": "2.",
+            "start": 16.96,
+            "end": 17.28
+          }
+        ]
+      },
+      {
+        "text": "We need to add some free tools, hyper frame for motion graphics like this,",
+        "start": 17.56,
+        "end": 21.12,
+        "words": [
+          {
+            "word": "We",
+            "start": 17.56,
+            "end": 17.66
+          },
+          {
+            "word": "need",
+            "start": 17.66,
+            "end": 17.84
+          },
+          {
+            "word": "to",
+            "start": 17.84,
+            "end": 17.96
+          },
+          {
+            "word": "add",
+            "start": 17.96,
+            "end": 18.16
+          },
+          {
+            "word": "some",
+            "start": 18.16,
+            "end": 18.48
+          },
+          {
+            "word": "free",
+            "start": 18.48,
+            "end": 18.8
+          },
+          {
+            "word": "tools,",
+            "start": 18.8,
+            "end": 19.06
+          },
+          {
+            "word": "hyper",
+            "start": 19.3,
+            "end": 19.52
+          },
+          {
+            "word": "frame",
+            "start": 19.52,
+            "end": 19.8
+          },
+          {
+            "word": "for",
+            "start": 19.8,
+            "end": 20.02
+          },
+          {
+            "word": "motion",
+            "start": 20.02,
+            "end": 20.32
+          },
+          {
+            "word": "graphics",
+            "start": 20.32,
+            "end": 20.62
+          },
+          {
+            "word": "like",
+            "start": 20.62,
+            "end": 20.9
+          },
+          {
+            "word": "this,",
+            "start": 20.9,
+            "end": 21.12
+          }
+        ]
+      },
+      {
+        "text": "ppmg, for cuts and editing.",
+        "start": 21.36,
+        "end": 23.36,
+        "words": [
+          {
+            "word": "ppmg,",
+            "start": 21.36,
+            "end": 21.94
+          },
+          {
+            "word": "for",
+            "start": 22.24,
+            "end": 22.3
+          },
+          {
+            "word": "cuts",
+            "start": 22.3,
+            "end": 22.58
+          },
+          {
+            "word": "and",
+            "start": 22.58,
+            "end": 22.98
+          },
+          {
+            "word": "editing.",
+            "start": 22.98,
+            "end": 23.36
+          }
+        ]
+      },
+      {
+        "text": "Whisper for captions and whitey dlp to download the video and study this.",
+        "start": 23.52,
+        "end": 28.06,
+        "words": [
+          {
+            "word": "Whisper",
+            "start": 23.52,
+            "end": 23.84
+          },
+          {
+            "word": "for",
+            "start": 23.84,
+            "end": 24.14
+          },
+          {
+            "word": "captions",
+            "start": 24.14,
+            "end": 24.5
+          },
+          {
+            "word": "and",
+            "start": 24.5,
+            "end": 25.02
+          },
+          {
+            "word": "whitey",
+            "start": 25.02,
+            "end": 25.48
+          },
+          {
+            "word": "dlp",
+            "start": 25.48,
+            "end": 25.96
+          },
+          {
+            "word": "to",
+            "start": 25.96,
+            "end": 26.18
+          },
+          {
+            "word": "download",
+            "start": 26.18,
+            "end": 26.52
+          },
+          {
+            "word": "the",
+            "start": 26.52,
+            "end": 26.84
+          },
+          {
+            "word": "video",
+            "start": 26.84,
+            "end": 27.12
+          },
+          {
+            "word": "and",
+            "start": 27.12,
+            "end": 27.46
+          },
+          {
+            "word": "study",
+            "start": 27.46,
+            "end": 27.86
+          },
+          {
+            "word": "this.",
+            "start": 27.86,
+            "end": 28.06
+          }
+        ]
+      },
+      {
+        "text": "So these tools will make Claude very powerful.",
+        "start": 28.06,
+        "end": 30.48,
+        "words": [
+          {
+            "word": "So",
+            "start": 28.06,
+            "end": 28.26
+          },
+          {
+            "word": "these",
+            "start": 28.26,
+            "end": 28.52
+          },
+          {
+            "word": "tools",
+            "start": 28.52,
+            "end": 28.76
+          },
+          {
+            "word": "will",
+            "start": 28.76,
+            "end": 29.02
+          },
+          {
+            "word": "make",
+            "start": 29.02,
+            "end": 29.24
+          },
+          {
+            "word": "Claude",
+            "start": 29.24,
+            "end": 29.56
+          },
+          {
+            "word": "very",
+            "start": 29.56,
+            "end": 29.82
+          },
+          {
+            "word": "powerful.",
+            "start": 29.82,
+            "end": 30.48
+          }
+        ]
+      },
+      {
+        "text": "Paste the links with the prompt and Claude will install all these tools.",
+        "start": 30.58,
+        "end": 34.08,
+        "words": [
+          {
+            "word": "Paste",
+            "start": 30.58,
+            "end": 30.74
+          },
+          {
+            "word": "the",
+            "start": 30.74,
+            "end": 30.92
+          },
+          {
+            "word": "links",
+            "start": 30.92,
+            "end": 31.08
+          },
+          {
+            "word": "with",
+            "start": 31.08,
+            "end": 31.4
+          },
+          {
+            "word": "the",
+            "start": 31.4,
+            "end": 31.54
+          },
+          {
+            "word": "prompt",
+            "start": 31.54,
+            "end": 31.88
+          },
+          {
+            "word": "and",
+            "start": 31.88,
+            "end": 32.22
+          },
+          {
+            "word": "Claude",
+            "start": 32.22,
+            "end": 32.58
+          },
+          {
+            "word": "will",
+            "start": 32.58,
+            "end": 32.68
+          },
+          {
+            "word": "install",
+            "start": 32.68,
+            "end": 33.02
+          },
+          {
+            "word": "all",
+            "start": 33.02,
+            "end": 33.52
+          },
+          {
+            "word": "these",
+            "start": 33.52,
+            "end": 33.78
+          },
+          {
+            "word": "tools.",
+            "start": 33.78,
+            "end": 34.08
+          }
+        ]
+      },
+      {
+        "text": "Step 3.",
+        "start": 34.18,
+        "end": 34.56,
+        "words": [
+          {
+            "word": "Step",
+            "start": 34.18,
+            "end": 34.28
+          },
+          {
+            "word": "3.",
+            "start": 34.28,
+            "end": 34.56
+          }
+        ]
+      },
+      {
+        "text": "Style.",
+        "start": 35.0,
+        "end": 35.18,
+        "words": [
+          {
+            "word": "Style.",
+            "start": 35.0,
+            "end": 35.18
+          }
+        ]
+      },
+      {
+        "text": "Give Claude 3 to 5 reels from a creator you'd real like.",
+        "start": 35.44,
+        "end": 38.44,
+        "words": [
+          {
+            "word": "Give",
+            "start": 35.44,
+            "end": 35.58
+          },
+          {
+            "word": "Claude",
+            "start": 35.58,
+            "end": 36.0
+          },
+          {
+            "word": "3",
+            "start": 36.0,
+            "end": 36.2
+          },
+          {
+            "word": "to",
+            "start": 36.2,
+            "end": 36.36
+          },
+          {
+            "word": "5",
+            "start": 36.36,
+            "end": 36.68
+          },
+          {
+            "word": "reels",
+            "start": 36.68,
+            "end": 37.0
+          },
+          {
+            "word": "from",
+            "start": 37.0,
+            "end": 37.16
+          },
+          {
+            "word": "a",
+            "start": 37.16,
+            "end": 37.3
+          },
+          {
+            "word": "creator",
+            "start": 37.3,
+            "end": 37.7
+          },
+          {
+            "word": "you'd",
+            "start": 37.7,
+            "end": 38.04
+          },
+          {
+            "word": "real",
+            "start": 38.04,
+            "end": 38.2
+          },
+          {
+            "word": "like.",
+            "start": 38.2,
+            "end": 38.44
+          }
+        ]
+      },
+      {
+        "text": "Then it will break down the editing style from fonts to sound design.",
+        "start": 38.72,
+        "end": 42.62,
+        "words": [
+          {
+            "word": "Then",
+            "start": 38.72,
+            "end": 38.9
+          },
+          {
+            "word": "it",
+            "start": 38.9,
+            "end": 39.22
+          },
+          {
+            "word": "will",
+            "start": 39.22,
+            "end": 39.36
+          },
+          {
+            "word": "break",
+            "start": 39.36,
+            "end": 39.6
+          },
+          {
+            "word": "down",
+            "start": 39.6,
+            "end": 39.82
+          },
+          {
+            "word": "the",
+            "start": 39.82,
+            "end": 40.04
+          },
+          {
+            "word": "editing",
+            "start": 40.04,
+            "end": 40.44
+          },
+          {
+            "word": "style",
+            "start": 40.44,
+            "end": 40.76
+          },
+          {
+            "word": "from",
+            "start": 40.76,
+            "end": 41.14
+          },
+          {
+            "word": "fonts",
+            "start": 41.14,
+            "end": 41.66
+          },
+          {
+            "word": "to",
+            "start": 41.66,
+            "end": 41.9
+          },
+          {
+            "word": "sound",
+            "start": 41.9,
+            "end": 42.24
+          },
+          {
+            "word": "design.",
+            "start": 42.24,
+            "end": 42.62
+          }
+        ]
+      },
+      {
+        "text": "And then give it this prompt and it will give you a style shape.",
+        "start": 42.94,
+        "end": 46.36,
+        "words": [
+          {
+            "word": "And",
+            "start": 42.94,
+            "end": 43.06
+          },
+          {
+            "word": "then",
+            "start": 43.06,
+            "end": 43.26
+          },
+          {
+            "word": "give",
+            "start": 43.26,
+            "end": 43.64
+          },
+          {
+            "word": "it",
+            "start": 43.64,
+            "end": 43.86
+          },
+          {
+            "word": "this",
+            "start": 43.86,
+            "end": 44.06
+          },
+          {
+            "word": "prompt",
+            "start": 44.06,
+            "end": 44.4
+          },
+          {
+            "word": "and",
+            "start": 44.4,
+            "end": 44.66
+          },
+          {
+            "word": "it",
+            "start": 44.66,
+            "end": 44.86
+          },
+          {
+            "word": "will",
+            "start": 44.86,
+            "end": 45.0
+          },
+          {
+            "word": "give",
+            "start": 45.0,
+            "end": 45.16
+          },
+          {
+            "word": "you",
+            "start": 45.16,
+            "end": 45.38
+          },
+          {
+            "word": "a",
+            "start": 45.38,
+            "end": 45.66
+          },
+          {
+            "word": "style",
+            "start": 45.66,
+            "end": 46.16
+          },
+          {
+            "word": "shape.",
+            "start": 46.16,
+            "end": 46.36
+          }
+        ]
+      },
+      {
+        "text": "It works like a charm every time.",
+        "start": 46.56,
+        "end": 48.3,
+        "words": [
+          {
+            "word": "It",
+            "start": 46.56,
+            "end": 46.68
+          },
+          {
+            "word": "works",
+            "start": 46.68,
+            "end": 46.92
+          },
+          {
+            "word": "like",
+            "start": 46.92,
+            "end": 47.16
+          },
+          {
+            "word": "a",
+            "start": 47.16,
+            "end": 47.3
+          },
+          {
+            "word": "charm",
+            "start": 47.3,
+            "end": 47.56
+          },
+          {
+            "word": "every",
+            "start": 47.56,
+            "end": 48.06
+          },
+          {
+            "word": "time.",
+            "start": 48.06,
+            "end": 48.3
+          }
+        ]
+      },
+      {
+        "text": "Step 4.",
+        "start": 48.56,
+        "end": 48.96,
+        "words": [
+          {
+            "word": "Step",
+            "start": 48.56,
+            "end": 48.7
+          },
+          {
+            "word": "4.",
+            "start": 48.7,
+            "end": 48.96
+          }
+        ]
+      },
+      {
+        "text": "Drop in your raw footage and send this prompt.",
+        "start": 49.28,
+        "end": 51.62,
+        "words": [
+          {
+            "word": "Drop",
+            "start": 49.28,
+            "end": 49.44
+          },
+          {
+            "word": "in",
+            "start": 49.44,
+            "end": 49.66
+          },
+          {
+            "word": "your",
+            "start": 49.66,
+            "end": 49.82
+          },
+          {
+            "word": "raw",
+            "start": 49.82,
+            "end": 50.0
+          },
+          {
+            "word": "footage",
+            "start": 50.0,
+            "end": 50.32
+          },
+          {
+            "word": "and",
+            "start": 50.32,
+            "end": 50.68
+          },
+          {
+            "word": "send",
+            "start": 50.68,
+            "end": 50.9
+          },
+          {
+            "word": "this",
+            "start": 50.9,
+            "end": 51.22
+          },
+          {
+            "word": "prompt.",
+            "start": 51.22,
+            "end": 51.62
+          }
+        ]
+      },
+      {
+        "text": "Then Claude will give you a storyboard first before generating the video.",
+        "start": 51.84,
+        "end": 55.62,
+        "words": [
+          {
+            "word": "Then",
+            "start": 51.84,
+            "end": 51.98
+          },
+          {
+            "word": "Claude",
+            "start": 51.98,
+            "end": 52.6
+          },
+          {
+            "word": "will",
+            "start": 52.6,
+            "end": 52.74
+          },
+          {
+            "word": "give",
+            "start": 52.74,
+            "end": 52.86
+          },
+          {
+            "word": "you",
+            "start": 52.86,
+            "end": 53.02
+          },
+          {
+            "word": "a",
+            "start": 53.02,
+            "end": 53.14
+          },
+          {
+            "word": "storyboard",
+            "start": 53.14,
+            "end": 53.7
+          },
+          {
+            "word": "first",
+            "start": 53.7,
+            "end": 54.1
+          },
+          {
+            "word": "before",
+            "start": 54.1,
+            "end": 54.56
+          },
+          {
+            "word": "generating",
+            "start": 54.56,
+            "end": 54.98
+          },
+          {
+            "word": "the",
+            "start": 54.98,
+            "end": 55.36
+          },
+          {
+            "word": "video.",
+            "start": 55.36,
+            "end": 55.62
+          }
+        ]
+      },
+      {
+        "text": "Here you can give it changes like make the font bigger.",
+        "start": 55.62,
+        "end": 58.86,
+        "words": [
+          {
+            "word": "Here",
+            "start": 55.62,
+            "end": 56.02
+          },
+          {
+            "word": "you",
+            "start": 56.02,
+            "end": 56.4
+          },
+          {
+            "word": "can",
+            "start": 56.4,
+            "end": 56.54
+          },
+          {
+            "word": "give",
+            "start": 56.54,
+            "end": 56.74
+          },
+          {
+            "word": "it",
+            "start": 56.74,
+            "end": 56.92
+          },
+          {
+            "word": "changes",
+            "start": 56.92,
+            "end": 57.24
+          },
+          {
+            "word": "like",
+            "start": 57.24,
+            "end": 57.58
+          },
+          {
+            "word": "make",
+            "start": 57.58,
+            "end": 58.0
+          },
+          {
+            "word": "the",
+            "start": 58.0,
+            "end": 58.24
+          },
+          {
+            "word": "font",
+            "start": 58.24,
+            "end": 58.48
+          },
+          {
+            "word": "bigger.",
+            "start": 58.48,
+            "end": 58.86
+          }
+        ]
+      },
+      {
+        "text": "And then you get your final video.",
+        "start": 59.14,
+        "end": 60.9,
+        "words": [
+          {
+            "word": "And",
+            "start": 59.14,
+            "end": 59.24
+          },
+          {
+            "word": "then",
+            "start": 59.24,
+            "end": 59.42
+          },
+          {
+            "word": "you",
+            "start": 59.42,
+            "end": 59.72
+          },
+          {
+            "word": "get",
+            "start": 59.72,
+            "end": 59.88
+          },
+          {
+            "word": "your",
+            "start": 59.88,
+            "end": 60.08
+          },
+          {
+            "word": "final",
+            "start": 60.08,
+            "end": 60.52
+          },
+          {
+            "word": "video.",
+            "start": 60.52,
+            "end": 60.9
+          }
+        ]
+      },
+      {
+        "text": "That's the workflow.",
+        "start": 61.2,
+        "end": 61.86,
+        "words": [
+          {
+            "word": "That's",
+            "start": 61.2,
+            "end": 61.44
+          },
+          {
+            "word": "the",
+            "start": 61.44,
+            "end": 61.54
+          },
+          {
+            "word": "workflow.",
+            "start": 61.54,
+            "end": 61.86
+          }
+        ]
+      },
+      {
+        "text": "Comment at it and I'll send you the full prompts.",
+        "start": 62.08,
+        "end": 64.16,
+        "words": [
+          {
+            "word": "Comment",
+            "start": 62.08,
+            "end": 62.24
+          },
+          {
+            "word": "at",
+            "start": 62.24,
+            "end": 62.46
+          },
+          {
+            "word": "it",
+            "start": 62.46,
+            "end": 62.56
+          },
+          {
+            "word": "and",
+            "start": 62.56,
+            "end": 62.8
+          },
+          {
+            "word": "I'll",
+            "start": 62.8,
+            "end": 63.04
+          },
+          {
+            "word": "send",
+            "start": 63.04,
+            "end": 63.22
+          },
+          {
+            "word": "you",
+            "start": 63.22,
+            "end": 63.36
+          },
+          {
+            "word": "the",
+            "start": 63.36,
+            "end": 63.5
+          },
+          {
+            "word": "full",
+            "start": 63.5,
+            "end": 63.76
+          },
+          {
+            "word": "prompts.",
+            "start": 63.76,
+            "end": 64.16
+          }
+        ]
+      }
+    ],
+    "text": "All the top creators are editing with Claude, but no one is showing you the process. So here is the step by step tutorial to create the whole editing pipeline. Step 1. Download the Claude desktop app. Create a folder called AI Video Editor with 3 inside. Raw footage, reference and export. Open it into a local chat. Step 2. We need to add some free tools, hyper frame for motion graphics like this, ppmg, for cuts and editing. Whisper for captions and whitey dlp to download the video and study this. So these tools will make Claude very powerful. Paste the links with the prompt and Claude will install all these tools. Step 3. Style. Give Claude 3 to 5 reels from a creator you'd real like. Then it will break down the editing style from fonts to sound design. And then give it this prompt and it will give you a style shape. It works like a charm every time. Step 4. Drop in your raw footage and send this prompt. Then Claude will give you a storyboard first before generating the video. Here you can give it changes like make the font bigger. And then you get your final video. That's the workflow. Comment at it and I'll send you the full prompts.",
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_ef008b9c0785\\transcript.json"
+  }
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
+      body { font-family: "Helvetica Neue", Arial, "DejaVu Sans", sans-serif; }
+      #wrap { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; padding: 0 213px; }
+      #title { display: inline-block; color: #111111; background: rgba(255,122,26,0.96); padding: 49px 99px;
+               border-radius: 32px; font-size: 170px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+      #bar { height: 14px; width: 284px; margin: 32px auto 0; background: #111111; border-radius: 4px; transform-origin: left; }
+      #sub { margin-top: 32px; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.6); font-size: 71px; font-weight: 500; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="title-o1" data-start="0" data-duration="2.6"
+         data-width="1080" data-height="1920">
+      <div id="wrap">
+        <div id="title" class="clip" data-start="0" data-duration="2.6" data-track-index="0">AI in your product is easy. Trusting it is hard.</div>
+        <div id="bar" class="clip" data-start="0" data-duration="2.6" data-track-index="1"></div>
+        
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      gsap.set("#title", { opacity: 0, y: 40 });
+      gsap.set("#bar", { scaleX: 0 });
+      tl.to("#title", { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
+      tl.to("#bar", { scaleX: 1, duration: 0.5, ease: "power2.out" }, 0.3);
+      if (document.getElementById("sub")) {
+        gsap.set("#sub", { opacity: 0 });
+        tl.to("#sub", { opacity: 1, duration: 0.4 }, 0.5);
+        tl.to("#sub", { opacity: 0, duration: 0.25 }, 2.25);
+      }
+      tl.to("#title", { opacity: 0, y: -30, duration: 0.3, ease: "power2.in" }, 2.25);
+      tl.to("#bar", { opacity: 0, duration: 0.25 }, 2.25);
+      window.__timelines["title-o1"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

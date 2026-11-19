@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --gold: #D4AF37;
+        --gold-bright: #FFE885;
+        --white: #FFFFFF;
+        --cyan: #00E5FF;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        background: transparent;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+      }
+      .card {
+        position: absolute;
+        opacity: 0;
+      }
+      /* 1. Intro Title (0 - 4.5s) */
+      #intro-card {
+        top: 38%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 900px;
+        text-align: center;
+        background: rgba(10, 15, 25, 0.65);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        border-radius: 24px;
+        padding: 60px 40px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      }
+      .intro-tag {
+        font-size: 24px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold-bright);
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      .intro-title {
+        font-size: 64px;
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        color: var(--white);
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .intro-loc {
+        font-size: 22px;
+        letter-spacing: 0.15em;
+        color: rgba(255,255,255,0.85);
+        font-weight: 500;
+      }
+
+      /* 2. Lower-Third (5 - 9.5s) */
+      #lower-third {
+        bottom: 220px;
+        left: 90px;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        border-left: 6px solid var(--gold);
+        border-radius: 4px 16px 16px 4px;
+        padding: 24px 36px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+      .lt-label {
+        font-size: 20px;
+        color: var(--gold-bright);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .lt-main {
+        font-size: 38px;
+        color: var(--white);
+        font-weight: 800;
+        margin-top: 4px;
+      }
+
+      /* 3. The Drop / Kinetic Center Title (10.3 - 15.5s) */
+      #drop-card {
+        top: 42%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 920px;
+        text-align: center;
+      }
+      .drop-pill {
+        display: inline-block;
+        background: linear-gradient(135deg, rgba(212,175,55,0.9), rgba(255,232,133,0.9));
+        color: #000;
+        font-weight: 900;
+        font-size: 24px;
+        letter-spacing: 0.25em;
+        padding: 10px 28px;
+        border-radius: 50px;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+      .drop-title {
+        font-size: 72px;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: var(--white);
+        text-transform: uppercase;
+        text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      }
+
+      /* 4. Side-Rail / Vertical Callout (16 - 22s) */
+      #side-card {
+        bottom: 260px;
+        right: 80px;
+        background: rgba(15, 23, 42, 0.85);
+        border-right: 6px solid var(--cyan);
+        border-radius: 16px 4px 4px 16px;
+        padding: 24px 36px;
+        text-align: right;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+      .side-tag {
+        font-size: 20px;
+        color: var(--cyan);
+        letter-spacing: 0.2em;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .side-main {
+        font-size: 36px;
+        color: var(--white);
+        font-weight: 800;
+        margin-top: 4px;
+      }
+
+      /* 5. Finale Card (25.2 - 29.8s) */
+      #finale-card {
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 880px;
+        text-align: center;
+        background: radial-gradient(circle, rgba(20,25,40,0.9) 0%, rgba(5,8,15,0.95) 100%);
+        border: 2px solid var(--gold);
+        border-radius: 28px;
+        padding: 70px 50px;
+        box-shadow: 0 25px 80px rgba(0,0,0,0.8), 0 0 40px rgba(212,175,55,0.25);
+      }
+      .finale-crown {
+        font-size: 24px;
+        letter-spacing: 0.35em;
+        color: var(--gold-bright);
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .finale-title {
+        font-size: 60px;
+        font-weight: 900;
+        color: var(--white);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+      .finale-dmcc {
+        font-size: 26px;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- 1. Intro Card -->
+      <div id="intro-card" class="card clip" data-start="0" data-duration="4.8">
+        <div class="intro-tag">DDC 2022 • DUBAI</div>
+        <div class="intro-title">DUBAI DIAMOND<br />CONFERENCE</div>
+        <div class="intro-loc">ATLANTIS, THE PALM</div>
+      </div>
+
+      <!-- 2. Lower Third -->
+      <div id="lower-third" class="card clip" data-start="5.2" data-duration="4.5">
+        <div class="lt-label">VIP DELEGATION</div>
+        <div class="lt-main">GLOBAL INDUSTRY LEADERS</div>
+      </div>
+
+      <!-- 3. Drop Card -->
+      <div id="drop-card" class="card clip" data-start="10.3" data-duration="5.2">
+        <div class="drop-pill">KEYNOTE VISION</div>
+        <div class="drop-title">THE FUTURE OF<br />PRECIOUS STONES</div>
+      </div>
+
+      <!-- 4. Side Card -->
+      <div id="side-card" class="card clip" data-start="16.2" data-duration="5.5">
+        <div class="side-tag">MARKET POWER</div>
+        <div class="side-main">DUBAI • GLOBAL CAPITAL<br />OF DIAMONDS</div>
+      </div>
+
+      <!-- 5. Finale Card -->
+      <div id="finale-card" class="card clip" data-start="25.2" data-duration="4.6">
+        <div class="finale-crown">THE PREMIER EVENT</div>
+        <div class="finale-title">DUBAI DIAMOND<br />CONFERENCE</div>
+        <div class="finale-dmcc">HOSTED BY DMCC</div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // 1. Intro Card (0 -> 4.8s)
+      tl.fromTo("#intro-card", 
+        { opacity: 0, scale: 0.85, y: 30 }, 
+        { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "power3.out" }, 
+        0.2
+      );
+      tl.to("#intro-card", 
+        { opacity: 0, scale: 1.05, y: -20, duration: 0.4, ease: "power2.in" }, 
+        4.3
+      );
+
+      // 2. Lower-Third (5.2 -> 9.5s)
+      tl.fromTo("#lower-third", 
+        { opacity: 0, x: -60 }, 
+        { opacity: 1, x: 0, duration: 0.5, ease: "back.out(1.4)" }, 
+        5.2
+      );
+      tl.to("#lower-third", 
+        { opacity: 0, x: -40, duration: 0.35, ease: "power2.in" }, 
+        9.2
+      );
+
+      // 3. Drop Card (10.3 -> 15.5s)
+      tl.fromTo("#drop-card", 
+        { opacity: 0, scale: 0.75 }, 
+        { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 
+        10.3
+      );
+      tl.to("#drop-card", 
+        { opacity: 0, scale: 1.1, duration: 0.4, ease: "power2.in" }, 
+        15.0
+      );
+
+      // 4. Side Card (16.2 -> 21.7s)
+      tl.fromTo("#side-card", 
+        { opacity: 0, x: 60 }, 
+        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 
+        16.2
+      );
+      tl.to("#side-card", 
+        { opacity: 0, x: 40, duration: 0.35, ease: "power2.in" }, 
+        21.3
+      );
+
+      // 5. Finale Card (25.2 -> 29.8s)
+      tl.fromTo("#finale-card", 
+        { opacity: 0, scale: 0.9, y: 20 }, 
+        { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "power3.out" }, 
+        25.2
+      );
+      tl.to("#finale-card", 
+        { opacity: 0, duration: 0.4, ease: "power1.in" }, 
+        29.4
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "text": "Music track (ambient / electronic conference soundtrack with no continuous spoken commentary).",
+  "words": [
+    {
+      "word": "Music",
+      "start": 0.0,
+      "end": 1.06
+    }
+  ],
+  "has_speech": false,
+  "audio_type": "event_music_soundtrack"
+}

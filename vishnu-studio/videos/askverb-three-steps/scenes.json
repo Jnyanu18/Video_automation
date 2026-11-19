@@ -1,0 +1,11 @@
+[
+  {"scene": "manual", "at": "here's how", "bg": "#f3f1ec", "section": "an instruction manual: cover, step 1, step 2, step 3, finished, comment", "mark": ["link"],
+   "poses": [{"on": "here's how", "pose": "point-left"}, {"on": "three steps", "pose": "present"}, {"on": "step one", "pose": "point-left"}, {"on": "no code", "pose": "wink"},
+     {"on": "step 2", "pose": "point-left"}, {"on": "it answers", "pose": "cheer"}, {"on": "step 3", "pose": "point-left"}, {"on": "now it", "pose": "wow"},
+     {"on": "in most", "pose": "present"}, {"on": "completely", "pose": "cheer"}, {"on": "comment", "pose": "wave"}],
+   "props": {"look": "dev", "ava": "side", "stageScale": 1.0, "stageLift": 60, "slug": "askverb-three-steps",
+     "parts": {"three": "three steps", "s1": "step one", "domain": "add your", "builds": "it builds", "nocode": "no code",
+       "s2": "step 2", "paste": "paste", "users": "users ask", "answers": "it answers",
+       "s3": "step 3", "mcp": "connect the", "writes": "writes", "act": "now it",
+       "live": "in most", "hour": "under an", "free": "completely", "comment": "comment", "kw": "link", "guide": "guide"}}}
+]

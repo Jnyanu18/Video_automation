@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1080, height=1920"/>
+<script src="vendor/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family:sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+#main{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:0}
+.ov-full{position:absolute;inset:0;z-index:5;overflow:hidden}
+.ov-title{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 120.0px}
+.ov-lt{position:absolute;left:110.0px;bottom:499px;z-index:6}
+.ov-gfx{position:absolute;inset:110.0px;z-index:6;display:flex;align-items:center;justify-content:center}
+.tt{color:#fff;font-weight:800;font-size:72.0px;text-shadow:0 4px 18px rgba(0,0,0,.8)}
+.sub{color:#eee;font-weight:500;font-size:38.0px;margin-top:8.0px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.lt{background:rgba(0,0,0,.6);border-left:8.0px solid #ff7a00;padding:16.0px 28.0px}
+.lt .tt{font-size:44.0px}
+.cap{position:absolute;left:0;right:0;bottom:230px;z-index:10;text-align:center;padding:0 110.0px}
+.ct{display:inline-block;font-size:64.0px;line-height:1.2}
+.w{display:inline-block;transform-origin:50% 70%}
+</style></head><body>
+<div id="stage" data-composition-id="edit" data-start="0" data-duration="64.533" data-width="1080" data-height="1920" data-fps="30">
+  <video id="main" class="clip" data-start="0" data-duration="64.533" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
+  <div id="cap0" class="clip cap" data-start="0.000" data-duration="1.660" data-track-index="1" style=""><span class="ct" id="cap0t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">All the top creators are editing with</span></div>
+  <div id="cap1" class="clip cap" data-start="1.660" data-duration="1.540" data-track-index="1" style=""><span class="ct" id="cap1t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Claude, but no one is showing you the</span></div>
+  <div id="cap2" class="clip cap" data-start="3.200" data-duration="0.340" data-track-index="1" style=""><span class="ct" id="cap2t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">process.</span></div>
+  <div id="cap3" class="clip cap" data-start="3.820" data-duration="1.720" data-track-index="1" style=""><span class="ct" id="cap3t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">So here is the step by step tutorial to</span></div>
+  <div id="cap4" class="clip cap" data-start="5.540" data-duration="1.480" data-track-index="1" style=""><span class="ct" id="cap4t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">create the whole editing pipeline.</span></div>
+  <div id="cap5" class="clip cap" data-start="7.160" data-duration="0.320" data-track-index="1" style=""><span class="ct" id="cap5t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Step 1.</span></div>
+  <div id="cap6" class="clip cap" data-start="7.640" data-duration="1.420" data-track-index="1" style=""><span class="ct" id="cap6t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Download the Claude desktop app.</span></div>
+  <div id="cap7" class="clip cap" data-start="9.220" data-duration="2.040" data-track-index="1" style=""><span class="ct" id="cap7t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Create a folder called AI Video Editor</span></div>
+  <div id="cap8" class="clip cap" data-start="11.260" data-duration="1.100" data-track-index="1" style=""><span class="ct" id="cap8t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">with 3 inside.</span></div>
+  <div id="cap9" class="clip cap" data-start="12.620" data-duration="2.100" data-track-index="1" style=""><span class="ct" id="cap9t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Raw footage, reference and export.</span></div>
+  <div id="cap10" class="clip cap" data-start="14.980" data-duration="1.560" data-track-index="1" style=""><span class="ct" id="cap10t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Open it into a local chat.</span></div>
+  <div id="cap11" class="clip cap" data-start="16.860" data-duration="0.420" data-track-index="1" style=""><span class="ct" id="cap11t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Step 2.</span></div>
+  <div id="cap12" class="clip cap" data-start="17.560" data-duration="1.960" data-track-index="1" style=""><span class="ct" id="cap12t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">We need to add some free tools, hyper</span></div>
+  <div id="cap13" class="clip cap" data-start="19.520" data-duration="2.420" data-track-index="1" style=""><span class="ct" id="cap13t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">frame for motion graphics like this, ppmg,</span></div>
+  <div id="cap14" class="clip cap" data-start="22.240" data-duration="1.120" data-track-index="1" style=""><span class="ct" id="cap14t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">for cuts and editing.</span></div>
+  <div id="cap15" class="clip cap" data-start="23.520" data-duration="2.660" data-track-index="1" style=""><span class="ct" id="cap15t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Whisper for captions and whitey dlp to</span></div>
+  <div id="cap16" class="clip cap" data-start="26.180" data-duration="1.880" data-track-index="1" style=""><span class="ct" id="cap16t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">download the video and study this.</span></div>
+  <div id="cap17" class="clip cap" data-start="28.060" data-duration="1.760" data-track-index="1" style=""><span class="ct" id="cap17t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">So these tools will make Claude very</span></div>
+  <div id="cap18" class="clip cap" data-start="29.820" data-duration="0.660" data-track-index="1" style=""><span class="ct" id="cap18t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">powerful.</span></div>
+  <div id="cap19" class="clip cap" data-start="30.580" data-duration="2.000" data-track-index="1" style=""><span class="ct" id="cap19t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Paste the links with the prompt and Claude</span></div>
+  <div id="cap20" class="clip cap" data-start="32.580" data-duration="1.500" data-track-index="1" style=""><span class="ct" id="cap20t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">will install all these tools.</span></div>
+  <div id="cap21" class="clip cap" data-start="34.180" data-duration="0.380" data-track-index="1" style=""><span class="ct" id="cap21t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Step 3.</span></div>
+  <div id="cap22" class="clip cap" data-start="35.000" data-duration="0.180" data-track-index="1" style=""><span class="ct" id="cap22t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Style.</span></div>
+  <div id="cap23" class="clip cap" data-start="35.440" data-duration="2.260" data-track-index="1" style=""><span class="ct" id="cap23t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Give Claude 3 to 5 reels from a creator</span></div>
+  <div id="cap24" class="clip cap" data-start="37.700" data-duration="0.740" data-track-index="1" style=""><span class="ct" id="cap24t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">you&#x27;d real like.</span></div>
+  <div id="cap25" class="clip cap" data-start="38.720" data-duration="2.040" data-track-index="1" style=""><span class="ct" id="cap25t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Then it will break down the editing style</span></div>
+  <div id="cap26" class="clip cap" data-start="40.760" data-duration="1.860" data-track-index="1" style=""><span class="ct" id="cap26t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">from fonts to sound design.</span></div>
+  <div id="cap27" class="clip cap" data-start="42.940" data-duration="2.060" data-track-index="1" style=""><span class="ct" id="cap27t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">And then give it this prompt and it will</span></div>
+  <div id="cap28" class="clip cap" data-start="45.000" data-duration="1.360" data-track-index="1" style=""><span class="ct" id="cap28t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">give you a style shape.</span></div>
+  <div id="cap29" class="clip cap" data-start="46.560" data-duration="1.740" data-track-index="1" style=""><span class="ct" id="cap29t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">It works like a charm every time.</span></div>
+  <div id="cap30" class="clip cap" data-start="48.560" data-duration="0.400" data-track-index="1" style=""><span class="ct" id="cap30t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Step 4.</span></div>
+  <div id="cap31" class="clip cap" data-start="49.280" data-duration="1.940" data-track-index="1" style=""><span class="ct" id="cap31t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Drop in your raw footage and send this</span></div>
+  <div id="cap32" class="clip cap" data-start="51.220" data-duration="0.400" data-track-index="1" style=""><span class="ct" id="cap32t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">prompt.</span></div>
+  <div id="cap33" class="clip cap" data-start="51.840" data-duration="1.860" data-track-index="1" style=""><span class="ct" id="cap33t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Then Claude will give you a storyboard</span></div>
+  <div id="cap34" class="clip cap" data-start="53.700" data-duration="1.920" data-track-index="1" style=""><span class="ct" id="cap34t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">first before generating the video.</span></div>
+  <div id="cap35" class="clip cap" data-start="55.620" data-duration="2.620" data-track-index="1" style=""><span class="ct" id="cap35t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Here you can give it changes like make the</span></div>
+  <div id="cap36" class="clip cap" data-start="58.240" data-duration="0.620" data-track-index="1" style=""><span class="ct" id="cap36t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">font bigger.</span></div>
+  <div id="cap37" class="clip cap" data-start="59.140" data-duration="1.760" data-track-index="1" style=""><span class="ct" id="cap37t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">And then you get your final video.</span></div>
+  <div id="cap38" class="clip cap" data-start="61.200" data-duration="0.660" data-track-index="1" style=""><span class="ct" id="cap38t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">That&#x27;s the workflow.</span></div>
+  <div id="cap39" class="clip cap" data-start="62.080" data-duration="1.680" data-track-index="1" style=""><span class="ct" id="cap39t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">Comment at it and I&#x27;ll send you the full</span></div>
+  <div id="cap40" class="clip cap" data-start="63.760" data-duration="0.400" data-track-index="1" style=""><span class="ct" id="cap40t" style="font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em">prompts.</span></div>
+</div>
+<script>
+const tl = gsap.timeline({paused:true});
+tl.from("#cap0t",{"opacity": 0, "duration": 0.12},0.000);
+tl.from("#cap1t",{"opacity": 0, "duration": 0.12},1.660);
+tl.from("#cap2t",{"opacity": 0, "duration": 0.12},3.200);
+tl.from("#cap3t",{"opacity": 0, "duration": 0.12},3.820);
+tl.from("#cap4t",{"opacity": 0, "duration": 0.12},5.540);
+tl.from("#cap5t",{"opacity": 0, "duration": 0.12},7.160);
+tl.from("#cap6t",{"opacity": 0, "duration": 0.12},7.640);
+tl.from("#cap7t",{"opacity": 0, "duration": 0.12},9.220);
+tl.from("#cap8t",{"opacity": 0, "duration": 0.12},11.260);
+tl.from("#cap9t",{"opacity": 0, "duration": 0.12},12.620);
+tl.from("#cap10t",{"opacity": 0, "duration": 0.12},14.980);
+tl.from("#cap11t",{"opacity": 0, "duration": 0.12},16.860);
+tl.from("#cap12t",{"opacity": 0, "duration": 0.12},17.560);
+tl.from("#cap13t",{"opacity": 0, "duration": 0.12},19.520);
+tl.from("#cap14t",{"opacity": 0, "duration": 0.12},22.240);
+tl.from("#cap15t",{"opacity": 0, "duration": 0.12},23.520);
+tl.from("#cap16t",{"opacity": 0, "duration": 0.12},26.180);
+tl.from("#cap17t",{"opacity": 0, "duration": 0.12},28.060);
+tl.from("#cap18t",{"opacity": 0, "duration": 0.12},29.820);
+tl.from("#cap19t",{"opacity": 0, "duration": 0.12},30.580);
+tl.from("#cap20t",{"opacity": 0, "duration": 0.12},32.580);
+tl.from("#cap21t",{"opacity": 0, "duration": 0.12},34.180);
+tl.from("#cap22t",{"opacity": 0, "duration": 0.12},35.000);
+tl.from("#cap23t",{"opacity": 0, "duration": 0.12},35.440);
+tl.from("#cap24t",{"opacity": 0, "duration": 0.12},37.700);
+tl.from("#cap25t",{"opacity": 0, "duration": 0.12},38.720);
+tl.from("#cap26t",{"opacity": 0, "duration": 0.12},40.760);
+tl.from("#cap27t",{"opacity": 0, "duration": 0.12},42.940);
+tl.from("#cap28t",{"opacity": 0, "duration": 0.12},45.000);
+tl.from("#cap29t",{"opacity": 0, "duration": 0.12},46.560);
+tl.from("#cap30t",{"opacity": 0, "duration": 0.12},48.560);
+tl.from("#cap31t",{"opacity": 0, "duration": 0.12},49.280);
+tl.from("#cap32t",{"opacity": 0, "duration": 0.12},51.220);
+tl.from("#cap33t",{"opacity": 0, "duration": 0.12},51.840);
+tl.from("#cap34t",{"opacity": 0, "duration": 0.12},53.700);
+tl.from("#cap35t",{"opacity": 0, "duration": 0.12},55.620);
+tl.from("#cap36t",{"opacity": 0, "duration": 0.12},58.240);
+tl.from("#cap37t",{"opacity": 0, "duration": 0.12},59.140);
+tl.from("#cap38t",{"opacity": 0, "duration": 0.12},61.200);
+tl.from("#cap39t",{"opacity": 0, "duration": 0.12},62.080);
+tl.from("#cap40t",{"opacity": 0, "duration": 0.12},63.760);
+window.__timelines = window.__timelines || {};
+window.__timelines["edit"] = tl;
+</script></body></html>

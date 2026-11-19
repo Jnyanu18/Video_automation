@@ -1,0 +1,30 @@
+{
+  "note": "Spine config for scripts/build_spine.py. Paths are relative to this file's folder (the project root). Items are source ranges [first word start, last word start] in transcript seconds. q = a question he reads out (becomes an anonymous IG DM card). fix = caption-only word fixes, first match each ('' drops the word). outro_from = the word where his spoken 'follow for more ...' starts. This is the real c2-bubble clip ('Is the AI boom a bubble?') from the batch Madhav called flawless, with the camera file names made generic.",
+  "defaults": { "speed": 1.10, "gap": 0.18, "keep": 0.05, "outro_text": "Follow for more AI news." },
+  "clips": [
+    {
+      "id": "c2-bubble",
+      "video": "source/take-0161.MP4",
+      "audio": "source/take-0161.WAV",
+      "transcript": "analysis/0161.json",
+      "items": [
+        { "r": [501.7, 502.7], "note": "hook: I barely write code anymore." },
+        { "r": [504.9, 505.9], "note": "and here is what I do instead.", "fix": [["and", "And"]] },
+        { "r": [523.4, 526.9], "q": true, "note": "Q: Is the AI boom the future, or a bubble about to pop?" },
+        { "r": [528.8, 530.7] },
+        { "r": [531.8, 537.2] },
+        { "r": [544.3, 546.0] },
+        { "r": [565.0, 566.7], "q": true, "fix": [["what's", "What's"]], "note": "Q: What's actually changed in your job?" },
+        { "r": [567.6, 578.8], "fix": [["over", ""]] },
+        { "r": [579.4, 589.6] },
+        { "r": [594.3, 599.6], "fix": [["in", "In"]] },
+        { "r": [618.1, 622.5] },
+        { "r": [624.2, 627.1] },
+        { "r": [661.9, 670.7], "fix": [["these", ""], ["are", "is"]] },
+        { "r": [726.3, 727.8] },
+        { "r": [738.9, 741.7], "outro_from": "fall", "fix": [["how", "comment"], ["much", ""], ["fall", "follow"]],
+          "note": "Bubble or not, comment your take. Follow for more AI news. (Whisper heard 'fall'; outro_from matches the raw transcript word)" }
+      ]
+    }
+  ]
+}

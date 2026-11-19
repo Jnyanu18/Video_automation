@@ -1,0 +1,88 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+  "backend": "faster-whisper",
+  "status": "ok",
+  "language": "es",
+  "words": [
+    {
+      "word": "como",
+      "start": 0.0,
+      "end": 0.12
+    },
+    {
+      "word": "lo",
+      "start": 0.12,
+      "end": 0.24
+    },
+    {
+      "word": "que",
+      "start": 0.24,
+      "end": 0.4
+    },
+    {
+      "word": "est\u00e1",
+      "start": 0.4,
+      "end": 0.54
+    },
+    {
+      "word": "en",
+      "start": 0.54,
+      "end": 0.62
+    },
+    {
+      "word": "el",
+      "start": 0.62,
+      "end": 0.72
+    },
+    {
+      "word": "mundo.",
+      "start": 0.72,
+      "end": 0.94
+    }
+  ],
+  "segments": [
+    {
+      "text": "como lo que est\u00e1 en el mundo.",
+      "start": 0.0,
+      "end": 0.94,
+      "words": [
+        {
+          "word": "como",
+          "start": 0.0,
+          "end": 0.12
+        },
+        {
+          "word": "lo",
+          "start": 0.12,
+          "end": 0.24
+        },
+        {
+          "word": "que",
+          "start": 0.24,
+          "end": 0.4
+        },
+        {
+          "word": "est\u00e1",
+          "start": 0.4,
+          "end": 0.54
+        },
+        {
+          "word": "en",
+          "start": 0.54,
+          "end": 0.62
+        },
+        {
+          "word": "el",
+          "start": 0.62,
+          "end": 0.72
+        },
+        {
+          "word": "mundo.",
+          "start": 0.72,
+          "end": 0.94
+        }
+      ]
+    }
+  ],
+  "text": "como lo que est\u00e1 en el mundo."
+}

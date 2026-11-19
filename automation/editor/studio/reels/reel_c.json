@@ -1,0 +1,129 @@
+{
+ "name": "reel-c-old-way-vs-ailo-way",
+ "voice": "ava",
+ "rate": "+4%",
+ "music": {
+  "style": "chill",
+  "volume": 0.24,
+  "seed": 5
+ },
+ "scenes": [
+  {
+   "kind": "headline",
+   "theme": "light",
+   "lines": [
+    "Which one",
+    "*are you?*"
+   ],
+   "say": "Which one are you?",
+   "duration": 3.0
+  },
+  {
+   "kind": "versus2",
+   "theme": "dark",
+   "old": {
+    "tag": "The old way",
+    "items": [
+     "Cut by hand",
+     "Caption by hand",
+     "Post by hand"
+    ]
+   },
+   "new": {
+    "tag": "The AILO way",
+    "items": [
+     "Paste a link",
+     "Approve",
+     "Ready to post"
+    ]
+   },
+   "new_at_word": "AILO",
+   "say": "The old way. Cut by hand, caption by hand, post by hand. The AILO way. Paste a link, approve, and it's ready to post.",
+   "sfx": [
+    {
+     "name": "tick",
+     "at": 1.2
+    },
+    {
+     "name": "tick",
+     "at": 2.1
+    },
+    {
+     "name": "tick",
+     "at": 3.0
+    },
+    {
+     "name": "chime",
+     "at": 4.6,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "flow",
+   "theme": "light",
+   "title": "Four steps. *Zero* busywork.",
+   "nodes": [
+    {
+     "icon": "1",
+     "label": "Paste a link"
+    },
+    {
+     "icon": "2",
+     "label": "AI edits it"
+    },
+    {
+     "icon": "3",
+     "label": "You approve"
+    },
+    {
+     "icon": "4",
+     "label": "Ready to post"
+    }
+   ],
+   "say": "Four steps. Paste a link. The AI edits it. You approve. Ready to post.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 1.2
+    },
+    {
+     "name": "pop",
+     "at": 2.4
+    },
+    {
+     "name": "pop",
+     "at": 3.6
+    },
+    {
+     "name": "ding",
+     "at": 4.8,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "cta",
+   "theme": "dark",
+   "lines": [
+    "Less busywork.",
+    "*More reach.*"
+   ],
+   "button": "Book a free consultation",
+   "url": "accelerationlogics.com",
+   "say": "Less busywork. More reach. AILO Marketing Automation. Book a free consultation.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 2.2,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 3.4,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,91 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "sparse, leaves room for a voice",
+  "confident upbeat light electronic",
+  "plucky synth",
+  "soft claps",
+  "warm bass",
+  "112 bpm (three takes; Vishnu picks)"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody in the vocal range",
+  "aggressive EDM"
+ ],
+ "sections": [
+  {
+   "section_name": "01-amount",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5636,
+   "lines": []
+  },
+  {
+   "section_name": "02-door",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3659,
+   "lines": []
+  },
+  {
+   "section_name": "03-checklist",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5388,
+   "lines": []
+  },
+  {
+   "section_name": "04-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 8956,
+   "lines": []
+  },
+  {
+   "section_name": "05-amount",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3312,
+   "lines": []
+  },
+  {
+   "section_name": "06-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 6320,
+   "lines": []
+  },
+  {
+   "section_name": "07-chat",
+   "positive_local_styles": [
+    "builds a little"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 6390,
+   "lines": []
+  },
+  {
+   "section_name": "08-end",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3789,
+   "lines": []
+  }
+ ]
+}

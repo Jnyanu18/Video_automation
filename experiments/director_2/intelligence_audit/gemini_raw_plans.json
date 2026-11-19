@@ -1,0 +1,340 @@
+{
+  "plan_a": {
+    "title": "High-Impact Retention Cut",
+    "target_duration": 18.0,
+    "selected_scenes": [
+      {
+        "scene_id": "scene_01",
+        "start": 0.0,
+        "end": 1.4,
+        "purpose": "Opening Hook",
+        "zoom": 1.2,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_08",
+        "start": 14.4,
+        "end": 15.44,
+        "purpose": "Fast rhythm build",
+        "zoom": 1.0,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_09",
+        "start": 15.44,
+        "end": 16.56,
+        "purpose": "Pacing accent",
+        "zoom": 1.1,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_10",
+        "start": 16.56,
+        "end": 17.64,
+        "purpose": "Visual momentum",
+        "zoom": 1.0,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_11",
+        "start": 17.64,
+        "end": 18.68,
+        "purpose": "Quick cut energy",
+        "zoom": 1.15,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_13",
+        "start": 20.92,
+        "end": 22.0,
+        "purpose": "Beat accent",
+        "zoom": 1.0,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_14",
+        "start": 22.0,
+        "end": 23.04,
+        "purpose": "Punchy transition",
+        "zoom": 1.2,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_17",
+        "start": 26.4,
+        "end": 27.44,
+        "purpose": "Rapid shot",
+        "zoom": 1.0,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_19",
+        "start": 29.6,
+        "end": 30.68,
+        "purpose": "Dynamic pulse",
+        "zoom": 1.1,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_20",
+        "start": 30.68,
+        "end": 31.76,
+        "purpose": "Fast pacing",
+        "zoom": 1.0,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_21",
+        "start": 31.76,
+        "end": 32.88,
+        "purpose": "Rhythm upkeep",
+        "zoom": 1.15,
+        "sfx": "whoosh_fast.wav"
+      },
+      {
+        "scene_id": "scene_22",
+        "start": 32.88,
+        "end": 34.0,
+        "purpose": "Climax approach",
+        "zoom": 1.2,
+        "sfx": "whoosh_fast.wav"
+      }
+    ],
+    "editorial_rationale": "Engineered for maximum audience retention on social feeds. Features sub-2-second cuts, aggressive punch-in zooms on focal points, and synchronized whoosh SFX to match the electronic soundtrack's upbeat tempo.",
+    "captions_or_titles": [
+      {
+        "text": "DUBAI DIAMOND CONFERENCE 2022",
+        "start": 0.0,
+        "end": 2.5,
+        "style": "hook_title"
+      }
+    ],
+    "unsupported_elements_excluded": [
+      "Extended spoken dialogue scenes",
+      "Slow-panning establishing shots"
+    ],
+    "confidence": 0.95
+  },
+  "plan_b": {
+    "title": "Keynote & Industry Highlight Cut",
+    "target_duration": 36.0,
+    "selected_scenes": [
+      {
+        "scene_id": "scene_05",
+        "start": 5.92,
+        "end": 10.0,
+        "purpose": "Conference opening scale",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_06",
+        "start": 10.0,
+        "end": 12.2,
+        "purpose": "Speaker presentation focus",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_07",
+        "start": 12.2,
+        "end": 14.4,
+        "purpose": "Audience engagement",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_12",
+        "start": 18.68,
+        "end": 20.92,
+        "purpose": "Keynote stage view",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_16",
+        "start": 24.2,
+        "end": 26.4,
+        "purpose": "Industry panel discussion",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_18",
+        "start": 27.44,
+        "end": 29.6,
+        "purpose": "Delegate interaction",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_24",
+        "start": 35.08,
+        "end": 37.24,
+        "purpose": "Main hall showcase",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_28",
+        "start": 40.48,
+        "end": 42.72,
+        "purpose": "Thought leadership highlight",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_37",
+        "start": 51.44,
+        "end": 53.64,
+        "purpose": "Strategic overview",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_45",
+        "start": 63.52,
+        "end": 67.8,
+        "purpose": "Extended audience and stage shot",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_52",
+        "start": 74.32,
+        "end": 79.72,
+        "purpose": "Grand plenary session",
+        "zoom": 1.0,
+        "sfx": "none"
+      }
+    ],
+    "editorial_rationale": "Designed for corporate stakeholders and industry professionals. Utilizes longer, deliberate scene durations (2.5s - 5.4s) to emphasize event scale, keynote presentations, and professional atmosphere.",
+    "captions_or_titles": [
+      {
+        "text": "Dubai Diamond Conference 2022 | Future of Diamonds",
+        "start": 1.0,
+        "end": 5.0,
+        "style": "lower_third"
+      },
+      {
+        "text": "Shaping the Global Industry",
+        "start": 74.32,
+        "end": 78.5,
+        "style": "closing_takeaway"
+      }
+    ],
+    "unsupported_elements_excluded": [
+      "Ultra-short 1-second rapid cuts",
+      "Heavy visual effect transitions"
+    ],
+    "confidence": 0.92
+  },
+  "plan_c": {
+    "title": "Cinematic Atmosphere Cut",
+    "target_duration": 22.0,
+    "selected_scenes": [
+      {
+        "scene_id": "scene_04",
+        "start": 4.48,
+        "end": 5.92,
+        "purpose": "Atmospheric intro lighting",
+        "zoom": 1.05,
+        "sfx": "ambient_swell.wav"
+      },
+      {
+        "scene_id": "scene_36",
+        "start": 50.32,
+        "end": 51.44,
+        "purpose": "Luxury detail shot",
+        "zoom": 1.1,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_43",
+        "start": 59.08,
+        "end": 61.28,
+        "purpose": "Stage lighting dynamics",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_44",
+        "start": 61.28,
+        "end": 63.52,
+        "purpose": "Crowd and ambient glow",
+        "zoom": 1.1,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_46",
+        "start": 67.8,
+        "end": 68.96,
+        "purpose": "Cinematic pan accent",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_47",
+        "start": 68.96,
+        "end": 70.0,
+        "purpose": "Visual texture",
+        "zoom": 1.15,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_48",
+        "start": 70.0,
+        "end": 71.08,
+        "purpose": "Rhythmic pulse",
+        "zoom": 1.0,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_49",
+        "start": 71.08,
+        "end": 72.16,
+        "purpose": "Aesthetic flow",
+        "zoom": 1.05,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_50",
+        "start": 72.16,
+        "end": 73.24,
+        "purpose": "Momentum build",
+        "zoom": 1.1,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_51",
+        "start": 73.24,
+        "end": 74.32,
+        "purpose": "Lighting climax",
+        "zoom": 1.2,
+        "sfx": "none"
+      },
+      {
+        "scene_id": "scene_53",
+        "start": 79.72,
+        "end": 84.776,
+        "purpose": "Cinematic resolution",
+        "zoom": 1.0,
+        "sfx": "ambient_fade.wav"
+      }
+    ],
+    "editorial_rationale": "Focuses on mood, stage lighting, luxury diamond displays, and crowd reactions. Employs a sophisticated visual rhythm matching the ambient electronic soundtrack with minimalist graphic overlays.",
+    "captions_or_titles": [
+      {
+        "text": "The Art of Brilliance",
+        "start": 4.48,
+        "end": 7.0,
+        "style": "minimalist_title"
+      }
+    ],
+    "unsupported_elements_excluded": [
+      "Static presentation slides",
+      "Standard podium speaker close-ups"
+    ],
+    "confidence": 0.94
+  }
+}

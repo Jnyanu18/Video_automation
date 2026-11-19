@@ -1,0 +1,27 @@
+[
+ {
+  "scene": "igkill",
+  "at": "claude just",
+  "bg": "#d8b98d",
+  "section": "paper collage: a new picture on every phrase",
+  "mark": ["claude", "instagram", "free", "13", "26", "insta", "yes"],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "claude-killed-instagram",
+   "mark": ["claude", "instagram", "free", "13", "26", "insta", "yes"],
+   "parts": {
+    "killed": "killed", "ig": "instagram",
+    "b2": "now you", "whole": "whole", "withc": "with claude", "free0": "and its", "free": "free",
+    "b3": "its 13",
+    "b4": "one writes", "f26": "from 26", "scores": "scores the", "film": "before you",
+    "b5": "one finds", "blow": "blowing up", "ranks": "and ranks", "avg": "against their",
+    "b6": "and one strips", "em": "the em", "slop": "the slop", "hidden": "even hidden",
+    "b7": "nothing gets", "yes": "yes",
+    "b8": "comment insta", "send": "ill send"
+   }
+  }
+ }
+]

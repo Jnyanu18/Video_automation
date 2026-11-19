@@ -1,0 +1,12 @@
+[
+  {"scene": "market", "at": "your competitors", "bg": "#f3f1ec", "section": "one take: you vs them, five clicks vs one ask, under an hour, setup, the race, comment", "mark": ["link"],
+   "poses": [{"on": "your competitors", "pose": "point-left"}, {"on": "already shipped", "pose": "shock"}, {"on": "will notice", "pose": "think"}, {"on": "they'll click", "pose": "facepalm"},
+     {"on": "lose them", "pose": "sad"}, {"on": "catching", "pose": "point-left"}, {"on": "less than", "pose": "wow"}, {"on": "go to", "pose": "point-left"},
+     {"on": "completely", "pose": "cheer"}, {"on": "your users just", "pose": "present"}, {"on": "ship it", "pose": "cheer"}, {"on": "comment", "pose": "wave"}],
+   "props": {"look": "dev", "ava": "side", "stageScale": 1.0, "stageLift": 60, "slug": "askverb-fomo",
+     "parts": {"native": "going ai", "shipped": "already shipped", "notice": "will notice", "clicks": "they'll click", "theirs": "open theirs", "once": "once",
+       "lose": "lose them", "catch": "catching", "team": "ai team", "rebuild": "rebuild", "hour": "less than",
+       "go": "go to", "site": "add your", "mcp": "verb mcp", "free": "completely",
+       "ask": "your users just", "work": "does the", "click": "one click", "before": "ship it",
+       "comment": "comment", "kw": "link", "guide": "guide"}}}
+]

@@ -1,0 +1,42 @@
+// Sound events (output seconds), v5b: sparse and soft, only real visual hits (35 for 93.6 s ≈ 22/min).
+import type { SoundEvent } from "../lib";
+import { B } from "../beats";
+import { T } from "./T";
+
+export const EVENTS: SoundEvent[] = [
+  { id: "hook-stamp", t: T.banned + 0.02, what: "stamp BANNED on the whale photo", x: 0.4 },
+  { id: "q1", t: B.qwhy.s, what: "pop question bubble", x: -0.2 },
+  { id: "news", t: B.news.s, what: "paper page slides in (dated news card)", x: 0.3 },
+  { id: "news-ban", t: T.banning, what: "stamp BANNED on the federal monitor", x: 0.5 },
+  { id: "data", t: T.sensitive - 0.2, what: "draw pencil arrow, data packets", x: 0.2 },
+  { id: "lock", t: T.outside - 0.1, what: "padlock clicks shut at the border", x: 0 },
+  { id: "whatif", t: T.enigma + 0.2, what: "stamp WHAT IF?", x: 0 },
+  { id: "british", t: T.british - 0.1, what: "soft thud, British bunker", x: 0.6 },
+  { id: "encrypt", t: T.encrypt - 0.25, what: "typewriter clatter, cipher strip", x: 0.5 },
+  { id: "wire", t: T.started, what: "pencil wire draw", x: 0.3 },
+  { id: "leak", t: T.sending - 0.1, what: "data blips along the wire", x: -0.3 },
+  { id: "received", t: T.germanyE, what: "stamp RECEIVED", x: -0.5 },
+  { id: "restricting", t: T.restricting, what: "stamp RESTRICTING", x: 0.5 },
+  { id: "q2", t: B.qthreat.s, what: "pop question bubble", x: -0.2 },
+  { id: "x-or", t: T.notOr, what: "marker slash X over OR", x: 0 },
+  { id: "and", t: T.and - 0.05, what: "card pop AND", x: 0 },
+  { id: "car", t: T.carMarket - 0.1, what: "whoosh car rolls in", x: 0.6 },
+  { id: "gate", t: T.tariff + 0.15, what: "impact barrier gate down", x: -0.2 },
+  { id: "x-risk", t: T.no - 0.05, what: "marker slash X over SECURITY RISK?", x: 0.5 },
+  { id: "power", t: T.power2, what: "stamp POWER STRUGGLE", x: 0.5 },
+  { id: "workers", t: T.employs - 0.1, what: "soft pops, workers appear", x: -0.3 },
+  { id: "cheapcar", t: T.cheap - 0.05, what: "whoosh cheap car rolls in", x: 0.6 },
+  { id: "closed", t: T.losingFactories, what: "stamp CLOSED, factory lights off", x: -0.5 },
+  { id: "jobslost", t: T.losingJob, what: "stamp JOBS LOST", x: 0.5 },
+  { id: "buyai", t: T.buying - 0.1, what: "card pop BUY AI", x: 0.4 },
+  { id: "loss-x", t: T.employment + 0.05, what: "marker X (first of three losses)", x: 0.5 },
+  { id: "ifwar", t: T.ifWar, what: "stamp IF THERE IS A WAR", x: 0 },
+  { id: "unplug", t: T.notGonna, what: "plug pulled, power-down blip", x: -0.4 },
+  { id: "stuck", t: T.stuck, what: "stamp STUCK", x: 0 },
+  { id: "broken", t: T.broken, what: "glass crack, stamp BROKEN HARDWARE", x: 0.5 },
+  { id: "natsec", t: T.national, what: "pencil tick NATIONAL SECURITY", x: -0.3 },
+  { id: "players", t: T.competitors - 0.1, what: "cards drop in (new players)", x: 0.5 },
+  { id: "healthy", t: T.healthy - 0.05, what: "marker highlight HEALTHY", x: 0.5 },
+  { id: "comment", t: B.comment.s, what: "pop comment card", x: 0 },
+  { id: "end-ai", t: T.outro + 0.55, what: "stamp AI NEWS", x: 0.4 },
+];

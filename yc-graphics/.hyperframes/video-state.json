@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "historyId": "ccf2539b-249e-4e29-93bf-273a2bef478b",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\ccf2539b-249e-4e29-93bf-273a2bef478b\\blobs\\18\\18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f"
+    },
+    "CLAUDE.md": {
+      "hash": "18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\ccf2539b-249e-4e29-93bf-273a2bef478b\\blobs\\18\\18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\ccf2539b-249e-4e29-93bf-273a2bef478b\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "daeae2d43ab71bdde6644bda0655746265c04412049288dbbed51ce738c631af",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\ccf2539b-249e-4e29-93bf-273a2bef478b\\blobs\\da\\daeae2d43ab71bdde6644bda0655746265c04412049288dbbed51ce738c631af"
+    },
+    "meta.json": {
+      "hash": "9f201130da5352ea442083f52e3d52fca6cf22627bf6526d3ff8098e343e3b4b",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\ccf2539b-249e-4e29-93bf-273a2bef478b\\blobs\\9f\\9f201130da5352ea442083f52e3d52fca6cf22627bf6526d3ff8098e343e3b4b"
+    },
+    "package.json": {
+      "hash": "8542edff8371bee8f185fac0c89654079bb265c89535fd57965fb9f28920ded3",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\ccf2539b-249e-4e29-93bf-273a2bef478b\\blobs\\85\\8542edff8371bee8f185fac0c89654079bb265c89535fd57965fb9f28920ded3"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "b24137ee-59b1-4e88-983d-e47f794f783b",
+      "completedAt": 1794259484681,
+      "output": "J:\\ai editor\\raw footage\\yc\\overlay.webm",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}

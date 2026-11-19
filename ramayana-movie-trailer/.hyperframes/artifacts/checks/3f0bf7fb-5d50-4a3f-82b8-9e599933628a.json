@@ -1,0 +1,2771 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": false,
+    "errorCount": 3,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "non_deterministic_code",
+        "severity": "error",
+        "message": "Script contains `Math.random()` which produces non-deterministic output. Renders may differ between frames or runs.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\ramayana-movie-trailer\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use a seeded PRNG (e.g. a simple mulberry32) so renders are deterministic across frames."
+      },
+      {
+        "code": "gsap_non_transform_motion",
+        "severity": "error",
+        "message": "GSAP tween on \"#s1-tag\" uses motion that snaps to integer device pixels: letterSpacing. Layout and text-reflow properties snap during browser layout; roundProps rounds the tween value. Slow motion or an ease-out tail then stutters under the seek-by-frame capture engine. Animate transforms (x/y/scale/opacity) instead.",
+        "selector": "#s1-tag",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\ramayana-movie-trailer\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "do not animate letterSpacing (they reflow text and snap glyph positions): for letterSpacing, split the text into per-character elements and animate each glyph's x (the spread), since uniform scale is NOT equivalent, or hold the final value statically. Transforms interpolate sub-pixel and stay smooth at any speed."
+      },
+      {
+        "code": "gsap_non_transform_motion",
+        "severity": "error",
+        "message": "GSAP tween on \"#s6-flare\" uses motion that snaps to integer device pixels: left. Layout and text-reflow properties snap during browser layout; roundProps rounds the tween value. Slow motion or an ease-out tail then stutters under the seek-by-frame capture engine. Animate transforms (x/y/scale/opacity) instead.",
+        "selector": "#s6-flare",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\ramayana-movie-trailer\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "replace left with the transform equivalent (x), e.g. tl.fromTo(\"#s6-flare\", { x: -1300 }, { x: 0, ...yourAnimation }). Transforms interpolate sub-pixel and stay smooth at any speed."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 401 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\ramayana-movie-trailer\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 3,
+    "warningCount": 21,
+    "infoCount": 24,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 7.24,
+        "selector": "#s2-card > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 0,
+          "top": 1720.36,
+          "right": 556.04,
+          "bottom": 1920,
+          "width": 556.04,
+          "height": 199.64
+        },
+        "containerSelector": "#s2-card > div:nth-of-type(3)",
+        "text": "LORD RAMA",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1720.36,
+          "width": 556.04,
+          "height": 199.64
+        },
+        "firstSeen": 7.24,
+        "lastSeen": 8.045,
+        "occurrences": 7,
+        "heldMs": 804.9999999999998,
+        "times": [
+          7.24,
+          7.374,
+          7.508,
+          7.642,
+          7.777,
+          7.911,
+          8.045
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 12,
+        "selector": "#s3-card > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 0,
+          "top": 1832.39,
+          "right": 413.8,
+          "bottom": 1920,
+          "width": 413.8,
+          "height": 87.61
+        },
+        "containerSelector": "div.card-headline.card-headline-crimson",
+        "text": "RULER OF THE THREE REALMS",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1832.39,
+          "width": 413.8,
+          "height": 87.61
+        },
+        "firstSeen": 8.447,
+        "lastSeen": 12.335,
+        "occurrences": 14,
+        "heldMs": 804.0000000000002,
+        "times": [
+          8.447,
+          8.581,
+          8.715,
+          8.849,
+          8.983,
+          9.117,
+          9.251,
+          11.665,
+          11.799,
+          11.933,
+          12,
+          12.067,
+          12.201,
+          12.335
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 14.883,
+        "selector": "#s4-card > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 0,
+          "top": 1698.92,
+          "right": 501.01,
+          "bottom": 1856.81,
+          "width": 501.01,
+          "height": 157.89
+        },
+        "containerSelector": "#s4-card > div:nth-of-type(3)",
+        "text": "HANUMAN",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1698.92,
+          "width": 501.01,
+          "height": 157.89
+        },
+        "firstSeen": 14.883,
+        "lastSeen": 16.089,
+        "occurrences": 10,
+        "heldMs": 1205.9999999999995,
+        "times": [
+          14.883,
+          15.017,
+          15.151,
+          15.285,
+          15.419,
+          15.553,
+          15.687,
+          15.821,
+          15.955,
+          16.089
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 8.447,
+        "selector": "div.card-headline.card-headline-crimson",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 131.29,
+          "top": 1472.33,
+          "right": 381.19,
+          "bottom": 1606.45,
+          "width": 249.9,
+          "height": 134.12
+        },
+        "containerSelector": "#s3-card > div:nth-of-type(3)",
+        "text": "RAVANA",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 131.29,
+          "y": 1472.33,
+          "width": 249.9,
+          "height": 134.12
+        },
+        "firstSeen": 8.447,
+        "lastSeen": 8.715,
+        "occurrences": 3,
+        "heldMs": 268.0000000000007,
+        "times": [
+          8.447,
+          8.581,
+          8.715
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 16.626,
+        "selector": "#s5-card > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 0,
+          "top": 1708.2,
+          "right": 262.87,
+          "bottom": 1823.4,
+          "width": 262.87,
+          "height": 115.2
+        },
+        "containerSelector": "#s5-card > div:nth-of-type(2)",
+        "text": "THE WAR FOR ETERNITY",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1708.2,
+          "width": 262.87,
+          "height": 115.2
+        },
+        "firstSeen": 16.626,
+        "lastSeen": 19.709,
+        "occurrences": 3,
+        "heldMs": 134.00000000000034,
+        "times": [
+          16.626,
+          19.575,
+          19.709
+        ]
+      },
+      {
+        "selector": "#s2-card",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -539.05,
+          "y": 2414.07,
+          "width": 789.11,
+          "height": 582.69
+        },
+        "time": 4,
+        "rect": {
+          "left": -539.05,
+          "top": 2414.07,
+          "right": 250.06,
+          "bottom": 2996.76,
+          "width": 789.11,
+          "height": 582.69
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "THE CHOSEN AVATAR",
+        "message": "<div> \"THE CHOSEN AVATAR\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "selector": "#s2-card > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -874.41,
+          "y": 2238.04,
+          "width": 1695.61,
+          "height": 1734.83
+        },
+        "time": 4,
+        "rect": {
+          "left": -874.41,
+          "top": 2238.04,
+          "right": 821.2,
+          "bottom": 3972.87,
+          "width": 1695.61,
+          "height": 1734.83
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "LORD RAMA",
+        "message": "<div> \"LORD RAMA\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "selector": "#s2-card > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -963.75,
+          "y": 2660.16,
+          "width": 1736.25,
+          "height": 1648.92
+        },
+        "time": 4,
+        "rect": {
+          "left": -963.75,
+          "top": 2660.16,
+          "right": 772.5,
+          "bottom": 4309.08,
+          "width": 1736.25,
+          "height": 1648.92
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "WIELDER OF THE DIVINE KODANDA",
+        "message": "<div> \"WIELDER OF THE DIVINE KODANDA\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "selector": "#s3-card",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 62.38,
+          "y": 1558.09,
+          "width": 332.9,
+          "height": 77.45
+        },
+        "time": 9.333,
+        "rect": {
+          "left": 62.38,
+          "top": 1558.09,
+          "right": 395.28,
+          "bottom": 1635.54,
+          "width": 332.9,
+          "height": 77.45
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "RULER OF THE THREE REALMS",
+        "message": "<div> \"RULER OF THE THREE REALMS\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.333,
+        "lastSeen": 12,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.333,
+          12
+        ]
+      },
+      {
+        "selector": "div.card-headline.card-headline-crimson",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 46.42,
+          "y": 1584.1,
+          "width": 313.63,
+          "height": 134.93
+        },
+        "time": 9.333,
+        "rect": {
+          "left": 46.42,
+          "top": 1584.1,
+          "right": 360.05,
+          "bottom": 1719.03,
+          "width": 313.63,
+          "height": 134.93
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "RAVANA",
+        "message": "<div> \"RAVANA\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.333,
+        "lastSeen": 12,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.333,
+          12
+        ]
+      },
+      {
+        "selector": "#s3-card > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 54.42,
+          "y": 1663.09,
+          "width": 416.47,
+          "height": 100.97
+        },
+        "time": 9.333,
+        "rect": {
+          "left": 54.42,
+          "top": 1663.09,
+          "right": 470.89,
+          "bottom": 1764.06,
+          "width": 416.47,
+          "height": 100.97
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "THE EMPEROR OF TEN SHADOWS",
+        "message": "<div> \"THE EMPEROR OF TEN SHADOWS\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.333,
+        "lastSeen": 12,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.333,
+          12
+        ]
+      },
+      {
+        "selector": "#s4-card",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -43.34,
+          "y": 1691.06,
+          "width": 355.33,
+          "height": 57.73
+        },
+        "time": 14.667,
+        "rect": {
+          "left": -43.34,
+          "top": 1691.06,
+          "right": 311.99,
+          "bottom": 1748.79,
+          "width": 355.33,
+          "height": 57.73
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "DEVOTION UNLEASHED",
+        "message": "<div> \"DEVOTION UNLEASHED\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "selector": "#s4-card > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -70.64,
+          "y": 1708.88,
+          "width": 572.57,
+          "height": 156.78
+        },
+        "time": 14.667,
+        "rect": {
+          "left": -70.64,
+          "top": 1708.88,
+          "right": 501.93,
+          "bottom": 1865.66,
+          "width": 572.57,
+          "height": 156.78
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "HANUMAN",
+        "message": "<div> \"HANUMAN\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "selector": "#s4-card > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -63.68,
+          "y": 1792.77,
+          "width": 662.7,
+          "height": 102.73
+        },
+        "time": 14.667,
+        "rect": {
+          "left": -63.68,
+          "top": 1792.77,
+          "right": 599.02,
+          "bottom": 1895.5,
+          "width": 662.7,
+          "height": 102.73
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "THE SHOCKWAVE ACROSS THE HEAVENS",
+        "message": "<div> \"THE SHOCKWAVE ACROSS THE HEAVENS\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "selector": "#s5-card",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -41.68,
+          "y": 1668.99,
+          "width": 312.81,
+          "height": 107.86
+        },
+        "time": 17.333,
+        "rect": {
+          "left": -41.68,
+          "top": 1668.99,
+          "right": 271.13,
+          "bottom": 1776.85,
+          "width": 312.81,
+          "height": 107.86
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "THE WAR FOR ETERNITY",
+        "message": "<div> \"THE WAR FOR ETERNITY\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "selector": "#s5-card > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -84.54,
+          "y": 1710.75,
+          "width": 897.43,
+          "height": 386.97
+        },
+        "time": 17.333,
+        "rect": {
+          "left": -84.54,
+          "top": 1710.75,
+          "right": 812.89,
+          "bottom": 2097.72,
+          "width": 897.43,
+          "height": 386.97
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "SIEGE OF LANKA",
+        "message": "<div> \"SIEGE OF LANKA\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "selector": "#s5-card > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -90.45,
+          "y": 1845.04,
+          "width": 759.71,
+          "height": 262.06
+        },
+        "time": 17.333,
+        "rect": {
+          "left": -90.45,
+          "top": 1845.04,
+          "right": 669.26,
+          "bottom": 2107.1,
+          "width": 759.71,
+          "height": 262.06
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "WHEN LIGHT STRIKES THE CITADEL OF NIGHT",
+        "message": "<div> \"WHEN LIGHT STRIKES THE CITADEL OF NIGHT\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "selector": "#s6-present",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 60.9,
+          "y": 513.39,
+          "width": 1013.32,
+          "height": 36.4
+        },
+        "time": 22.667,
+        "rect": {
+          "left": 60.9,
+          "top": 513.39,
+          "right": 1074.22,
+          "bottom": 549.79,
+          "width": 1013.32,
+          "height": 36.4
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "EXPERIENCE THE GLOBAL THEATRICAL EVENT",
+        "message": "<div> \"EXPERIENCE THE GLOBAL THEATRICAL EVENT\" is outside the safe area: TikTok (left and right edges), Instagram Reels (left and right edges), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "selector": "#s6-title",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -67.21,
+          "y": 559.59,
+          "width": 1269.52,
+          "height": 244.08
+        },
+        "time": 22.667,
+        "rect": {
+          "left": -67.21,
+          "top": 559.59,
+          "right": 1202.31,
+          "bottom": 803.67,
+          "width": 1269.52,
+          "height": 244.08
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "RAMAYANA",
+        "message": "<div> \"RAMAYANA\" is outside the safe area: TikTok (left and right edges), Instagram Reels (left and right edges), YouTube Shorts (left and right edges).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "selector": "#s6-sub",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 198.07,
+          "y": 795.32,
+          "width": 738.8,
+          "height": 48.65
+        },
+        "time": 22.667,
+        "rect": {
+          "left": 198.07,
+          "top": 795.32,
+          "right": 936.87,
+          "bottom": 843.97,
+          "width": 738.8,
+          "height": 48.65
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "PART I • THE BEGINNING",
+        "message": "<div> \"PART I • THE BEGINNING\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "selector": "div.theatrical-date-text",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 314,
+          "y": 954.92,
+          "width": 506.8,
+          "height": 81.63
+        },
+        "time": 22.667,
+        "rect": {
+          "left": 314,
+          "top": 954.92,
+          "right": 820.8,
+          "bottom": 1036.55,
+          "width": 506.8,
+          "height": 81.63
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "DIWALI 2026",
+        "message": "<div> \"DIWALI 2026\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "selector": "#s6-formats > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 91.52,
+          "y": 1138.68,
+          "width": 154.99,
+          "height": 26.18
+        },
+        "time": 22.667,
+        "rect": {
+          "left": 91.52,
+          "top": 1138.68,
+          "right": 246.51,
+          "bottom": 1164.86,
+          "width": 154.99,
+          "height": 26.18
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "IMAX 70MM",
+        "message": "<div> \"IMAX 70MM\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "selector": "#s6-formats > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 850.19,
+          "y": 1138.68,
+          "width": 192.97,
+          "height": 26.18
+        },
+        "time": 22.667,
+        "rect": {
+          "left": 850.19,
+          "top": 1138.68,
+          "right": 1043.16,
+          "bottom": 1164.86,
+          "width": 192.97,
+          "height": 26.18
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "DOLBY ATMOS",
+        "message": "<div> \"DOLBY ATMOS\" is outside the safe area: TikTok (right edge), Instagram Reels (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "selector": "#s6-credits",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 123.71,
+          "y": 1236.42,
+          "width": 887.2,
+          "height": 54.12
+        },
+        "time": 22.667,
+        "rect": {
+          "left": 123.71,
+          "top": 1236.42,
+          "right": 1010.91,
+          "bottom": 1290.54,
+          "width": 887.2,
+          "height": 54.12
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "AN EPIC BY NAMIT MALHOTRA • DIRECTED FOR THE GLO",
+        "message": "<div> \"AN EPIC BY NAMIT MALHOTRA • DIRECTED FOR THE GLO\" is outside the safe area: TikTok (right and bottom edges), Instagram Reels (bottom edge), YouTube Shorts (right and bottom edges).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 4,
+        "selector": "div.tag-pill.tag-pill-blue",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -539.05,
+          "top": 2414.07,
+          "right": 250.06,
+          "bottom": 2996.76,
+          "width": 789.11,
+          "height": 582.69
+        },
+        "containerSelector": "#root",
+        "text": "THE CHOSEN AVATAR",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 539.05,
+          "bottom": 1076.76
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -539.05,
+          "y": 2414.07,
+          "width": 789.11,
+          "height": 582.69
+        },
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 4,
+        "selector": "#s2-card > div:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -874.41,
+          "top": 2238.04,
+          "right": 821.2,
+          "bottom": 3972.87,
+          "width": 1695.61,
+          "height": 1734.83
+        },
+        "containerSelector": "#root",
+        "text": "LORD RAMA",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 874.41,
+          "bottom": 2052.87
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -874.41,
+          "y": 2238.04,
+          "width": 1695.61,
+          "height": 1734.83
+        },
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 4,
+        "selector": "#s2-card > div:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -963.75,
+          "top": 2660.16,
+          "right": 772.5,
+          "bottom": 4309.08,
+          "width": 1736.25,
+          "height": 1648.92
+        },
+        "containerSelector": "#root",
+        "text": "WIELDER OF THE DIVINE KODANDA",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 963.75,
+          "bottom": 2389.08
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -963.75,
+          "y": 2660.16,
+          "width": 1736.25,
+          "height": 1648.92
+        },
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 4,
+        "selector": "#s2-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -1671.55,
+          "top": -221.63,
+          "right": 1431.62,
+          "bottom": 5258.79,
+          "width": 3103.17,
+          "height": 5480.42
+        },
+        "containerSelector": "#s2-img-wrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -854.93,
+          "top": -48.23,
+          "right": 1321.15,
+          "bottom": 3818.84,
+          "width": 2176.08,
+          "height": 3867.07
+        },
+        "overflow": {
+          "left": 816.62,
+          "right": 110.47,
+          "top": 173.4,
+          "bottom": 1439.95
+        },
+        "dataAttributes": {
+          "data-hf-render-id": "s2-img",
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1671.55,
+          "y": -221.63,
+          "width": 3103.17,
+          "height": 5480.42
+        },
+        "firstSeen": 4,
+        "lastSeen": 6.667,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          6.667
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 4,
+        "selector": "#camera-rig",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": -790.74,
+          "top": -67.92,
+          "right": 1329.5,
+          "bottom": 3859.62,
+          "width": 2120.24,
+          "height": 3927.54
+        },
+        "containerSelector": "#shake-wrapper",
+        "text": "THE CHOSEN AVATAR LORD RAMA WIELDER OF THE DIVINE KODANDA",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 2.29,
+          "top": 6.73,
+          "right": 1082.29,
+          "bottom": 1926.73,
+          "width": 1080,
+          "height": 1920
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -790.74,
+          "y": -67.92,
+          "width": 2120.24,
+          "height": 3927.54
+        },
+        "firstSeen": 4,
+        "lastSeen": 20,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          4,
+          20
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 6.667,
+        "selector": "#s2-card",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -129.91,
+          "top": 1646.46,
+          "right": 1266.48,
+          "bottom": 2169.79,
+          "width": 1396.39,
+          "height": 523.34
+        },
+        "containerSelector": "#root",
+        "text": "THE CHOSEN AVATAR LORD RAMA WIELDER OF THE DIVIN",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 129.91,
+          "right": 186.48,
+          "bottom": 249.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -129.91,
+          "y": 1646.46,
+          "width": 1396.39,
+          "height": 523.34
+        },
+        "firstSeen": 6.667,
+        "lastSeen": 6.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          6.667
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 9.333,
+        "selector": "#s3-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -152.15,
+          "top": -715.8,
+          "right": 1645.42,
+          "bottom": 1921.26,
+          "width": 1797.58,
+          "height": 2637.06
+        },
+        "containerSelector": "#s3-img-wrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -113.51,
+          "top": -613.91,
+          "right": 1567.25,
+          "bottom": 1872.07,
+          "width": 1680.77,
+          "height": 2485.98
+        },
+        "overflow": {
+          "left": 38.64,
+          "right": 78.17,
+          "top": 101.89,
+          "bottom": 49.19
+        },
+        "dataAttributes": {
+          "data-hf-render-id": "s3-img",
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -152.15,
+          "y": -715.8,
+          "width": 1797.58,
+          "height": 2637.06
+        },
+        "firstSeen": 9.333,
+        "lastSeen": 12,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.333,
+          12
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 9.333,
+        "selector": "#s3-card",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -1.51,
+          "top": 1507.06,
+          "right": 1130.93,
+          "bottom": 1920.35,
+          "width": 1132.45,
+          "height": 413.28
+        },
+        "containerSelector": "#root",
+        "text": "RULER OF THE THREE REALMS RAVANA THE EMPEROR OF ",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "right": 50.93
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1.51,
+          "y": 1507.06,
+          "width": 1132.45,
+          "height": 413.28
+        },
+        "firstSeen": 9.333,
+        "lastSeen": 12,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.333,
+          12
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 12,
+        "selector": "#s3-card > div:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -89.95,
+          "top": 1832.39,
+          "right": 413.8,
+          "bottom": 1926.25,
+          "width": 503.75,
+          "height": 93.86
+        },
+        "containerSelector": "#root",
+        "text": "RULER OF THE THREE REALMS",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 89.95,
+          "bottom": 6.25
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -89.95,
+          "y": 1832.39,
+          "width": 503.75,
+          "height": 93.86
+        },
+        "firstSeen": 12,
+        "lastSeen": 12,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          12
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 12,
+        "selector": "div.card-headline.card-headline-crimson",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -117.68,
+          "top": 1882.91,
+          "right": 371.03,
+          "bottom": 2068.58,
+          "width": 488.71,
+          "height": 185.67
+        },
+        "containerSelector": "#root",
+        "text": "RAVANA",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 117.68,
+          "bottom": 148.58
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -117.68,
+          "y": 1882.91,
+          "width": 488.71,
+          "height": 185.67
+        },
+        "firstSeen": 12,
+        "lastSeen": 12,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          12
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 12,
+        "selector": "#s3-card > div:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -105.26,
+          "top": 1982.67,
+          "right": 522.01,
+          "bottom": 2105.23,
+          "width": 627.27,
+          "height": 122.56
+        },
+        "containerSelector": "#root",
+        "text": "THE EMPEROR OF TEN SHADOWS",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 105.26,
+          "bottom": 185.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -105.26,
+          "y": 1982.67,
+          "width": 627.27,
+          "height": 122.56
+        },
+        "firstSeen": 12,
+        "lastSeen": 12,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          12
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 14.667,
+        "selector": "#s4-card > div:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -43.34,
+          "top": 1691.06,
+          "right": 311.99,
+          "bottom": 1748.79,
+          "width": 355.33,
+          "height": 57.73
+        },
+        "containerSelector": "#root",
+        "text": "DEVOTION UNLEASHED",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 43.34
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -43.34,
+          "y": 1691.06,
+          "width": 355.33,
+          "height": 57.73
+        },
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 14.667,
+        "selector": "#s4-card > div:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -70.64,
+          "top": 1708.88,
+          "right": 501.93,
+          "bottom": 1865.66,
+          "width": 572.57,
+          "height": 156.78
+        },
+        "containerSelector": "#root",
+        "text": "HANUMAN",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 70.64
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -70.64,
+          "y": 1708.88,
+          "width": 572.57,
+          "height": 156.78
+        },
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 14.667,
+        "selector": "#s4-card > div:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -63.68,
+          "top": 1792.77,
+          "right": 599.02,
+          "bottom": 1895.5,
+          "width": 662.7,
+          "height": 102.73
+        },
+        "containerSelector": "#root",
+        "text": "THE SHOCKWAVE ACROSS THE HEAVENS",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 63.68
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -63.68,
+          "y": 1792.77,
+          "width": 662.7,
+          "height": 102.73
+        },
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 14.667,
+        "selector": "#s4-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -353.4,
+          "top": -832.76,
+          "right": 1349.77,
+          "bottom": 1958.56,
+          "width": 1703.17,
+          "height": 2791.32
+        },
+        "containerSelector": "#s4-img-wrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -271.57,
+          "top": -654.16,
+          "right": 1291.51,
+          "bottom": 1905.11,
+          "width": 1563.08,
+          "height": 2559.27
+        },
+        "overflow": {
+          "left": 81.83,
+          "right": 58.26,
+          "top": 178.6,
+          "bottom": 53.45
+        },
+        "dataAttributes": {
+          "data-hf-render-id": "s4-img",
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -353.4,
+          "y": -832.76,
+          "width": 1703.17,
+          "height": 2791.32
+        },
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 14.667,
+        "selector": "#s4-card",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -143.15,
+          "top": 1577.07,
+          "right": 1080.7,
+          "bottom": 1944.93,
+          "width": 1223.85,
+          "height": 367.86
+        },
+        "containerSelector": "#root",
+        "text": "DEVOTION UNLEASHED HANUMAN THE SHOCKWAVE ACROSS ",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 143.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -143.15,
+          "y": 1577.07,
+          "width": 1223.85,
+          "height": 367.86
+        },
+        "firstSeen": 14.667,
+        "lastSeen": 14.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 17.333,
+        "selector": "#s5-card > div:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -41.68,
+          "top": 1668.99,
+          "right": 271.13,
+          "bottom": 1776.85,
+          "width": 312.81,
+          "height": 107.86
+        },
+        "containerSelector": "#root",
+        "text": "THE WAR FOR ETERNITY",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 41.68
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -41.68,
+          "y": 1668.99,
+          "width": 312.81,
+          "height": 107.86
+        },
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 17.333,
+        "selector": "#s5-card > div:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -84.54,
+          "top": 1710.75,
+          "right": 812.89,
+          "bottom": 2097.72,
+          "width": 897.43,
+          "height": 386.97
+        },
+        "containerSelector": "#root",
+        "text": "SIEGE OF LANKA",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 84.54,
+          "bottom": 177.72
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -84.54,
+          "y": 1710.75,
+          "width": 897.43,
+          "height": 386.97
+        },
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 17.333,
+        "selector": "#s5-card > div:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -90.45,
+          "top": 1845.04,
+          "right": 669.26,
+          "bottom": 2107.1,
+          "width": 759.71,
+          "height": 262.06
+        },
+        "containerSelector": "#root",
+        "text": "WHEN LIGHT STRIKES THE CITADEL OF NIGHT",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 90.45,
+          "bottom": 187.1
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -90.45,
+          "y": 1845.04,
+          "width": 759.71,
+          "height": 262.06
+        },
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 17.333,
+        "selector": "#s5-img",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -119.48,
+          "top": 36.69,
+          "right": 1337.41,
+          "bottom": 2505.75,
+          "width": 1456.88,
+          "height": 2469.06
+        },
+        "containerSelector": "#s5-img-wrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -79.28,
+          "top": 78.05,
+          "right": 1277.91,
+          "bottom": 2372.58,
+          "width": 1357.19,
+          "height": 2294.53
+        },
+        "overflow": {
+          "left": 40.2,
+          "right": 59.5,
+          "top": 41.36,
+          "bottom": 133.17
+        },
+        "dataAttributes": {
+          "data-hf-render-id": "s5-img",
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -119.48,
+          "y": 36.69,
+          "width": 1456.88,
+          "height": 2469.06
+        },
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 17.333,
+        "selector": "#s5-card",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -145.83,
+          "top": 1590.25,
+          "right": 1332.3,
+          "bottom": 2388.71,
+          "width": 1478.13,
+          "height": 798.45
+        },
+        "containerSelector": "#root",
+        "text": "THE WAR FOR ETERNITY SIEGE OF LANKA WHEN LIGHT S",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 145.83,
+          "right": 252.3,
+          "bottom": 468.71
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -145.83,
+          "y": 1590.25,
+          "width": 1478.13,
+          "height": 798.45
+        },
+        "firstSeen": 17.333,
+        "lastSeen": 17.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.333
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 22.667,
+        "selector": "#s6-title",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": -67.21,
+          "top": 604.22,
+          "right": 1202.31,
+          "bottom": 742.3,
+          "width": 1269.52,
+          "height": 138.08
+        },
+        "containerSelector": "#root",
+        "text": "RAMAYANA",
+        "fixHint": "Text is 1270px x 138px inside 1080px x 1920px and overflows by up to 122px; widen the container to at least ~1270px or shrink font-size from 130px to ~111px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 67.21,
+          "right": 122.31
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -67.21,
+          "y": 604.22,
+          "width": 1269.52,
+          "height": 138.08
+        },
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 22.667,
+        "selector": "#s6-title",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -67.21,
+          "top": 559.59,
+          "right": 1202.31,
+          "bottom": 803.67,
+          "width": 1269.52,
+          "height": 244.08
+        },
+        "containerSelector": "#root",
+        "text": "RAMAYANA",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 67.21,
+          "right": 122.31
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -67.21,
+          "y": 559.59,
+          "width": 1269.52,
+          "height": 244.08
+        },
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 22.667,
+        "selector": "#s6-flare",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 2565.98,
+          "top": 591.75,
+          "right": 3336.84,
+          "bottom": 773.07,
+          "width": 770.87,
+          "height": 181.31
+        },
+        "containerSelector": "#s6-title",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": -114.24,
+          "top": 591.75,
+          "right": 1249.32,
+          "bottom": 773.07,
+          "width": 1363.56,
+          "height": 181.31
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 2565.98,
+          "y": 591.75,
+          "width": 770.87,
+          "height": 181.31
+        },
+        "firstSeen": 22.667,
+        "lastSeen": 22.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.667
+        ]
+      }
+    ],
+    "duration": 24,
+    "samples": [
+      1.333,
+      4,
+      6.667,
+      9.333,
+      12,
+      14.667,
+      17.333,
+      20,
+      22.667
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 48,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      1.333,
+      6.667,
+      12,
+      17.333,
+      22.667
+    ],
+    "checked": 20,
+    "passed": 20
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 8,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "first_frame_empty",
+        "severity": "warning",
+        "message": "Frame 0 shows only the background, and the first frame is the thumbnail on social players: have the title or key image already on screen at 0 s instead of entering from nothing; see references/review.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"THE GREATEST EPIC OF MANKIND\" (5 words) is on screen 1.38 s (±0.01 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "THE GREATEST EPIC OF MANKIND",
+        "selector": "#s1-sub",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 186.91,
+          "y": 958.8,
+          "width": 657.89,
+          "height": 30.25
+        },
+        "time": 2.32,
+        "words": 5,
+        "seconds": 1.383,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 2,
+            "opacity": 0.7,
+            "heightPx": 29
+          },
+          {
+            "time": 2.125,
+            "opacity": 0.82,
+            "heightPx": 29
+          },
+          {
+            "time": 2.25,
+            "opacity": 0.9,
+            "heightPx": 30
+          },
+          {
+            "time": 2.375,
+            "opacity": 0.95,
+            "heightPx": 30
+          },
+          {
+            "time": 2.5,
+            "opacity": 0.98,
+            "heightPx": 31
+          },
+          {
+            "time": 2.625,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 2.75,
+            "opacity": 1,
+            "heightPx": 32
+          },
+          {
+            "time": 3.25,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 3.375,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 3.5,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 3.625,
+            "opacity": 0.9,
+            "heightPx": 80
+          },
+          {
+            "time": 3.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 3.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"WIELDER OF THE DIVINE KODANDA\" (5 words) is on screen 1.40 s (±0.01 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "WIELDER OF THE DIVINE KODANDA",
+        "selector": "#s2-card > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1882.74,
+          "width": 514.09,
+          "height": 37.25999999999999
+        },
+        "time": 6.703,
+        "words": 5,
+        "seconds": 1.398,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": 0.9,
+            "heightPx": 7
+          },
+          {
+            "time": 6.625,
+            "opacity": 0.9,
+            "heightPx": 22
+          },
+          {
+            "time": 6.75,
+            "opacity": 0.9,
+            "heightPx": 37
+          },
+          {
+            "time": 6.875,
+            "opacity": 0.9,
+            "heightPx": 49
+          },
+          {
+            "time": 7,
+            "opacity": 0.9,
+            "heightPx": 61
+          },
+          {
+            "time": 7.125,
+            "opacity": 0.9,
+            "heightPx": 70
+          },
+          {
+            "time": 7.625,
+            "opacity": 0.9,
+            "heightPx": 95
+          },
+          {
+            "time": 7.75,
+            "opacity": 0.9,
+            "heightPx": 98
+          },
+          {
+            "time": 7.875,
+            "opacity": 0.9,
+            "heightPx": 100
+          },
+          {
+            "time": 8,
+            "opacity": 0.84,
+            "heightPx": 117
+          },
+          {
+            "time": 8.125,
+            "opacity": 0.31,
+            "heightPx": 94
+          },
+          {
+            "time": 8.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.375,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"RULER OF THE THREE REALMS RAVANA THE EMPEROR OF TEN SHADOWS\" (11 words) is on screen 1.98 s (±0.01 s), under its 2.85 s floor: hold it about 0.5 s + 0.3 s a word (3.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "RULER OF THE THREE REALMS RAVANA THE EMPEROR OF TEN SHADOWS",
+        "selector": "#s3-card",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 131.17,
+          "y": 1455.46,
+          "width": 269.1,
+          "height": 101.61999999999989
+        },
+        "time": 8.422,
+        "words": 11,
+        "seconds": 1.984,
+        "floorSeconds": 2.85,
+        "measured": [
+          {
+            "time": 8.125,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.375,
+            "opacity": 0.31,
+            "heightPx": 104
+          },
+          {
+            "time": 8.5,
+            "opacity": 0.75,
+            "heightPx": 102
+          },
+          {
+            "time": 8.625,
+            "opacity": 0.96,
+            "heightPx": 99
+          },
+          {
+            "time": 8.75,
+            "opacity": 1,
+            "heightPx": 96
+          },
+          {
+            "time": 8.875,
+            "opacity": 1,
+            "heightPx": 92
+          },
+          {
+            "time": 10,
+            "opacity": 1,
+            "heightPx": 49
+          },
+          {
+            "time": 10.125,
+            "opacity": 1,
+            "heightPx": 43
+          },
+          {
+            "time": 10.25,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 10.375,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 10.5,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 10.625,
+            "opacity": 1,
+            "heightPx": 32
+          },
+          {
+            "time": 10.75,
+            "opacity": 1,
+            "heightPx": 40
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"THE WAR FOR ETERNITY SIEGE OF LANKA WHEN LIGHT STRIKES TH...\" (14 words) is on screen 3.17 s (±0.01 s), under its 3.53 s floor: hold it about 0.5 s + 0.3 s a word (4.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "THE WAR FOR ETERNITY SIEGE OF LANKA WHEN LIGHT STRIKES THE CITADEL OF NIGHT",
+        "selector": "#s5-card",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1708.2,
+          "width": 262.87,
+          "height": 115.20000000000005
+        },
+        "time": 16.617,
+        "words": 14,
+        "seconds": 3.172,
+        "floorSeconds": 3.525,
+        "measured": [
+          {
+            "time": 16.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.625,
+            "opacity": 0.52,
+            "heightPx": 115
+          },
+          {
+            "time": 16.75,
+            "opacity": 0.83,
+            "heightPx": 112
+          },
+          {
+            "time": 16.875,
+            "opacity": 0.95,
+            "heightPx": 111
+          },
+          {
+            "time": 17,
+            "opacity": 0.99,
+            "heightPx": 109
+          },
+          {
+            "time": 19.375,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 19.5,
+            "opacity": 1,
+            "heightPx": 46
+          },
+          {
+            "time": 19.625,
+            "opacity": 1,
+            "heightPx": 60
+          },
+          {
+            "time": 19.75,
+            "opacity": 1,
+            "heightPx": 73
+          },
+          {
+            "time": 19.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 20,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 20.125,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"WHEN LIGHT STRIKES THE CITADEL OF NIGHT\" (7 words) is on screen 1.66 s (±0.01 s), under its 1.95 s floor: hold it about 0.5 s + 0.3 s a word (2.60 s here) before it leaves or changes; see references/motion.md.",
+        "text": "WHEN LIGHT STRIKES THE CITADEL OF NIGHT",
+        "selector": "#s5-card > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 1858.56,
+          "width": 662.57,
+          "height": 61.440000000000055
+        },
+        "time": 16.641,
+        "words": 7,
+        "seconds": 1.664,
+        "floorSeconds": 1.95,
+        "measured": [
+          {
+            "time": 16.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.625,
+            "opacity": 0.47,
+            "heightPx": 34
+          },
+          {
+            "time": 16.75,
+            "opacity": 0.75,
+            "heightPx": 61
+          },
+          {
+            "time": 16.875,
+            "opacity": 0.85,
+            "heightPx": 69
+          },
+          {
+            "time": 17,
+            "opacity": 0.89,
+            "heightPx": 84
+          },
+          {
+            "time": 17.125,
+            "opacity": 0.9,
+            "heightPx": 76
+          },
+          {
+            "time": 17.875,
+            "opacity": 0.9,
+            "heightPx": 55
+          },
+          {
+            "time": 18,
+            "opacity": 0.9,
+            "heightPx": 49
+          },
+          {
+            "time": 18.125,
+            "opacity": 0.9,
+            "heightPx": 42
+          },
+          {
+            "time": 18.25,
+            "opacity": 0.9,
+            "heightPx": 33
+          },
+          {
+            "time": 18.375,
+            "opacity": 0.9,
+            "heightPx": 24
+          },
+          {
+            "time": 18.5,
+            "opacity": 0.9,
+            "heightPx": 13
+          },
+          {
+            "time": 18.625,
+            "opacity": 0.9,
+            "heightPx": 3
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"AN EPIC BY NAMIT MALHOTRA • DIRECTED FOR THE GLOBAL SCREE...\" (15 words) is on screen 1.73 s (±0.01 s), under the 3.75 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "AN EPIC BY NAMIT MALHOTRA • DIRECTED FOR THE GLOBAL SCREEN SOUND DESIGN • ORIGINAL THEATRICAL EXPERIENCE",
+        "selector": "#s6-credits",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 119.4,
+          "y": 1239.25,
+          "width": 895.89,
+          "height": 54.450000000000045
+        },
+        "time": 22.273,
+        "words": 15,
+        "seconds": 1.73,
+        "floorSeconds": 3.75,
+        "measured": [
+          {
+            "time": 22,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 22.125,
+            "opacity": 0.26,
+            "heightPx": 55
+          },
+          {
+            "time": 22.25,
+            "opacity": 0.49,
+            "heightPx": 55
+          },
+          {
+            "time": 22.375,
+            "opacity": 0.63,
+            "heightPx": 54
+          },
+          {
+            "time": 22.5,
+            "opacity": 0.74,
+            "heightPx": 54
+          },
+          {
+            "time": 22.625,
+            "opacity": 0.8,
+            "heightPx": 54
+          },
+          {
+            "time": 22.75,
+            "opacity": 0.84,
+            "heightPx": 54
+          },
+          {
+            "time": 23.5,
+            "opacity": 0.85,
+            "heightPx": 54
+          },
+          {
+            "time": 23.625,
+            "opacity": 0.85,
+            "heightPx": 54
+          },
+          {
+            "time": 23.75,
+            "opacity": 0.85,
+            "heightPx": 54
+          },
+          {
+            "time": 23.875,
+            "opacity": 0.85,
+            "heightPx": 54
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 17 text elements stay under it for 0.5 s or more, the smallest \"AN EPIC BY NAMIT MALHOTRA • DIRECTED ...\" at 13 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "AN EPIC BY NAMIT MALHOTRA • DIRECTED FOR THE GLOBAL SCREEN SOUND DESIGN • ORIGINAL THEATRICAL EXPERIENCE",
+        "selector": "#s6-credits",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 119.4,
+          "y": 1239.25,
+          "width": 895.89,
+          "height": 54.45
+        },
+        "time": 22.375,
+        "times": [
+          0.75,
+          1.875,
+          5.25,
+          6.5,
+          8.5,
+          8.5,
+          13.125,
+          13.875,
+          16.625,
+          16.75,
+          20.375,
+          21.75,
+          21.875,
+          21.875,
+          21.875,
+          21.875,
+          22.375
+        ],
+        "fontPx": 13,
+        "floorPx": 28,
+        "seconds": 1.625,
+        "elements": [
+          {
+            "selector": "#s6-credits",
+            "text": "AN EPIC BY NAMIT MALHOTRA • DIRECTED FOR THE GLOBAL SCREEN SOUND DESIGN • ORIGINAL THEATRICAL EXPERIENCE",
+            "fontPx": 13,
+            "time": 22.375,
+            "seconds": 1.625
+          },
+          {
+            "selector": "#s3-card > div:nth-of-type(1)",
+            "text": "RULER OF THE THREE REALMS",
+            "fontPx": 14.49,
+            "time": 8.5,
+            "seconds": 4.125
+          },
+          {
+            "selector": "#s6-formats > div:nth-of-type(1)",
+            "text": "IMAX 70MM",
+            "fontPx": 15,
+            "time": 21.875,
+            "seconds": 2.125
+          },
+          {
+            "selector": "#s6-formats > div:nth-of-type(2)",
+            "text": "DOLBY CINEMA",
+            "fontPx": 15,
+            "time": 21.875,
+            "seconds": 2.125
+          },
+          {
+            "selector": "#s6-formats > div:nth-of-type(3)",
+            "text": "REAL D 3D",
+            "fontPx": 15,
+            "time": 21.875,
+            "seconds": 2.125
+          },
+          {
+            "selector": "#s6-formats > div:nth-of-type(4)",
+            "text": "DOLBY ATMOS",
+            "fontPx": 15,
+            "time": 21.875,
+            "seconds": 2.125
+          },
+          {
+            "selector": "div.tag-pill.tag-pill-blue",
+            "text": "THE CHOSEN AVATAR",
+            "fontPx": 15.07,
+            "time": 5.25,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#s4-card > div:nth-of-type(1)",
+            "text": "DEVOTION UNLEASHED",
+            "fontPx": 15.63,
+            "time": 13.125,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#s5-card > div:nth-of-type(1)",
+            "text": "THE WAR FOR ETERNITY",
+            "fontPx": 15.64,
+            "time": 16.625,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#s3-card > div:nth-of-type(3)",
+            "text": "THE EMPEROR OF TEN SHADOWS",
+            "fontPx": 18.35,
+            "time": 8.5,
+            "seconds": 2.5
+          },
+          {
+            "selector": "#s6-present",
+            "text": "EXPERIENCE THE GLOBAL THEATRICAL EVENT",
+            "fontPx": 19,
+            "time": 20.375,
+            "seconds": 3.625
+          },
+          {
+            "selector": "#s2-card > div:nth-of-type(3)",
+            "text": "WIELDER OF THE DIVINE KODANDA",
+            "fontPx": 19.08,
+            "time": 6.5,
+            "seconds": 1.625
+          },
+          {
+            "selector": "#s4-card > div:nth-of-type(3)",
+            "text": "THE SHOCKWAVE ACROSS THE HEAVENS",
+            "fontPx": 19.8,
+            "time": 13.875,
+            "seconds": 2.5
+          },
+          {
+            "selector": "#s5-card > div:nth-of-type(3)",
+            "text": "WHEN LIGHT STRIKES THE CITADEL OF NIGHT",
+            "fontPx": 19.81,
+            "time": 16.75,
+            "seconds": 2
+          },
+          {
+            "selector": "#s1-sub",
+            "text": "THE GREATEST EPIC OF MANKIND",
+            "fontPx": 20.34,
+            "time": 1.875,
+            "seconds": 1.875
+          },
+          {
+            "selector": "#s1-tag",
+            "text": "FROM ACROSS THE AGES",
+            "fontPx": 22.98,
+            "time": 0.75,
+            "seconds": 3
+          },
+          {
+            "selector": "#s6-sub",
+            "text": "PART I • THE BEGINNING",
+            "fontPx": 26,
+            "time": 21.75,
+            "seconds": 2.25
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 192
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

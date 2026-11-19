@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "historyId": "a3df58e4-d827-4be9-9441-cecd67df3cd7",
+  "currentRevision": "a5f53e21-39d3-44ad-93d1-647ec8d6ef35",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "268ff46777938da818baa92a718571785e9acf2cef2d3ffbacbb93483dcba37a",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\26\\268ff46777938da818baa92a718571785e9acf2cef2d3ffbacbb93483dcba37a"
+    },
+    "CLAUDE.md": {
+      "hash": "268ff46777938da818baa92a718571785e9acf2cef2d3ffbacbb93483dcba37a",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\26\\268ff46777938da818baa92a718571785e9acf2cef2d3ffbacbb93483dcba37a"
+    },
+    "assets/music.mp3": {
+      "hash": "65b608647558ca3c5253003f64936520aaed84ca3db153c11dae31e39922eace",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\65\\65b608647558ca3c5253003f64936520aaed84ca3db153c11dae31e39922eace"
+    },
+    "assets/sfx/CREDITS.md": {
+      "hash": "79590c7738b0427b10f362f76b02cfd2643158a40e1d5fd787f9ac6b33bcf4ce",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\79\\79590c7738b0427b10f362f76b02cfd2643158a40e1d5fd787f9ac6b33bcf4ce"
+    },
+    "assets/sfx/chime.mp3": {
+      "hash": "74823b1b27703c56e0652db838f503c150ce9c2442d47d27430af3d5121d6d12",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\74\\74823b1b27703c56e0652db838f503c150ce9c2442d47d27430af3d5121d6d12"
+    },
+    "assets/sfx/click-soft.mp3": {
+      "hash": "075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\07\\075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d"
+    },
+    "assets/sfx/click.mp3": {
+      "hash": "075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\07\\075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d"
+    },
+    "assets/sfx/error.mp3": {
+      "hash": "b4882e3941ca496b5038e7c7d64318419da9f69d3da9540a1c693adc639cf121",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\b4\\b4882e3941ca496b5038e7c7d64318419da9f69d3da9540a1c693adc639cf121"
+    },
+    "assets/sfx/glitch-1.mp3": {
+      "hash": "760b72bdaad71f83350e2ef3a9d037daf58f44855a05a6cce25d990f1ffb888a",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\76\\760b72bdaad71f83350e2ef3a9d037daf58f44855a05a6cce25d990f1ffb888a"
+    },
+    "assets/sfx/glitch-2.mp3": {
+      "hash": "b326efdf687f18f68f0df7443a65b0ea7a4a1287dfe3143ea23707cc645257f1",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\b3\\b326efdf687f18f68f0df7443a65b0ea7a4a1287dfe3143ea23707cc645257f1"
+    },
+    "assets/sfx/glitch-3.mp3": {
+      "hash": "7ebe61cfd0d69a2d35d9ee3a88c26025101e999d5cc6bfb2df410f820b433042",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\7e\\7ebe61cfd0d69a2d35d9ee3a88c26025101e999d5cc6bfb2df410f820b433042"
+    },
+    "assets/sfx/impact-bass-1.mp3": {
+      "hash": "634d5eda5eb7b501aca98393a64f3815eccf24157cd1d95df55aaec1b5000bd7",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\63\\634d5eda5eb7b501aca98393a64f3815eccf24157cd1d95df55aaec1b5000bd7"
+    },
+    "assets/sfx/impact-bass-2.mp3": {
+      "hash": "fb832995477784f44ba8533359d20caf706195b52117ecc2a33b3e63e3c1307b",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\fb\\fb832995477784f44ba8533359d20caf706195b52117ecc2a33b3e63e3c1307b"
+    },
+    "assets/sfx/key-press.mp3": {
+      "hash": "bcc892df0898bf466162f14233c3e92a8c1ea351f6affd8a3a7e56c9a760bb72",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\bc\\bcc892df0898bf466162f14233c3e92a8c1ea351f6affd8a3a7e56c9a760bb72"
+    },
+    "assets/sfx/manifest.json": {
+      "hash": "1b1aae06c6e25412e1d217ebf1e646a0ed36410c0fcad11acdb8f5d5e5b7dc10",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\1b\\1b1aae06c6e25412e1d217ebf1e646a0ed36410c0fcad11acdb8f5d5e5b7dc10"
+    },
+    "assets/sfx/notification.mp3": {
+      "hash": "b1559967dedb7994a82371f10cec9f7f3992e6b147b4cd88d62112bcdc3f9ba3",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\b1\\b1559967dedb7994a82371f10cec9f7f3992e6b147b4cd88d62112bcdc3f9ba3"
+    },
+    "assets/sfx/ping.mp3": {
+      "hash": "c54d088fa2709e6b3c9ce87594a9187d0d5338d3a8c683271f9c4353a8ee8c91",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\c5\\c54d088fa2709e6b3c9ce87594a9187d0d5338d3a8c683271f9c4353a8ee8c91"
+    },
+    "assets/sfx/pop.mp3": {
+      "hash": "19ab7193f626ff57fdeef60b45543bac416fcbcec803cfb417abe4b271c1b352",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\19\\19ab7193f626ff57fdeef60b45543bac416fcbcec803cfb417abe4b271c1b352"
+    },
+    "assets/sfx/riser.mp3": {
+      "hash": "d2f29d49f27dee7d3b25af22ffe5bebc39390cc5d5fb3b3e1c433499c77f3d1d",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\d2\\d2f29d49f27dee7d3b25af22ffe5bebc39390cc5d5fb3b3e1c433499c77f3d1d"
+    },
+    "assets/sfx/sparkle.mp3": {
+      "hash": "a66b2829a307bcb5b1f6551d7cdc72fe45bbe9a91abfb994d28db8d5e4e42ea8",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\a6\\a66b2829a307bcb5b1f6551d7cdc72fe45bbe9a91abfb994d28db8d5e4e42ea8"
+    },
+    "assets/sfx/typing.mp3": {
+      "hash": "944160652faeb7b32acc9341ede4d735a5c9a4ce3fe8509ef7eab91efb430487",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\94\\944160652faeb7b32acc9341ede4d735a5c9a4ce3fe8509ef7eab91efb430487"
+    },
+    "assets/sfx/whoosh-cinematic.mp3": {
+      "hash": "0a0f3505856fdfa84ac6b86b3c55ccd0ef1eb4ff0907d7b6934002218a73404e",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0a\\0a0f3505856fdfa84ac6b86b3c55ccd0ef1eb4ff0907d7b6934002218a73404e"
+    },
+    "assets/sfx/whoosh-short.mp3": {
+      "hash": "c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\c2\\c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30"
+    },
+    "assets/sfx/whoosh.mp3": {
+      "hash": "c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\c2\\c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30"
+    },
+    "hyperframes.json": {
+      "hash": "35a6d4ea79ebe911f0d81705f7aace5d8ff0316b745b0311d56af50c9c237cb7",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\35\\35a6d4ea79ebe911f0d81705f7aace5d8ff0316b745b0311d56af50c9c237cb7"
+    },
+    "index.html": {
+      "hash": "6909b24751f5fda93ef014896ca44a8158c9fe04a5b5b975ea22bdda4d8c5226",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\69\\6909b24751f5fda93ef014896ca44a8158c9fe04a5b5b975ea22bdda4d8c5226"
+    },
+    "meta.json": {
+      "hash": "94244ef71967ff5a4fcb79b52b22717c863c6e113741dd98977ce918b59bc180",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\94\\94244ef71967ff5a4fcb79b52b22717c863c6e113741dd98977ce918b59bc180"
+    },
+    "package.json": {
+      "hash": "50720871a126ee4651216f3997f74f0c1166c2f8ee57a9467c74c2053dd402ac",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\50\\50720871a126ee4651216f3997f74f0c1166c2f8ee57a9467c74c2053dd402ac"
+    },
+    "assets/audio_track_sfx.mp3": {
+      "hash": "5e8e14d978ca87a95271d576008a15e40f7ccfb1e8d2b115d79c185db4f9f385",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\5e\\5e8e14d978ca87a95271d576008a15e40f7ccfb1e8d2b115d79c185db4f9f385"
+    },
+    "assets/audio_track.mp3": {
+      "hash": "9c16b390cebb93d89c21916e1587bed80c5d253bd7d6efd6c52fdf7043e1b3da",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\9c\\9c16b390cebb93d89c21916e1587bed80c5d253bd7d6efd6c52fdf7043e1b3da"
+    },
+    "assets/lime_cursor.svg": {
+      "hash": "9d6898904713e48959fa165689cbbcc63d6ad3db7ead6e65dbcaf555155bf6a9",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\9d\\9d6898904713e48959fa165689cbbcc63d6ad3db7ead6e65dbcaf555155bf6a9"
+    },
+    "assets/memes/anton_ego_clean.png": {
+      "hash": "25e008413908d4c621496e9f26942e7bc1cbc297ebb1587b5f815ffa8c2d741b",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\25\\25e008413908d4c621496e9f26942e7bc1cbc297ebb1587b5f815ffa8c2d741b"
+    },
+    "assets/memes/anton_ego.png": {
+      "hash": "7524373b57dd09e255d3df46c6001febce4f3a50e5480227ed3dd081697dcc41",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\75\\7524373b57dd09e255d3df46c6001febce4f3a50e5480227ed3dd081697dcc41"
+    },
+    "assets/memes/apple_cat_clean.png": {
+      "hash": "6587fd0f43fbf8109d6683112e59c0241b3e3fb1da9571ab8b3ef4a435d97e65",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\65\\6587fd0f43fbf8109d6683112e59c0241b3e3fb1da9571ab8b3ef4a435d97e65"
+    },
+    "assets/memes/apple_cat.png": {
+      "hash": "ff5538bd6e95babcba2707db627011ffe4d9bc617cc8659c4ada34a022427eb2",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ff\\ff5538bd6e95babcba2707db627011ffe4d9bc617cc8659c4ada34a022427eb2"
+    },
+    "assets/memes/eminem_clean.png": {
+      "hash": "ade0c6909bb10bac72089187cad6a52443e7d92d8a3a0f3c84e3aa961fa163c5",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ad\\ade0c6909bb10bac72089187cad6a52443e7d92d8a3a0f3c84e3aa961fa163c5"
+    },
+    "assets/memes/eminem_money_cutout.png": {
+      "hash": "6546156b549ed20021e6e3cc67af69a72cc22cccc8fd222108ab2d3b5b91809b",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\65\\6546156b549ed20021e6e3cc67af69a72cc22cccc8fd222108ab2d3b5b91809b"
+    },
+    "assets/memes/eminem_money.png": {
+      "hash": "29e654844af5ac0c791687ce4a3ceb7306a6862ad833bf4d61a27d7e7b9412e8",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\29\\29e654844af5ac0c791687ce4a3ceb7306a6862ad833bf4d61a27d7e7b9412e8"
+    },
+    "assets/memes/magnifying_glass.png": {
+      "hash": "a132fd01327413e36145581c6031204800f2f70ef599a8833e1f72a8c5abf42d",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\a1\\a132fd01327413e36145581c6031204800f2f70ef599a8833e1f72a8c5abf42d"
+    },
+    "assets/memes/professor_x_clean.png": {
+      "hash": "8df993513851500e2a8c9c8fbe0f63eda88707e48628a8bd05f4bb4741d6a20f",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\8d\\8df993513851500e2a8c9c8fbe0f63eda88707e48628a8bd05f4bb4741d6a20f"
+    },
+    "assets/memes/professor_x.png": {
+      "hash": "8c95a3357cd3258c1d7b6d24905d8e170da8c66dfb28a58435c1175b3fcc4eb7",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\8c\\8c95a3357cd3258c1d7b6d24905d8e170da8c66dfb28a58435c1175b3fcc4eb7"
+    },
+    "assets/memes/roll_safe_clean.png": {
+      "hash": "13c7e0757114ce60d0bd6d9f66a6803955e456b631923b2ab9a4ea6931109862",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\13\\13c7e0757114ce60d0bd6d9f66a6803955e456b631923b2ab9a4ea6931109862"
+    },
+    "assets/memes/roll_safe_cutout.png": {
+      "hash": "0e6dc0bacbe58db099366dddbc91d960fa91e9202e3d7581624f623d36f9eaa9",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0e\\0e6dc0bacbe58db099366dddbc91d960fa91e9202e3d7581624f623d36f9eaa9"
+    },
+    "assets/memes/roll_safe.png": {
+      "hash": "9174651c36b02a87fdd41d75a7a3a801438c41690cb7b23d241c7c01c1c3a539",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\91\\9174651c36b02a87fdd41d75a7a3a801438c41690cb7b23d241c7c01c1c3a539"
+    },
+    "assets/memes/salt_bae_clean.png": {
+      "hash": "6127c8b3357fd15882af4102222d64428fda01c19b7c2578d9ca749b3099db3a",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\61\\6127c8b3357fd15882af4102222d64428fda01c19b7c2578d9ca749b3099db3a"
+    },
+    "assets/memes/salt_bae_cutout.png": {
+      "hash": "ae867f2aaab0e96b9dcccd78903617b678697553dd7cd796f6b2ff7c760faa95",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ae\\ae867f2aaab0e96b9dcccd78903617b678697553dd7cd796f6b2ff7c760faa95"
+    },
+    "assets/memes/salt_bae.png": {
+      "hash": "871ec95c3a618bb87f6e8c506e37fc78e0130209d05884ececcfd74df2a3384c",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\87\\871ec95c3a618bb87f6e8c506e37fc78e0130209d05884ececcfd74df2a3384c"
+    },
+    "assets/voiceover.mp3": {
+      "hash": "0c923f9580ca3050ba62997752c263c424d08c052505af75d152265ef376cdfc",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0c\\0c923f9580ca3050ba62997752c263c424d08c052505af75d152265ef376cdfc"
+    },
+    "assets/voiceover.wav": {
+      "hash": "cecd816a630b6ce5940aec000fd99e8134c300dee7dd00960cb2c8d021f554aa",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ce\\cecd816a630b6ce5940aec000fd99e8134c300dee7dd00960cb2c8d021f554aa"
+    },
+    "index.html.bak": {
+      "hash": "0dbb9377336bae3fb514e9e9a3f4f1e42ec7bb6a1e7ba5e457e857340042e026",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0d\\0dbb9377336bae3fb514e9e9a3f4f1e42ec7bb6a1e7ba5e457e857340042e026"
+    }
+  },
+  "revisions": {
+    "a5f53e21-39d3-44ad-93d1-647ec8d6ef35": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1794851341668,
+      "endedAt": 1794851342873,
+      "files": {
+        "assets/audio_track_sfx.mp3": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\5e\\5e8e14d978ca87a95271d576008a15e40f7ccfb1e8d2b115d79c185db4f9f385"
+        },
+        "assets/audio_track.mp3": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\9c\\9c16b390cebb93d89c21916e1587bed80c5d253bd7d6efd6c52fdf7043e1b3da"
+        },
+        "assets/lime_cursor.svg": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\9d\\9d6898904713e48959fa165689cbbcc63d6ad3db7ead6e65dbcaf555155bf6a9"
+        },
+        "assets/memes/anton_ego_clean.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\25\\25e008413908d4c621496e9f26942e7bc1cbc297ebb1587b5f815ffa8c2d741b"
+        },
+        "assets/memes/anton_ego.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\75\\7524373b57dd09e255d3df46c6001febce4f3a50e5480227ed3dd081697dcc41"
+        },
+        "assets/memes/apple_cat_clean.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\65\\6587fd0f43fbf8109d6683112e59c0241b3e3fb1da9571ab8b3ef4a435d97e65"
+        },
+        "assets/memes/apple_cat.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ff\\ff5538bd6e95babcba2707db627011ffe4d9bc617cc8659c4ada34a022427eb2"
+        },
+        "assets/memes/eminem_clean.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ad\\ade0c6909bb10bac72089187cad6a52443e7d92d8a3a0f3c84e3aa961fa163c5"
+        },
+        "assets/memes/eminem_money_cutout.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\65\\6546156b549ed20021e6e3cc67af69a72cc22cccc8fd222108ab2d3b5b91809b"
+        },
+        "assets/memes/eminem_money.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\29\\29e654844af5ac0c791687ce4a3ceb7306a6862ad833bf4d61a27d7e7b9412e8"
+        },
+        "assets/memes/magnifying_glass.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\a1\\a132fd01327413e36145581c6031204800f2f70ef599a8833e1f72a8c5abf42d"
+        },
+        "assets/memes/professor_x_clean.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\8d\\8df993513851500e2a8c9c8fbe0f63eda88707e48628a8bd05f4bb4741d6a20f"
+        },
+        "assets/memes/professor_x.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\8c\\8c95a3357cd3258c1d7b6d24905d8e170da8c66dfb28a58435c1175b3fcc4eb7"
+        },
+        "assets/memes/roll_safe_clean.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\13\\13c7e0757114ce60d0bd6d9f66a6803955e456b631923b2ab9a4ea6931109862"
+        },
+        "assets/memes/roll_safe_cutout.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0e\\0e6dc0bacbe58db099366dddbc91d960fa91e9202e3d7581624f623d36f9eaa9"
+        },
+        "assets/memes/roll_safe.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\91\\9174651c36b02a87fdd41d75a7a3a801438c41690cb7b23d241c7c01c1c3a539"
+        },
+        "assets/memes/salt_bae_clean.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\61\\6127c8b3357fd15882af4102222d64428fda01c19b7c2578d9ca749b3099db3a"
+        },
+        "assets/memes/salt_bae_cutout.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ae\\ae867f2aaab0e96b9dcccd78903617b678697553dd7cd796f6b2ff7c760faa95"
+        },
+        "assets/memes/salt_bae.png": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\87\\871ec95c3a618bb87f6e8c506e37fc78e0130209d05884ececcfd74df2a3384c"
+        },
+        "assets/voiceover.mp3": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0c\\0c923f9580ca3050ba62997752c263c424d08c052505af75d152265ef376cdfc"
+        },
+        "assets/voiceover.wav": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\ce\\cecd816a630b6ce5940aec000fd99e8134c300dee7dd00960cb2c8d021f554aa"
+        },
+        "index.html": {
+          "before": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0d\\0dbb9377336bae3fb514e9e9a3f4f1e42ec7bb6a1e7ba5e457e857340042e026",
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\69\\6909b24751f5fda93ef014896ca44a8158c9fe04a5b5b975ea22bdda4d8c5226"
+        },
+        "index.html.bak": {
+          "before": null,
+          "after": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\a3df58e4-d827-4be9-9441-cecd67df3cd7\\blobs\\0d\\0dbb9377336bae3fb514e9e9a3f4f1e42ec7bb6a1e7ba5e457e857340042e026"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "a5f53e21-39d3-44ad-93d1-647ec8d6ef35",
+      "id": "fd8418ab-bcab-4880-8841-94881184ea53"
+    },
+    "revisions": {
+      "a5f53e21-39d3-44ad-93d1-647ec8d6ef35": [
+        {
+          "id": "fd8418ab-bcab-4880-8841-94881184ea53",
+          "scope": "project",
+          "report": "J:\\ai editor\\ailo-ad-3\\.hyperframes\\artifacts\\checks\\fd8418ab-bcab-4880-8841-94881184ea53.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 45000,
+              "cache": true,
+              "contrast": true,
+              "craft": true,
+              "strict": false,
+              "snapshots": false,
+              "safeZones": [
+                "tiktok",
+                "reels",
+                "shorts"
+              ],
+              "browserGpuMode": "auto",
+              "includeUnmounted": false
+            }
+          },
+          "createdAt": 1794851371221,
+          "contentHash": "bc2f724fed666d204b749a9fac48c0cd16918c6d71d4008f0d052f900dbb41bc",
+          "revision": "a5f53e21-39d3-44ad-93d1-647ec8d6ef35",
+          "inputFingerprint": "185f2328cd6dca2cd957adf8733204f0273f7f6568734d2f028dc673f18ff1b6",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "0001fe9c-acd8-4517-a717-6ce1446d65ca",
+        "scope": "project",
+        "report": "J:\\ai editor\\ailo-ad-3\\.hyperframes\\artifacts\\checks\\0001fe9c-acd8-4517-a717-6ce1446d65ca.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 45000,
+            "cache": true,
+            "contrast": true,
+            "craft": true,
+            "strict": false,
+            "snapshots": false,
+            "safeZones": [
+              "tiktok",
+              "reels",
+              "shorts"
+            ],
+            "browserGpuMode": "auto",
+            "includeUnmounted": false
+          }
+        },
+        "createdAt": 1794663962211,
+        "contentHash": "724dff5c9572d9d03c33503fcf8d3f97a032fb258ad485f5ada77f75fbefa636",
+        "revision": null,
+        "inputFingerprint": "0c2d2912052e4d19dc4a226465c04c464720d566252fdeb0eb38bc7f7c758ab8",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "d2da99f5-79c6-4084-8725-8a5f9b924cfe",
+      "completedAt": 1794851512669,
+      "output": "J:\\ai editor\\ailo-ad-3\\renders\\ailo_ad_3_cinematic_3d.mp4",
+      "status": "completed",
+      "revision": "a5f53e21-39d3-44ad-93d1-647ec8d6ef35"
+    },
+    "retainedRevisions": [
+      "a5f53e21-39d3-44ad-93d1-647ec8d6ef35"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

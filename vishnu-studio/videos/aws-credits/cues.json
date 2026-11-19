@@ -1,0 +1,65 @@
+[
+  {
+    "id": "01-shot",
+    "start": 0.0,
+    "end": 6.731,
+    "words": "aws gave",
+    "desc": ""
+  },
+  {
+    "id": "02-ruling",
+    "start": 6.731,
+    "end": 13.331,
+    "words": "it's called",
+    "desc": ""
+  },
+  {
+    "id": "03-warning",
+    "start": 13.331,
+    "end": 19.069,
+    "words": "first,",
+    "desc": ""
+  },
+  {
+    "id": "04-chat",
+    "start": 19.069,
+    "end": 25.53,
+    "words": "second,",
+    "desc": ""
+  },
+  {
+    "id": "05-checklist",
+    "start": 25.53,
+    "end": 31.711,
+    "words": "third,",
+    "desc": ""
+  },
+  {
+    "id": "06-ruling",
+    "start": 31.711,
+    "end": 36.749,
+    "words": "fourth,",
+    "desc": ""
+  },
+  {
+    "id": "07-door",
+    "start": 36.749,
+    "end": 40.338,
+    "words": "then,",
+    "desc": ""
+  },
+  {
+    "id": "08-ruling",
+    "start": 40.338,
+    "end": 44.422,
+    "words": "mine came",
+    "desc": ""
+  },
+  {
+    "id": "09-end",
+    "start": 44.422,
+    "end": 49.48,
+    "words": "comment",
+    "desc": ""
+  }
+]

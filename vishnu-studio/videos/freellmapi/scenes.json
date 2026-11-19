@@ -1,0 +1,37 @@
+[
+ {
+  "scene": "freellm",
+  "at": "someone just made",
+  "bg": "#0d0d10",
+  "section": "FreeLLMAPI: Claude Code on free models; a colour world per chapter (34 system); the repo, the router, 7.4B, the handoff note, plug in",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "freellmapi",
+   "parts": {
+    "free": "for free",
+    "unlimited": "unlimited",
+    "b2": "its called",
+    "stars": "48000 stars",
+    "between": "sits between",
+    "spreads": "spreads your",
+    "b3": "add up their",
+    "billion": "billion tokens",
+    "own": "projects own",
+    "b4": "when one model",
+    "limit": "its limit",
+    "note": "short note",
+    "picks": "picks up",
+    "b5": "it works with",
+    "b6": "comment free",
+    "link": "the link",
+    "codex": "codex",
+    "plugin": "plug in",
+    "owncomp": "own computer"
+   }
+  }
+ }
+]

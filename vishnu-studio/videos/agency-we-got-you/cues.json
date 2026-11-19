@@ -1,0 +1,142 @@
+[
+ {
+  "id": "q1",
+  "start": 0.0,
+  "end": 0.6,
+  "words": "NEED A WEBSITE?",
+  "desc": "badge at the far right, question shown"
+ },
+ {
+  "id": "cut1",
+  "start": 0.6,
+  "end": 1.2,
+  "words": "",
+  "desc": "string slicing the text"
+ },
+ {
+  "id": "a1",
+  "start": 1.2,
+  "end": 1.8,
+  "words": "WE GOT YOU.",
+  "desc": "badge at the far left, answer shown"
+ },
+ {
+  "id": "back1",
+  "start": 1.8,
+  "end": 2.4,
+  "words": "",
+  "desc": "swinging back, next question cut in"
+ },
+ {
+  "id": "q2",
+  "start": 2.4,
+  "end": 3.0,
+  "words": "NEED A MOBILE APP?",
+  "desc": "badge at the far right, question shown"
+ },
+ {
+  "id": "cut2",
+  "start": 3.0,
+  "end": 3.6,
+  "words": "",
+  "desc": "string slicing the text"
+ },
+ {
+  "id": "a2",
+  "start": 3.6,
+  "end": 4.2,
+  "words": "WE GOT YOU.",
+  "desc": "badge at the far left, answer shown"
+ },
+ {
+  "id": "back2",
+  "start": 4.2,
+  "end": 4.8,
+  "words": "",
+  "desc": "swinging back, next question cut in"
+ },
+ {
+  "id": "q3",
+  "start": 4.8,
+  "end": 5.4,
+  "words": "NEED SOFTWARE?",
+  "desc": "badge at the far right, question shown"
+ },
+ {
+  "id": "cut3",
+  "start": 5.4,
+  "end": 6.0,
+  "words": "",
+  "desc": "string slicing the text"
+ },
+ {
+  "id": "a3",
+  "start": 6.0,
+  "end": 6.6,
+  "words": "WE GOT YOU.",
+  "desc": "badge at the far left, answer shown"
+ },
+ {
+  "id": "back3",
+  "start": 6.6,
+  "end": 7.2,
+  "words": "",
+  "desc": "swinging back, next question cut in"
+ },
+ {
+  "id": "q4",
+  "start": 7.2,
+  "end": 7.8,
+  "words": "NEED AI AGENTS?",
+  "desc": "badge at the far right, question shown"
+ },
+ {
+  "id": "cut4",
+  "start": 7.8,
+  "end": 8.4,
+  "words": "",
+  "desc": "string slicing the text"
+ },
+ {
+  "id": "a4",
+  "start": 8.4,
+  "end": 9.0,
+  "words": "WE GOT YOU.",
+  "desc": "badge at the far left, answer shown"
+ },
+ {
+  "id": "back4",
+  "start": 9.0,
+  "end": 9.6,
+  "words": "",
+  "desc": "swinging back, next question cut in"
+ },
+ {
+  "id": "q5",
+  "start": 9.6,
+  "end": 10.2,
+  "words": "NEED AUTOMATION?",
+  "desc": "badge at the far right, question shown"
+ },
+ {
+  "id": "cut5",
+  "start": 10.2,
+  "end": 10.8,
+  "words": "",
+  "desc": "string slicing the text"
+ },
+ {
+  "id": "a5",
+  "start": 10.8,
+  "end": 11.4,
+  "words": "WE GOT YOU.",
+  "desc": "badge at the far left, answer shown"
+ },
+ {
+  "id": "back5",
+  "start": 11.4,
+  "end": 12.0,
+  "words": "",
+  "desc": "swinging back, next question cut in"
+ }
+]

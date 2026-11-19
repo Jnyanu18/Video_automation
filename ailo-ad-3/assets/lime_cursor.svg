@@ -1,0 +1,12 @@
+<svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <filter id="cursor-shadow" x="-30%" y="-30%" width="180%" height="180%">
+    <feDropShadow dx="6" dy="14" stdDeviation="10" flood-color="#000000" flood-opacity="0.35"/>
+    <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.25"/>
+  </filter>
+  <!-- 3D Bevel Base -->
+  <path d="M24 16L78 52L50 58L38 86L24 16Z" fill="#99C700" filter="url(#cursor-shadow)" stroke="#80A800" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Front Surface -->
+  <path d="M22 14L76 50L48 56L36 84L22 14Z" fill="#D4FF00"/>
+  <!-- Top Highlight -->
+  <path d="M25 18L65 44L46 48L37 70L25 18Z" fill="#F0FF85" opacity="0.85"/>
+</svg>

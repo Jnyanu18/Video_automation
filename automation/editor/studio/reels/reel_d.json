@@ -1,0 +1,164 @@
+{
+ "name": "reel-d-teammate-that-never-sleeps",
+ "voice": "neerja",
+ "rate": "+2%",
+ "music": {
+  "style": "pulse",
+  "volume": 0.22,
+  "seed": 3
+ },
+ "scenes": [
+  {
+   "kind": "headline",
+   "theme": "dark",
+   "lines": [
+    "A teammate",
+    "that never",
+    "*sleeps.*"
+   ],
+   "say": "Imagine a teammate that never sleeps.",
+   "duration": 3.2
+  },
+  {
+   "kind": "orb",
+   "theme": "dark",
+   "lines": [
+    "Meet *AILO*"
+   ],
+   "sub": "Marketing Automation",
+   "say": "Meet AILO Marketing Automation. It turns one link into a finished reel.",
+   "sfx": [
+    {
+     "name": "subdrop",
+     "at": 0.1,
+     "volume": 0.7
+    },
+    {
+     "name": "chime",
+     "at": 0.9,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "demo",
+   "theme": "light",
+   "title": "Paste a link. *Done.*",
+   "card_title": "New reel",
+   "input": "instagram.com/reel/your-idea",
+   "button": "Edit it",
+   "steps": [
+    "Transcript ready",
+    "Silences cut",
+    "Captions added",
+    "Diagrams animated",
+    "Sound mixed"
+   ],
+   "sub": "",
+   "say": "Paste a link. It cuts the silences, adds captions, draws animated diagrams, and mixes the sound.",
+   "duration": 7.2,
+   "sfx": [
+    {
+     "name": "typing",
+     "at": 0.9,
+     "volume": 0.35,
+     "length": 0.8
+    },
+    {
+     "name": "click",
+     "at": 1.9
+    },
+    {
+     "name": "tick",
+     "at": 2.4,
+     "volume": 0.4,
+     "length": 0.4
+    },
+    {
+     "name": "tick",
+     "at": 2.8,
+     "volume": 0.4,
+     "length": 0.4
+    },
+    {
+     "name": "tick",
+     "at": 3.2,
+     "volume": 0.4,
+     "length": 0.4
+    },
+    {
+     "name": "tick",
+     "at": 3.6,
+     "volume": 0.4,
+     "length": 0.4
+    },
+    {
+     "name": "tick",
+     "at": 4.0,
+     "volume": 0.4,
+     "length": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "approval",
+   "theme": "dark",
+   "title": "You *approve.*",
+   "card_title": "Final render",
+   "waiting": "Waiting for your approval",
+   "done": "Approved. Rendering now.",
+   "button": "Approve",
+   "sub": "Nothing goes out without you.",
+   "say": "Nothing goes out without your approval.",
+   "duration": 4.0,
+   "sfx": [
+    {
+     "name": "click",
+     "at": 1.8
+    },
+    {
+     "name": "ding",
+     "at": 1.95,
+     "volume": 0.5
+    }
+   ]
+  },
+  {
+   "kind": "headline",
+   "theme": "light",
+   "lines": [
+    "It's like",
+    "adding a",
+    "*full-time*",
+    "*employee* that",
+    "never sleeps."
+   ],
+   "sub": "Director, Logistics. An AILO client.",
+   "say": "As one AILO client put it: it's like adding a full-time employee that never sleeps.",
+   "size": 96
+  },
+  {
+   "kind": "cta",
+   "theme": "dark",
+   "lines": [
+    "*Automate* your",
+    "marketing."
+   ],
+   "button": "Book a free consultation",
+   "url": "accelerationlogics.com",
+   "say": "AILO Marketing Automation. Book a free consultation.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.3,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 2.2,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

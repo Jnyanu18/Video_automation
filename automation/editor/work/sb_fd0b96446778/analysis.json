@@ -1,0 +1,201 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+  "probe": {
+    "duration": 15.128,
+    "width": 1920,
+    "height": 1020,
+    "fps": 27.962,
+    "has_video": true,
+    "has_audio": true,
+    "video_codec": "h264",
+    "audio_codec": "aac"
+  },
+  "silences": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+    "duration": 15.128,
+    "noise_db": -35,
+    "min_len": 0.5,
+    "silences": [
+      {
+        "start": 1.563,
+        "end": 2.36
+      },
+      {
+        "start": 2.516,
+        "end": 3.112
+      },
+      {
+        "start": 3.112,
+        "end": 4.144
+      },
+      {
+        "start": 6.851,
+        "end": 8.625
+      },
+      {
+        "start": 11.365,
+        "end": 12.536
+      },
+      {
+        "start": 12.795,
+        "end": 13.486
+      }
+    ],
+    "speech": [
+      {
+        "start": 0.0,
+        "end": 1.563
+      },
+      {
+        "start": 2.36,
+        "end": 2.516
+      },
+      {
+        "start": 4.144,
+        "end": 6.851
+      },
+      {
+        "start": 8.625,
+        "end": 11.365
+      },
+      {
+        "start": 12.536,
+        "end": 12.795
+      },
+      {
+        "start": 13.486,
+        "end": 15.128
+      }
+    ],
+    "silence_total": 6.061,
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_fd0b96446778\\silences.json"
+  },
+  "scenes": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+    "duration": 15.128,
+    "threshold": 0.3,
+    "cuts": [
+      4.211,
+      5.845,
+      8.061,
+      12.194
+    ],
+    "scenes": [
+      {
+        "index": 0,
+        "start": 0.0,
+        "end": 4.211
+      },
+      {
+        "index": 1,
+        "start": 4.211,
+        "end": 5.845
+      },
+      {
+        "index": 2,
+        "start": 5.845,
+        "end": 8.061
+      },
+      {
+        "index": 3,
+        "start": 8.061,
+        "end": 12.194
+      },
+      {
+        "index": 4,
+        "start": 12.194,
+        "end": 15.128
+      }
+    ],
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_fd0b96446778\\scenes.json"
+  },
+  "transcript": {
+    "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\35c2de374442f81e2dbe11bb39b431e9.mp4",
+    "backend": "faster-whisper",
+    "status": "ok",
+    "language": "es",
+    "words": [
+      {
+        "word": "como",
+        "start": 0.0,
+        "end": 0.12
+      },
+      {
+        "word": "lo",
+        "start": 0.12,
+        "end": 0.24
+      },
+      {
+        "word": "que",
+        "start": 0.24,
+        "end": 0.4
+      },
+      {
+        "word": "est\u00e1",
+        "start": 0.4,
+        "end": 0.54
+      },
+      {
+        "word": "en",
+        "start": 0.54,
+        "end": 0.62
+      },
+      {
+        "word": "el",
+        "start": 0.62,
+        "end": 0.72
+      },
+      {
+        "word": "mundo.",
+        "start": 0.72,
+        "end": 0.94
+      }
+    ],
+    "segments": [
+      {
+        "text": "como lo que est\u00e1 en el mundo.",
+        "start": 0.0,
+        "end": 0.94,
+        "words": [
+          {
+            "word": "como",
+            "start": 0.0,
+            "end": 0.12
+          },
+          {
+            "word": "lo",
+            "start": 0.12,
+            "end": 0.24
+          },
+          {
+            "word": "que",
+            "start": 0.24,
+            "end": 0.4
+          },
+          {
+            "word": "est\u00e1",
+            "start": 0.4,
+            "end": 0.54
+          },
+          {
+            "word": "en",
+            "start": 0.54,
+            "end": 0.62
+          },
+          {
+            "word": "el",
+            "start": 0.62,
+            "end": 0.72
+          },
+          {
+            "word": "mundo.",
+            "start": 0.72,
+            "end": 0.94
+          }
+        ]
+      }
+    ],
+    "text": "como lo que est\u00e1 en el mundo.",
+    "file": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_fd0b96446778\\transcript.json"
+  }
+}

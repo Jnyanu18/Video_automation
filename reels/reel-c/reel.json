@@ -1,0 +1,470 @@
+{
+  "name": "reel-c-old-way-vs-ailo-way",
+  "voice": "ava",
+  "rate": "+4%",
+  "music": {
+    "style": "chill",
+    "volume": 0.24,
+    "seed": 5
+  },
+  "scenes": [
+    {
+      "kind": "headline",
+      "theme": "light",
+      "lines": [
+        "Which one",
+        "*are you?*"
+      ],
+      "say": "Which one are you?",
+      "duration": 3.0,
+      "_vo": {
+        "file": "assets/vo0.mp3",
+        "start": 0.25,
+        "duration": 1.872
+      },
+      "_chunks": [
+        [
+          {
+            "text": "Which",
+            "start": 0.35,
+            "end": 0.6144160000000001
+          },
+          {
+            "text": "one",
+            "start": 0.626458,
+            "end": 0.746666
+          },
+          {
+            "text": "are",
+            "start": 0.758666,
+            "end": 0.854832
+          }
+        ],
+        [
+          {
+            "text": "you?",
+            "start": 0.866833,
+            "end": 1.2033740000000002
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "versus2",
+      "theme": "dark",
+      "old": {
+        "tag": "The old way",
+        "items": [
+          "Cut by hand",
+          "Caption by hand",
+          "Post by hand"
+        ]
+      },
+      "new": {
+        "tag": "The AILO way",
+        "items": [
+          "Paste a link",
+          "Approve",
+          "Ready to post"
+        ]
+      },
+      "new_at_word": "AILO",
+      "say": "The old way. Cut by hand, caption by hand, post by hand. The AILO way. Paste a link, approve, and it's ready to post.",
+      "sfx": [
+        {
+          "name": "tick",
+          "at": 1.2
+        },
+        {
+          "name": "tick",
+          "at": 2.1
+        },
+        {
+          "name": "tick",
+          "at": 3.0
+        },
+        {
+          "name": "chime",
+          "at": 4.6,
+          "volume": 0.4
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo1.mp3",
+        "start": 0.25,
+        "duration": 9.288
+      },
+      "duration": 10.09,
+      "_chunks": [
+        [
+          {
+            "text": "The",
+            "start": 0.35,
+            "end": 0.5302910000000001
+          },
+          {
+            "text": "old",
+            "start": 0.566333,
+            "end": 0.794708
+          },
+          {
+            "text": "way",
+            "start": 0.80675,
+            "end": 1.167333
+          }
+        ],
+        [
+          {
+            "text": "Cut",
+            "start": 1.513958,
+            "end": 1.778374
+          },
+          {
+            "text": "by",
+            "start": 1.790375,
+            "end": 1.910583
+          },
+          {
+            "text": "hand",
+            "start": 1.922583,
+            "end": 2.355291
+          }
+        ],
+        [
+          {
+            "text": "caption",
+            "start": 2.595666,
+            "end": 2.956249
+          },
+          {
+            "text": "by",
+            "start": 2.96825,
+            "end": 3.076416
+          },
+          {
+            "text": "hand",
+            "start": 3.088458,
+            "end": 3.521166
+          }
+        ],
+        [
+          {
+            "text": "post",
+            "start": 3.761541,
+            "end": 4.062041
+          },
+          {
+            "text": "by",
+            "start": 4.074040999999999,
+            "end": 4.194249
+          },
+          {
+            "text": "hand",
+            "start": 4.20625,
+            "end": 4.687
+          }
+        ],
+        [
+          {
+            "text": "The",
+            "start": 5.035583,
+            "end": 5.215874
+          },
+          {
+            "text": "AILO",
+            "start": 5.227875,
+            "end": 5.600458
+          },
+          {
+            "text": "way",
+            "start": 5.6125,
+            "end": 5.949041
+          }
+        ],
+        [
+          {
+            "text": "Paste",
+            "start": 6.297583,
+            "end": 6.670166
+          },
+          {
+            "text": "a",
+            "start": 6.682208,
+            "end": 6.754333
+          },
+          {
+            "text": "link",
+            "start": 6.766333,
+            "end": 7.090833
+          }
+        ],
+        [
+          {
+            "text": "approve",
+            "start": 7.31925,
+            "end": 7.872125
+          }
+        ],
+        [
+          {
+            "text": "and",
+            "start": 7.96825,
+            "end": 8.124500000000001
+          },
+          {
+            "text": "it's",
+            "start": 8.136541000000001,
+            "end": 8.280791
+          },
+          {
+            "text": "ready",
+            "start": 8.292791,
+            "end": 8.545207
+          }
+        ],
+        [
+          {
+            "text": "to",
+            "start": 8.557208,
+            "end": 8.641333
+          },
+          {
+            "text": "post",
+            "start": 8.653375,
+            "end": 9.19425
+          }
+        ]
+      ],
+      "new_at": 5.08
+    },
+    {
+      "kind": "flow",
+      "theme": "light",
+      "title": "Four steps. *Zero* busywork.",
+      "nodes": [
+        {
+          "icon": "1",
+          "label": "Paste a link"
+        },
+        {
+          "icon": "2",
+          "label": "AI edits it"
+        },
+        {
+          "icon": "3",
+          "label": "You approve"
+        },
+        {
+          "icon": "4",
+          "label": "Ready to post"
+        }
+      ],
+      "say": "Four steps. Paste a link. The AI edits it. You approve. Ready to post.",
+      "sfx": [
+        {
+          "name": "pop",
+          "at": 1.2
+        },
+        {
+          "name": "pop",
+          "at": 2.4
+        },
+        {
+          "name": "pop",
+          "at": 3.6
+        },
+        {
+          "name": "ding",
+          "at": 4.8,
+          "volume": 0.4
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo2.mp3",
+        "start": 0.25,
+        "duration": 6.408
+      },
+      "duration": 7.21,
+      "_chunks": [
+        [
+          {
+            "text": "Four",
+            "start": 0.35,
+            "end": 0.566333
+          },
+          {
+            "text": "steps",
+            "start": 0.578375,
+            "end": 1.11925
+          }
+        ],
+        [
+          {
+            "text": "Paste",
+            "start": 1.465875,
+            "end": 1.8505
+          },
+          {
+            "text": "a",
+            "start": 1.8625,
+            "end": 1.934625
+          },
+          {
+            "text": "link",
+            "start": 1.946625,
+            "end": 2.379333
+          }
+        ],
+        [
+          {
+            "text": "The",
+            "start": 2.727875,
+            "end": 2.908166
+          },
+          {
+            "text": "AI",
+            "start": 2.932208,
+            "end": 3.244708
+          },
+          {
+            "text": "edits",
+            "start": 3.26875,
+            "end": 3.557208
+          }
+        ],
+        [
+          {
+            "text": "it",
+            "start": 3.56925,
+            "end": 3.797625
+          }
+        ],
+        [
+          {
+            "text": "You",
+            "start": 4.146166,
+            "end": 4.350499
+          },
+          {
+            "text": "approve",
+            "start": 4.3625,
+            "end": 4.9875
+          }
+        ],
+        [
+          {
+            "text": "Ready",
+            "start": 5.336041,
+            "end": 5.672582
+          },
+          {
+            "text": "to",
+            "start": 5.684625,
+            "end": 5.76875
+          },
+          {
+            "text": "post",
+            "start": 5.78075,
+            "end": 6.309583
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "cta",
+      "theme": "dark",
+      "lines": [
+        "Less busywork.",
+        "*More reach.*"
+      ],
+      "button": "Book a free consultation",
+      "url": "accelerationlogics.com",
+      "say": "Less busywork. More reach. AILO Marketing Automation. Book a free consultation.",
+      "sfx": [
+        {
+          "name": "stamp",
+          "at": 2.2,
+          "volume": 0.6
+        },
+        {
+          "name": "sparkle",
+          "at": 3.4,
+          "volume": 0.35
+        }
+      ],
+      "_vo": {
+        "file": "assets/vo3.mp3",
+        "start": 0.25,
+        "duration": 6.456
+      },
+      "duration": 7.61,
+      "_chunks": [
+        [
+          {
+            "text": "Less",
+            "start": 0.35,
+            "end": 0.710583
+          },
+          {
+            "text": "busywork",
+            "start": 0.722583,
+            "end": 1.395666
+          }
+        ],
+        [
+          {
+            "text": "More",
+            "start": 1.742291,
+            "end": 2.0427910000000002
+          },
+          {
+            "text": "reach",
+            "start": 2.054791,
+            "end": 2.499499
+          }
+        ],
+        [
+          {
+            "text": "AILO",
+            "start": 2.848083,
+            "end": 3.352874
+          },
+          {
+            "text": "Marketing",
+            "start": 3.364916,
+            "end": 3.773582
+          },
+          {
+            "text": "Automation",
+            "start": 3.785583,
+            "end": 4.494708
+          }
+        ],
+        [
+          {
+            "text": "Book",
+            "start": 4.84325,
+            "end": 5.119708
+          },
+          {
+            "text": "a",
+            "start": 5.13175,
+            "end": 5.227916
+          },
+          {
+            "text": "free",
+            "start": 5.239916,
+            "end": 5.480291
+          }
+        ],
+        [
+          {
+            "text": "consultation",
+            "start": 5.492291,
+            "end": 6.357666
+          }
+        ]
+      ]
+    }
+  ]
+}

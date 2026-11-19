@@ -1,0 +1,5 @@
+# Spelling only, from the transcript (2026-10-23)
+this AS => they say yes
+SAS => SaaS
+Ask Work => AskVerb
+mcp => MCP

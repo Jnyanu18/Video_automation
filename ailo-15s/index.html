@@ -1,0 +1,245 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>AILO Signal Path</title>
+<style>
+@font-face{font-family:'Geist';src:url('node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2') format('woff2');font-weight:100 900;font-style:normal}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}
+svg{display:block}
+</style></head><body>
+<svg id="v" xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script>
+'use strict';
+/* "Signal Path" — AILO 15s loop. Every pixel is a pure function of t inside window.seek(t). */
+const O='#FF6A00',WH='#FFFFFF',CX=540,CY=915,D2R=Math.PI/180,v=document.getElementById('v');
+const clamp=(x,a=0,b=1)=>x<a?a:x>b?b:x, seg=(t,t0,d)=>clamp((t-t0)/d);
+const eo=x=>x>=1?1:1-Math.pow(2,-10*x);
+const eio=x=>x<=0?0:x>=1?1:x<.5?Math.pow(2,20*x-10)/2:(2-Math.pow(2,-20*x+10))/2;
+const spr=(dt,w=16)=>dt<=0?0:dt>.8?1:1-(1+w*dt)*Math.exp(-w*dt);   // critically damped, no overshoot
+const lerp=(a,b,e)=>a+(b-a)*e, LP=(p,q,e)=>[lerp(p[0],q[0],e),lerp(p[1],q[1],e)];
+const n1=x=>(Math.round(x*10)/10).toString(), dist=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1]);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const vblur=(vel,k=.004,mx=22)=>Math.min(mx,Math.abs(vel)*k);
+const mctx=document.createElement('canvas').getContext('2d'),TWC={};
+const tw=(s,wt,sz)=>{const k=s+'|'+wt;if(!(k in TWC)){mctx.font=`${wt} 100px Geist`;TWC[k]=mctx.measureText(s).width/100;}return TWC[k]*sz;};
+
+/* ---------- AILO mark, traced from accelerationlogics.com/images/ailo-mark.png (532x486) ---------- */
+const LC=[270,235];
+const LO=[[158,72,158,72,74],[140,200,140,200,104],[292,160,292,160,92],[152,96,142,164,44],[172,206,282,172,56],[55,140,55,140,44],[270,52,270,52,48],[58,305,58,305,74]];
+const LW=[[385,215,385,215,72],[255,285,255,285,92],[165,400,165,400,100],[338,345,338,345,80],[190,372,240,302,52],[272,300,330,342,46],[352,322,380,242,40],[370,115,370,115,44],[265,432,265,432,36]];
+const LCIR=[[[404,356],[424,330],[424,305],[445,284]],[[392,388],[440,352],[458,334]],[[360,413],[414,413]]];
+const LRING=[[453,276],[465,326],[425,413]], LV=[[507,58],[507,430]];
+const TG=[...LO.map(p=>({p,c:O})),...LW.map(p=>({p,c:WH}))];
+const lx=(p,X)=>[X.cx+X.S*(p[0]-LC[0]),X.cy+X.S*(p[1]-LC[1])];
+
+/* ---------- per-frame defs ---------- */
+let DEFS='',FID=0; const fid=()=>'f'+(FID++);
+function blurAttr(sx,sy){if(sx<.35&&sy<.35)return '';const id=fid();DEFS+=`<filter id="${id}" x="-15%" y="-60%" width="130%" height="220%"><feGaussianBlur stdDeviation="${n1(sx)} ${n1(sy)}"/></filter>`;return ` filter="url(#${id})"`;}
+function gooAttr(sig,r=[-200,-200,1480,2320]){if(sig<.6)return '';const id=fid();DEFS+=`<filter id="${id}" filterUnits="userSpaceOnUse" x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="${n1(sig)}"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 22 -9.5"/></filter>`;return ` filter="url(#${id})"`;}
+function ringAttr(){const id=fid();DEFS+=`<filter id="${id}" filterUnits="userSpaceOnUse" x="-250" y="-250" width="1030" height="990" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" values="0 0 0 0 1 0 0 0 0 0.4157 0 0 0 0 0 0 0 0 22 -9.5" result="g"/><feMorphology in="g" operator="erode" radius="4.5" result="e"/><feFlood flood-color="#000" result="k"/><feComposite in="k" in2="e" operator="in" result="ki"/><feComposite in="g" in2="e" operator="out" result="rg"/><feMerge><feMergeNode in="ki"/><feMergeNode in="rg"/></feMerge></filter>`;return ` filter="url(#${id})"`;}
+const capL=(a,b,w)=>`<line x1="${n1(a[0])}" y1="${n1(a[1])}" x2="${n1(b[0])}" y2="${n1(b[1])}" stroke-width="${n1(Math.max(0,w))}"/>`;
+const pts=P=>P.map(p=>n1(p[0])+','+n1(p[1])).join(' ');
+const drawPL=(P,p,w,col)=>p<=0.0005?'':`<polyline points="${pts(P)}" fill="none" stroke="${col}" stroke-width="${n1(w)}" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 2" stroke-dashoffset="${(1-p).toFixed(4)}"/>`;
+const ring=(c,r,sw)=>r<=.2?'':`<circle cx="${n1(c[0])}" cy="${n1(c[1])}" r="${n1(r)}" fill="#000" stroke="${O}" stroke-width="${n1(sw)}"/>`;
+const NODE=()=>ring([CX,CY],24,8);
+function pointAt(P,p){let L=0;const s=[];for(let i=0;i<P.length-1;i++){const d=dist(P[i],P[i+1]);s.push(d);L+=d;}let r=p*L;for(let i=0;i<s.length;i++){if(r<=s[i])return LP(P[i],P[i+1],s[i]?r/s[i]:0);r-=s[i];}return P[P.length-1];}
+function word(str,x,base,sz,wt,col,anchor,tIn,t,sq=1){
+  if(t<tIn)return '';
+  const pos=tt=>(1-eo(seg(tt,tIn,.34)))*sz*1.05, dy=pos(t), vy=(pos(t+1/240)-pos(t-1/240))*120, yc=base-sz*.36;
+  const cid=fid();DEFS+=`<clipPath id="${cid}"><rect x="0" y="${n1(base-sz*.98)}" width="1080" height="${n1(sz*1.3)}"/></clipPath>`;
+  return `<g clip-path="url(#${cid})"><g transform="translate(0 ${n1(dy)}) translate(0 ${n1(yc)}) scale(1 ${sq.toFixed(4)}) translate(0 ${n1(-yc)})"${blurAttr(0,vblur(vy))}><text x="${n1(x)}" y="${n1(base)}" font-family="Geist" font-weight="${wt}" font-size="${n1(sz)}" fill="${col}" text-anchor="${anchor}">${esc(str)}</text></g></g>`;
+}
+
+/* ---------- metaball fold: any set of strokes -> the AILO mark ---------- */
+function pairUp(src,X0){
+  const ang=c=>Math.atan2(c[1]-X0.cy,c[0]-X0.cx);
+  const S=src.map(s=>({...s,an:ang(LP(s.a,s.b,.5))})).sort((p,q)=>p.an-q.an);
+  const T=TG.map((g,j)=>{const a=lx([g.p[0],g.p[1]],X0),b=lx([g.p[2],g.p[3]],X0);return {j,a,b,an:ang(LP(a,b,.5))};}).sort((p,q)=>p.an-q.an);
+  const P=[];
+  if(S.length>=T.length)S.forEach((s,i)=>P.push([s,T[Math.floor(i*T.length/S.length)]]));
+  else T.forEach((g,j)=>P.push([S[Math.floor(j*S.length/T.length)],g]));
+  return P.map(([s,g],k)=>{const f=dist(s.a,g.a)+dist(s.b,g.b)>dist(s.a,g.b)+dist(s.b,g.a);return {sa:f?s.b:s.a,sb:f?s.a:s.b,sw:s.w,j:g.j,st:k*.006};});
+}
+function foldDraw(P,t0,t,X,swell,col){
+  let o='',w='';const sig=6*X.S*eio(seg(t,t0+.1,.3));
+  for(const q of P){const g=TG[q.j],e=spr(t-t0-q.st,15);
+    let a=LP(q.sa,lx([g.p[0],g.p[1]],X),e),b=LP(q.sb,lx([g.p[2],g.p[3]],X),e),ww=lerp(q.sw,g.p[4]*X.S*swell,e);
+    if(col){a=LP(a,col.Q,col.E);b=LP(b,col.Q,col.E);ww*=1-col.E;}
+    if(g.c===O)o+=capL(a,b,ww);else w+=capL(a,b,ww);}
+  return `<g stroke="${O}" stroke-linecap="round"${gooAttr(sig)}>${o}</g><g stroke="${WH}" stroke-linecap="round"${gooAttr(sig)}>${w}</g>`;
+}
+function logoDetails(X,det){ // circuit lines, vertical rule, ring pads
+  let s=`<g transform="matrix(${X.S.toFixed(4)} 0 0 ${X.S.toFixed(4)} ${n1(X.cx-X.S*LC[0])} ${n1(X.cy-X.S*LC[1])})">`;
+  for(const P of LCIR)s+=drawPL(P,det,5,O);
+  s+=drawPL(LV,det,4,O);
+  const k=eo(seg(det,.55,.45));LRING.forEach(r=>s+=ring(r,10*k,4*k));
+  return s+'</g>';
+}
+function logoFront(){let o='',w='';for(const p of LO)o+=capL([p[0],p[1]],[p[2],p[3]],p[4]);for(const p of LW)w+=capL([p[0],p[1]],[p[2],p[3]],p[4]);
+  let s=`<g stroke="${O}" stroke-linecap="round"${gooAttr(6,[-250,-250,1030,990])}>${o}</g><g stroke="${WH}" stroke-linecap="round"${gooAttr(6,[-250,-250,1030,990])}>${w}</g>`;
+  for(const P of LCIR)s+=drawPL(P,1,5,O);s+=drawPL(LV,1,4,O);LRING.forEach(r=>s+=ring(r,10,4));return s;}
+
+/* ---------- BAR 1: circuit traces spell WE, kinetic type ---------- */
+const ROUTES=[[0.05,.3,[[540,891],[540,840]]],[0.2,.3,[[540,840],[490,840],[490,760]]],[0.2,.3,[[540,840],[650,840],[650,760]]],
+ [0.5,.35,[[490,760],[570,470]]],[0.5,.45,[[490,760],[410,560],[310,760],[250,470]]],[0.52,.4,[[650,760],[650,470],[830,470]]],
+ [0.62,.3,[[650,615],[800,615]]],[0.56,.34,[[650,760],[830,760]]]];
+const PADS=[[250,470,.95],[570,470,.85],[830,470,.92],[800,615,.92],[830,760,.9]];
+const BW=[['build',1.0,1110,WH],["what's",1.25,1270,WH],['next.',1.5,1430,O]];
+function S1(t){
+  let s='';const sq=1-eio(seg(t,2.0,.18));
+  for(const [t0,d,P] of ROUTES)s+=drawPL(P,eo(seg(t,t0,d)),12,O);
+  for(const [x,y,tp] of PADS){const k=spr(t-tp,22);s+=ring([x,y],12*k,6*k);}
+  s+=NODE();
+  for(const [w,tin,base,col] of BW){
+    if(sq>.06)s+=word(w,CX,base,150,700,col,'middle',tin,t,sq);
+    else{const L=tw(w,700,150),yc=base-54;s+=`<g stroke="${col}" stroke-linecap="round">${capL([CX-L/2,yc],[CX+L/2,yc],12)}</g>`;}
+  }
+  return s;
+}
+let P1C=null;
+const X2={cx:CX,cy:CY,S:1.1};
+function P1(){if(P1C)return P1C;const L=[];
+  for(const [,,P] of ROUTES)for(let i=0;i<P.length-1;i++)L.push({a:P[i],b:P[i+1],w:12});
+  for(const [x,y] of PADS)L.push({a:[x,y],b:[x,y],w:30});
+  L.push({a:[CX,CY],b:[CX,CY],w:56});
+  for(const [w,,base] of BW){const Lw=tw(w,700,150),yc=base-54;L.push({a:[CX-Lw/2,yc],b:[CX+Lw/2,yc],w:12});}
+  return P1C=pairUp(L,X2);}
+
+/* ---------- BAR 3: extrude to 3D slices ---------- */
+const RKEYS=[[4.0,-16,30],[4.5,14,-34],[5.0,-10,68],[5.5,89,0]], KS=10, F3=1700;
+function rot(rx,ry){const cx=Math.cos(rx),sx=Math.sin(rx),cy=Math.cos(ry),sy=Math.sin(ry);return [[cy,0,sy],[sx*sy,cx,-sx*cy],[-cx*sy,sx,cx*cy]];}
+function sliceState(t){const gap=30*eo(seg(t,4.0,.45));let rx=0,ry=0,px=0,py=0;
+  for(const [k,x,y] of RKEYS){const e=eo(seg(t,k,.42));rx+=(x-px)*e;ry+=(y-py)*e;px=x;py=y;}
+  ry+=7*(t-4)*(1-seg(t,5.5,.3));return {gap,R:rot(rx*D2R,ry*D2R)};}
+function sliceMats(st){const {gap,R}=st,S=1.1,L=[];
+  for(let i=0;i<KS;i++){const z=((KS-1)/2-i)*gap,Zc=R[2][2]*z,sc=F3/(F3-Zc);
+    const a=sc*S*R[0][0],b=sc*S*R[1][0],c=sc*S*R[0][1],d=sc*S*R[1][1];
+    L.push({i,Zc,m:[a,b,c,d,CX+sc*R[0][2]*z-a*LC[0]-c*LC[1],CY+sc*R[1][2]*z-b*LC[0]-d*LC[1]]});}
+  return L;}
+function S3(t){
+  const L=sliceMats(sliceState(t)).sort((p,q)=>(p.Zc-q.Zc)||(q.i-p.i));let s='';
+  for(const q of L){const m=`matrix(${q.m.map(x=>x.toFixed(4)).join(' ')})`;
+    if(q.i===0)s+=`<g transform="${m}">${logoFront()}</g>`;
+    else{let o='';for(const p of [...LO,...LW])o+=capL([p[0],p[1]],[p[2],p[3]],p[4]);s+=`<g transform="${m}"><g stroke="#fff" stroke-linecap="round"${ringAttr()}>${o}</g></g>`;}}
+  return s;
+}
+
+/* ---------- BAR 4: slices unfold into the dashboard ---------- */
+const BX=i=>215+i*72,BASE=1250,BH=i=>60+460*Math.pow(i/9,1.6);
+const TREND=[...Array(10)].map((_,i)=>[BX(i),BASE-BH(i)-44]);
+let SL6=null;
+function slice6(){if(SL6)return SL6;const M=sliceMats(sliceState(6.0));return SL6=M.sort((p,q)=>p.i-q.i).map(q=>{const [a,b,c,d,e,f]=q.m;const y=b*270+d*235+f;return {y,x0:a*20+c*235+e,x1:a*510+c*235+e};});}
+const DSH=t=>1450*eio(seg(t,8.0,.45));
+function S4(t){
+  let s='';const sw=eo(seg(t,6.0,.4)),pp=eo(seg(t,6.5,.45)),L6=slice6();
+  if(pp>0){s+=`<rect x="110" y="520" width="860" height="830" rx="40" fill="none" stroke="${WH}" stroke-width="3" pathLength="1" stroke-dasharray="1 2" stroke-dashoffset="${(1-pp).toFixed(4)}"/>`;
+    for(const [y,w] of [[770,2],[930,2],[1090,2],[1250,3]])s+=drawPL([[170,y],[910,y]],pp,w,WH);}
+  for(let i=0;i<10;i++){const h=lerp(50,BH(i),spr(t-7.0-i*.035,14)),l=L6[i];
+    const a=LP([l.x0,l.y],[BX(i),BASE],sw),b=LP([l.x1,l.y],[BX(i),BASE-h],sw);
+    s+=`<line x1="${n1(a[0])}" y1="${n1(a[1])}" x2="${n1(b[0])}" y2="${n1(b[1])}" stroke="${O}" stroke-width="${n1(lerp(6,40,sw))}"/>`;}
+  s+=word('Shipped faster',170,640,64,600,WH,'start',6.55,t);
+  const tp=eo(seg(t,7.5,.38));
+  if(tp>0){s+=drawPL(TREND,tp,8,O);if(t<8.0)s+=ring(pointAt(TREND,tp),24,8);}
+  const vD=(DSH(t+1/240)-DSH(t-1/240))*120;
+  return `<g transform="translate(0 ${n1(DSH(t))})"${blurAttr(0,vblur(vD,.0035,28))}>${s}</g>`;
+}
+
+/* ---------- BARS 5-6: the build, a vertical circuit column that accelerates ---------- */
+const WORDS=['Custom','software.','AI','products.','Code.','Cloud.','Content.','Support.','Apps.','Automation.','Platforms.','Scale.'];
+const EV=[8.0,8.5,9.0,9.5,10.0,10.25,10.5,10.75,11.0,11.25,11.5,11.75];
+const wsz=i=>Math.min(118,118*790/tw(WORDS[i],700,118));
+function colO(t){let o=-1450*(1-eio(seg(t,8.0,.45)));for(let i=1;i<12;i++)o+=150*eo(seg(t,EV[i],EV[i]<10?.3:.18));return o;}
+const colK=t=>1+.05*Math.pow(seg(t,10,2),2);
+function S5(t){
+  const o=colO(t),k=colK(t),vO=(colO(t+1/240)-colO(t-1/240))*120,sq=1-eio(seg(t,12.0,.12)),cur=clamp(Math.round(o/150),0,11),tr=eo(seg(t,8.2,.35));
+  let s='';
+  if(tr>0)s+=`<g stroke="${O}" stroke-width="6">${capL([120,915],[120,915-640*tr],6)}${capL([120,915],[120,915+640*tr],6)}</g>`;
+  for(let i=0;i<12;i++){const y=915-150*i+o;if(y<150||y>1700)continue;const sz=wsz(i),isC=i===cur;
+    s+=`<line x1="${isC?150:131}" y1="${n1(y)}" x2="182" y2="${n1(y)}" stroke="${O}" stroke-width="4"/>`;
+    if(!isC)s+=ring([120,y],11,5);
+    const T=`<text x="200" y="${n1(y+sz*.35)}" font-family="Geist" font-weight="700" font-size="${n1(sz)}" ${isC?`fill="${WH}"`:`fill="none" stroke="${O}" stroke-width="2.5"`}>${esc(WORDS[i])}</text>`;
+    s+=sq<1?`<g transform="translate(0 ${n1(y)}) scale(1 ${sq.toFixed(4)}) translate(0 ${n1(-y)})">${T}</g>`:T;}
+  const cid=fid();DEFS+=`<clipPath id="${cid}"><rect x="0" y="300" width="1080" height="1230"/></clipPath>`;
+  const np=t<8.45?LP(TREND[9],[120,915],eio(seg(t,8.0,.45))):[120,915];
+  return `<g transform="translate(540 915) scale(${k.toFixed(4)}) translate(-540 -915)"><g clip-path="url(#${cid})"><g${blurAttr(0,vblur(vO,.0035,26))}>${s}</g></g>${ring(np,24,8)}</g>`;
+}
+
+/* ---------- BAR 7 + END: collapse into the mark, title, resolve to the node ---------- */
+const X7=t=>{const e=eo(seg(t,13.0,.45));return {cx:CX,cy:lerp(915,740,e),S:lerp(1.45,.95,e)};};
+let P7C=null;
+function P7(){if(P7C)return P7C;const o=colO(12.12),k=colK(12.12),Z=p=>[540+k*(p[0]-540),915+k*(p[1]-915)],cur=clamp(Math.round(o/150),0,11),L=[];
+  for(let i=0;i<12;i++){const y=915-150*i+o;if(y<300||y>1530)continue;L.push({a:Z([200,y]),b:Z([200+tw(WORDS[i],700,wsz(i)),y]),w:10});if(i!==cur)L.push({a:Z([120,y]),b:Z([120,y]),w:22});}
+  L.push({a:Z([120,300]),b:Z([120,915]),w:6},{a:Z([120,915]),b:Z([120,1530]),w:6},{a:Z([120,915]),b:Z([120,915]),w:56});
+  return P7C=pairUp(L,X7(12.12));}
+const NAME='AccelerationLogics',TAG='Custom software. Built to scale.';
+function S7(t){
+  const X=X7(t),E=eio(seg(t,14.55,.33)),Q=LP(lx(LRING[1],X),[CX,CY],E),col=E>0?{E,Q}:null;
+  const vY=(X7(t+1/240).cy-X7(t-1/240).cy)*120;
+  let s=foldDraw(P7(),12.12,t,X,.8+.2*eo(seg(t,12.5,.22)),col);
+  const det=eo(seg(t,13.0,.4));
+  if(det>0){
+    let d=`<g transform="matrix(${X.S.toFixed(4)} 0 0 ${X.S.toFixed(4)} ${n1(X.cx-X.S*LC[0])} ${n1(X.cy-X.S*LC[1])})">`;
+    for(const P of LCIR)d+=drawPL(P,det*(1-E),5,O);d+=drawPL(LV,det*(1-E),4,O);d+='</g>';
+    const kp=eo(seg(det,.55,.45));
+    LRING.forEach((r,j)=>{const p=lx(r,X);if(j===1)d+=ring(LP(p,[CX,CY],E),lerp(10*X.S,24,E)*kp,lerp(4*X.S,8,E)*kp);else d+=ring(LP(p,Q,E),10*X.S*kp*(1-E),4*X.S*kp*(1-E));});
+    s+=d;}
+  s=`<g${blurAttr(0,vblur(vY,.004,20))}>${s}</g>`;
+  const nsz=Math.min(88,88*880/tw(NAME,700,88)),sqT=1-eio(seg(t,14.5,.1));
+  if(sqT>.06){s+=word(NAME,CX,1110,nsz,700,WH,'middle',13.5,t,sqT);s+=word(TAG,CX,1180,46,500,WH,'middle',13.75,t,sqT);}
+  else{const nw=tw(NAME,700,nsz),gw=tw(TAG,500,46),ln=(x0,x1,y,w)=>capL(LP([x0,y],Q,E),LP([x1,y],Q,E),w*(1-E));
+    s+=`<g stroke="${WH}" stroke-linecap="round">${ln(CX-nw/2,CX+nw/2,1110-nsz*.36,10)}${ln(CX-gw/2,CX+gw/2,1180-16,5)}</g>`;}
+  const up=eo(seg(t,14.0,.3)),gw=tw(TAG,500,46);
+  if(up>0){const a=LP([CX-gw/2,1206],Q,E),b=LP([CX-gw/2+gw*up,1206],Q,E);s+=`<g stroke="${O}" stroke-linecap="round">${capL(a,b,5*(1-E))}</g>`;}
+  return s;
+}
+
+/* ---------- camera: vertical travel + beat punch-ins ---------- */
+const HITS=[[2,.022],[4,.022],[6,.022],[8,.022],[10,.012],[12,.03],[14,.015]];
+const stageK=t=>{let k=1;for(const [h,a] of HITS)if(t>=h)k+=a*(1-eo(seg(t,h,.5)));return k;};
+
+window.seek=function(T){
+  const t=((T%15)+15)%15;DEFS='';FID=0;let b;
+  if(t<0.05||t>=14.88)b=NODE();
+  else if(t<2.5)b=S1(t);
+  else if(t<4.0)b=foldDraw(P1(),2.5,t,X2,.8+.2*eo(seg(t,3.0,.25)))+logoDetails(X2,eo(seg(t,3.5,.4)));
+  else if(t<6.0)b=S3(t);
+  else if(t<8.0)b=S4(t);
+  else if(t<8.45)b=S4(t)+S5(t);
+  else if(t<12.12)b=S5(t);
+  else b=S7(t);
+  v.innerHTML=`<rect width="1080" height="1920" fill="#000"/><defs>${DEFS}</defs><g transform="translate(540 915) scale(${stageK(t).toFixed(4)}) translate(-540 -915)">${b}</g>`;
+};
+
+/* ---------- soundtrack: 120 BPM, OfflineAudioContext -> WAV (base64) ---------- */
+window.renderAudio=async()=>{
+  const SR=48000,ctx=new OfflineAudioContext(2,SR*15,SR),bus=ctx.createGain();bus.gain.value=.7;
+  const comp=ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.knee.value=6;comp.ratio.value=4;comp.attack.value=.003;comp.release.value=.15;bus.connect(comp);comp.connect(ctx.destination);
+  let sd=7;const R=()=>(sd=(sd*16807)%2147483647)/2147483647*2-1;
+  const nb=ctx.createBuffer(1,SR*2,SR),nd=nb.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=R();
+  const env=(g,t,pk,att,dec)=>{g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pk,t+Math.max(att,.001));g.gain.exponentialRampToValueAtTime(.0001,t+Math.max(att,.001)+dec);};
+  const out=(n,p)=>{const P=ctx.createStereoPanner();P.pan.value=p;n.connect(P);P.connect(bus);};
+  function noise(t,dur,type,f,q,g,p=0,att=.002){const s=ctx.createBufferSource();s.buffer=nb;const fl=ctx.createBiquadFilter();fl.type=type;fl.frequency.value=f;fl.Q.value=q;const a=ctx.createGain();env(a,t,g,att,dur);s.connect(fl);fl.connect(a);out(a,p);s.start(t,(t*.731)%1.2);s.stop(t+att+dur+.05);}
+  const kick=(t,g)=>{const o=ctx.createOscillator(),a=ctx.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(44,t+.11);env(a,t,g,.003,.38);o.connect(a);a.connect(bus);o.start(t);o.stop(t+.45);noise(t,.012,'highpass',3000,.7,.25*g);};
+  const ping=(t,f,g=.15,p=0)=>{const o=ctx.createOscillator(),a=ctx.createGain();o.frequency.value=f;env(a,t,g,.004,.28);o.connect(a);out(a,p);o.start(t);o.stop(t+.35);};
+  const hit=(t,g)=>{const o=ctx.createOscillator(),a=ctx.createGain();o.frequency.setValueAtTime(95,t);o.frequency.exponentialRampToValueAtTime(30,t+.6);env(a,t,.8*g,.002,.9);o.connect(a);a.connect(bus);o.start(t);o.stop(t+1);noise(t,.22,'bandpass',1600,.7,.45*g);noise(t,.5,'highpass',6000,.4,.12*g,0,.001);};
+  const bass=(t,f,d)=>{const o=ctx.createOscillator();o.type='sawtooth';o.frequency.value=f;const fl=ctx.createBiquadFilter();fl.type='lowpass';fl.Q.value=5;fl.frequency.setValueAtTime(1100,t);fl.frequency.exponentialRampToValueAtTime(120,t+d);const a=ctx.createGain();env(a,t,.22,.006,d);o.connect(fl);fl.connect(a);a.connect(bus);o.start(t);o.stop(t+d+.05);};
+  for(let b=0;b<30;b++)kick(b*.5,b%4===0?1:.8);
+  [[.05,880,-.3],[.5,1318.5,.3],[1,987.8,-.2],[1.25,1108.7,.2],[1.5,1318.5,0]].forEach(([t,f,p])=>ping(t,f,.15,p));
+  for(let t=2.25;t<14;t+=.5)noise(t,.045,'highpass',8500,.7,.11,(Math.round(t*2)%4<2)?-.25:.25);
+  for(let t=10.125;t<12;t+=.25)noise(t,.03,'highpass',9000,.7,.07,.35);
+  const roots=[55,43.65,65.41,49];
+  for(let bar=1;bar<7;bar++){const f=roots[(bar-1)%4];for(let k=0;k<8;k++){if(bar<4&&k%2===0)continue;bass(bar*2+k*.25,k===7?f*2:f,.2);}}
+  {const s=ctx.createBufferSource();s.buffer=nb;s.loop=true;const fl=ctx.createBiquadFilter();fl.type='bandpass';fl.Q.value=2.5;fl.frequency.setValueAtTime(300,10);fl.frequency.exponentialRampToValueAtTime(9000,11.97);const a=ctx.createGain();a.gain.setValueAtTime(.0001,10);a.gain.exponentialRampToValueAtTime(.35,11.96);a.gain.linearRampToValueAtTime(0,12);s.connect(fl);fl.connect(a);a.connect(bus);s.start(10);s.stop(12.02);
+   const o=ctx.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(110,10);o.frequency.exponentialRampToValueAtTime(880,12);const l=ctx.createBiquadFilter();l.type='lowpass';l.frequency.value=2500;const g=ctx.createGain();g.gain.setValueAtTime(.0001,10);g.gain.exponentialRampToValueAtTime(.09,11.96);g.gain.linearRampToValueAtTime(0,12);o.connect(l);l.connect(g);g.connect(bus);o.start(10);o.stop(12.02);}
+  [[2,1],[4,1],[6,1],[8,1],[12,1.3],[14,.8]].forEach(([t,g])=>hit(t,g));
+  [[12.5,659.3],[13,880],[13.5,987.8],[14,1318.5]].forEach(([t,f])=>ping(t,f,.12));
+  ping(14.86,880,.16);
+  const buf=await ctx.startRendering(),L=buf.getChannelData(0),Rr=buf.getChannelData(1);let pk=0;
+  for(let i=0;i<L.length;i++)pk=Math.max(pk,Math.abs(L[i]),Math.abs(Rr[i]));
+  const gn=pk>0?.89/pk:1,n=L.length,ab=new ArrayBuffer(44+n*4),dv=new DataView(ab),ws=(o,s)=>{for(let i=0;i<s.length;i++)dv.setUint8(o+i,s.charCodeAt(i));};
+  ws(0,'RIFF');dv.setUint32(4,36+n*4,true);ws(8,'WAVE');ws(12,'fmt ');dv.setUint32(16,16,true);dv.setUint16(20,1,true);dv.setUint16(22,2,true);dv.setUint32(24,SR,true);dv.setUint32(28,SR*4,true);dv.setUint16(32,4,true);dv.setUint16(34,16,true);ws(36,'data');dv.setUint32(40,n*4,true);
+  for(let i=0,o=44;i<n;i++,o+=4){dv.setInt16(o,Math.max(-1,Math.min(1,L[i]*gn))*32767,true);dv.setInt16(o+2,Math.max(-1,Math.min(1,Rr[i]*gn))*32767,true);}
+  const u8=new Uint8Array(ab);let bin='';for(let i=0;i<u8.length;i+=32768)bin+=String.fromCharCode.apply(null,u8.subarray(i,i+32768));return btoa(bin);
+};
+
+Promise.all(['500','600','700'].map(w=>document.fonts.load(`${w} 100px Geist`))).then(()=>{window.seek(0);window.READY=true;});
+</script>
+</body></html>

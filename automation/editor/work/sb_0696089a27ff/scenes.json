@@ -1,0 +1,13 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\009b7275bb3d5db436a705d891e549f9.mp4",
+  "duration": 25.4,
+  "threshold": 0.3,
+  "cuts": [],
+  "scenes": [
+    {
+      "index": 0,
+      "start": 0.0,
+      "end": 25.4
+    }
+  ]
+}

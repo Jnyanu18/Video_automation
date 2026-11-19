@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "historyId": "0124b86f-5d03-4b86-8c6a-e01f6af4d6a6",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\0124b86f-5d03-4b86-8c6a-e01f6af4d6a6\\blobs\\18\\18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f"
+    },
+    "CLAUDE.md": {
+      "hash": "18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\0124b86f-5d03-4b86-8c6a-e01f6af4d6a6\\blobs\\18\\18bcca1593d1b29cd7442b3dc91d18ada440affb9b7acd577c1da57446f3d24f"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\0124b86f-5d03-4b86-8c6a-e01f6af4d6a6\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "dd993d5cb8153ae633fd92f92b099d48584881c06f494f9fbdbd733a264d70c3",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\0124b86f-5d03-4b86-8c6a-e01f6af4d6a6\\blobs\\dd\\dd993d5cb8153ae633fd92f92b099d48584881c06f494f9fbdbd733a264d70c3"
+    },
+    "meta.json": {
+      "hash": "87ea716957916b9428bef18140b180137528680b889e303fdb693dde0b7eb7ee",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\0124b86f-5d03-4b86-8c6a-e01f6af4d6a6\\blobs\\87\\87ea716957916b9428bef18140b180137528680b889e303fdb693dde0b7eb7ee"
+    },
+    "package.json": {
+      "hash": "c22bacb54a1a83cb17ddf418c8ab9da9aad049b034ea6f228fa8c371cfe82a22",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\0124b86f-5d03-4b86-8c6a-e01f6af4d6a6\\blobs\\c2\\c22bacb54a1a83cb17ddf418c8ab9da9aad049b034ea6f228fa8c371cfe82a22"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "7ea39a6f-c014-438e-9ae9-50900336b8dd",
+      "completedAt": 1794256025731,
+      "output": "J:\\ai editor\\raw footage\\education\\animated_video.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}

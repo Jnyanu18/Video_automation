@@ -1,0 +1,92 @@
+{
+ "clip": "sample-robots",
+ "version": "v5",
+ "source": "<your-take>.MP4",
+ "lo": 0,
+ "segments": [
+  {
+   "out": 0,
+   "src": 0,
+   "len": 55.13333333333333
+  }
+ ],
+ "speed": 1.15,
+ "gap": 0.18,
+ "intro": null,
+ "outro": {
+  "t": 53.869565,
+  "dur": 0.964,
+  "text": "Follow for more AI news.",
+  "silent": true
+ },
+ "srcEnd": 55.13333333333333,
+ "total": 55.13333333333333,
+ "frames": 1654,
+ "items": [
+  {
+   "type": "his",
+   "q": false,
+   "text": "Robots will take these jobs first. Is yours on the list?"
+  },
+  {
+   "type": "his",
+   "q": true,
+   "text": "which job will robot take first?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "Well humanoid robot basically will have a penetration everywhere. Anywhere there is a human in the supply chain you can put a humanoid robot on it and voila, you will have a system which runs 24 -7."
+  },
+  {
+   "type": "his",
+   "q": true,
+   "text": "But how does a company decide you want a robot?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "Well, it depends on what kind of task you wanna do."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "Robots can take job where things are repetitive, it is pattern -based,"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "But if you're in an industry which is art -based, for example, imagine a person who builds the value of a painting. How would AI know where the value comes from?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "It's more like a human feeling. It comes from emotions."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "A robot can't do that today. That it can't sit with us, have a sip, have some gossip while you're talking and then voila, this is what this human would like. That value is still there with the humans."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "jewelers who take a diamond and knows which diamond goes well with what person, a robot can't take that, right?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "the artistic touch stays with the human."
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "Which job do you think is safe from robots?"
+  },
+  {
+   "type": "his",
+   "q": false,
+   "text": "comment below."
+  }
+ ]
+}

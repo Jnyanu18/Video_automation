@@ -1,0 +1,446 @@
+{
+  "media_id": "event_source",
+  "source_file": "J:\\ai editor\\raw footage\\event_source.mp4",
+  "duration": 84.776,
+  "total_scenes": 53,
+  "silences": [
+    {
+      "start": 0.0,
+      "end": 0.797483
+    },
+    {
+      "start": 8.245646,
+      "end": 9.566327
+    },
+    {
+      "start": 83.820544,
+      "end": 84.776054
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "start": 0.0,
+      "end": 1.4,
+      "duration": 1.4,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_01_0.70s.jpg",
+      "keyframe_rel": "keyframes/scene_01_0.70s.jpg"
+    },
+    {
+      "scene_id": "scene_02",
+      "start": 1.4,
+      "end": 2.76,
+      "duration": 1.36,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_02_2.08s.jpg",
+      "keyframe_rel": "keyframes/scene_02_2.08s.jpg"
+    },
+    {
+      "scene_id": "scene_03",
+      "start": 2.76,
+      "end": 4.48,
+      "duration": 1.72,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_03_3.62s.jpg",
+      "keyframe_rel": "keyframes/scene_03_3.62s.jpg"
+    },
+    {
+      "scene_id": "scene_04",
+      "start": 4.48,
+      "end": 5.92,
+      "duration": 1.44,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_04_5.20s.jpg",
+      "keyframe_rel": "keyframes/scene_04_5.20s.jpg"
+    },
+    {
+      "scene_id": "scene_05",
+      "start": 5.92,
+      "end": 10.0,
+      "duration": 4.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_05_7.96s.jpg",
+      "keyframe_rel": "keyframes/scene_05_7.96s.jpg"
+    },
+    {
+      "scene_id": "scene_06",
+      "start": 10.0,
+      "end": 12.2,
+      "duration": 2.2,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_06_11.10s.jpg",
+      "keyframe_rel": "keyframes/scene_06_11.10s.jpg"
+    },
+    {
+      "scene_id": "scene_07",
+      "start": 12.2,
+      "end": 14.4,
+      "duration": 2.2,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_07_13.30s.jpg",
+      "keyframe_rel": "keyframes/scene_07_13.30s.jpg"
+    },
+    {
+      "scene_id": "scene_08",
+      "start": 14.4,
+      "end": 15.44,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_08_14.92s.jpg",
+      "keyframe_rel": "keyframes/scene_08_14.92s.jpg"
+    },
+    {
+      "scene_id": "scene_09",
+      "start": 15.44,
+      "end": 16.56,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_09_16.00s.jpg",
+      "keyframe_rel": "keyframes/scene_09_16.00s.jpg"
+    },
+    {
+      "scene_id": "scene_10",
+      "start": 16.56,
+      "end": 17.64,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_10_17.10s.jpg",
+      "keyframe_rel": "keyframes/scene_10_17.10s.jpg"
+    },
+    {
+      "scene_id": "scene_11",
+      "start": 17.64,
+      "end": 18.68,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_11_18.16s.jpg",
+      "keyframe_rel": "keyframes/scene_11_18.16s.jpg"
+    },
+    {
+      "scene_id": "scene_12",
+      "start": 18.68,
+      "end": 20.92,
+      "duration": 2.24,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_12_19.80s.jpg",
+      "keyframe_rel": "keyframes/scene_12_19.80s.jpg"
+    },
+    {
+      "scene_id": "scene_13",
+      "start": 20.92,
+      "end": 22.0,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_13_21.46s.jpg",
+      "keyframe_rel": "keyframes/scene_13_21.46s.jpg"
+    },
+    {
+      "scene_id": "scene_14",
+      "start": 22.0,
+      "end": 23.04,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_14_22.52s.jpg",
+      "keyframe_rel": "keyframes/scene_14_22.52s.jpg"
+    },
+    {
+      "scene_id": "scene_15",
+      "start": 23.04,
+      "end": 24.2,
+      "duration": 1.16,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_15_23.62s.jpg",
+      "keyframe_rel": "keyframes/scene_15_23.62s.jpg"
+    },
+    {
+      "scene_id": "scene_16",
+      "start": 24.2,
+      "end": 26.4,
+      "duration": 2.2,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_16_25.30s.jpg",
+      "keyframe_rel": "keyframes/scene_16_25.30s.jpg"
+    },
+    {
+      "scene_id": "scene_17",
+      "start": 26.4,
+      "end": 27.44,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_17_26.92s.jpg",
+      "keyframe_rel": "keyframes/scene_17_26.92s.jpg"
+    },
+    {
+      "scene_id": "scene_18",
+      "start": 27.44,
+      "end": 29.6,
+      "duration": 2.16,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_18_28.52s.jpg",
+      "keyframe_rel": "keyframes/scene_18_28.52s.jpg"
+    },
+    {
+      "scene_id": "scene_19",
+      "start": 29.6,
+      "end": 30.68,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_19_30.14s.jpg",
+      "keyframe_rel": "keyframes/scene_19_30.14s.jpg"
+    },
+    {
+      "scene_id": "scene_20",
+      "start": 30.68,
+      "end": 31.76,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_20_31.22s.jpg",
+      "keyframe_rel": "keyframes/scene_20_31.22s.jpg"
+    },
+    {
+      "scene_id": "scene_21",
+      "start": 31.76,
+      "end": 32.88,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_21_32.32s.jpg",
+      "keyframe_rel": "keyframes/scene_21_32.32s.jpg"
+    },
+    {
+      "scene_id": "scene_22",
+      "start": 32.88,
+      "end": 34.0,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_22_33.44s.jpg",
+      "keyframe_rel": "keyframes/scene_22_33.44s.jpg"
+    },
+    {
+      "scene_id": "scene_23",
+      "start": 34.0,
+      "end": 35.08,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_23_34.54s.jpg",
+      "keyframe_rel": "keyframes/scene_23_34.54s.jpg"
+    },
+    {
+      "scene_id": "scene_24",
+      "start": 35.08,
+      "end": 37.24,
+      "duration": 2.16,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_24_36.16s.jpg",
+      "keyframe_rel": "keyframes/scene_24_36.16s.jpg"
+    },
+    {
+      "scene_id": "scene_25",
+      "start": 37.24,
+      "end": 38.4,
+      "duration": 1.16,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_25_37.82s.jpg",
+      "keyframe_rel": "keyframes/scene_25_37.82s.jpg"
+    },
+    {
+      "scene_id": "scene_26",
+      "start": 38.4,
+      "end": 39.44,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_26_38.92s.jpg",
+      "keyframe_rel": "keyframes/scene_26_38.92s.jpg"
+    },
+    {
+      "scene_id": "scene_27",
+      "start": 39.44,
+      "end": 40.48,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_27_39.96s.jpg",
+      "keyframe_rel": "keyframes/scene_27_39.96s.jpg"
+    },
+    {
+      "scene_id": "scene_28",
+      "start": 40.48,
+      "end": 42.72,
+      "duration": 2.24,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_28_41.60s.jpg",
+      "keyframe_rel": "keyframes/scene_28_41.60s.jpg"
+    },
+    {
+      "scene_id": "scene_29",
+      "start": 42.72,
+      "end": 43.76,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_29_43.24s.jpg",
+      "keyframe_rel": "keyframes/scene_29_43.24s.jpg"
+    },
+    {
+      "scene_id": "scene_30",
+      "start": 43.76,
+      "end": 44.84,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_30_44.30s.jpg",
+      "keyframe_rel": "keyframes/scene_30_44.30s.jpg"
+    },
+    {
+      "scene_id": "scene_31",
+      "start": 44.84,
+      "end": 45.96,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_31_45.40s.jpg",
+      "keyframe_rel": "keyframes/scene_31_45.40s.jpg"
+    },
+    {
+      "scene_id": "scene_32",
+      "start": 45.96,
+      "end": 47.08,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_32_46.52s.jpg",
+      "keyframe_rel": "keyframes/scene_32_46.52s.jpg"
+    },
+    {
+      "scene_id": "scene_33",
+      "start": 47.08,
+      "end": 48.16,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_33_47.62s.jpg",
+      "keyframe_rel": "keyframes/scene_33_47.62s.jpg"
+    },
+    {
+      "scene_id": "scene_34",
+      "start": 48.16,
+      "end": 49.28,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_34_48.72s.jpg",
+      "keyframe_rel": "keyframes/scene_34_48.72s.jpg"
+    },
+    {
+      "scene_id": "scene_35",
+      "start": 49.28,
+      "end": 50.32,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_35_49.80s.jpg",
+      "keyframe_rel": "keyframes/scene_35_49.80s.jpg"
+    },
+    {
+      "scene_id": "scene_36",
+      "start": 50.32,
+      "end": 51.44,
+      "duration": 1.12,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_36_50.88s.jpg",
+      "keyframe_rel": "keyframes/scene_36_50.88s.jpg"
+    },
+    {
+      "scene_id": "scene_37",
+      "start": 51.44,
+      "end": 53.64,
+      "duration": 2.2,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_37_52.54s.jpg",
+      "keyframe_rel": "keyframes/scene_37_52.54s.jpg"
+    },
+    {
+      "scene_id": "scene_38",
+      "start": 53.64,
+      "end": 54.72,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_38_54.18s.jpg",
+      "keyframe_rel": "keyframes/scene_38_54.18s.jpg"
+    },
+    {
+      "scene_id": "scene_39",
+      "start": 54.72,
+      "end": 55.8,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_39_55.26s.jpg",
+      "keyframe_rel": "keyframes/scene_39_55.26s.jpg"
+    },
+    {
+      "scene_id": "scene_40",
+      "start": 55.8,
+      "end": 56.88,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_40_56.34s.jpg",
+      "keyframe_rel": "keyframes/scene_40_56.34s.jpg"
+    },
+    {
+      "scene_id": "scene_41",
+      "start": 56.88,
+      "end": 58.04,
+      "duration": 1.16,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_41_57.46s.jpg",
+      "keyframe_rel": "keyframes/scene_41_57.46s.jpg"
+    },
+    {
+      "scene_id": "scene_42",
+      "start": 58.04,
+      "end": 59.08,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_42_58.56s.jpg",
+      "keyframe_rel": "keyframes/scene_42_58.56s.jpg"
+    },
+    {
+      "scene_id": "scene_43",
+      "start": 59.08,
+      "end": 61.28,
+      "duration": 2.2,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_43_60.18s.jpg",
+      "keyframe_rel": "keyframes/scene_43_60.18s.jpg"
+    },
+    {
+      "scene_id": "scene_44",
+      "start": 61.28,
+      "end": 63.52,
+      "duration": 2.24,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_44_62.40s.jpg",
+      "keyframe_rel": "keyframes/scene_44_62.40s.jpg"
+    },
+    {
+      "scene_id": "scene_45",
+      "start": 63.52,
+      "end": 67.8,
+      "duration": 4.28,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_45_65.66s.jpg",
+      "keyframe_rel": "keyframes/scene_45_65.66s.jpg"
+    },
+    {
+      "scene_id": "scene_46",
+      "start": 67.8,
+      "end": 68.96,
+      "duration": 1.16,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_46_68.38s.jpg",
+      "keyframe_rel": "keyframes/scene_46_68.38s.jpg"
+    },
+    {
+      "scene_id": "scene_47",
+      "start": 68.96,
+      "end": 70.0,
+      "duration": 1.04,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_47_69.48s.jpg",
+      "keyframe_rel": "keyframes/scene_47_69.48s.jpg"
+    },
+    {
+      "scene_id": "scene_48",
+      "start": 70.0,
+      "end": 71.08,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_48_70.54s.jpg",
+      "keyframe_rel": "keyframes/scene_48_70.54s.jpg"
+    },
+    {
+      "scene_id": "scene_49",
+      "start": 71.08,
+      "end": 72.16,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_49_71.62s.jpg",
+      "keyframe_rel": "keyframes/scene_49_71.62s.jpg"
+    },
+    {
+      "scene_id": "scene_50",
+      "start": 72.16,
+      "end": 73.24,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_50_72.70s.jpg",
+      "keyframe_rel": "keyframes/scene_50_72.70s.jpg"
+    },
+    {
+      "scene_id": "scene_51",
+      "start": 73.24,
+      "end": 74.32,
+      "duration": 1.08,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_51_73.78s.jpg",
+      "keyframe_rel": "keyframes/scene_51_73.78s.jpg"
+    },
+    {
+      "scene_id": "scene_52",
+      "start": 74.32,
+      "end": 79.72,
+      "duration": 5.4,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_52_77.02s.jpg",
+      "keyframe_rel": "keyframes/scene_52_77.02s.jpg"
+    },
+    {
+      "scene_id": "scene_53",
+      "start": 79.72,
+      "end": 84.776,
+      "duration": 5.056,
+      "keyframe": "J:\\ai editor\\experiments\\director_2\\intelligence_audit\\keyframes\\scene_53_82.25s.jpg",
+      "keyframe_rel": "keyframes/scene_53_82.25s.jpg"
+    }
+  ]
+}

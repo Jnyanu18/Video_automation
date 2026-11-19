@@ -1,0 +1,515 @@
+// v4 world (Paper Lab train set): "Dadaji asks, Madhav answers". He is always the still cut-out bottom-left, so every
+// picture lives in the top band (y 230-630, full width) or the right column (x 560-1040, y 650-1180). Captions: x 555-930, y 1215+.
+// Dadaji (an ORIGINAL paper-cut grandfather, not any real person) speaks his lines from the right column with a speech
+// bubble in the top band; while Madhav answers he shrinks to a small corner portrait (top-left of the right column).
+// Calm rules: one primary motion at a time, short pop/settle entrances, exits by a quick lift + fade, no idle wobble.
+import React from "react";
+import { AbsoluteFill } from "remotion";
+import { OUTRO, smooth, voLevel } from "../lib";
+import words from "../words.json";
+import { Dressing } from "./dressing";
+import { BLUE, BgImage, COND, Defs, Draw, GOLD, HAND, IMG, INK, RED, SERIF, Stamp, TAPE, TYPE, Tape, back, lerp, pS, rnd, torn, twos } from "./kit";
+import { Departures, Diploma, Gear, HeroTrain, QMark, RobotArm, Student, Tag, Ticket, Track, TrainCut, checkPath, type TrainKind } from "./props";
+import { B, T } from "./T";
+
+type P = { t: number; tt: number };
+// panel visibility: pop in at a, lift + fade out at b
+const win = (t: number, a: number, b: number) => {
+  if (t < a - 0.05 || t > b + 0.12) return null;
+  const k = back((twos(t) - a) / 0.3, 1.9), out = smooth((t - (b - 0.12)) / 0.24);
+  return { k: Math.max(0.001, k), out };
+};
+const G: React.FC<{ w: ReturnType<typeof win>; children: React.ReactNode }> = ({ w, children }) =>
+  w ? <g transform={`translate(0 ${-w.out * 70})`} opacity={1 - w.out}>{children}</g> : null;
+const popAt = (tt: number, at: number, d = 0.3, s = 2.2) => back((tt - at) / d, s);
+
+// ================= Dadaji: original paper-cut grandfather =================
+// Big white moustache, grey side hair under a brown cloth flat cap, cream kurta, rust sleeveless waistcoat, walking stick.
+// Deliberately generic: not bald, no spectacles, no shawl/dhoti, no beard.
+const CH = (words as { s: number; e: number; spk?: string }[]).filter((w) => w.spk === "ch");
+const chSpeaking = (t: number) => CH.some((w) => t >= w.s && t < w.e);
+// jaw open 0..1 on twos, from the voice level, only while one of his words is playing
+const jawOpen = (t: number) => {
+  const tt = twos(t);
+  if (!chSpeaking(tt)) return 0;
+  const v = Math.min(1, voLevel(Math.round(tt * 30)) * 2.4);
+  return Math.round(v * 3) / 3;
+};
+const SKIN = "#c98b62", SKIN_D = "#b0704c", HAIR = "#e3e2dc", CAP = "#6d5a46", CAP_D = "#4f4031", VEST = "#8a3d2b", KURTA = "#f5efe2", EDGE = "#fffdf6";
+const Sticker: React.FC<{ children: React.ReactNode; w?: number }> = ({ children, w = 12 }) => (
+  <g filter="url(#psh)">
+    <g stroke={EDGE} strokeWidth={w} strokeLinejoin="round" fill={EDGE}>{children}</g>
+    {children}
+  </g>
+);
+const Tuft: React.FC = () => <path d="M-60,-402 Q-96,-398 -96,-364 Q-96,-340 -80,-330 Q-82,-360 -70,-378 Q-66,-392 -60,-402 Z" fill={HAIR} stroke="#bdbcb4" strokeWidth={2} />;
+// origin = bottom centre of the bust; ~380 wide, ~465 tall at scale 1
+const Dadaji: React.FC<{ open: number; tag?: boolean }> = ({ open, tag = true }) => {
+  const j = open * 14;
+  return <g>
+    <Sticker>
+      {/* torso (kurta) + sleeves + neck + head + ears + cap */}
+      <path d="M-172,0 L-178,-168 Q-170,-220 -98,-236 L98,-236 Q170,-220 178,-168 L172,0 Z" fill={KURTA} />
+      <path d="M-176,-196 Q-200,-110 -190,-14 L-150,-14 Q-150,-110 -146,-190 Z" fill={KURTA} />
+      <path d="M150,-210 Q200,-186 196,-130 L178,-86 L140,-100 L156,-150 Z" fill={KURTA} />
+      <rect x={-28} y={-270} width={56} height={44} fill={SKIN} />
+      <ellipse cx={-77} cy={-338} rx={15} ry={24} fill={SKIN} /><ellipse cx={77} cy={-338} rx={15} ry={24} fill={SKIN} />
+      <ellipse cx={0} cy={-345} rx={78} ry={90} fill={SKIN} />
+      <path d="M-88,-380 Q-92,-446 -8,-458 Q74,-462 90,-400 Q92,-388 88,-380 Z" fill={CAP} />
+    </Sticker>
+    {/* waistcoat panels (open V) + buttons */}
+    <path d="M-150,0 L-158,-172 Q-150,-220 -96,-234 L-34,-236 L-12,-112 L-12,0 Z" fill={VEST} />
+    <path d="M150,0 L158,-172 Q150,-220 96,-234 L34,-236 L12,-112 L12,0 Z" fill={VEST} />
+    <path d="M-150,0 L-158,-172 Q-150,-220 -96,-234" fill="none" stroke="#6e2f20" strokeWidth={4} />
+    {[-150, -100, -50].map((y) => <circle key={y} cx={24} cy={y} r={6} fill={GOLD} stroke="#8a6a1a" strokeWidth={1.5} />)}
+    <path d="M-36,-236 Q0,-222 36,-236" fill="none" stroke="#d9cfb8" strokeWidth={6} />
+    <line x1={0} y1={-226} x2={0} y2={-120} stroke="#d9cfb8" strokeWidth={3} />
+    {/* walking stick + hand */}
+    <path d="M162,6 L162,-110 Q162,-146 132,-146 Q106,-146 106,-122" stroke="#6b4423" strokeWidth={15} fill="none" strokeLinecap="round" />
+    <path d="M162,6 L162,-110" stroke="#8a5a35" strokeWidth={5} fill="none" />
+    <ellipse cx={160} cy={-100} rx={22} ry={19} fill={SKIN} stroke={SKIN_D} strokeWidth={2} />
+    {/* grey hair at the temples, under the cap */}
+    <Tuft /><g transform="scale(-1 1)"><Tuft /></g>
+    <ellipse cx={-77} cy={-336} rx={6} ry={12} fill={SKIN_D} /><ellipse cx={77} cy={-336} rx={6} ry={12} fill={SKIN_D} />
+    {/* cloth cap: band, brim, tweed flecks, button */}
+    <path d="M-88,-382 Q0,-398 88,-382" fill="none" stroke={CAP_D} strokeWidth={7} />
+    <path d="M-72,-386 Q0,-404 76,-386 Q84,-366 0,-370 Q-80,-366 -72,-386 Z" fill={CAP_D} />
+    {Array.from({ length: 9 }, (_, i) => <line key={i} x1={-60 + i * 15} y1={-400 - (i % 3) * 14} x2={-52 + i * 15} y2={-404 - (i % 3) * 14} stroke="#8c775f" strokeWidth={3} strokeLinecap="round" />)}
+    <circle cx={-8} cy={-456} r={7} fill={CAP_D} />
+    {/* face: bushy white brows, twinkly eyes, nose, rosy cheeks */}
+    <path d="M-56,-368 Q-36,-388 -12,-372" stroke={HAIR} strokeWidth={11} fill="none" strokeLinecap="round" />
+    <path d="M56,-368 Q36,-388 12,-372" stroke={HAIR} strokeWidth={11} fill="none" strokeLinecap="round" />
+    <ellipse cx={-32} cy={-350} rx={7} ry={8} fill={INK} /><ellipse cx={32} cy={-350} rx={7} ry={8} fill={INK} />
+    <circle cx={-30} cy={-353} r={2.4} fill="#fff" /><circle cx={34} cy={-353} r={2.4} fill="#fff" />
+    <path d="M-56,-350 L-48,-346 M-56,-340 L-48,-340" stroke={SKIN_D} strokeWidth={2.5} strokeLinecap="round" />
+    <path d="M56,-350 L48,-346 M56,-340 L48,-340" stroke={SKIN_D} strokeWidth={2.5} strokeLinecap="round" />
+    <circle cx={-48} cy={-316} r={15} fill="#e0806a" opacity={0.45} /><circle cx={48} cy={-316} r={15} fill="#e0806a" opacity={0.45} />
+    <ellipse cx={0} cy={-320} rx={18} ry={16} fill="#bb7651" /><ellipse cx={-5} cy={-325} rx={5} ry={4} fill="#d9a07c" />
+    {/* mouth (dark) behind the dropping jaw */}
+    <ellipse cx={0} cy={-286 + j * 0.4} rx={30} ry={3 + j * 0.95} fill="#4a1d1a" />
+    {open > 0.3 && <ellipse cx={0} cy={-278 + j * 0.7} rx={14} ry={5} fill="#c4544a" />}
+    <path d="M-52,-292 Q-50,-262 0,-252 Q50,-262 52,-292 Z" fill={SKIN} transform={`translate(0 ${j})`} />
+    {j > 0 && <path d="M-52,-292 Q-50,-262 0,-252 Q50,-262 52,-292" fill="none" stroke={SKIN_D} strokeWidth={2} transform={`translate(0 ${j})`} />}
+    {/* the big white moustache (lifts a touch when he talks) */}
+    <path transform={`translate(0 ${-j * 0.25})`} d="M0,-312 C-30,-328 -72,-324 -96,-300 C-110,-286 -104,-266 -88,-270 C-72,-290 -40,-284 0,-292 C40,-284 72,-290 88,-270 C104,-266 110,-286 96,-300 C72,-324 30,-328 0,-312 Z" fill="#f8f6f0" stroke="#cfc9bc" strokeWidth={2.5} />
+    <path transform={`translate(0 ${-j * 0.25})`} d="M-70,-302 Q-40,-310 -12,-302 M70,-302 Q40,-310 12,-302" stroke="#d8d3c7" strokeWidth={3} fill="none" />
+    {/* name tag on tape */}
+    {tag && <g transform="translate(-4 -64) rotate(-4)">
+      <g filter="url(#psh)"><path d={torn(300, 58, "dadtag", "lr", 4)} fill={TAPE} opacity={0.95} /></g>
+      <text textAnchor="middle" y={11} fontFamily={TYPE} fontSize={32} fill={INK} letterSpacing={1}>DADAJI ASKS</text>
+    </g>}
+  </g>;
+};
+
+// where Dadaji stands: hook (under the headline), speaking (big, right column), portrait (small, corner card)
+type DS = { x: number; y: number; s: number; card: number };
+const HOOK_SMALL = 0.5;
+const SPEAK: DS = { x: 810, y: 1180, s: 1, card: 0 };
+const PORT: DS = { x: 640, y: 826, s: 0.36, card: 1 };
+const PORT_CARD = { x: 640, y: 742, w: 166, h: 196 };
+// keyframes: shrink right after his line ends (before Madhav's answer visuals land); grow back at the start of his next line
+const KEYS: [number, DS][] = [
+  [-1, SPEAK],
+  [T.science1 + 0.08, PORT],
+  [B.q2.s, SPEAK],
+  [T.learnEnd + 0.06, PORT],
+  [B.q3.s, SPEAK],
+  [T.goesEnd + 0.04, PORT],
+  [B.q4.s, SPEAK],
+];
+const dState = (t: number): DS => {
+  let i = 0; while (i + 1 < KEYS.length && KEYS[i + 1][0] <= t) i++;
+  const [k0, s1] = KEYS[i], s0 = i ? KEYS[i - 1][1] : s1;
+  const u = smooth((t - k0) / 0.4);
+  return { x: lerp(s0.x, s1.x, u), y: lerp(s0.y, s1.y, u), s: lerp(s0.s, s1.s, u), card: lerp(s0.card, s1.card, u) };
+};
+const DadajiLayer: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, -0.1, B.end.s); // enters once (~0.3 s pop), leaves at the end card
+  if (!w) return null;
+  const d = dState(tt), k = Math.min(1.08, w.k);
+  return <G w={w}>
+    {d.card > 0.01 && <g opacity={d.card} transform={`translate(${PORT_CARD.x} ${PORT_CARD.y}) rotate(-3)`}>
+      <g filter="url(#psh2)"><path d={torn(PORT_CARD.w, PORT_CARD.h, "pcard", "tlrb", 3)} fill="#fffaf0" /></g>
+      <rect x={-PORT_CARD.w / 2 + 10} y={-PORT_CARD.h / 2 + 10} width={PORT_CARD.w - 20} height={PORT_CARD.h - 20} fill="#f3e7c9" />
+      <Tape x={0} y={-PORT_CARD.h / 2 + 2} w={90} h={28} rot={4} seed="pct" />
+    </g>}
+    <g transform={`translate(${d.x} ${d.y}) scale(${d.s * k})`}><Dadaji open={jawOpen(t)} tag={d.s > 0.5} /></g>
+  </G>;
+};
+
+// ================= speech bubble (exact words) with a "Q" tag =================
+const Bubble: React.FC<{ x: number; y: number; w: number; h: number; tip: [number, number]; base: number; k: number; lines: string[]; size: number; q?: boolean; seed: string }> = ({ x, y, w, h, tip, base, k, lines, size, q = true, seed }) => {
+  if (k <= 0.01) return null;
+  const lh = size * 1.12, y0 = y + h / 2 - ((lines.length - 1) * lh) / 2 + size * 0.34;
+  return <g transform={`translate(${tip[0]} ${tip[1]}) scale(${Math.min(1.05, k)}) translate(${-tip[0]} ${-tip[1]})`}>
+    <g filter="url(#psh2)">
+      <rect x={x} y={y} width={w} height={h} rx={44} fill="#fffdf8" stroke="#e6dcc6" strokeWidth={3} />
+      <path d={`M${base - 38},${y + h - 6} L${tip[0]},${tip[1]} L${base + 38},${y + h - 6} Z`} fill="#fffdf8" />
+    </g>
+    <path d={`M${base - 38},${y + h} L${tip[0]},${tip[1]} L${base + 38},${y + h}`} fill="none" stroke="#e6dcc6" strokeWidth={3} />
+    <rect x={base - 40} y={y + h - 10} width={80} height={12} fill="#fffdf8" />
+    {lines.map((l, i) => <text key={`${seed}${i}`} x={x + w / 2 + (q ? 18 : 0)} y={y0 + i * lh} textAnchor="middle" fontFamily={HAND} fontSize={size} fill={INK}>{l}</text>)}
+    {q && <g transform={`translate(${x + 18} ${y + 14}) rotate(-8)`} filter="url(#psh)">
+      <circle r={32} fill={RED} />
+      <text y={15} textAnchor="middle" fontFamily={COND} fontSize={44} fill="#fffaf0">Q</text>
+    </g>}
+  </g>;
+};
+
+// "A / MY ANSWER" tape tag (shown twice: his first answer and the track answer)
+const AnswerTag: React.FC<{ x: number; y: number; k: number }> = ({ x, y, k }) => k > 0.01 ? (
+  <g transform={`translate(${x} ${y}) rotate(-3) scale(${k})`}>
+    <Tag x={30} y={0} text="MY ANSWER" size={32} fill={TAPE} seed="myA" />
+    <g filter="url(#psh)"><circle cx={-100} cy={0} r={30} fill={BLUE} /><text x={-100} y={14} textAnchor="middle" fontFamily={COND} fontSize={40} fill="#fffaf0">A</text></g>
+  </g>
+) : null;
+
+// ---------------- q1 hook: the exact headline, big, static from frame 0; Dadaji's bubble in the right column ----------------
+const HEAD = [
+  { words: ["IS", "YOUR", "CS", "DEGREE"], size: 84, cy: 292 },
+  { words: ["STILL", "WORTH", "IT"], size: 98, cy: 405 },
+  { words: ["IN", "2026?"], size: 124, cy: 532 },
+];
+const Hook: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, -1, B.still.s);
+  if (!w) return null;
+  const AW = 0.47;
+  // frame 0: big cover headline; at ~0.75 s it settles (one 0.4 s move) to half size at the top so the q1 bubble fits below
+  const hs = lerp(1, HOOK_SMALL, smooth((tt - 0.75) / 0.4));
+  return <G w={w}><g transform={`translate(540 232) scale(${hs}) translate(-540 -238)`}>{HEAD.map((L, li) => {
+    const widths = L.words.map((x) => x.length * L.size * AW + L.size * 0.36);
+    const gap = 14, total = widths.reduce((a, b) => a + b, 0) + gap * (L.words.length - 1);
+    let x = 540 - total / 2 + (li === 1 ? 16 : li === 2 ? -10 : 0);
+    return L.words.map((word, j) => {
+      const cx = x + widths[j] / 2; x += widths[j] + gap;
+      const red = word === "2026?";
+      const tw = word.length * L.size * AW;
+      return <g key={`${li}${j}`} transform={`translate(${cx} ${L.cy}) rotate(${(rnd(`h3${li}${j}`) - 0.5) * 5})`} filter="url(#psh2)">
+        <path d={torn(tw + L.size * 0.36, L.size * 1.08, `h3${li}${j}`, "tlrb", 5)} fill={red ? RED : (li + j) % 2 ? "#fffaf0" : "#f6eedb"} />
+        <text textAnchor="middle" y={L.size * 0.36} fontFamily={COND} fontSize={L.size} fill={red ? "#fffaf0" : INK} textLength={tw} lengthAdjust="spacingAndGlyphs">{word}</text>
+      </g>;
+    });
+  })}
+    <path d={torn(130, 34, "h3t", "lr", 3)} transform="translate(110 250) rotate(-24)" fill={TAPE} opacity={0.85} />
+  </g>
+  </G>;
+};
+const Q1: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, 1.15, T.science1 + 0.25);
+  if (!w) return null;
+  const page2 = tt >= T.so0 - 0.1;
+  return <G w={w}>
+    <Bubble x={70} y={426} w={940} h={206} tip={[790, 708]} base={760} k={w.k} size={66} seed={page2 ? "q1b" : "q1a"}
+      lines={page2 ? ["so why is my grandson still", "studying computer science?"] : ["Arre beta, everyone says", "AI can write code now,"]} />
+  </G>;
+};
+
+// ---------------- still: diploma + STILL IMPORTANT; product + software; "A / MY ANSWER" ----------------
+const Still: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, B.still.s, B.q2.s);
+  if (!w) return null;
+  const p = popAt(tt, T.product - 0.12), sw = popAt(tt, T.software - 0.12), kn = popAt(tt, T.know - 0.1);
+  return <G w={w}>
+    <Diploma x={320} y={420} w={480} s={Math.min(1, w.k) * 1.1} unroll={pS(t, T.csStill, 0.5)} rot={-3} t={t} />
+    <Stamp x={800} y={420} t={tt} at={T.important} lines={["STILL", "IMPORTANT"]} rot={7} size={48} paper />
+    {kn > 0.01 && <Tag x={882} y={700} text="how it works" size={36} rot={-3} s={kn} fill={TAPE} seed="hiw" />}
+    {p > 0.01 && <g transform={`translate(700 990) rotate(-3) scale(${p})`} filter="url(#psh)">
+      <rect x={-115} y={-120} width={230} height={240} fill="#fffdf6" />
+      <Gear x={-34} y={10} r={52} a={Math.min(tt, T.product + 1.3) * 50} /><Gear x={50} y={62} r={34} a={-Math.min(tt, T.product + 1.3) * 75 + 12} fill="#e8b84a" />
+      <text textAnchor="middle" y={-78} fontFamily={TYPE} fontSize={36} fill={INK}>product</text>
+    </g>}
+    {sw > 0.01 && <g transform={`translate(905 1000) rotate(3) scale(${sw})`} filter="url(#psh)">
+      <rect x={-115} y={-120} width={230} height={240} fill="#1f2433" />
+      <text textAnchor="middle" y={-74} fontFamily={TYPE} fontSize={34} fill="#f2b36b">software</text>
+      {["if (ok) {", "  run();", "}"].map((l, i) => <text key={i} x={-96} y={-20 + i * 40} fontFamily={TYPE} fontSize={30} fill={i === 1 ? "#7dd3a8" : "#dfeefb"}>{l}</text>)}
+    </g>}
+    <AnswerTag x={705} y={1163} k={popAt(tt, T.csStill - 0.05)} />
+  </G>;
+};
+
+// ---------------- q2: "Hmm. But if the computer writes the code, why should he learn it?" ----------------
+const Q2: React.FC<P> = ({ t }) => {
+  const w = win(t, B.q2.s + 0.25, B.track.s);
+  if (!w) return null;
+  return <G w={w}>
+    <Bubble x={70} y={250} w={940} h={330} tip={[790, 708]} base={760} k={w.k} size={66} seed="q2"
+      lines={["Hmm. But if the computer", "writes the code,", "why should he learn it?"]} />
+  </G>;
+};
+
+// ---------------- train set: track, departures, hero train, ticket; then the four trains ----------------
+const CARDS: { kind: TrainKind; x: number; y: number; at: () => number; label: string; sky: string }[] = [
+  { kind: "bullet", x: 290, y: 335, at: () => T.bullet, label: "BULLET", sky: "#dceaf7" },
+  { kind: "normal", x: 780, y: 335, at: () => T.normal, label: "NORMAL", sky: "#f7ead2" },
+  { kind: "hill", x: 290, y: 535, at: () => T.hill, label: "HILL", sky: "#e1f0dc" },
+  { kind: "coal", x: 780, y: 535, at: () => T.coal, label: "COAL", sky: "#e2dfe6" },
+];
+const Trains: React.FC<P> = ({ t, tt }) => {
+  const els: React.ReactNode[] = [];
+  // top band, track beat: the AI lays a long track fast; the question mark at its end; "A / MY ANSWER"
+  const tr = win(t, B.track.s, B.trains.s);
+  if (tr) {
+    const n = Math.max(0, Math.min(9, Math.floor((tt - (T.so + 0.05)) / 0.11) + 1));
+    const lastX = 80 + n * 96;
+    const h = { x: Math.min(lastX + 20, 940), y: 470, grip: 0.8 };
+    els.push(<G key="tr" w={tr}>
+      <Tag x={330} y={300} text="AI builds the track" size={44} rot={-3} fill={TAPE} seed="abt" />
+      <AnswerTag x={210} y={412} k={popAt(tt, B.track.s + 0.05)} />
+      {Array.from({ length: n }, (_, i) => <Track key={i} x0={80 + i * 96} x1={178 + i * 96} y={560} seed={`tt${i}`} />)}
+      <RobotArm t={t} shoulder={{ x: 1220, y: 300 }} L1={300} L2={280} hand={h} />
+      <QMark x={560} y={420} s={popAt(tt, T.question1 - 0.05, 0.3, 2.4) * 0.7} rot={-8} />
+    </G>);
+  }
+  // top band: the four trains, each on its word, held to the end of the "choose" beat
+  const cards = win(t, B.trains.s, B.q3.s);
+  if (cards) els.push(<G key="cards" w={cards}>{CARDS.map((c, i) => {
+    const k = popAt(tt, c.at() - 0.06, 0.3, 2.4);
+    if (k <= 0.01) return null;
+    const q = popAt(tt, T.doesnt - 0.05 + i * 0.08, 0.3, 2.4);
+    return <g key={i} transform={`translate(${c.x} ${c.y}) rotate(${(rnd(`c3r${i}`) - 0.5) * 4}) scale(${k})`}>
+      <g filter="url(#psh2)"><rect x={-225} y={-95} width={450} height={190} fill="#fffaf0" /></g>
+      <rect x={-213} y={-83} width={426} height={166} fill={c.sky} />
+      {c.kind === "hill" && <path d="M-213 83 L-130 -10 L-70 30 L30 -60 L150 40 L213 10 L213 83 Z" fill="#b9cfa6" />}
+      <rect x={-213} y={58} width={426} height={25} fill="#cbb98f" />
+      <Track x0={-213} x1={213} y={62} s={0.55} seed={`c3t${i}`} />
+      <TrainCut kind={c.kind} x={10} y={62} s={0.7} t={t} />
+      <Tag x={-125} y={-62} text={c.label} size={36} rot={-4} fill={TAPE} seed={`c3l${i}`} />
+      {q > 0.01 && <text x={175} y={-30} textAnchor="middle" fontFamily={SERIF} fontSize={64 * q} fill={RED}>?</text>}
+    </g>;
+  })}</G>);
+  // right column across track/trains/choose: departures, hero train on its track, the ticket (portrait card top-left)
+  const rc = win(t, B.track.s, B.q3.s);
+  if (rc) {
+    const depText = t < T.question1 - 0.1 ? "DEPARTURES" : t < T.whatYouWant - 0.05 ? "DESTINATION: ?" : "YOUR CHOICE";
+    const depFlip = t < T.question1 - 0.1 ? 1 : t < T.whatYouWant - 0.05 ? pS(t, T.question1 - 0.1, 0.5, (x) => x) : pS(t, T.whatYouWant - 0.05, 0.5, (x) => x);
+    const trainX = lerp(1250, 830, smooth((t - (T.track + 0.1)) / 0.8));
+    const tk = popAt(tt, T.question1 - 0.05, 0.35, 2);
+    els.push(<G key="rc" w={rc}>
+      <Departures x={880} y={722} w={420} s={Math.min(1, rc.k) * 0.75} text={depText} t={t} flip={depFlip} />
+      <Track x0={570} x1={1100} y={975} s={0.7} seed="rct" />
+      <HeroTrain x={trainX} y={975} s={0.6} t={t} roll={trainX} smoke={t > T.track + 0.1 && t < T.track + 1.0 ? 1 : 0} />
+      {tk > 0.01 && <g>
+        <Ticket x={800} y={1110} w={420} h={130} rot={-3} s={tk}>
+          <text x={-128} y={10} textAnchor="middle" fontFamily={TYPE} fontSize={22} fill="#8a6a1a" transform="rotate(-90 -128 10)">ADMIT 1</text>
+          <text x={50} y={-12} textAnchor="middle" fontFamily={TYPE} fontSize={30} fill={INK}>YOUR TICKET</text>
+          {t < T.question2 + 0.05 && <text x={50} y={40} textAnchor="middle" fontFamily={HAND} fontSize={46} fill={BLUE}>which train?</text>}
+        </Ticket>
+        <Stamp x={850} y={1125} t={tt} at={T.question2 + 0.1} lines={["YOU CHOOSE"]} rot={-8} size={36} />
+      </g>}
+    </G>);
+  }
+  return <>{els}</>;
+};
+
+// ---------------- q3: "Achha! So the machine lays the tracks, but you decide where the train goes." ----------------
+// top band: his bubble, and under it the track strip: pieces drop on "lays the tracks", a YOU flag on "decide",
+// the hero train rolls to the flag on "train goes" (one motion at a time).
+const Q3: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, B.q3.s + 0.2, B.want.s);
+  if (!w) return null;
+  const n = Math.max(0, Math.min(7, Math.floor((tt - (T.lays - 0.05)) / 0.12) + 1));
+  const fl = popAt(tt, T.decide - 0.05, 0.3, 2.2);
+  const go = smooth((t - (T.trainGoes - 0.05)) / 0.7);
+  const tx = lerp(170, 560, go);
+  return <G w={w}>
+    <Bubble x={70} y={238} w={940} h={212} tip={[830, 706]} base={890} k={w.k} size={54} seed="q3"
+      q={false} lines={["Achha! So the machine lays the tracks,", "but you decide where the train goes."]} />
+    {/* ground strip */}
+    <path d={torn(720, 40, "q3g", "tb", 3)} transform="translate(425 610)" fill="#cbb98f" opacity={0.9} />
+    {Array.from({ length: n }, (_, i) => {
+      const k = popAt(tt, T.lays - 0.05 + i * 0.12, 0.14, 2);
+      return <g key={i} transform={`translate(0 ${(1 - Math.min(1, k)) * -30})`}><Track x0={90 + i * 96} x1={188 + i * 96} y={592} seed={`q3t${i}`} /></g>;
+    })}
+    <HeroTrain x={tx} y={592} s={0.36} t={t} roll={tx} />
+    {fl > 0.01 && <g transform={`translate(742 598) scale(${fl})`}>
+      <line x1={0} y1={0} x2={0} y2={-118} stroke="#5b4636" strokeWidth={6} strokeLinecap="round" />
+      <g filter="url(#psh)"><path d="M0,-118 L-108,-100 L-96,-82 L-108,-62 L0,-66 Z" fill={RED} /></g>
+      <text x={-50} y={-79} textAnchor="middle" fontFamily={TYPE} fontSize={28} fill="#fffaf0">YOU</text>
+    </g>}
+  </G>;
+};
+
+// ---------------- want: ticket "what you want?" -> CS; student in the right column ----------------
+const Want: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, B.want.s, B.cs.s);
+  if (!w) return null;
+  return <G w={w}>
+    <Ticket x={540} y={420} w={760} h={260} rot={-2} s={Math.min(1, w.k)}>
+      <text x={-232} y={10} textAnchor="middle" fontFamily={TYPE} fontSize={30} fill="#8a6a1a" transform="rotate(-90 -232 10)">ADMIT 1</text>
+      <text x={90} y={-30} textAnchor="middle" fontFamily={TYPE} fontSize={42} fill={INK}>YOUR TICKET</text>
+      <text x={90} y={60} textAnchor="middle" fontFamily={HAND} fontSize={84} fill={BLUE}>what you want?</text>
+      <Draw d="M -110 84 Q 90 98 300 78" p={pS(t, T.understanding, 0.4)} w={8} />
+    </Ticket>
+    <g transform={`translate(830 1170) scale(${Math.min(1, w.k) * 0.9})`}><Student x={0} y={0} t={t} raise={0.5} ticket look={-0.4} /></g>
+    <Stamp x={872} y={770} t={tt} at={T.theCS + 0.6} lines={["CS"]} rot={-10} size={90} paper />
+  </G>;
+};
+
+// ---------------- cs + trades: blueprint (top band) + three books (right column) ----------------
+const BOOKS = [{ l: "ARCHITECTURE", at: () => T.architecture, c: "#3f6fb4" }, { l: "SYSTEM DESIGN", at: () => T.system2, c: "#3f8f5a" }, { l: "TRADE-OFFS", at: () => T.trades, c: RED }];
+const CsPart: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, B.cs.s, B.q4.s);
+  if (!w) return null;
+  const blue = win(t, B.cs.s, B.answer.s);
+  const diag = pS(t, T.architecture, 0.6), lb = pS(t, T.system2, 0.5);
+  const sc = popAt(tt, T.trades - 0.1, 0.35, 1.8), ang = lerp(0, -10, smooth((t - (T.trades + 0.3)) / 0.5)) + lerp(0, 18, smooth((t - (T.make - 0.1)) / 0.5));
+  const diagOut = smooth((t - (T.trades - 0.2)) / 0.3);
+  return <G w={w}>
+    {blue && <G w={blue}>
+      <g transform="rotate(-0.8 540 430)">
+        <rect x={50} y={232} width={980} height={400} fill="#24569e" filter="url(#psh2)" />
+        {Array.from({ length: 23 }, (_, i) => <line key={`v${i}`} x1={50 + i * 43} y1={232} x2={50 + i * 43} y2={632} stroke="#fff" strokeOpacity={0.12} />)}
+        {Array.from({ length: 10 }, (_, i) => <line key={`h${i}`} x1={50} y1={232 + i * 43} x2={1030} y2={232 + i * 43} stroke="#fff" strokeOpacity={0.12} />)}
+        <Tape x={95} y={240} rot={-35} seed="b3a" /><Tape x={985} y={240} rot={35} seed="b3b" />
+        <text x={540} y={300} textAnchor="middle" fontFamily={HAND} fontSize={58} fill="#fff" opacity={pS(t, B.cs.s + 0.1, 0.4)}>the computer science part</text>
+      </g>
+      {diagOut < 1 && <g opacity={1 - diagOut}>
+        {[{ x: 230, l: "app" }, { x: 540, l: "API" }, { x: 850, l: "DB" }].map((b, i) => {
+          const k = Math.min(1, Math.max(0, diag * 3 - i));
+          return k > 0 && <g key={i} opacity={k}>
+            {i === 2 ? <><ellipse cx={b.x} cy={372} rx={84} ry={22} fill="none" stroke="#fff" strokeWidth={4} /><path d={`M${b.x - 84},372 V470 A84,22 0 0 0 ${b.x + 84},470 V372`} fill="none" stroke="#fff" strokeWidth={4} /></>
+              : <rect x={b.x - 95} y={360} width={190} height={115} rx={10} fill="none" stroke="#fff" strokeWidth={4} />}
+            <text x={b.x} y={436} textAnchor="middle" fontFamily={HAND} fontSize={52} fill="#fff">{b.l}</text>
+            {i < 2 && <Draw d={`M${b.x + 100},418 L${b.x + 210},418`} p={k} stroke="#fff" w={4} />}
+          </g>;
+        })}
+        {lb > 0 && <g opacity={lb}>
+          <rect x={410} y={510} width={260} height={80} rx={10} fill="none" stroke="#ffe9a0" strokeWidth={4} strokeDasharray="12 8" />
+          <text x={540} y={564} textAnchor="middle" fontFamily={HAND} fontSize={46} fill="#ffe9a0">load balancer</text>
+          <rect x={750} y={510} width={200} height={80} rx={10} fill="none" stroke="#ffe9a0" strokeWidth={4} strokeDasharray="12 8" />
+          <text x={850} y={564} textAnchor="middle" fontFamily={HAND} fontSize={46} fill="#ffe9a0">cache</text>
+        </g>}
+      </g>}
+      {sc > 0.01 && <g transform={`translate(540 400) scale(${Math.min(1.05, sc)})`}>
+        <rect x={-12} y={0} width={24} height={200} fill="#c9a24a" />
+        <path d="M-90 215 L90 215 L60 190 L-60 190 Z" fill="#a8780f" />
+        <g transform={`rotate(${ang})`}><rect x={-280} y={-10} width={560} height={20} rx={8} fill={GOLD} /></g>
+        {[-1, 1].map((sd) => { const r = (ang * Math.PI) / 180, px = sd * Math.cos(r) * 260, py = sd * Math.sin(r) * 260; return <g key={sd}>
+          <path d={`M${px},${py} L${px - 90},${py + 120} M${px},${py} L${px + 90},${py + 120}`} stroke="#ffe9a0" strokeWidth={3} />
+          <path d={`M${px - 115},${py + 120} Q${px},${py + 175} ${px + 115},${py + 120} Z`} fill={GOLD} stroke="#a8780f" strokeWidth={3} />
+          <QMark x={px} y={py + 86} s={0.32} color={sd < 0 ? BLUE : RED} />
+        </g>; })}
+        <circle r={20} fill="#ffe9a0" stroke="#a8780f" strokeWidth={4} />
+      </g>}
+    </G>}
+    {/* the three books drop on their words; they stay through "answered" */}
+    {BOOKS.map((b, i) => {
+      const k = popAt(tt, b.at() - 0.08, 0.32, 2);
+      if (k <= 0.01) return null;
+      const y = 1110 - i * 82 - (1 - Math.min(1, k)) * 160;
+      return <g key={i} transform={`translate(${800 + (i - 1) * 14} ${y}) rotate(${(i - 1) * 2})`} filter="url(#psh)">
+        <rect x={-210} y={-36} width={420} height={72} rx={6} fill={b.c} />
+        <rect x={-210} y={-36} width={26} height={72} fill="#00000033" /><rect x={184} y={-36} width={26} height={72} fill="#00000033" />
+        <text textAnchor="middle" y={13} fontFamily={TYPE} fontSize={36} fill="#fffaf0">{b.l}</text>
+      </g>;
+    })}
+  </G>;
+};
+
+// ---------------- answer: diploma + ? -> checks ----------------
+const Answer: React.FC<P> = ({ t, tt }) => {
+  const w = win(t, B.answer.s, B.q4.s);
+  if (!w) return null;
+  return <G w={w}>
+    <Diploma x={320} y={430} w={460} s={Math.min(1, w.k) * 1.1} unroll={pS(t, T.these, 0.45)} rot={-3} t={t} />
+    {[0, 1, 2].map((i) => {
+      const x = 700 + i * 120, y = 400 + (i % 2) * 70;
+      const flip = (t - (T.answered + i * 0.12)) / 0.18;
+      const sx = flip < 0 ? 1 : flip < 1 ? Math.max(0.15, Math.abs(1 - 2 * flip)) : 1;
+      return <g key={i} transform={`translate(${x} ${y}) scale(${sx} 1)`}>
+        {flip < 0.5 ? <QMark x={0} y={0} s={popAt(tt, T.these + 0.1 + i * 0.1, 0.3, 2.4) * 0.5} rot={(i - 1) * 8} /> : <g filter="url(#psh2)"><circle r={50} fill="#fffaf0" /><path d={checkPath(0, 4, 1.1)} stroke={RED} strokeWidth={11} fill="none" strokeLinecap="round" strokeLinejoin="round" /></g>}
+      </g>;
+    })}
+    <Tag x={590} y={590} text="pursue a CS degree" size={40} rot={-2} s={popAt(tt, T.pursue - 0.1)} fill={TAPE} seed="pcs" />
+  </G>;
+};
+
+// ---------------- q4: "Okay, okay, he can keep studying." bubble, then the IG-style comment card + YES / NO ----------------
+const Q4: React.FC<P> = ({ t, tt }) => {
+  const els: React.ReactNode[] = [];
+  const b = win(t, B.q4.s + 0.25, T.would - 0.1);
+  if (b) els.push(<G key="b" w={b}>
+    <Bubble x={110} y={262} w={860} h={250} tip={[790, 708]} base={760} k={b.k} size={66} q={false} seed="q4"
+      lines={["Okay, okay,", "he can keep studying."]} />
+  </G>);
+  const c = win(t, T.would - 0.1, B.end.s);
+  if (c) {
+    const y = popAt(tt, T.tell - 0.05, 0.3, 2.4), n = popAt(tt, T.comments - 0.05, 0.3, 2.4);
+    els.push(<G key="c" w={c}>
+      <g transform={`translate(540 380) scale(${Math.min(1, c.k)})`} filter="url(#psh2)">
+        <rect x={-450} y={-120} width={900} height={240} rx={46} fill="#ffffff" />
+        <clipPath id="q4av"><circle cx={-370} cy={-40} r={46} /></clipPath>
+        <circle cx={-370} cy={-40} r={46} fill="#f3e7c9" />
+        <g clipPath="url(#q4av)"><g transform="translate(-370 104) scale(0.42)"><Dadaji open={0} tag={false} /></g></g>
+        <text x={-300} y={-36} fontFamily={SERIF} fontSize={50} fill={INK}>Would you still pick CS?</text>
+        <text x={-300} y={36} fontFamily={TYPE} fontSize={38} fill="#5b5770">Tell me in the comments.</text>
+        <text x={-300} y={92} fontFamily={TYPE} fontSize={28} fill="#8b86a0">Reply</text>
+        <path d="M370,-70 C370,-96 400,-100 410,-80 C420,-100 450,-96 450,-70 C450,-46 410,-24 410,-24 C410,-24 370,-46 370,-70 Z" fill="none" stroke="#8b86a0" strokeWidth={5} transform="translate(-20 40)" />
+      </g>
+      {y > 0.01 && <g transform={`translate(330 570) rotate(-5) scale(${y * 0.82})`} filter="url(#psh2)">
+        <rect x={-110} y={-70} width={220} height={140} rx={70} fill="#fff" /><rect x={-98} y={-58} width={196} height={116} rx={58} fill="#3f8f5a" />
+        <text textAnchor="middle" y={22} fontFamily={COND} fontSize={70} fill="#fffaf0">YES</text>
+      </g>}
+      {n > 0.01 && <g transform={`translate(560 578) rotate(5) scale(${n * 0.82})`} filter="url(#psh2)">
+        <rect x={-100} y={-70} width={200} height={140} rx={70} fill="#fff" /><rect x={-88} y={-58} width={176} height={116} rx={58} fill={RED} />
+        <text textAnchor="middle" y={22} fontFamily={COND} fontSize={70} fill="#fffaf0">NO</text>
+      </g>}
+    </G>);
+  }
+  return <>{els}</>;
+};
+
+// ---------------- end card (top band + right column), static for the last ~0.4 s ----------------
+const End: React.FC<{ t: number }> = ({ t }) => {
+  if (t < B.end.s - 0.05) return null;
+  const tf = Math.min(t, T.end - 0.45), tt = twos(tf);
+  const k = back((tt - B.end.s) / 0.35, 1.8);
+  const fol = pS(tf, OUTRO.t, 0.4), pulse = Math.sin(smooth((tf - (OUTRO.t + 0.7)) / 0.4) * Math.PI);
+  const hk = back((tt - (OUTRO.t + 0.65)) / 0.3, 2.2);
+  return <g>
+    <g transform={`translate(540 430) scale(${Math.max(0.001, Math.min(1, k))})`}>
+      <Ticket x={0} y={0} w={960} h={390} fill="#fffaf0">
+        <rect x={-466} y={-181} width={932} height={362} fill="none" stroke={GOLD} strokeWidth={4} />
+        <text x={-372} y={0} textAnchor="middle" fontFamily={TYPE} fontSize={34} fill="#8a6a1a" transform="rotate(-90 -372 0)" letterSpacing={3}>ADMIT ONE</text>
+        <text x={90} y={-82} textAnchor="middle" fontFamily={SERIF} fontSize={70} fill={INK}>Is your CS degree</text>
+        <text x={90} y={10} textAnchor="middle" fontFamily={SERIF} fontSize={84} fill={RED}>still worth it</text>
+        <text x={90} y={100} textAnchor="middle" fontFamily={SERIF} fontSize={70} fill={INK}>in 2026?</text>
+      </Ticket>
+      <path d={torn(130, 34, "e3a", "lr", 3)} transform="translate(-420 -200) rotate(-30)" fill={TAPE} opacity={0.85} />
+      <path d={torn(130, 34, "e3b", "lr", 3)} transform="translate(420 -200) rotate(28)" fill={TAPE} opacity={0.85} />
+    </g>
+    <g opacity={Math.min(1, Math.max(0, (tt - (OUTRO.t - 0.1)) / 0.15))}>
+      <text x={790} y={760} textAnchor="middle" fontFamily={TYPE} fontSize={48} fill={INK}>Follow for</text>
+      <text x={790} y={822} textAnchor="middle" fontFamily={TYPE} fontSize={48} fill={INK}>more AI news</text>
+      {fol > 0 && <Draw d="M 650 778 Q 720 790 790 776" p={fol} w={7} />}
+    </g>
+    {hk > 0.01 && <g transform={`translate(790 930) rotate(-3) scale(${hk * (1 + 0.08 * pulse)})`} filter="url(#psh)">
+      <path d={torn(440, 84, "end3", "lr", 5)} fill={RED} />
+      <text y={17} textAnchor="middle" fontFamily={TYPE} fontSize={44} fill="#fffaf0">@madhav_somani</text>
+    </g>}
+    <Track x0={570} x1={1100} y={1130} s={0.7} seed="e3t" />
+    <HeroTrain x={830} y={1130} s={0.6} t={tf} />
+  </g>;
+};
+
+export const V4Back: React.FC<{ t: number; fr: number }> = ({ t }) => {
+  const tt = twos(t);
+  const p = { t, tt };
+  return (
+    <AbsoluteFill style={{ background: "#efe4cf" }}>
+      <svg width={1080} height={1920} style={{ position: "absolute", inset: 0 }}>
+        <Defs />
+        <BgImage src={IMG.board} t={0} />
+        <Dressing spots={[{ x: 700, y: 1700, rot: -10, kind: 0 }, { x: 1000, y: 1600, rot: 0, kind: 2 }, { x: 980, y: 1820, rot: 0, kind: 1 }]} />
+        <Hook {...p} />
+        <Still {...p} />
+        <Trains {...p} />
+        <Want {...p} />
+        <CsPart {...p} /><Answer {...p} />
+        <DadajiLayer {...p} />
+        <Q1 {...p} /><Q2 {...p} /><Q3 {...p} /><Q4 {...p} />
+        <End t={t} />
+      </svg>
+    </AbsoluteFill>
+  );
+};

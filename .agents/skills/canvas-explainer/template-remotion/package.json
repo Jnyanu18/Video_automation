@@ -1,0 +1,1 @@
+{"name":"canvas-film","private":true,"version":"0.0.0","dependencies":{"@remotion/cli":"^4.0.535","@remotion/media-utils":"^4.0.535","@types/react":"^19.3.0","react":"^19.3.0","react-dom":"^19.3.0","remotion":"^4.0.535","typescript":"^5.6.3"}}

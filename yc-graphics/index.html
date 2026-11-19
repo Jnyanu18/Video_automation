@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg-glass: rgba(10, 15, 26, 0.94);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --cyan: #38BDF8;
+        --cyan-glow: rgba(56, 189, 248, 0.35);
+        --indigo: #6366F1;
+        --green: #10B981;
+        --green-glow: rgba(16, 185, 129, 0.3);
+        --yellow: #FDE047;
+        --red: #F43F5E;
+        --white: #FFFFFF;
+        --muted: #94A3B8;
+        --yc-orange: #FF6600;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        background: transparent;
+        overflow: hidden;
+        font-family: var(--font);
+        color: var(--white);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+      }
+
+      /* 1. Intro Founder Lower Third (0 - 5.0s) */
+      #intro-badge {
+        position: absolute;
+        top: 260px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 900px;
+        background: var(--bg-glass);
+        backdrop-filter: blur(24px);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 30px 40px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        opacity: 0;
+        z-index: 200;
+      }
+      .yc-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 102, 0, 0.15);
+        border: 1px solid var(--yc-orange);
+        color: var(--yc-orange);
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        padding: 6px 20px;
+        border-radius: 30px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .founder-name {
+        font-size: 46px;
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+      .founder-sub {
+        font-size: 24px;
+        color: var(--cyan);
+        font-weight: 600;
+      }
+
+      /* 2. Top UI Section Container (y: 0 to 864px) */
+      #top-ui-panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1080px;
+        height: 864px;
+        background: #080D1A;
+        border-bottom: 2px solid #1E293B;
+        opacity: 0;
+        z-index: 100;
+        overflow: hidden;
+      }
+      .ui-header {
+        position: absolute;
+        top: 40px;
+        left: 60px;
+        right: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .product-tag {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        background: rgba(56, 189, 248, 0.12);
+        padding: 8px 22px;
+        border-radius: 30px;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+      }
+      .metric-badge {
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--green);
+        background: rgba(16, 185, 129, 0.12);
+        padding: 8px 20px;
+        border-radius: 30px;
+        border: 1px solid var(--green);
+      }
+
+      /* Divider Line at y = 864px */
+      #divider-bar {
+        position: absolute;
+        top: 864px;
+        left: 0;
+        width: 1080px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cyan), var(--indigo), var(--cyan));
+        box-shadow: 0 0 20px var(--cyan-glow);
+        opacity: 0;
+        z-index: 150;
+      }
+      #divider-pill {
+        position: absolute;
+        top: 846px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #0B0F19;
+        border: 1px solid var(--cyan);
+        color: var(--cyan);
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        padding: 4px 18px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        opacity: 0;
+        z-index: 160;
+      }
+
+      /* Scene 1: TradePilot (5.2 - 12.0s) */
+      #scene-tradepilot {
+        position: absolute;
+        top: 110px;
+        left: 60px;
+        width: 960px;
+        height: 710px;
+        opacity: 0;
+      }
+      .trading-window {
+        background: #111827;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 24px 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .candlestick-area {
+        height: 300px;
+        background: #0B0F19;
+        border-radius: 14px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        padding: 20px 30px;
+        position: relative;
+        overflow: hidden;
+      }
+      .candle {
+        width: 18px;
+        border-radius: 3px;
+        position: relative;
+      }
+      .candle.green {
+        background: var(--green);
+        box-shadow: 0 0 10px var(--green-glow);
+      }
+      .candle.red {
+        background: var(--red);
+      }
+      .candle::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        background: inherit;
+        top: -14px;
+        bottom: -14px;
+      }
+      .bot-signal-card {
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid var(--green);
+        border-radius: 14px;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .signal-txt {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--white);
+      }
+      .signal-status {
+        font-size: 20px;
+        color: var(--green);
+        font-weight: 800;
+      }
+
+      /* Scene 2: The Problem (12.0 - 26.0s) */
+      #scene-problem {
+        position: absolute;
+        top: 110px;
+        left: 60px;
+        width: 960px;
+        height: 710px;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .problem-title {
+        font-size: 40px;
+        font-weight: 900;
+        text-align: center;
+        color: var(--white);
+        margin-bottom: 20px;
+      }
+      .compare-cards {
+        display: flex;
+        gap: 24px;
+        height: 480px;
+      }
+      .comp-box {
+        flex: 1;
+        background: #111827;
+        border-radius: 20px;
+        padding: 30px 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .comp-box.bad {
+        border: 2px solid var(--red);
+      }
+      .comp-box.good {
+        border: 2px solid var(--indigo);
+      }
+      .comp-tag {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .comp-desc {
+        font-size: 24px;
+        line-height: 1.4;
+        color: var(--muted);
+      }
+      .comp-status {
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      /* Scene 3: AskVerb (26.0 - 42.0s) */
+      #scene-askverb {
+        position: absolute;
+        top: 110px;
+        left: 60px;
+        width: 960px;
+        height: 710px;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .ask-input-box {
+        background: #111827;
+        border: 2px solid var(--cyan);
+        border-radius: 16px;
+        padding: 20px 28px;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--white);
+        box-shadow: 0 0 25px var(--cyan-glow);
+      }
+      .ask-preview-modal {
+        background: rgba(30, 41, 59, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 18px;
+        padding: 24px 30px;
+      }
+      .modal-title {
+        font-size: 22px;
+        color: var(--yellow);
+        font-weight: 800;
+        margin-bottom: 12px;
+      }
+      .modal-diff {
+        font-size: 20px;
+        color: var(--muted);
+        line-height: 1.4;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 14px 20px;
+        border-radius: 10px;
+        font-family: monospace;
+      }
+      .confirm-action-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(16, 185, 129, 0.15);
+        border: 2px solid var(--green);
+        border-radius: 16px;
+        padding: 20px 30px;
+      }
+      .btn-confirm {
+        background: var(--green);
+        color: #000;
+        font-size: 22px;
+        font-weight: 900;
+        padding: 10px 26px;
+        border-radius: 10px;
+      }
+
+      /* Scene 4: Traction (42.0 - 48.0s) */
+      #scene-traction {
+        position: absolute;
+        top: 110px;
+        left: 60px;
+        width: 960px;
+        height: 710px;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+      }
+      .traction-stat-box {
+        background: #111827;
+        border: 2px solid var(--green);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 0 40px var(--green-glow);
+      }
+      .stat-big {
+        font-size: 72px;
+        font-weight: 900;
+        color: var(--green);
+        margin-bottom: 10px;
+      }
+      .stat-label {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--white);
+      }
+
+      /* 5. Vision / Thesis Overlay (48.0 - 60.9s) */
+      #vision-overlay {
+        position: absolute;
+        top: 180px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 900px;
+        background: var(--bg-glass);
+        backdrop-filter: blur(24px);
+        border: 2px solid var(--cyan);
+        border-radius: 28px;
+        padding: 36px 44px;
+        text-align: center;
+        opacity: 0;
+        z-index: 200;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px var(--cyan-glow);
+      }
+      .vision-pill {
+        display: inline-block;
+        background: var(--cyan);
+        color: #000;
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 0.25em;
+        padding: 6px 22px;
+        border-radius: 30px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .vision-headline {
+        font-size: 42px;
+        font-weight: 900;
+        line-height: 1.2;
+        color: var(--white);
+        text-transform: uppercase;
+      }
+
+      /* 6. Closing Outro Card (58.0 - 60.9s) */
+      #outro-card {
+        position: absolute;
+        bottom: 260px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 800px;
+        background: rgba(10, 15, 26, 0.96);
+        border: 2px solid var(--yc-orange);
+        border-radius: 24px;
+        padding: 30px 40px;
+        text-align: center;
+        opacity: 0;
+        z-index: 250;
+      }
+      .outro-yc {
+        font-size: 32px;
+        font-weight: 900;
+        color: var(--yc-orange);
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+      .outro-brand {
+        font-size: 24px;
+        color: var(--white);
+        font-weight: 700;
+      }
+
+      /* Bottom Synchronized Captions */
+      #caption-bar {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 920px;
+        background: rgba(8, 12, 22, 0.94);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 24px;
+        padding: 24px 36px;
+        text-align: center;
+        font-size: 34px;
+        line-height: 1.35;
+        font-weight: 800;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        z-index: 300;
+      }
+      .hl-yellow { color: var(--yellow); }
+      .hl-cyan { color: var(--cyan); }
+      .hl-green { color: var(--green); }
+      .hl-orange { color: var(--yc-orange); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="61"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- 1. Intro Founder Lower Third (0 - 5.0s) -->
+      <div id="intro-badge" class="clip" data-start="0" data-duration="5.2">
+        <div class="yc-pill">YC WINTER 2027</div>
+        <div class="founder-name">VISHNU • SOLO FOUNDER</div>
+        <div class="founder-sub">ASKVERB • BUILDING ACTION AGENTS YOU CAN TRUST</div>
+      </div>
+
+      <!-- 2. Top UI Panel (5.2 - 48.0s) -->
+      <div id="top-ui-panel" class="clip" data-start="5.2" data-duration="42.8">
+        <div class="ui-header">
+          <div class="product-tag" id="panel-tag">TRADEPILOT</div>
+          <div class="metric-badge" id="panel-metric">2,600+ USERS</div>
+        </div>
+
+        <!-- Scene 1: TradePilot (5.2 - 12.0s) -->
+        <div id="scene-tradepilot">
+          <div class="trading-window">
+            <div class="chart-header">
+              <span>TRADINGVIEW • BTC/USDT (15m)</span>
+              <span style="color: var(--green);">● AGENT ONLINE</span>
+            </div>
+            <div class="candlestick-area">
+              <div class="candle red" style="height: 120px;"></div>
+              <div class="candle red" style="height: 160px;"></div>
+              <div class="candle green" style="height: 180px;"></div>
+              <div class="candle green" style="height: 220px;"></div>
+              <div class="candle red" style="height: 140px;"></div>
+              <div class="candle green" style="height: 240px;"></div>
+              <div class="candle green" style="height: 270px;"></div>
+            </div>
+            <div class="bot-signal-card">
+              <div class="signal-txt">TradePilot: Buy Signal Executed</div>
+              <div class="signal-status">✓ 2,600+ TRADERS</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 2: The Problem (12.0 - 26.0s) -->
+        <div id="scene-problem">
+          <div class="problem-title">THE PRODUCTION TRUST GAP</div>
+          <div class="compare-cards">
+            <div class="comp-box bad">
+              <div>
+                <div class="comp-tag" style="color: var(--red);">CHATBOT AGENTS</div>
+                <div class="comp-desc" style="margin-top: 14px;">Easy to embed, but unverified actions break production data.</div>
+              </div>
+              <div class="comp-status" style="background: rgba(244,63,94,0.15); color: var(--red);">⚠️ HIGH FAILURE RISK</div>
+            </div>
+            <div class="comp-box good">
+              <div>
+                <div class="comp-tag" style="color: var(--indigo);">BIG TECH AGENTS</div>
+                <div class="comp-desc" style="margin-top: 14px;">AWS & Google Cloud build custom in-house agentic ops.</div>
+              </div>
+              <div class="comp-status" style="background: rgba(99,102,241,0.15); color: var(--indigo);">🔒 $10M+ R&D COST</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 3: AskVerb (26.0 - 42.0s) -->
+        <div id="scene-askverb">
+          <div class="ask-input-box">
+            <span style="color: var(--cyan);">User:</span> "Reassign 18 inactive leads to Sarah"
+          </div>
+          <div class="ask-preview-modal">
+            <div class="modal-title">AskVerb Safe Action Preview</div>
+            <div class="modal-diff">
+              Proposed: UPDATE leads SET owner='Sarah' WHERE active=false<br />
+              Safety Check: 18 rows affected • Zero data loss
+            </div>
+          </div>
+          <div class="confirm-action-row">
+            <div>
+              <div style="font-size: 22px; font-weight: 800;">Human-in-the-Loop</div>
+              <div style="font-size: 18px; color: var(--muted);">Executes ONLY after approval</div>
+            </div>
+            <div class="btn-confirm">[ CONFIRM ]</div>
+          </div>
+        </div>
+
+        <!-- Scene 4: Traction (42.0 - 48.0s) -->
+        <div id="scene-traction">
+          <div class="traction-stat-box">
+            <div class="stat-big">1 LIVE CUSTOMER</div>
+            <div class="stat-label">DEPLOYED IN PRODUCTION • LAUNCHED SEPT</div>
+          </div>
+          <div style="font-size: 24px; color: var(--cyan); font-weight: 700;">
+            100% AUDITABLE ACTION TRACES • ENTERPRISE READY
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider Bar -->
+      <div id="divider-bar" class="clip" data-start="5.2" data-duration="42.8"></div>
+      <div id="divider-pill" class="clip" data-start="5.2" data-duration="42.8">LIVE PRODUCT DEMO</div>
+
+      <!-- 5. Vision / Thesis Overlay (48.0 - 58.0s) -->
+      <div id="vision-overlay" class="clip" data-start="48.0" data-duration="10.0">
+        <div class="vision-pill">THE THESIS</div>
+        <div class="vision-headline">THE ZERO-CLICK FUTURE OF SOFTWARE</div>
+        <div style="margin-top: 14px; font-size: 24px; color: var(--muted); font-weight: 600;">
+          Users will no longer navigate complex UIs. They will just ask an AI agent to do it.
+        </div>
+      </div>
+
+      <!-- 6. Outro YC Card (58.0 - 61.0s) -->
+      <div id="outro-card" class="clip" data-start="58.0" data-duration="3.0">
+        <div class="outro-yc">Y COMBINATOR W27</div>
+        <div class="outro-brand">ASKVERB • VISHNU</div>
+      </div>
+
+      <!-- Bottom Synchronized Captions -->
+      <div id="caption-bar" class="clip" data-start="0" data-duration="61">
+        <span id="caption-text">Hey YC, I'm <span class="hl-cyan">Vishnu</span>, 22, solo founder of <span class="hl-orange">AskVerb</span>.</span>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // 1. Intro Founder Lower Third (0 -> 5.0s)
+      tl.fromTo("#intro-badge", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.2);
+      tl.to("#intro-badge", { opacity: 0, y: -20, duration: 0.4, ease: "power2.in" }, 4.8);
+
+      // 2. Top UI Panel Drop Down at 5.2s
+      tl.fromTo("#top-ui-panel", { opacity: 0, y: -50 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 5.2);
+      tl.fromTo(["#divider-bar", "#divider-pill"], { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out" }, 5.2);
+
+      // Top UI Panel Exit at 48.0s
+      tl.to(["#top-ui-panel", "#divider-bar", "#divider-pill"], { opacity: 0, y: -40, duration: 0.5, ease: "power2.in" }, 47.8);
+
+      // Scene 1: TradePilot (5.2 -> 12.0s)
+      tl.fromTo("#scene-tradepilot", { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, 5.4);
+      tl.to("#scene-tradepilot", { opacity: 0, duration: 0.3 }, 11.7);
+
+      // Transition to Scene 2: The Problem (12.0 -> 26.0s)
+      tl.call(() => {
+        document.getElementById("panel-tag").innerText = "THE INDUSTRY GAP";
+        document.getElementById("panel-metric").innerText = "THE HARD PART";
+        document.getElementById("panel-metric").style.borderColor = "#F43F5E";
+        document.getElementById("panel-metric").style.color = "#F43F5E";
+      }, null, 11.9);
+
+      tl.fromTo("#scene-problem", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 12.0);
+      tl.to("#scene-problem", { opacity: 0, duration: 0.3 }, 25.7);
+
+      // Transition to Scene 3: AskVerb (26.0 -> 42.0s)
+      tl.call(() => {
+        document.getElementById("panel-tag").innerText = "ASKVERB";
+        document.getElementById("panel-metric").innerText = "EMBEDDABLE SAAS AGENT";
+        document.getElementById("panel-metric").style.borderColor = "#10B981";
+        document.getElementById("panel-metric").style.color = "#10B981";
+      }, null, 25.9);
+
+      tl.fromTo("#scene-askverb", { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 26.0);
+      tl.to("#scene-askverb", { opacity: 0, duration: 0.3 }, 41.7);
+
+      // Transition to Scene 4: Traction (42.0 -> 48.0s)
+      tl.call(() => {
+        document.getElementById("panel-tag").innerText = "TRACTION";
+        document.getElementById("panel-metric").innerText = "ENTERPRISE LIVE";
+      }, null, 41.9);
+
+      tl.fromTo("#scene-traction", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 42.0);
+      tl.to("#scene-traction", { opacity: 0, duration: 0.3 }, 47.7);
+
+      // 5. Vision Overlay (48.0 -> 58.0s)
+      tl.fromTo("#vision-overlay", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 48.0);
+      tl.to("#vision-overlay", { opacity: 0, duration: 0.4 }, 57.6);
+
+      // 6. Outro Card (58.0 -> 61.0s)
+      tl.fromTo("#outro-card", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 58.0);
+
+      // Synchronized Captions
+      const cap = document.getElementById("caption-text");
+      const captions = [
+        { t: 0.6, html: 'Hey YC, I\'m <span class="hl-cyan">Vishnu</span>, 22, solo founder of <span class="hl-orange">AskVerb</span>.' },
+        { t: 5.4, html: 'I built <span class="hl-cyan">TradePilot</span>, an AI agent inside <span class="hl-yellow">TradingView</span>...' },
+        { t: 8.5, html: 'And gave it to <span class="hl-green">over 2,600 users</span>!' },
+        { t: 11.0, html: 'Building that taught me: putting AI inside a product is the easy part.' },
+        { t: 15.2, html: 'The hard part is to <span class="hl-yellow">trust that AI agent</span> to do things...' },
+        { t: 18.5, html: 'Inside your product <span class="hl-cyan">without breaking anything</span>.' },
+        { t: 22.0, html: 'Big tech like <span class="hl-cyan">AWS and Google Cloud</span> are building their own agents.' },
+        { t: 26.1, html: 'Most software companies can\'t. <span class="hl-orange">AskVerb</span> is the AI agent for them!' },
+        { t: 31.3, html: 'Users just ask, and <span class="hl-orange">Verb shows what is going to change</span>...' },
+        { t: 36.5, html: 'And only after they say yes, <span class="hl-green">it executes it safely</span>.' },
+        { t: 41.5, html: 'Live since September, with <span class="hl-green">one live customer deployed</span> in their product.' },
+        { t: 47.8, html: 'I\'m betting heavily on a future where people <span class="hl-cyan">no longer click on anything</span>.' },
+        { t: 53.0, html: 'They\'ll just open an AI agent, ask what they want, and <span class="hl-green">get things done</span>.' },
+        { t: 58.5, html: '<span class="hl-orange">Looking forward to hearing from you, YC!</span>' }
+      ];
+
+      captions.forEach((c) => {
+        tl.call(() => {
+          cap.innerHTML = c.html;
+        }, null, c.t);
+      });
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

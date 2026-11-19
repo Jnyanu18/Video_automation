@@ -1,0 +1,947 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"s0\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s0",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\reels\\reel-c\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"s0\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s1",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\reels\\reel-c\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"s1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s2",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\reels\\reel-c\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"s2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"s3\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s3",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\reels\\reel-c\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"s3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 12,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx0\" is 0.49s but its slot (data-duration) is 0.60s — the slot is shortened to the media length when rendered. Set data-duration to ~0.49s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx1\" is 0.49s but its slot (data-duration) is 0.60s — the slot is shortened to the media length when rendered. Set data-duration to ~0.49s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx2\" is 0.49s but its slot (data-duration) is 0.60s — the slot is shortened to the media length when rendered. Set data-duration to ~0.49s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx3\" is 0.11s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.11s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx4\" is 0.11s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.11s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx5\" is 0.11s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.11s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx6\" is 0.32s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.32s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx7\" is 0.38s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.38s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx8\" is 0.38s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.38s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx9\" is 0.38s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.38s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx10\" is 0.32s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.32s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx11\" is 0.71s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.71s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "27.91",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 13,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 14.968,
+        "selector": "#s2 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 216.14,
+          "top": 1079,
+          "right": 391.64,
+          "bottom": 1188,
+          "width": 175.5,
+          "height": 109
+        },
+        "containerSelector": "#s2 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "text": "Four",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 216.14,
+          "y": 1079,
+          "width": 175.5,
+          "height": 109
+        },
+        "firstSeen": 14.968,
+        "lastSeen": 15.124,
+        "occurrences": 2,
+        "heldMs": 156.00000000000057,
+        "times": [
+          14.968,
+          15.124
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 14.968,
+        "selector": "#s2 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 410.36,
+          "top": 1079,
+          "right": 625.09,
+          "bottom": 1188,
+          "width": 214.73,
+          "height": 109
+        },
+        "containerSelector": "#s2 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)",
+        "text": "steps",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 410.36,
+          "y": 1079,
+          "width": 214.73,
+          "height": 109
+        },
+        "firstSeen": 14.968,
+        "lastSeen": 15.124,
+        "occurrences": 2,
+        "heldMs": 156.00000000000057,
+        "times": [
+          14.968,
+          15.124
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 14.968,
+        "selector": "#s2 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(3)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 643.81,
+          "top": 1079,
+          "right": 863.86,
+          "bottom": 1188,
+          "width": 220.05,
+          "height": 109
+        },
+        "containerSelector": "#s2 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(3)",
+        "text": "Paste",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 643.81,
+          "y": 1079,
+          "width": 220.05,
+          "height": 109
+        },
+        "firstSeen": 14.968,
+        "lastSeen": 15.124,
+        "occurrences": 2,
+        "heldMs": 156.00000000000057,
+        "times": [
+          14.968,
+          15.124
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 0.936,
+        "selector": "#s0 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 528.38,
+          "top": 1079,
+          "right": 674.86,
+          "bottom": 1188,
+          "width": 146.48,
+          "height": 109
+        },
+        "containerSelector": "#s0 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "text": "one",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 528.38,
+          "y": 1079,
+          "width": 146.48,
+          "height": 109
+        },
+        "firstSeen": 0.936,
+        "lastSeen": 0.936,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          0.936
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 11.382,
+        "selector": "#s1 > div:nth-of-type(2) > div:nth-of-type(7) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 221.19,
+          "top": 1079,
+          "right": 552.55,
+          "bottom": 1188,
+          "width": 331.36,
+          "height": 109
+        },
+        "containerSelector": "#s1 > div:nth-of-type(2) > div:nth-of-type(8) > span:nth-of-type(1)",
+        "text": "approve",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 221.19,
+          "y": 1079,
+          "width": 331.36,
+          "height": 109
+        },
+        "firstSeen": 11.382,
+        "lastSeen": 11.382,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          11.382
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 11.382,
+        "selector": "#s1 > div:nth-of-type(2) > div:nth-of-type(7) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 571.27,
+          "top": 1079,
+          "right": 726.19,
+          "bottom": 1188,
+          "width": 154.92,
+          "height": 109
+        },
+        "containerSelector": "#s1 > div:nth-of-type(2) > div:nth-of-type(8) > span:nth-of-type(2)",
+        "text": "and",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 571.27,
+          "y": 1079,
+          "width": 154.92,
+          "height": 109
+        },
+        "firstSeen": 11.382,
+        "lastSeen": 11.382,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          11.382
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 11.382,
+        "selector": "#s1 > div:nth-of-type(2) > div:nth-of-type(7) > span:nth-of-type(3)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 744.91,
+          "top": 1079,
+          "right": 858.8,
+          "bottom": 1188,
+          "width": 113.89,
+          "height": 109
+        },
+        "containerSelector": "#s1 > div:nth-of-type(2) > div:nth-of-type(8) > span:nth-of-type(3)",
+        "text": "it's",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 744.91,
+          "y": 1079,
+          "width": 113.89,
+          "height": 109
+        },
+        "firstSeen": 11.382,
+        "lastSeen": 11.382,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          11.382
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 18.867,
+        "selector": "#s2 > div:nth-of-type(2) > div:nth-of-type(4) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 326.39,
+          "top": 1079,
+          "right": 657.75,
+          "bottom": 1188,
+          "width": 331.36,
+          "height": 109
+        },
+        "containerSelector": "#s2 > div:nth-of-type(2) > div:nth-of-type(5) > span:nth-of-type(1)",
+        "text": "approve",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 326.39,
+          "y": 1079,
+          "width": 331.36,
+          "height": 109
+        },
+        "firstSeen": 18.867,
+        "lastSeen": 18.867,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.867
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 22.453,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 140.59,
+          "top": 1079,
+          "right": 309.31,
+          "bottom": 1188,
+          "width": 168.72,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "text": "Less",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 140.59,
+          "y": 1079,
+          "width": 168.72,
+          "height": 109
+        },
+        "firstSeen": 22.453,
+        "lastSeen": 22.453,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.453
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 22.453,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 328.03,
+          "top": 1079,
+          "right": 721.47,
+          "bottom": 1188,
+          "width": 393.44,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)",
+        "text": "busywork",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 328.03,
+          "y": 1079,
+          "width": 393.44,
+          "height": 109
+        },
+        "firstSeen": 22.453,
+        "lastSeen": 22.453,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.453
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 22.453,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(3)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 740.19,
+          "top": 1079,
+          "right": 939.41,
+          "bottom": 1188,
+          "width": 199.22,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(3)",
+        "text": "More",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 740.19,
+          "y": 1079,
+          "width": 199.22,
+          "height": 109
+        },
+        "firstSeen": 22.453,
+        "lastSeen": 22.453,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.453
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 24.168,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 114.22,
+          "top": 1079,
+          "right": 343.23,
+          "bottom": 1188,
+          "width": 229.01,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "text": "reach",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 114.22,
+          "y": 1079,
+          "width": 229.01,
+          "height": 109
+        },
+        "firstSeen": 24.168,
+        "lastSeen": 24.168,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.168
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 24.168,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 361.95,
+          "top": 1079,
+          "right": 538.31,
+          "bottom": 1188,
+          "width": 176.36,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "text": "AILO",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 361.95,
+          "y": 1079,
+          "width": 176.36,
+          "height": 109
+        },
+        "firstSeen": 24.168,
+        "lastSeen": 24.168,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.168
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 24.168,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(3)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 557.03,
+          "top": 1079,
+          "right": 965.77,
+          "bottom": 1188,
+          "width": 408.74,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "text": "Marketing",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 557.03,
+          "y": 1079,
+          "width": 408.74,
+          "height": 109
+        },
+        "firstSeen": 24.168,
+        "lastSeen": 24.168,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          24.168
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 25.571,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 159.89,
+          "top": 1079,
+          "right": 635.39,
+          "bottom": 1188,
+          "width": 475.5,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(4) > span:nth-of-type(1)",
+        "text": "Automation",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 159.89,
+          "y": 1079,
+          "width": 475.5,
+          "height": 109
+        },
+        "firstSeen": 25.571,
+        "lastSeen": 25.571,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          25.571
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 25.571,
+        "selector": "#s3 > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 654.11,
+          "top": 1079,
+          "right": 849.89,
+          "bottom": 1188,
+          "width": 195.78,
+          "height": 109
+        },
+        "containerSelector": "#s3 > div:nth-of-type(2) > div:nth-of-type(4) > span:nth-of-type(2)",
+        "text": "Book",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 654.11,
+          "y": 1079,
+          "width": 195.78,
+          "height": 109
+        },
+        "firstSeen": 25.571,
+        "lastSeen": 25.571,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          25.571
+        ]
+      }
+    ],
+    "duration": 27.91,
+    "samples": [
+      1.551,
+      4.652,
+      7.753,
+      10.854,
+      13.955,
+      17.056,
+      20.157,
+      23.258,
+      26.359
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 16,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      1.551,
+      7.753,
+      13.955,
+      20.157,
+      26.359
+    ],
+    "checked": 40,
+    "passed": 40
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 224
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

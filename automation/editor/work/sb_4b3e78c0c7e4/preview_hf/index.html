@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=360, height=640"/>
+<script src="vendor/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:360px;height:640px;overflow:hidden;background:#000;font-family:sans-serif}
+#stage{position:relative;width:360px;height:640px;overflow:hidden}
+#main{position:absolute;left:0;top:0;width:360px;height:640px;z-index:0}
+.ov-full{position:absolute;inset:0;z-index:5;overflow:hidden}
+.ov-title{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 40.0px}
+.ov-lt{position:absolute;left:36.7px;bottom:166px;z-index:6}
+.ov-gfx{position:absolute;inset:36.7px;z-index:6;display:flex;align-items:center;justify-content:center}
+.tt{color:#fff;font-weight:800;font-size:24.0px;text-shadow:0 4px 18px rgba(0,0,0,.8)}
+.sub{color:#eee;font-weight:500;font-size:12.7px;margin-top:2.7px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.lt{background:rgba(0,0,0,.6);border-left:2.7px solid #ff7a00;padding:5.3px 9.3px}
+.lt .tt{font-size:14.7px}
+.cap{position:absolute;left:0;right:0;bottom:77px;z-index:10;text-align:center;padding:0 36.7px}
+.ct{display:inline-block;font-size:21.3px;line-height:1.2}
+.w{display:inline-block;transform-origin:50% 70%}
+</style></head><body>
+<div id="stage" data-composition-id="edit" data-start="0" data-duration="16.146" data-width="360" data-height="640" data-fps="24">
+  <video id="main" class="clip" data-start="0" data-duration="16.146" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
+  <div id="cap0" class="clip cap" data-start="0.000" data-duration="0.960" data-track-index="1" style=""><span class="ct" id="cap0t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Stop paying monthly</span></div>
+  <div id="cap1" class="clip cap" data-start="0.960" data-duration="0.560" data-track-index="1" style=""><span class="ct" id="cap1t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">for a trading</span></div>
+  <div id="cap2" class="clip cap" data-start="1.520" data-duration="0.240" data-track-index="1" style=""><span class="ct" id="cap2t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">bot.</span></div>
+  <div id="cap3" class="clip cap" data-start="2.100" data-duration="0.540" data-track-index="1" style=""><span class="ct" id="cap3t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Build your own</span></div>
+  <div id="cap4" class="clip cap" data-start="2.640" data-duration="0.780" data-track-index="1" style=""><span class="ct" id="cap4t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">with these five</span></div>
+  <div id="cap5" class="clip cap" data-start="3.420" data-duration="1.040" data-track-index="1" style=""><span class="ct" id="cap5t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">free GitHub repos.</span></div>
+  <div id="cap6" class="clip cap" data-start="4.500" data-duration="0.960" data-track-index="1" style=""><span class="ct" id="cap6t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">One, freak trade.</span></div>
+  <div id="cap7" class="clip cap" data-start="5.820" data-duration="0.620" data-track-index="1" style=""><span class="ct" id="cap7t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">A full crypto</span></div>
+  <div id="cap8" class="clip cap" data-start="6.440" data-duration="0.680" data-track-index="1" style=""><span class="ct" id="cap8t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">bot ready to</span></div>
+  <div id="cap9" class="clip cap" data-start="7.120" data-duration="0.540" data-track-index="1" style=""><span class="ct" id="cap9t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">run with over</span></div>
+  <div id="cap10" class="clip cap" data-start="7.660" data-duration="1.220" data-track-index="1" style=""><span class="ct" id="cap10t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">55 ,000 stars.</span></div>
+  <div id="cap11" class="clip cap" data-start="8.910" data-duration="1.500" data-track-index="1" style=""><span class="ct" id="cap11t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Two, backtestin .py.</span></div>
+  <div id="cap12" class="clip cap" data-start="10.870" data-duration="0.500" data-track-index="1" style=""><span class="ct" id="cap12t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Test his strategy</span></div>
+  <div id="cap13" class="clip cap" data-start="11.370" data-duration="0.620" data-track-index="1" style=""><span class="ct" id="cap13t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">idea in a</span></div>
+  <div id="cap14" class="clip cap" data-start="11.990" data-duration="0.540" data-track-index="1" style=""><span class="ct" id="cap14t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">few lines of</span></div>
+  <div id="cap15" class="clip cap" data-start="12.530" data-duration="0.200" data-track-index="1" style=""><span class="ct" id="cap15t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Python.</span></div>
+  <div id="cap16" class="clip cap" data-start="12.760" data-duration="1.100" data-track-index="1" style=""><span class="ct" id="cap16t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Three, vector BT.</span></div>
+  <div id="cap17" class="clip cap" data-start="14.360" data-duration="0.780" data-track-index="1" style=""><span class="ct" id="cap17t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">Test thousands of</span></div>
+  <div id="cap18" class="clip cap" data-start="15.140" data-duration="0.840" data-track-index="1" style=""><span class="ct" id="cap18t" style="font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase">variations at once.</span></div>
+</div>
+<script>
+const tl = gsap.timeline({paused:true});
+tl.from("#cap0t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},0.000);
+tl.from("#cap1t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},0.960);
+tl.from("#cap2t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},1.520);
+tl.from("#cap3t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},2.100);
+tl.from("#cap4t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},2.640);
+tl.from("#cap5t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},3.420);
+tl.from("#cap6t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},4.500);
+tl.from("#cap7t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},5.820);
+tl.from("#cap8t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},6.440);
+tl.from("#cap9t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},7.120);
+tl.from("#cap10t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},7.660);
+tl.from("#cap11t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},8.910);
+tl.from("#cap12t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},10.870);
+tl.from("#cap13t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},11.370);
+tl.from("#cap14t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},11.990);
+tl.from("#cap15t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},12.530);
+tl.from("#cap16t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},12.760);
+tl.from("#cap17t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},14.360);
+tl.from("#cap18t",{"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"},15.140);
+window.__timelines = window.__timelines || {};
+window.__timelines["edit"] = tl;
+</script></body></html>

@@ -1,0 +1,78 @@
+{
+  "video": "J:\\ai editor\\raw footage\\ingested\\Instagram_DagCLF8yhJj.mp4",
+  "backend": "faster-whisper",
+  "status": "ok",
+  "language": "en",
+  "words": [
+    {
+      "word": "Warning",
+      "start": 23.16,
+      "end": 24.42
+    },
+    {
+      "word": "the",
+      "start": 24.42,
+      "end": 25.08
+    },
+    {
+      "word": "stance",
+      "start": 25.08,
+      "end": 25.68
+    },
+    {
+      "word": "in",
+      "start": 25.68,
+      "end": 25.76
+    },
+    {
+      "word": "this",
+      "start": 25.76,
+      "end": 25.98
+    },
+    {
+      "word": "movie",
+      "start": 25.98,
+      "end": 26.74
+    }
+  ],
+  "segments": [
+    {
+      "text": "Warning the stance in this movie",
+      "start": 23.16,
+      "end": 26.74,
+      "words": [
+        {
+          "word": "Warning",
+          "start": 23.16,
+          "end": 24.42
+        },
+        {
+          "word": "the",
+          "start": 24.42,
+          "end": 25.08
+        },
+        {
+          "word": "stance",
+          "start": 25.08,
+          "end": 25.68
+        },
+        {
+          "word": "in",
+          "start": 25.68,
+          "end": 25.76
+        },
+        {
+          "word": "this",
+          "start": 25.76,
+          "end": 25.98
+        },
+        {
+          "word": "movie",
+          "start": 25.98,
+          "end": 26.74
+        }
+      ]
+    }
+  ],
+  "text": "Warning the stance in this movie"
+}

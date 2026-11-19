@@ -1,0 +1,4 @@
+interface:
+  display_name: "Madhav Split Reels"
+  short_description: "Animated lesson above, moving Madhav below"
+  default_prompt: "Use $madhav-split-reels to make a Reel about my topic in the white-gray split-teaching style, with speech-timed animation and a large moving presenter."

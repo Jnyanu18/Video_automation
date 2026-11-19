@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #070B19;
+        --card-bg: rgba(15, 23, 42, 0.85);
+        --cyan: #00E5FF;
+        --cyan-glow: rgba(0, 229, 255, 0.3);
+        --yellow: #FDE047;
+        --green: #10B981;
+        --white: #FFFFFF;
+        --muted: #94A3B8;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        background: var(--bg);
+        overflow: hidden;
+        font-family: var(--font);
+        color: var(--white);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        background: radial-gradient(circle at 50% 20%, #111D38 0%, #070B19 70%);
+      }
+
+      /* Top Header */
+      .header-bar {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 12px 32px;
+        border-radius: 40px;
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        z-index: 100;
+      }
+      .progress-bar-container {
+        position: absolute;
+        top: 150px;
+        left: 90px;
+        width: 900px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        z-index: 100;
+      }
+      #progress-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--cyan), var(--green));
+      }
+
+      /* Base Section Card Container */
+      .section-card {
+        position: absolute;
+        top: 240px;
+        left: 90px;
+        width: 900px;
+        height: 1240px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .sec-badge {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        margin-bottom: 24px;
+        background: rgba(0, 229, 255, 0.12);
+        padding: 8px 24px;
+        border-radius: 20px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+      }
+      .sec-title {
+        font-size: 58px;
+        font-weight: 900;
+        text-align: center;
+        line-height: 1.15;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+      }
+
+      /* Section 1: Hook */
+      .price-tag {
+        background: rgba(30, 41, 59, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 28px;
+        padding: 50px 60px;
+        text-align: center;
+        width: 760px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      }
+      .orig-price {
+        font-size: 80px;
+        font-weight: 900;
+        color: var(--white);
+        margin-bottom: 20px;
+      }
+      .disc-pill {
+        display: inline-block;
+        background: #EF4444;
+        color: #FFF;
+        font-size: 38px;
+        font-weight: 900;
+        padding: 12px 36px;
+        border-radius: 50px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+      }
+      .saving-box {
+        background: rgba(16, 185, 129, 0.15);
+        border: 2px solid var(--green);
+        border-radius: 20px;
+        padding: 24px;
+        font-size: 42px;
+        font-weight: 900;
+        color: var(--green);
+      }
+
+      /* Section 2: 100 Grid */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 8px;
+        width: 520px;
+        height: 520px;
+        background: rgba(15, 23, 42, 0.8);
+        padding: 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        margin-bottom: 40px;
+      }
+      .grid-cell {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 6px;
+        transition: background 0.3s;
+      }
+      .grid-cell.active {
+        background: var(--cyan);
+        box-shadow: 0 0 12px var(--cyan-glow);
+      }
+      .fraction-eq {
+        font-size: 48px;
+        font-weight: 900;
+        color: var(--yellow);
+        background: rgba(253, 224, 71, 0.1);
+        border: 1px solid rgba(253, 224, 71, 0.3);
+        padding: 16px 40px;
+        border-radius: 16px;
+      }
+
+      /* Section 3: Formula */
+      .formula-box {
+        background: rgba(30, 41, 59, 0.95);
+        border: 2px solid var(--cyan);
+        border-radius: 24px;
+        padding: 40px 50px;
+        text-align: center;
+        width: 800px;
+        margin-bottom: 36px;
+        box-shadow: 0 0 40px var(--cyan-glow);
+      }
+      .formula-math {
+        font-size: 50px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+      .fraction {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        vertical-align: middle;
+      }
+      .numerator {
+        color: var(--yellow);
+        border-bottom: 4px solid var(--white);
+        padding-bottom: 6px;
+        width: 100%;
+        text-align: center;
+      }
+      .denominator {
+        color: var(--cyan);
+        padding-top: 6px;
+        width: 100%;
+        text-align: center;
+      }
+      .example-card {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        padding: 30px 40px;
+        width: 800px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 800;
+      }
+
+      /* Section 4: Shortcuts */
+      .shortcuts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 800px;
+        margin-bottom: 30px;
+      }
+      .sc-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(30, 41, 59, 0.85);
+        border-left: 6px solid var(--cyan);
+        padding: 18px 30px;
+        border-radius: 4px 16px 16px 4px;
+        font-size: 34px;
+        font-weight: 800;
+      }
+      .sc-val {
+        color: var(--yellow);
+      }
+      .demo-box {
+        background: rgba(16, 185, 129, 0.12);
+        border: 2px dashed var(--green);
+        border-radius: 20px;
+        padding: 24px 40px;
+        width: 800px;
+        text-align: center;
+        font-size: 38px;
+        font-weight: 900;
+      }
+
+      /* Section 5: Golden Trick */
+      .swap-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        font-size: 52px;
+        font-weight: 900;
+        margin-bottom: 40px;
+      }
+      .swap-pill {
+        background: rgba(30, 41, 59, 0.9);
+        border: 2px solid var(--cyan);
+        padding: 20px 36px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      }
+      .both-equal {
+        background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.4));
+        border: 2px solid var(--green);
+        border-radius: 24px;
+        padding: 30px 50px;
+        font-size: 64px;
+        font-weight: 900;
+        color: var(--green);
+        text-align: center;
+        box-shadow: 0 0 50px rgba(16, 185, 129, 0.3);
+      }
+
+      /* Section 6: Recap */
+      .recap-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 820px;
+        margin-bottom: 40px;
+      }
+      .recap-item {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        background: rgba(30, 41, 59, 0.9);
+        border-radius: 18px;
+        padding: 22px 30px;
+        font-size: 34px;
+        font-weight: 800;
+      }
+      .recap-num {
+        width: 50px;
+        height: 50px;
+        background: var(--cyan);
+        color: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 28px;
+        flex-shrink: 0;
+      }
+      .cta-title {
+        font-size: 56px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        text-align: center;
+        color: var(--yellow);
+      }
+
+      /* Bottom Synchronized Captions */
+      #caption-container {
+        position: absolute;
+        bottom: 160px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 900px;
+        background: rgba(10, 15, 26, 0.92);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 24px;
+        padding: 24px 36px;
+        text-align: center;
+        font-size: 36px;
+        line-height: 1.35;
+        font-weight: 800;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+        z-index: 200;
+      }
+      .hl-yellow {
+        color: var(--yellow);
+      }
+      .hl-green {
+        color: var(--green);
+      }
+      .hl-cyan {
+        color: var(--cyan);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="60"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- Top Header -->
+      <div class="header-bar clip" data-start="0" data-duration="60">
+        <span>⚡ APTITUDE MASTERCLASS • PERCENTAGES</span>
+      </div>
+      <div class="progress-bar-container clip" data-start="0" data-duration="60">
+        <div id="progress-bar"></div>
+      </div>
+
+      <!-- SECTION 1: THE HOOK (0 - 5.8s) -->
+      <div id="sec1" class="section-card clip" data-start="0" data-duration="5.8">
+        <div class="sec-badge">CONCEPT 01 • THE HOOK</div>
+        <div class="sec-title">CAN YOU CALCULATE<br />THIS IN 3 SECONDS?</div>
+        <div class="price-tag">
+          <div class="orig-price">SHIRT: ₹1,000</div>
+          <div class="disc-pill">20% DISCOUNT</div>
+          <div class="saving-box">YOU SAVE = ₹200!</div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: WHAT IS % (6.0 - 11.8s) -->
+      <div id="sec2" class="section-card clip" data-start="6.0" data-duration="5.8">
+        <div class="sec-badge">CONCEPT 02 • MEANING</div>
+        <div class="sec-title">PERCENT = PER 100</div>
+        <div class="grid-container" id="grid100">
+          <!-- 100 squares generated dynamically via script -->
+        </div>
+        <div class="fraction-eq">25% = 25 / 100 = 0.25</div>
+      </div>
+
+      <!-- SECTION 3: THE FORMULA (12.0 - 21.8s) -->
+      <div id="sec3" class="section-card clip" data-start="12.0" data-duration="9.8">
+        <div class="sec-badge">CONCEPT 03 • THE MASTER FORMULA</div>
+        <div class="sec-title">HOW TO FIND PERCENTAGE</div>
+        <div class="formula-box">
+          <div class="formula-math">
+            <span>Percentage = </span>
+            <div class="fraction">
+              <span class="numerator">Part</span>
+              <span class="denominator">Total</span>
+            </div>
+            <span>× 100</span>
+          </div>
+        </div>
+        <div class="example-card">
+          <div style="font-size: 28px; color: var(--muted); margin-bottom: 12px;">EXAMPLE: 20 OUT OF 50 STUDENTS PASS</div>
+          <div style="color: var(--cyan);">(20 ÷ 50) × 100 = <span style="color: var(--green); font-size: 52px; font-weight: 900;">40%</span></div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: SHORTCUTS (22.0 - 38.0s) -->
+      <div id="sec4" class="section-card clip" data-start="22.0" data-duration="16.0">
+        <div class="sec-badge">CONCEPT 04 • MENTAL SHORTCUTS</div>
+        <div class="sec-title">CALCULATE IN YOUR HEAD</div>
+        <div class="shortcuts-list">
+          <div class="sc-item"><span>10% of Number</span><span class="sc-val">Divide by 10</span></div>
+          <div class="sc-item"><span>5% of Number</span><span class="sc-val">Half of 10%</span></div>
+          <div class="sc-item"><span>1% of Number</span><span class="sc-val">Divide by 100</span></div>
+        </div>
+        <div class="demo-box">
+          <div style="font-size: 28px; color: var(--cyan); margin-bottom: 8px;">CALCULATE 15% OF 200:</div>
+          <div>10% = 20 &nbsp;|&nbsp; 5% = 10</div>
+          <div style="margin-top: 10px; font-size: 46px; color: var(--green);">Answer = 30</div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: GOLDEN TRICK (38.5 - 49.0s) -->
+      <div id="sec5" class="section-card clip" data-start="38.5" data-duration="10.5">
+        <div class="sec-badge">CONCEPT 05 • THE GOLDEN TRICK</div>
+        <div class="sec-title">THE SYMMETRY RULE</div>
+        <div style="font-size: 44px; color: var(--yellow); font-weight: 900; margin-bottom: 30px;">
+          X% of Y = Y% of X
+        </div>
+        <div class="swap-container">
+          <div class="swap-pill" id="swap1">25% of 80</div>
+          <span style="color: var(--cyan);">⟺</span>
+          <div class="swap-pill" id="swap2">80% of 25</div>
+        </div>
+        <div class="both-equal">
+          BOTH EQUAL = 20!
+        </div>
+      </div>
+
+      <!-- SECTION 6: RECAP & CTA (49.5 - 60.0s) -->
+      <div id="sec6" class="section-card clip" data-start="49.5" data-duration="10.5">
+        <div class="sec-badge">FINAL SUMMARY</div>
+        <div class="sec-title">3 RULES TO MASTER</div>
+        <div class="recap-list">
+          <div class="recap-item"><div class="recap-num">1</div><span>Percentage means per hundred</span></div>
+          <div class="recap-item"><div class="recap-num">2</div><span>(Part ÷ Total) × 100</span></div>
+          <div class="recap-item"><div class="recap-num">3</div><span>Use 10% and 5% breakdown shortcuts</span></div>
+        </div>
+        <div class="cta-title">
+          LEARN SMART.<br />SOLVE FASTER.
+        </div>
+      </div>
+
+      <!-- Bottom Synchronized Captions -->
+      <div id="caption-container" class="clip" data-start="0" data-duration="60">
+        <span id="caption-text">If a shirt costs <span class="hl-green">₹1,000</span> and you get a <span class="hl-yellow">20% discount</span>...</span>
+      </div>
+    </div>
+
+    <script>
+      // Populate 100 grid cells
+      const grid = document.getElementById("grid100");
+      for (let i = 0; i < 100; i++) {
+        const cell = document.createElement("div");
+        cell.className = "grid-cell" + (i < 25 ? " active" : "");
+        grid.appendChild(cell);
+      }
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Progress bar fill across 60 seconds
+      tl.to("#progress-bar", { width: "100%", duration: 60, ease: "none" }, 0);
+
+      // Section 1: Hook (0 -> 5.8s)
+      tl.fromTo("#sec1", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.1);
+      tl.to("#sec1", { opacity: 0, y: -30, duration: 0.35, ease: "power2.in" }, 5.5);
+
+      // Section 2: Definition (6.0 -> 11.8s)
+      tl.fromTo("#sec2", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 6.0);
+      tl.to("#sec2", { opacity: 0, scale: 1.05, duration: 0.35, ease: "power2.in" }, 11.5);
+
+      // Section 3: Formula (12.0 -> 21.8s)
+      tl.fromTo("#sec3", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 12.0);
+      tl.to("#sec3", { opacity: 0, y: -30, duration: 0.35, ease: "power2.in" }, 21.5);
+
+      // Section 4: Shortcuts (22.0 -> 38.0s)
+      tl.fromTo("#sec4", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 22.0);
+      tl.to("#sec4", { opacity: 0, x: -50, duration: 0.35, ease: "power2.in" }, 37.8);
+
+      // Section 5: Golden Trick (38.5 -> 49.0s)
+      tl.fromTo("#sec5", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power4.out" }, 38.5);
+      tl.to("#sec5", { opacity: 0, scale: 1.1, duration: 0.35, ease: "power2.in" }, 48.7);
+
+      // Section 6: Recap (49.5 -> 60.0s)
+      tl.fromTo("#sec6", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 49.5);
+      tl.to("#sec6", { opacity: 0, duration: 0.4, ease: "power1.in" }, 59.5);
+
+      // Caption timeline synced to Whisper timestamps
+      const cap = document.getElementById("caption-text");
+      const captions = [
+        { t: 0.0, html: 'If a shirt costs <span class="hl-green">₹1,000</span> and you get a <span class="hl-yellow">20% discount</span>...' },
+        { t: 2.8, html: 'How much do you <span class="hl-cyan">actually save</span>?' },
+        { t: 6.0, html: '<span class="hl-yellow">Percentage</span> simply means <span class="hl-cyan">per hundred</span>.' },
+        { t: 8.8, html: 'It tells us how much something represents <span class="hl-green">out of 100</span>.' },
+        { t: 12.0, html: 'Here is the key formula: <span class="hl-yellow">Part ÷ Total × 100</span>.' },
+        { t: 16.8, html: 'For example, 20 out of 50 passed, which is <span class="hl-green">40%</span>!' },
+        { t: 22.0, html: 'To calculate faster, remember these shortcuts:' },
+        { t: 24.5, html: '<span class="hl-cyan">10%</span> = Divide by 10 &nbsp;|&nbsp; <span class="hl-cyan">5%</span> = Half of 10%' },
+        { t: 28.5, html: '<span class="hl-cyan">1%</span> = Divide by 100.' },
+        { t: 32.0, html: 'For <span class="hl-yellow">15% of 200</span>: 10% is 20, 5% is 10...' },
+        { t: 35.5, html: 'Giving a total of <span class="hl-green">30</span>!' },
+        { t: 38.5, html: 'Golden trick: <span class="hl-yellow">X% of Y is equal to Y% of X</span>!' },
+        { t: 43.2, html: '<span class="hl-cyan">25% of 80</span> is the same as <span class="hl-cyan">80% of 25</span>.' },
+        { t: 46.8, html: 'Both equal <span class="hl-green">20</span>!' },
+        { t: 49.5, html: 'Remember: <span class="hl-yellow">per 100</span>, <span class="hl-yellow">part ÷ total × 100</span>, and use shortcuts.' },
+        { t: 54.5, html: 'Practice these and master percentages!' },
+        { t: 57.5, html: '<span class="hl-green">LEARN SMART. SOLVE FASTER.</span>' }
+      ];
+
+      captions.forEach((c) => {
+        tl.call(() => {
+          cap.innerHTML = c.html;
+        }, null, c.t);
+      });
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

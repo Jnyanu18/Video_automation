@@ -1,0 +1,113 @@
+[
+  {
+    "id": "sailors",
+    "start": 0.0,
+    "end": 4.02,
+    "words": "Modern sailors once",
+    "desc": "Open sea at dusk, flat cartoon. A grey warship side-on, slow bob on the swell. Two small sailors on deck slap white QR squares onto the hull, one, two, three.",
+    "chapter": "The warships"
+  },
+  {
+    "id": "corner",
+    "start": 4.02,
+    "end": 6.14,
+    "words": "from literally every corner.",
+    "desc": "Pull back: the whole ship is covered in QR codes, hull, deck, turret, funnel, even the radar dish."
+  },
+  {
+    "id": "drones",
+    "start": 6.14,
+    "end": 8.06,
+    "words": "They did this because enemy drones",
+    "desc": "Flashback, same sea: a plain grey warship with no codes. One big drone flies in close from the top right and hovers over it, red light blinking.",
+    "chapter": "The drones"
+  },
+  {
+    "id": "blasting",
+    "start": 8.06,
+    "end": 10.48,
+    "words": "were blasting their ships",
+    "desc": "Its own scene. The drone drops a bomb; it falls onto the plain ship and a big cartoon explosion (orange and brown puffs, no fire, no people) swallows it. The camera shakes."
+  },
+  {
+    "id": "scan",
+    "start": 10.48,
+    "end": 13.58,
+    "words": "But now, as these drones scan the ship,",
+    "desc": "Back to the ship covered in QR codes. The drone hovers above it and a green scan beam sweeps across the codes, left and right. Normal colours, no viewfinder yet.",
+    "chapter": "The scan"
+  },
+  {
+    "id": "lock",
+    "start": 13.58,
+    "end": 15.24,
+    "words": "they scan the QR code,",
+    "desc": "Cut to the drone's camera: a full frame of tilted QR stickers on the grey hull. \"DRONE CAM 07\" and \"ALT 42M\" in small green text. Green brackets hunt across the stickers and lock onto one in the middle."
+  },
+  {
+    "id": "link",
+    "start": 15.24,
+    "end": 16.0,
+    "words": "which takes them",
+    "desc": "Over the locked code, a dark \"Opening link...\" box: https://auralionlabs.com with a green bar filling."
+  },
+  {
+    "id": "brand",
+    "start": 16.0,
+    "end": 18.38,
+    "words": "straight to Auralion Labs,",
+    "desc": "Hard cut, with the boom, to the site look: the auralionlabs.com address bar, the Auralion Labs mark on a white card, the name rising under it.",
+    "chapter": "Auralion Labs"
+  },
+  {
+    "id": "studio",
+    "start": 18.38,
+    "end": 22.7,
+    "words": "the studio building AI receptionists",
+    "desc": "A mono label \"AI RECEPTIONISTS\" over three white pills that land in turn: \"Roofers\", \"Plumbers\", \"Electricians\"."
+  },
+  {
+    "id": "ava",
+    "start": 22.7,
+    "end": 26.66,
+    "words": "Our receptionist, Ava,",
+    "desc": "A white incoming-call card: orange dot, \"Incoming call\", then \"Answered by Ava\" with a live waveform.",
+    "chapter": "Ava"
+  },
+  {
+    "id": "books",
+    "start": 26.66,
+    "end": 28.22,
+    "words": "books the job into your calendar,",
+    "desc": "A white calendar card, a week view; one slot fills in orange: \"Roof inspection, Thu 10:30\"."
+  },
+  {
+    "id": "message",
+    "start": 28.22,
+    "end": 31.32,
+    "words": "or takes a message",
+    "desc": "A message card slides up: \"New message: leak over the kitchen, call back after 3.\""
+  },
+  {
+    "id": "onjob",
+    "start": 31.32,
+    "end": 33.38,
+    "words": "even while you're on a job.",
+    "desc": "Back to cartoon for one beat: a roofer up a ladder, hands full, a small white \"Answered by Ava\" pill pops beside his pocket."
+  },
+  {
+    "id": "audit",
+    "start": 33.38,
+    "end": 36.94,
+    "words": "Get your free missed-call audit.",
+    "desc": "A big white card, mono \"FREE\" eyebrow with the orange dot, \"Missed-call audit\" in ink. Under it, the dark button: DM \"AUDIT\" with an arrow.",
+    "chapter": "Free audit"
+  },
+  {
+    "id": "end",
+    "start": 36.94,
+    "end": 39.54,
+    "words": "only at Auralion Labs.",
+    "desc": "The Auralion Labs name lands with the orange dot, auralionlabs.com small under it."
+  }
+]

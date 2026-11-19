@@ -1,0 +1,971 @@
+{
+  "version": 1,
+  "historyId": "0f25a67d-8501-45a4-a8d6-520c3b870796",
+  "currentRevision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+  "pendingChanges": false,
+  "files": {
+    "assets/broll/node.js-tweet.PNG": {
+      "hash": "236c2ae8c5c69926ba74273ff24fd9d917f94685a04c15cefffc900378bef454",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\23\\236c2ae8c5c69926ba74273ff24fd9d917f94685a04c15cefffc900378bef454"
+    },
+    "assets/broll/php-security-tweet.PNG": {
+      "hash": "9592a8ba15493b12aab7c30444651e1706ca067c34ff08483dfad95317348d03",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\95\\9592a8ba15493b12aab7c30444651e1706ca067c34ff08483dfad95317348d03"
+    },
+    "assets/broll/railway-tweet.PNG": {
+      "hash": "2b6302dc83938de5fa2257aa6da8b566ae7bd48741d536d3908f1ce23fafb7a1",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\2b\\2b6302dc83938de5fa2257aa6da8b566ae7bd48741d536d3908f1ce23fafb7a1"
+    },
+    "assets/fonts/Fredoka.woff2": {
+      "hash": "99d6c78e043710d4f83ed90716779798b7b04eb690f73e0ad0e8f32d1f0e98c2",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\99\\99d6c78e043710d4f83ed90716779798b7b04eb690f73e0ad0e8f32d1f0e98c2"
+    },
+    "assets/last.jpg": {
+      "hash": "5784598a7af507fa045f7055da276639783b78234181c17f40117c6d84bfbb8f",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\57\\5784598a7af507fa045f7055da276639783b78234181c17f40117c6d84bfbb8f"
+    },
+    "assets/sfx/switch.wav": {
+      "hash": "0d07c6daac595425c820d92966bbc35cbd6590f4bde8a59199743b9bf45da77e",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\0d\\0d07c6daac595425c820d92966bbc35cbd6590f4bde8a59199743b9bf45da77e"
+    },
+    "assets/sfx/whoosh.wav": {
+      "hash": "d98f010fa5f03fd3f4f77418f8ba6a962d36e63357265772771c4ac69c1a63a7",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\d9\\d98f010fa5f03fd3f4f77418f8ba6a962d36e63357265772771c4ac69c1a63a7"
+    },
+    "compositions/beats.html": {
+      "hash": "73c7828f82dd85a05aff6f9c97b28c53769eea518ce6f9e15445b4117eddd7eb",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\73\\73c7828f82dd85a05aff6f9c97b28c53769eea518ce6f9e15445b4117eddd7eb"
+    },
+    "compositions/captions.html": {
+      "hash": "f9a117773bc9b06adb6e1dc6b1986849b595c575ebbcf915f56fcaa64d8e9513",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\f9\\f9a117773bc9b06adb6e1dc6b1986849b595c575ebbcf915f56fcaa64d8e9513"
+    },
+    "hyperframes.json": {
+      "hash": "479f28861977195355b205de15d033dd0178b0021d544e2c50cb903c5abc4345",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\47\\479f28861977195355b205de15d033dd0178b0021d544e2c50cb903c5abc4345"
+    },
+    "index.html": {
+      "hash": "402ac405e101d737dc8cbf09d0776c7b2e55a567be40fbbed34b22bc4e2567ff",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\40\\402ac405e101d737dc8cbf09d0776c7b2e55a567be40fbbed34b22bc4e2567ff"
+    },
+    "package.json": {
+      "hash": "60912b28f199f58802794e5877ae1f3ce327b682a20822617ad4110a158f23c8",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\60\\60912b28f199f58802794e5877ae1f3ce327b682a20822617ad4110a158f23c8"
+    },
+    "assets/cut.mp4": {
+      "hash": "b3b74a68bdde52c8fa2b87cdd339f3e14eeb07f98e98d39a409be31d500eae3d",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\b3\\b3b74a68bdde52c8fa2b87cdd339f3e14eeb07f98e98d39a409be31d500eae3d"
+    },
+    "hf-sheet.png": {
+      "hash": "36b179d1c77f064afcda60ae75c19f5302bc6e33f0e0a5cfe850cdf110bd6bd9",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\36\\36b179d1c77f064afcda60ae75c19f5302bc6e33f0e0a5cfe850cdf110bd6bd9"
+    },
+    "stills/s01.png": {
+      "hash": "6daff7c4a8b92dbacffcdd788d32287eb2f0ed9f623335c2bdfbe42816d1715e",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\6d\\6daff7c4a8b92dbacffcdd788d32287eb2f0ed9f623335c2bdfbe42816d1715e"
+    },
+    "stills/s02.png": {
+      "hash": "fdd1ec8c96b2a279a168c285eb2e0d4897bff353ff5f64a2fa1b13f6f396285c",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\fd\\fdd1ec8c96b2a279a168c285eb2e0d4897bff353ff5f64a2fa1b13f6f396285c"
+    },
+    "stills/s03.png": {
+      "hash": "245390c3dcdec5ae490c8518006a279c8a971668986d3ce5709f3de3c973814f",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\24\\245390c3dcdec5ae490c8518006a279c8a971668986d3ce5709f3de3c973814f"
+    },
+    "stills/s04.png": {
+      "hash": "716be42537b2cc96f7a8e932a67ca104ecb885aee51084289fa9e1f9de6ff849",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\71\\716be42537b2cc96f7a8e932a67ca104ecb885aee51084289fa9e1f9de6ff849"
+    },
+    "stills/s05.png": {
+      "hash": "54c7a088ce1f72dccb256adae5cc6ed4f25e594cde7bb4f5ed2abc2c0d3c9289",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\54\\54c7a088ce1f72dccb256adae5cc6ed4f25e594cde7bb4f5ed2abc2c0d3c9289"
+    },
+    "stills/s06.png": {
+      "hash": "557e057e3dbd2cf4c17e40c50e5c0151c18a41a0706248a625a35469dcb09d1c",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\55\\557e057e3dbd2cf4c17e40c50e5c0151c18a41a0706248a625a35469dcb09d1c"
+    },
+    "stills/s07.png": {
+      "hash": "d51d1bb5bcf557336bb64c10052b5e4c6da4ff514357e34695516b343e9a3efc",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\d5\\d51d1bb5bcf557336bb64c10052b5e4c6da4ff514357e34695516b343e9a3efc"
+    },
+    "stills/s08.png": {
+      "hash": "cfe2a5895f2391ac41137b0a264be0cff6108533a7142a0bbaf7ba97b63d8822",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\cf\\cfe2a5895f2391ac41137b0a264be0cff6108533a7142a0bbaf7ba97b63d8822"
+    },
+    "stills/s09.png": {
+      "hash": "68807ca54581ab5c3a7a3df95d50881d2a1ae484ba1dd87828f1e92697334a15",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\68\\68807ca54581ab5c3a7a3df95d50881d2a1ae484ba1dd87828f1e92697334a15"
+    }
+  },
+  "revisions": {
+    "cc9d7788-35c6-47f3-8083-b41df82a3a3d": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792929488010,
+      "endedAt": 1792929496237,
+      "files": {
+        "hf-sheet.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\36\\36b179d1c77f064afcda60ae75c19f5302bc6e33f0e0a5cfe850cdf110bd6bd9"
+        },
+        "stills/s01.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\6d\\6daff7c4a8b92dbacffcdd788d32287eb2f0ed9f623335c2bdfbe42816d1715e"
+        },
+        "stills/s02.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\fd\\fdd1ec8c96b2a279a168c285eb2e0d4897bff353ff5f64a2fa1b13f6f396285c"
+        },
+        "stills/s03.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\24\\245390c3dcdec5ae490c8518006a279c8a971668986d3ce5709f3de3c973814f"
+        },
+        "stills/s04.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\71\\716be42537b2cc96f7a8e932a67ca104ecb885aee51084289fa9e1f9de6ff849"
+        },
+        "stills/s05.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\54\\54c7a088ce1f72dccb256adae5cc6ed4f25e594cde7bb4f5ed2abc2c0d3c9289"
+        },
+        "stills/s06.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\55\\557e057e3dbd2cf4c17e40c50e5c0151c18a41a0706248a625a35469dcb09d1c"
+        },
+        "stills/s07.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\d5\\d51d1bb5bcf557336bb64c10052b5e4c6da4ff514357e34695516b343e9a3efc"
+        },
+        "stills/s08.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\cf\\cfe2a5895f2391ac41137b0a264be0cff6108533a7142a0bbaf7ba97b63d8822"
+        },
+        "stills/s09.png": {
+          "before": null,
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\0f25a67d-8501-45a4-a8d6-520c3b870796\\blobs\\68\\68807ca54581ab5c3a7a3df95d50881d2a1ae484ba1dd87828f1e92697334a15"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+      "id": "6ec18e1b-425a-4579-b637-1829bfaff9b0"
+    },
+    "revisions": {
+      "cc9d7788-35c6-47f3-8083-b41df82a3a3d": [
+        {
+          "id": "6ec18e1b-425a-4579-b637-1829bfaff9b0",
+          "scope": "project",
+          "report": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\checks\\6ec18e1b-425a-4579-b637-1829bfaff9b0.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792929695964,
+          "contentHash": "40cc2b5cefd4d5818ab070d73149a21237c44db158855f93911351770449499e",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "84d6a2a3-304d-406d-a714-be349c42bc8c",
+        "scope": "project",
+        "report": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\checks\\84d6a2a3-304d-406d-a714-be349c42bc8c.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792929322765,
+        "contentHash": "40cc2b5cefd4d5818ab070d73149a21237c44db158855f93911351770449499e",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": {
+      "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+      "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-26"
+    },
+    "revisions": {
+      "cc9d7788-35c6-47f3-8083-b41df82a3a3d": [
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-0",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-00-at-0.6s.png",
+          "time": 0.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136617,
+          "contentHash": "8caa24cc80e45f7bcdc9599d982de64ad62f1b5c262b5850879217175fef9d0f",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-1",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-01-at-4s.png",
+          "time": 4,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136624,
+          "contentHash": "67ec00b4bfe4af6c40723fade8981279e5cf85642d44de7c91a7ce0d79c7c6ed",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-2",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-02-at-5.267s.png",
+          "time": 5.267,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136627,
+          "contentHash": "f89e5238f851105bf22cb0710b511feb45fcbc8c892c290d7323cdc111e4be0c",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-3",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-03-at-10.633s.png",
+          "time": 10.633,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136629,
+          "contentHash": "e097cad6975cad8635fff0e41618ee2ffba0de606b0cfa29b4247f86354a49dc",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-4",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-04-at-12.4s.png",
+          "time": 12.4,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136630,
+          "contentHash": "37d093d923b534f96b8f77bb172aeb5810d62fff302438d56725848c513eca60",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-5",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-05-at-13.3s.png",
+          "time": 13.3,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136632,
+          "contentHash": "6c0ec17ca9690db6046c5400928892f56b87c7b0de82b267e17c24edcff016f5",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-6",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-06-at-14.6s.png",
+          "time": 14.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136634,
+          "contentHash": "325d74d12af3fe17243d4b62650f4f413d6baaf7629991a2adc9893673364244",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-7",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-07-at-15.667s.png",
+          "time": 15.667,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136637,
+          "contentHash": "fc058ef522fb4c696a8a59d1cbb5ea99673152264034c9d25fd043f4eab81f34",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-8",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-08-at-18.533s.png",
+          "time": 18.533,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136640,
+          "contentHash": "27ac5007ce68106dc7f366f170526dff7b17b72a60bf27d6875cfeaa13858643",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-9",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-09-at-23.233s.png",
+          "time": 23.233,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136642,
+          "contentHash": "6ab6d01a99b3124743d217af31c00cc948af3d243ae3af03d785db4b8f12543d",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-10",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-10-at-24.433s.png",
+          "time": 24.433,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136644,
+          "contentHash": "a04d2d4b64ac6ddbd219c90d4fdebd52b5f0afb008335c37eb99cd85d38ad4ea",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-11",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-11-at-28.767s.png",
+          "time": 28.767,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136646,
+          "contentHash": "281875d9d407cb2e1cd1e9c91fa45dcb466993a3934b32b1edf582500c858e83",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-12",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-12-at-31.7s.png",
+          "time": 31.7,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136649,
+          "contentHash": "8fd8147a7e6301cfcba2ca55739729c8f0248a050003da9cacfc866f3a39a975",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-13",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-13-at-33.7s.png",
+          "time": 33.7,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136651,
+          "contentHash": "7fb6e6a81b18a36fe6a4da0d539ae1dd51b9338043a4b3f6d02d00c3d5a6d625",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-14",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-14-at-34.667s.png",
+          "time": 34.667,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136653,
+          "contentHash": "7e7f0883b4941007c1cdb1d1a743842ae9b866ece84eafe7ee78322cdd7a6bfb",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-15",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-15-at-36.767s.png",
+          "time": 36.767,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136657,
+          "contentHash": "9d4fded4e11eeb7ed99c47387565a4d135fddc8c1aa1fb4314b3376ea05317e8",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-16",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-16-at-42.067s.png",
+          "time": 42.067,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136666,
+          "contentHash": "ccd0ce189f4ee40079763e768491d66724ad453b5d4a925d17a5f48dd29f3c8c",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-17",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-17-at-43.067s.png",
+          "time": 43.067,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136668,
+          "contentHash": "5c4bb24679b1825f3f59dd70533f7ce7eda10013abbf7f03bf1829aa6df6337f",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-18",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-18-at-46.267s.png",
+          "time": 46.267,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136676,
+          "contentHash": "424f94db614c2f31afc416e78912d52489cb1a638be6711f620338bdef27fa83",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-19",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-19-at-48.367s.png",
+          "time": 48.367,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136679,
+          "contentHash": "9e379d17cbbdc8d227b960071ecc231ee3b9f9a93c87237809e907b599ddbce7",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-20",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-20-at-49.233s.png",
+          "time": 49.233,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136685,
+          "contentHash": "3f2d39a109a822bca630d965ff65afb70d05eab3ab106150615f1b19245fa156",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-21",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-21-at-53.033s.png",
+          "time": 53.033,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136706,
+          "contentHash": "cad0945a2cf71e1555dba955f1d8194c59769edf3a008862685d797a6c1caba1",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-22",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-22-at-55.633s.png",
+          "time": 55.633,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136709,
+          "contentHash": "bd6b36f097ba2252d1175f5887a5d1008a8dc2d63f4b1ebf6bc9dc9491df2550",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-23",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-23-at-56.733s.png",
+          "time": 56.733,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136712,
+          "contentHash": "7b610688a01256bad9b05e6d5bcdddad87a91530baa6b748ab9f9eaf62458000",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-24",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-24-at-59.933s.png",
+          "time": 59.933,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136716,
+          "contentHash": "08548edb02549db95a545bb46804bed9cc0eefc6fc13dad09ceb4d4b6c083631",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-25",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-25-at-60.067s.png",
+          "time": 60.067,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136728,
+          "contentHash": "dd3f0ecbce9dba66ff5a95ba1ec4771a95f25e75ddb91d698ad1bde382e6f0f4",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "7cce9722-20f1-4c4d-b28e-82253335a5d3-26",
+          "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\1747840c-cab0-42a0-b5e1-cafd63061499\\frame-26-at-61.092s.png",
+          "time": 61.092,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930136732,
+          "contentHash": "2779f337fdc92160383fe6f74e48d3a6982ee5257ae689f906dca64f0e3964ff",
+          "revision": "cc9d7788-35c6-47f3-8083-b41df82a3a3d",
+          "inputFingerprint": "fb7b375d75faa749dab651733ed35b6229f8150e4c915bc47bffbf87ff87f427",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-0",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-00-at-2s.png",
+        "time": 2,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373994,
+        "contentHash": "6daff7c4a8b92dbacffcdd788d32287eb2f0ed9f623335c2bdfbe42816d1715e",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-1",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-01-at-6s.png",
+        "time": 6,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373994,
+        "contentHash": "fdd1ec8c96b2a279a168c285eb2e0d4897bff353ff5f64a2fa1b13f6f396285c",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-2",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-02-at-13s.png",
+        "time": 13,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373994,
+        "contentHash": "245390c3dcdec5ae490c8518006a279c8a971668986d3ce5709f3de3c973814f",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-3",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-03-at-22s.png",
+        "time": 22,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373995,
+        "contentHash": "716be42537b2cc96f7a8e932a67ca104ecb885aee51084289fa9e1f9de6ff849",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-4",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-04-at-33s.png",
+        "time": 33,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373995,
+        "contentHash": "54c7a088ce1f72dccb256adae5cc6ed4f25e594cde7bb4f5ed2abc2c0d3c9289",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-5",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-05-at-41s.png",
+        "time": 41,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373995,
+        "contentHash": "557e057e3dbd2cf4c17e40c50e5c0151c18a41a0706248a625a35469dcb09d1c",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-6",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-06-at-46s.png",
+        "time": 46,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373996,
+        "contentHash": "d51d1bb5bcf557336bb64c10052b5e4c6da4ff514357e34695516b343e9a3efc",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-7",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-07-at-54.5s.png",
+        "time": 54.5,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373997,
+        "contentHash": "cfe2a5895f2391ac41137b0a264be0cff6108533a7142a0bbaf7ba97b63d8822",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-8",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-08-at-62s.png",
+        "time": 62,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373997,
+        "contentHash": "68807ca54581ab5c3a7a3df95d50881d2a1ae484ba1dd87828f1e92697334a15",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "c2f397b6-6028-46dc-a316-e70d522500bb-9",
+        "image": "D:\\studio\\videos\\security-week\\hf\\.hyperframes\\artifacts\\snapshots\\7ed22d7c-96d3-4d0d-8956-cfa26f87ab3f\\frame-09-at-61.092s.png",
+        "time": 61.092,
+        "metadata": {
+          "width": 1080,
+          "height": 1920,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792929373998,
+        "contentHash": "744ac8a343cfafd3e71b90818ade42f48a96260da042138e3d115133f6ca45b9",
+        "revision": null,
+        "inputFingerprint": "a32111df79fab1716bce1182ccb93bd41d3389190075511c569092cc1c302009",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  }
+}

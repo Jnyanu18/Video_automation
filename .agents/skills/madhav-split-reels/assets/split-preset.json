@@ -1,0 +1,515 @@
+{
+  "schemaVersion": 1,
+  "name": "madhav-split-reels",
+  "displayName": "Madhav Split Reels",
+  "purpose": "Source-backed visual and animation preset; not a standalone renderer or authorization.",
+  "retiming": "Exact times describe the AI-course reference only. Map every event and phase to new final-speech anchors for a new topic; do not globally stretch timestamps.",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "reference": {
+    "engine": "HyperFrames",
+    "engineVersion": "0.8.63",
+    "duration": 28.166667,
+    "narrationSpeedAlreadyBakedIn": 1.2,
+    "presenterPlaybackRate": 1
+  },
+  "layout": {
+    "teachingPanel": {
+      "left": 54,
+      "top": 166,
+      "width": 972,
+      "height": 696,
+      "radius": 30
+    },
+    "lessonContent": {
+      "left": 96,
+      "top": 202,
+      "width": 888,
+      "height": 616
+    },
+    "progress": {
+      "left": 96,
+      "top": 829,
+      "width": 888,
+      "height": 3,
+      "transformOrigin": "left"
+    },
+    "captions": {
+      "left": 82,
+      "top": 876,
+      "width": 916,
+      "height": 154,
+      "zIndex": 10
+    },
+    "presenter": {
+      "left": 54,
+      "top": 1050,
+      "width": 972,
+      "height": 820,
+      "radius": 30,
+      "fit": "cover",
+      "objectPosition": "70% 62%",
+      "recheckCropForNewSource": true
+    }
+  },
+  "typography": {
+    "fontFamily": "Montserrat",
+    "hook": {
+      "fontSize": 61,
+      "fontWeight": 700,
+      "lineHeight": 1.13,
+      "letterSpacing": -2
+    },
+    "sceneHeading": {
+      "fontSize": 54,
+      "fontWeight": 700,
+      "lineHeight": 1.04
+    },
+    "captions": {
+      "fontSize": 61,
+      "fontWeight": 700,
+      "lineHeight": 1.12,
+      "letterSpacing": -1.8,
+      "textAlign": "center"
+    },
+    "maxCaptionLines": 2
+  },
+  "palette": {
+    "canvasTop": "#e4e5e6",
+    "canvasBottom": "#fafafa",
+    "text": "#222324",
+    "secondary": "#555b65",
+    "accent": "#4263a6",
+    "border": "#d8dce2"
+  },
+  "motion": {
+    "primitives": {
+      "hook": {
+        "from": {
+          "scale": 0.88,
+          "opacity": 0
+        },
+        "to": {
+          "scale": 1,
+          "opacity": 1
+        },
+        "duration": 0.333333,
+        "ease": "power3.out"
+      },
+      "enter": {
+        "from": {
+          "x": -22,
+          "opacity": 0
+        },
+        "to": {
+          "x": 0,
+          "opacity": 1
+        },
+        "duration": 0.35,
+        "ease": "power3.out"
+      },
+      "draw": {
+        "from": {
+          "strokeDashoffset": "measuredPathLength"
+        },
+        "to": {
+          "strokeDashoffset": 0
+        },
+        "duration": 0.375,
+        "ease": "power2.out"
+      },
+      "progress": {
+        "duration": 0.416667,
+        "ease": "power2.out"
+      },
+      "caption": {
+        "mode": "setOpacityAtPhraseBounds",
+        "visibleColor": "#222324",
+        "karaokeHighlight": false
+      }
+    },
+    "phaseTransition": "Clip visibility switches; stationary panel and presenter window, no elaborate exit.",
+    "hook": {
+      "selector": "#three",
+      "start": 0
+    },
+    "events": [
+      {
+        "primitive": "enter",
+        "selector": "#hook-step-1",
+        "start": 0.541667
+      },
+      {
+        "primitive": "enter",
+        "selector": "#hook-step-2",
+        "start": 1.083333
+      },
+      {
+        "primitive": "enter",
+        "selector": "#hook-step-3",
+        "start": 1.683333
+      },
+      {
+        "primitive": "enter",
+        "selector": "#watch",
+        "start": 3.1
+      },
+      {
+        "primitive": "enter",
+        "selector": "#build",
+        "start": 4.016667
+      },
+      {
+        "primitive": "draw",
+        "selector": "#project-check",
+        "start": 4.466667
+      },
+      {
+        "primitive": "enter",
+        "selector": "#ask-project",
+        "start": 6.25
+      },
+      {
+        "primitive": "enter",
+        "selector": "#reviewer",
+        "start": 9.966667
+      },
+      {
+        "primitive": "draw",
+        "selector": "#reviewer-check",
+        "start": 10.083333
+      },
+      {
+        "primitive": "enter",
+        "selector": "#frequency",
+        "start": 11
+      },
+      {
+        "primitive": "draw",
+        "selector": "#frequency-check",
+        "start": 11.183333
+      },
+      {
+        "primitive": "enter",
+        "selector": "#support",
+        "start": 12.2
+      },
+      {
+        "primitive": "draw",
+        "selector": "#support-check",
+        "start": 12.65
+      },
+      {
+        "primitive": "enter",
+        "selector": "#report",
+        "start": 15.516667
+      },
+      {
+        "primitive": "enter",
+        "selector": "#who",
+        "start": 17.183333
+      },
+      {
+        "primitive": "enter",
+        "selector": "#period",
+        "start": 18.266667
+      },
+      {
+        "primitive": "enter",
+        "selector": "#certificate",
+        "start": 19.366667
+      },
+      {
+        "primitive": "enter",
+        "selector": "#syllabus",
+        "start": 22.25
+      },
+      {
+        "primitive": "draw",
+        "selector": "#syllabus-check",
+        "start": 22.633333
+      },
+      {
+        "primitive": "enter",
+        "selector": "#recap-feedback",
+        "start": 23.3
+      },
+      {
+        "primitive": "draw",
+        "selector": "#feedback-check",
+        "start": 23.416667
+      },
+      {
+        "primitive": "enter",
+        "selector": "#cost",
+        "start": 23.85
+      },
+      {
+        "primitive": "draw",
+        "selector": "#cost-check",
+        "start": 24.133333
+      },
+      {
+        "primitive": "draw",
+        "selector": "#save-project",
+        "start": 25.416667
+      },
+      {
+        "primitive": "draw",
+        "selector": "#save-feedback",
+        "start": 25.833333
+      },
+      {
+        "primitive": "draw",
+        "selector": "#save-career",
+        "start": 26.25
+      }
+    ],
+    "progress": [
+      {
+        "start": 2.466667,
+        "scaleX": 0.333
+      },
+      {
+        "start": 8.683333,
+        "scaleX": 0.666
+      },
+      {
+        "start": 13.65,
+        "scaleX": 1
+      }
+    ]
+  },
+  "referencePhases": [
+    {
+      "id": "hook",
+      "start": 0,
+      "duration": 2.466667
+    },
+    {
+      "id": "project",
+      "start": 2.466667,
+      "duration": 6.216667
+    },
+    {
+      "id": "feedback",
+      "start": 8.683333,
+      "duration": 4.966667
+    },
+    {
+      "id": "career",
+      "start": 13.65,
+      "duration": 5.65
+    },
+    {
+      "id": "compare",
+      "start": 19.3,
+      "duration": 6.033333
+    },
+    {
+      "id": "save",
+      "start": 25.333333,
+      "duration": 2.833333
+    }
+  ],
+  "referenceCaptions": {
+    "groupCount": 24,
+    "wordCount": 95,
+    "groups": [
+      {
+        "start": 0.06666666666666667,
+        "end": 0.7,
+        "text": "Before you pay for an"
+      },
+      {
+        "start": 0.7333333333333334,
+        "end": 1.9333333333333333,
+        "text": "AI course, check these three"
+      },
+      {
+        "start": 1.9666666666666666,
+        "end": 2.3833333333333337,
+        "text": "things."
+      },
+      {
+        "start": 2.466666666666667,
+        "end": 3.5999999999999996,
+        "text": "First, the project."
+      },
+      {
+        "start": 3.8,
+        "end": 4.983333333333333,
+        "text": "Will you build something yourself"
+      },
+      {
+        "start": 5.016666666666667,
+        "end": 6,
+        "text": "or just follow a demo?"
+      },
+      {
+        "start": 6.25,
+        "end": 7.45,
+        "text": "Ask to see a finished"
+      },
+      {
+        "start": 7.516666666666667,
+        "end": 8.283333333333333,
+        "text": "student project."
+      },
+      {
+        "start": 8.683333333333334,
+        "end": 9.733333333333334,
+        "text": "Second, the feedback."
+      },
+      {
+        "start": 9.966666666666669,
+        "end": 10.966666666666667,
+        "text": "Who reviews your work and"
+      },
+      {
+        "start": 11,
+        "end": 11.55,
+        "text": "how often?"
+      },
+      {
+        "start": 11.816666666666666,
+        "end": 12.883333333333335,
+        "text": "Check what support is actually"
+      },
+      {
+        "start": 12.916666666666668,
+        "end": 13.400000000000002,
+        "text": "included."
+      },
+      {
+        "start": 13.649166666666668,
+        "end": 15.133333333333335,
+        "text": "Third, the career promise."
+      },
+      {
+        "start": 15.516666666666667,
+        "end": 16.51666666666667,
+        "text": "If a placement number is"
+      },
+      {
+        "start": 16.55,
+        "end": 18.066666666666666,
+        "text": "advertised, ask who it counts"
+      },
+      {
+        "start": 18.1,
+        "end": 19.01666666666667,
+        "text": "and over what period."
+      },
+      {
+        "start": 19.3,
+        "end": 20.283333333333335,
+        "text": "A certificate is one part"
+      },
+      {
+        "start": 20.316666666666666,
+        "end": 21.21666666666667,
+        "text": "of the decision, not the"
+      },
+      {
+        "start": 21.25,
+        "end": 21.833333333333332,
+        "text": "whole picture."
+      },
+      {
+        "start": 22.25,
+        "end": 23.81666666666667,
+        "text": "Compare the syllabus, feedback, and"
+      },
+      {
+        "start": 23.85,
+        "end": 25.133333333333333,
+        "text": "total cost before you enroll."
+      },
+      {
+        "start": 25.333333333333332,
+        "end": 26.366666666666667,
+        "text": "Save this checklist for your"
+      },
+      {
+        "start": 26.400000000000002,
+        "end": 27.365833333333335,
+        "text": "next course comparison."
+      }
+    ]
+  },
+  "referenceAudio": {
+    "music": {
+      "carveStrength": 0.5,
+      "fadeIn": 0.6,
+      "fadeOut": [
+        26.8,
+        28.1
+      ],
+      "provenance": "Existing local ownership assertion; no independently verified original license",
+      "reuseAuthorization": "Not established by this preset; verify rights and scope."
+    },
+    "cues": [
+      {
+        "id": "sfx-project-transition",
+        "file": "whoosh-short.mp3",
+        "start": 2.466667,
+        "duration": 0.57,
+        "volume": 0.09,
+        "purpose": "First check transition"
+      },
+      {
+        "id": "sfx-project-check",
+        "file": "click-soft.mp3",
+        "start": 4.466667,
+        "duration": 0.37,
+        "volume": 0.18,
+        "purpose": "Own-project checkmark"
+      },
+      {
+        "id": "sfx-reviewer-check",
+        "file": "click-soft.mp3",
+        "start": 10.083333,
+        "duration": 0.37,
+        "volume": 0.16,
+        "purpose": "Reviewer checkmark"
+      },
+      {
+        "id": "sfx-context",
+        "file": "click-soft.mp3",
+        "start": 17.183333,
+        "duration": 0.37,
+        "volume": 0.16,
+        "purpose": "Who-is-counted context reveal"
+      },
+      {
+        "id": "sfx-comparison-transition",
+        "file": "whoosh-short.mp3",
+        "start": 19.3,
+        "duration": 0.57,
+        "volume": 0.07,
+        "purpose": "Whole-picture comparison transition"
+      },
+      {
+        "id": "sfx-closing-confirmation",
+        "file": "chime.mp3",
+        "start": 25.416667,
+        "duration": 2.5,
+        "volume": 0.38,
+        "purpose": "Final checklist confirmation; full 2.5-second decay before ending"
+      }
+    ],
+    "volumesAreSourceSpecific": true,
+    "reuseMediaIncluded": false
+  },
+  "qa": {
+    "staticPresenterBlocksFinal": true,
+    "requireActualEncodedOutput": true,
+    "newTopicInvalidatesOldReviews": true,
+    "continuousListeningNotImplied": true,
+    "userAcceptanceNotAutomatic": true
+  }
+}
