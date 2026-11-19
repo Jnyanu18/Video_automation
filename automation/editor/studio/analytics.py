@@ -38,11 +38,22 @@ def stage_of(sb: dict) -> str:
     return "awaiting_approval"
 
 
+LANES = (("footage", "Footage"), ("motion", "Motion graphics"))
+
+
+def lane_of(sb: dict) -> str:
+    """Which lane made this storyboard. Records written before the lanes existed carry no field: they are footage."""
+    lane = sb.get("lane")
+    return lane if lane in dict(LANES) else "footage"
+
+
 def overview(store: Store) -> Dict[str, Any]:
     sbs, pubs, series = store.all("storyboards"), store.all("publishing"), store.all("series")
     by_stage: Dict[str, int] = defaultdict(int)
+    by_lane: Dict[str, int] = defaultdict(int)
     for sb in sbs:
         by_stage[stage_of(sb)] += 1
+        by_lane[lane_of(sb)] += 1
     by_pub: Dict[str, int] = defaultdict(int)
     for p in pubs:
         by_pub[p.get("status", "UNKNOWN")] += 1
@@ -71,6 +82,7 @@ def overview(store: Store) -> Dict[str, Any]:
             "series_active": sum(1 for s in series if s.get("status") == "ACTIVE"),
         },
         "pipeline": pipeline,
+        "lanes": [{"key": key, "label": label, "count": by_lane[key]} for key, label in LANES],
         "recent_activity": store.events(12),
         "next_scheduled": sorted((p for p in pubs if p.get("status") == "SCHEDULED" and p.get("scheduled_at")),
                                  key=lambda p: p["scheduled_at"])[:3],

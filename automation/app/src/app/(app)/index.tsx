@@ -77,6 +77,21 @@ export default function CommandCenter() {
               </Card>
             ))}
           </Row>
+
+          {/* Which lane each storyboard came from. Records written before the lanes existed count as footage. */}
+          {ov.lanes?.length ? (
+            <>
+              <SectionTitle title="By lane" />
+              <Row style={{ alignItems: 'stretch' }}>
+                {ov.lanes.map((l: any) => (
+                  <Card key={l.key} style={styles.stage} onPress={l.key === 'motion' ? () => router.push('/motion') : undefined}>
+                    <T variant="stat">{l.count}</T>
+                    <T variant="label" muted>{l.label.toUpperCase()}</T>
+                  </Card>
+                ))}
+              </Row>
+            </>
+          ) : null}
         </>
       )}
 

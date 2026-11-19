@@ -156,6 +156,64 @@ class Score:
         t = self.tt(.06)
         self.add(self.bp(self.noise(.06), 1500, 7000) * np.exp(-t * 40), at, .2)
 
+    # ---------- epic / cinematic ----------
+    def taiko(self, at, g=.8, f0=110):
+        t = self.tt(.9)
+        ph = 2 * np.pi * np.cumsum(f0 * (0.5 + 0.5 * np.exp(-t * 18))) / SR
+        body = np.sin(ph) * np.exp(-t * 5.5)
+        skin = self.bp(self.noise(.9), 150, 1200) * np.exp(-t * 30) * .5
+        self.add(body + skin, at, g)
+
+    def horn(self, at, f, d, g=.2, swell=.6):
+        """Conch/brass: detuned saws, low-passed, vibrato, slow swell."""
+        t = self.tt(d)
+        vib = 1 + .006 * np.sin(2 * np.pi * 5.2 * t) * np.minimum(1, t / .6)
+        s = np.zeros_like(t)
+        for det in (-.004, 0, .004):
+            ph = 2 * np.pi * np.cumsum(f * (1 + det) * vib) / SR
+            s += 2 * ((ph / (2 * np.pi)) % 1) - 1
+        s = self.lp(self.bp(s, f * .8, f * 9), 2400) / 3
+        env = np.minimum(1, t / swell) * np.minimum(1, (d - t) / .5)
+        self.add(s * env, at, g)
+
+    def choir(self, t0, t1, freqs, g=.1, attack=.6, release=.8):
+        """Vowel-like pad: saws through 'aah' formant bands."""
+        d = t1 - t0
+        t = self.tt(d)
+        s = np.zeros_like(t)
+        for f in freqs:
+            for det in (-.25, .25):
+                vib = 1 + .004 * np.sin(2 * np.pi * (4.6 + det) * t)
+                ph = 2 * np.pi * np.cumsum(f * (1 + det / 100) * vib) / SR + self.rng.uniform(0, 6.28)
+                s += 2 * ((ph / (2 * np.pi)) % 1) - 1
+        s = (self.bp(s, 650, 1100) + .6 * self.bp(s, 1000, 1500) + .3 * self.bp(s, 2400, 2900)) / len(freqs)
+        env = np.minimum(1, t / attack) * np.minimum(1, (d - t) / release)
+        self.add(s * env, t0, g)
+
+    def twang(self, at, f=180, g=.3):
+        """Bow string release: bright pluck with a pitch drop and buzz."""
+        t = self.tt(.6)
+        fr = f * (1 + .25 * np.exp(-t * 40))
+        ph = 2 * np.pi * np.cumsum(fr) / SR
+        s = (np.sin(ph) + .5 * np.sign(np.sin(ph)) * np.exp(-t * 30)) * np.exp(-t * 7)
+        self.add(s, at, g)
+
+    def crackle(self, t0, t1, g=.12, density=60):
+        d = t1 - t0
+        for _ in range(int(d * density)):
+            at = t0 + self.rng.uniform(0, d)
+            t = self.tt(.02)
+            self.add(self.hp(self.noise(.02), 2000) * np.exp(-t * 300), at, g * self.rng.uniform(.3, 1), self.rng.uniform(-.6, .6))
+        self.add(self.lp(self.noise(d), 400) * .5, t0, g * .5)
+
+    def shimmer(self, at, d, g=.06, base=1318.5):
+        for k, r in enumerate([1, 1.5, 2, 2.5, 3]):
+            self.tone(at + k * d / 6, base * r, d, g * (1 - k * .12), 'sine', (k % 2 * 2 - 1) * .4)
+
+    def tock(self, at, f=420, g=.25):
+        t = self.tt(.12)
+        self.add((np.sin(2 * np.pi * f * t) * .7 + self.bp(self.noise(.12), f, f * 4) * .5) * np.exp(-t * 45), at, g)
+
     # ---------- groove ----------
     def beat_bar(self, start, kick_g=.9, clap_g=.4, hats=8, hat_g=.06, basses=None):
         for q in range(4):

@@ -8,6 +8,7 @@
     "mock": "node mock/mock-server.cjs",
     "server": "node server/index.cjs",
     "hash-password": "node server/hash-password.cjs",
+    "create-user": "node server/create-user.cjs",
     "dev:stack": "node mock/dev-stack.cjs",
     "n8n:install": "npm install --prefix runtime/n8n n8n --no-audit --no-fund",
     "setup:local": "node scripts/setup-local.cjs",

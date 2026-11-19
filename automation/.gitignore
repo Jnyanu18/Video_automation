@@ -3,3 +3,6 @@
 runtime/
 node_modules/
 server/storage/
+server/storage/users.json
+server/.env
+editor/.env

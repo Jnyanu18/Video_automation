@@ -26,6 +26,7 @@ export const NAV_SECTIONS: NavSection[] = [
       { href: '/', label: 'Overview', icon: 'grid' },
       { href: '/studio', label: 'AI Studio', icon: 'camera' },
       { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
+      { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
       { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
       { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
       { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
@@ -132,11 +133,11 @@ export function Sidebar() {
       <View style={[styles.user, { borderTopColor: colors.border }]}>
         <View style={[styles.avatar, { backgroundColor: colors.primarySoft, borderColor: colors.border, borderWidth: 1 }]}>
           <Text style={{ fontFamily: font.bold, fontSize: 13, color: colors.primary }}>
-            {(user?.name || 'U').charAt(0).toUpperCase()}
+            {(user?.name || user?.email || 'U').charAt(0).toUpperCase()}
           </Text>
         </View>
         <View style={{ flex: 1 }}>
-          <T variant="small" style={{ fontWeight: '600' }} numberOfLines={1}>{user?.name || 'Director'}</T>
+          <T variant="small" style={{ fontWeight: '600' }} numberOfLines={1}>{user?.name || user?.email || 'Director'}</T>
           <T variant="mono" style={{ fontSize: 10, color: colors.textMuted }}>Producer</T>
         </View>
         <Pressable accessibilityRole="button" accessibilityLabel="Sign out" onPress={signOut} hitSlop={8}>

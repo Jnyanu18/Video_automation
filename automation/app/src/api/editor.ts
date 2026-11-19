@@ -32,6 +32,7 @@ export interface Storyboard {
   series: { id: string; episode: number } | null; storyboard: StoryboardCard | null; approved: boolean; approved_at: number | null;
   approval_reset?: boolean; latest_render: RenderRec | null; latest_preview: RenderRec | null; renders: RenderRec[];
   render_job: RenderJob | null; events: AgentEvent[]; stage: string; agent_reply: string; created_at: number; updated_at: number;
+  lane?: 'footage' | 'motion';
   messages?: { role: string; content: string }[];
   director?: Director | null; posts?: Posts | null; source_url?: string | null; stage_text?: string;
 }
@@ -103,6 +104,12 @@ export const editor = {
   setMusic: (id: string, track_id: string | null, volume_db = -20) => post(`/api/editor/storyboard/${id}/music`, { track_id, volume_db }),
   recipes: () => get<{ recipes: { name: string; title: string; description: string; steps: number }[] }>('/api/editor/recipes').then((r) => r.recipes),
   createStoryboard: (body: Record<string, unknown>) => post<{ storyboard_id: string; data: Storyboard }>('/api/editor/storyboard/create', body),
+
+  // Motion-graphics lane (studio/motion_api.py). The storyboard it returns is an ordinary storyboard: it is
+  // approved and rendered with approve() and render() below, through the same approval gate as the footage lane.
+  motionPreview: (body: Record<string, unknown>) => post<{ spec: Record<string, unknown>; storyboard: StoryboardCard }>('/api/editor/motion/preview', body),
+  motionCreate: (body: Record<string, unknown>) => post<{ storyboard_id: string; data: Storyboard }>('/api/editor/motion/reel', body),
+  motionReels: () => get<{ storyboards: Storyboard[] }>('/api/editor/motion/reels').then((r) => r.storyboards),
   chat: (id: string, message: string) => post(`/api/editor/storyboard/${id}/chat`, { message }),
   approve: (id: string) => post(`/api/editor/storyboard/${id}/approve`),
   unapprove: (id: string) => post(`/api/editor/storyboard/${id}/unapprove`),

@@ -1,9 +1,14 @@
 'use strict';
 // Forwards /api/editor/* from the (authenticated) dashboard to the AI editor service. The browser never talks to the editor
 // directly. JSON is relayed as JSON; anything else (the sound-effect audio) is relayed as bytes.
+//
+// Account isolation: the engine routes on the X-Studio-User header. NOTHING from the browser's headers is
+// forwarded - the request to the engine is built from scratch here - so an inbound X-Studio-User is dropped and
+// the value the engine sees always comes from the signed session cookie.
 const path = require('path');
 const { HttpError, sendJson, readJson } = require('./http.cjs');
 
+const USER_ID_RE = /^[a-z0-9][a-z0-9_-]{2,39}$/;
 const WITH_BODY = new Set(['POST', 'PUT', 'PATCH']);
 const ALLOWED = new Set(['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']);
 
@@ -11,15 +16,18 @@ function createEditorProxy(cfg, fetchImpl) {
   const base = String(cfg.editorUrl || 'http://127.0.0.1:8793').replace(/\/+$/, '');
   const f = fetchImpl || fetch;
 
-  return async function proxy(req, res, url) {
+  return async function proxy(req, res, url, session) {
     const method = req.method;
     if (!ALLOWED.has(method)) throw new HttpError(405, 'METHOD_NOT_ALLOWED', 'Method not allowed');
+    const userId = session && session.uid;
+    if (!USER_ID_RE.test(String(userId || ''))) throw new HttpError(401, 'UNAUTHENTICATED', 'Sign in to continue');
     let body;
     if (WITH_BODY.has(method)) {
       const raw = await readJson(req, 262144);
-      // A staged upload is referenced by id; only the server knows where it lives on disk.
+      // A staged upload is referenced by id; only the server knows where it lives on disk - inside this
+      // account's own upload folder, so an id belonging to another account resolves to a path that is not there.
       if (raw && typeof raw.uploadId === 'string' && /^[a-f0-9]{32}$/.test(raw.uploadId)) {
-        raw.video_path = path.join(cfg.uploadDir, raw.uploadId + '.mp4');
+        raw.video_path = path.join(cfg.uploadDir, 'users', userId, raw.uploadId + '.mp4');
       }
       body = JSON.stringify(raw);
     }
@@ -27,7 +35,7 @@ function createEditorProxy(cfg, fetchImpl) {
     try {
       upstream = await f(base + url.pathname + (url.search || ''), {
         method: method === 'HEAD' ? 'GET' : method,
-        headers: body !== undefined ? { 'content-type': 'application/json' } : {},
+        headers: Object.assign({ 'x-studio-user': userId }, body !== undefined ? { 'content-type': 'application/json' } : {}),
         body,
         signal: AbortSignal.timeout(cfg.editorTimeoutMs || 120000),
       });

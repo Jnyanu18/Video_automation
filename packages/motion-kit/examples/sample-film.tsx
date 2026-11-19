@@ -1,7 +1,7 @@
 /* The director writes this file per project. This one is a neutral API smoke test of the kit, not a style template. */
-import {S,T,chip,eo,gooInvert,letters,morphRadii,osc,outline,radial,ringText,seg,shapePath,slam,slices,fit,type Ball} from './kit/core';
-import {phone,phoneGeom,statusBar} from './kit/devices';
-import type {FilmConfig,Frame} from './kit/film';
+import {S,T,chip,eo,gooInvert,letters,morphRadii,osc,outline,radial,ringText,seg,shapePath,slam,slices,fit,type Ball} from '../src/kit/core';
+import {phone,phoneGeom,statusBar} from '../src/kit/devices';
+import type {FilmConfig,Frame} from '../src/kit/film';
 
 const C={dark:'#111114',light:'#F2F0EA',accent:'#3D5AFE'};
 

@@ -24,7 +24,7 @@ function fakeEditor() {
     req.on('data', (c) => chunks.push(c));
     req.on('end', () => {
       const body = Buffer.concat(chunks).toString();
-      seen.push({ method: req.method, url: req.url, body });
+      seen.push({ method: req.method, url: req.url, body, user: req.headers['x-studio-user'] });
       if (req.url.startsWith('/api/editor/sfx/')) {
         res.writeHead(200, { 'content-type': 'audio/wav' });
         return res.end(Buffer.from('RIFFfakewavdata'));
@@ -72,6 +72,12 @@ test('requires a session', async () => {
   assert.equal(r.status, 401);
 });
 
+test('the engine is told which account is calling, and the browser cannot choose it', async () => {
+  seen.length = 0;
+  await call('GET', '/api/editor/storyboards', undefined, { 'x-studio-user': 'someone-else' });
+  assert.equal(seen[0].user, 'operator', 'the forged X-Studio-User header is dropped; the session decides');
+});
+
 test('relays GET, POST, PATCH and DELETE with their bodies and query strings', async () => {
   seen.length = 0;
   assert.equal((await (await call('GET', '/api/editor/storyboards?x=1')).json()).method, 'GET');
@@ -106,7 +112,8 @@ test('an uploadId is translated to the server-side file path and never trusted f
   const id = 'a'.repeat(32);
   await call('POST', '/api/editor/storyboard/create', { uploadId: id, video_path: '/etc/passwd' });
   const sent = JSON.parse(seen[0].body);
-  assert.equal(sent.video_path, path.join(path.resolve(tmp, 'up'), id + '.mp4'));
+  // Each account stages into its own folder, so an id can only ever resolve inside the signed-in account's.
+  assert.equal(sent.video_path, path.join(path.resolve(tmp, 'up'), 'users', 'operator', id + '.mp4'));
 });
 
 test('a stopped editor gives a clear 502', async () => {

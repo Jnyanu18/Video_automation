@@ -1,6 +1,7 @@
 'use strict';
 // Backend configuration. Every secret comes from the environment; nothing here is ever sent to the browser.
 const path = require('path');
+const fs = require('fs');
 const crypto = require('crypto');
 const core = require('../lib/core.js');
 
@@ -22,7 +23,17 @@ function loadConfig(env) {
       warnings.push('SESSION_SECRET not set: using a random one (sessions end when the server restarts)');
     }
   }
-  if (!env.DASHBOARD_PASSWORD_HASH && !env.DASHBOARD_PASSWORD) problems.push('Set DASHBOARD_PASSWORD_HASH (run: npm run hash-password -- "<password>")');
+  const uploadDir = path.resolve(env.UPLOAD_DIR || path.join(__dirname, 'storage'));
+  const usersFile = path.resolve(env.USERS_FILE || path.join(uploadDir, 'users.json'));
+  let accountCount = 0;
+  try {
+    const parsed = JSON.parse(fs.readFileSync(usersFile, 'utf8'));
+    accountCount = (Array.isArray(parsed) ? parsed : parsed.users || []).length;
+  } catch (e) {
+    accountCount = 0;
+  }
+  // Pilot accounts live in usersFile; DASHBOARD_PASSWORD_HASH is the single-operator fallback. One of them must exist.
+  if (!accountCount && !env.DASHBOARD_PASSWORD_HASH && !env.DASHBOARD_PASSWORD) problems.push('No accounts yet: run `npm run create-user -- "<email>" "<password>"` (or set DASHBOARD_PASSWORD_HASH for the single-operator fallback)');
   if (env.DASHBOARD_PASSWORD && isProd) problems.push('DASHBOARD_PASSWORD (plain text) is not allowed in production; use DASHBOARD_PASSWORD_HASH');
   if (env.DASHBOARD_PASSWORD && !isProd) warnings.push('Using plain DASHBOARD_PASSWORD (development only)');
   if (publicBaseUrl && !/^https?:\/\/[^\s/]+$/.test(publicBaseUrl)) problems.push('PUBLIC_BASE_URL must be an origin such as https://reels.example.com');
@@ -51,7 +62,13 @@ function loadConfig(env) {
     publicBaseUrl,
     editorUrl: strip(env.EDITOR_URL) || 'http://127.0.0.1:8793',
     editorTimeoutMs: num(env.EDITOR_TIMEOUT_MS, 120000),
-    uploadDir: path.resolve(env.UPLOAD_DIR || path.join(__dirname, 'storage')),
+    uploadDir,
+    usersFile,
+    accountCount,
+    operatorId: 'operator',
+    operatorEmail: env.DASHBOARD_EMAIL || '',
+    // One directory per account, shared with the engine (which reads the same EDITOR_USERS_DIR).
+    editorUsersDir: path.resolve(env.EDITOR_USERS_DIR || path.join(__dirname, '..', 'runtime', 'users')),
     renderDir: path.resolve(env.RENDER_DIR || path.join(__dirname, '..', 'runtime', 'renders')),
     webDir: path.resolve(env.WEB_DIR || path.join(__dirname, '..', 'web', 'dist')),
     maxUploadBytes: Math.round(num(env.MAX_UPLOAD_MB, 100) * 1048576),

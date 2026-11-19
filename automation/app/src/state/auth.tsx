@@ -5,8 +5,8 @@ type Status = 'loading' | 'signedOut' | 'signedIn';
 
 interface AuthValue {
   status: Status;
-  user: { name?: string } | null;
-  signIn: (password: string, name?: string) => Promise<void>;
+  user: { id?: string; email?: string; name?: string } | null;
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   recheck: () => Promise<void>;
 }
@@ -15,7 +15,7 @@ const Ctx = createContext<AuthValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<Status>('loading');
-  const [user, setUser] = useState<{ name?: string } | null>(null);
+  const [user, setUser] = useState<{ id?: string; email?: string; name?: string } | null>(null);
 
   const recheck = useCallback(async () => {
     try {
@@ -38,8 +38,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => setUnauthenticatedHandler(null);
   }, [recheck]);
 
-  const signIn = useCallback(async (password: string, name?: string) => {
-    const r = await post('/api/login', { password, name: name || undefined });
+  // One account per person: the server identifies the user by email and gives back that user's session.
+  const signIn = useCallback(async (email: string, password: string) => {
+    const r = await post('/api/login', { email: email.trim().toLowerCase(), password });
     setCsrf(r.csrfToken);
     setUser(r.user);
     setStatus('signedIn');

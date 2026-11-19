@@ -1,0 +1,13 @@
+src,dst
+export,media/exports
+reference,media/reference/misc
+miracle-reference,media/reference/miracle
+rockcastle video reference,media/reference/rockcastle-events
+education-video,projects/education-video
+event-graphics,projects/event-graphics
+yc-graphics,projects/yc-graphics
+INTEGRATION_ARCHITECTURE.md,docs/archive/INTEGRATION_ARCHITECTURE.md
+IMPLEMENTATION_ROADMAP.md,docs/archive/IMPLEMENTATION_ROADMAP.md
+REPOSITORY_AUDIT.md,docs/archive/REPOSITORY_AUDIT.md
+REPOSITORY_CLEANUP_REPORT.md,docs/archive/REPOSITORY_CLEANUP_REPORT.md
+GEMINI-CLEANUP-PROMPT.md,docs/archive/GEMINI-CLEANUP-PROMPT.md

@@ -11,6 +11,7 @@ const { createAuth } = require('./auth.cjs');
 const { createAirtable, UpstreamError } = require('./airtable.cjs');
 const { createN8n } = require('./n8n.cjs');
 const { createUploads } = require('./uploads.cjs');
+const { createUsers } = require('./users.cjs');
 const { createStore, createHub } = require('./events.cjs');
 const views = require('./views.cjs');
 const { createEditorProxy } = require('./editor-proxy.cjs');
@@ -39,7 +40,8 @@ function createApp(cfg, deps) {
   deps = deps || {};
   const airtable = createAirtable(cfg, deps.fetch);
   const n8n = createN8n(cfg, deps.fetch);
-  const auth = createAuth(cfg);
+  const users = createUsers(cfg);
+  const auth = createAuth(cfg, users);
   const uploads = createUploads(cfg);
   const editorProxy = createEditorProxy(cfg, deps.fetch);
   const store = createStore(cfg, airtable);
@@ -122,15 +124,18 @@ function createApp(cfg, deps) {
     const wait = auth.throttle(ip, Date.now());
     if (wait) return sendJson(res, 429, { ok: false, error: 'TOO_MANY_ATTEMPTS', message: 'Too many failed attempts. Try again later.', retryAfterSec: wait }, { 'retry-after': String(wait) });
     const body = await readJson(req, 2048);
-    if (!auth.checkPassword(body.password)) {
+    const user = auth.checkPassword(body.email, body.password);
+    if (!user) {
       auth.failed(ip, Date.now());
       await new Promise((r) => setTimeout(r, 300));
-      return sendJson(res, 401, { ok: false, error: 'INVALID_CREDENTIALS', message: 'Incorrect password' });
+      return sendJson(res, 401, { ok: false, error: 'INVALID_CREDENTIALS', message: body.email ? 'Incorrect email or password' : 'Incorrect password' });
     }
     auth.clearFailures(ip);
-    const name = typeof body.name === 'string' && /^[\p{L}\p{N} ._-]{1,40}$/u.test(body.name.trim()) ? body.name.trim() : 'dashboard';
-    const { token, session } = auth.issue(name, Date.now());
-    return sendJson(res, 200, { ok: true, user: { name }, csrfToken: session.csrf }, { 'set-cookie': auth.cookie(token, cfg.sessionHours * 3600) });
+    const given = typeof body.name === 'string' && /^[\p{L}\p{N} ._-]{1,40}$/u.test(body.name.trim()) ? body.name.trim() : '';
+    const name = given || user.name || (user.email ? user.email.split('@')[0] : '') || 'dashboard';
+    const { token, session } = auth.issue(name, Date.now(), user);
+    return sendJson(res, 200, { ok: true, user: { id: user.id, email: user.email || null, name }, csrfToken: session.csrf },
+      { 'set-cookie': auth.cookie(token, cfg.sessionHours * 3600) });
   }
 
   async function summary(res) {
@@ -179,19 +184,19 @@ function createApp(cfg, deps) {
     });
   }
 
-  async function stageUpload(req, res) {
+  async function stageUpload(req, res, session) {
     if (!/^https:\/\//.test(cfg.publicBaseUrl)) fail(503, 'UPLOADS_NOT_CONFIGURED', 'Video upload needs PUBLIC_BASE_URL set to the public https address of this server (Blotato must be able to download the file)');
     const type = String(req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
     if (['video/mp4', 'video/quicktime', 'application/octet-stream'].indexOf(type) === -1) fail(415, 'FILE_TYPE_UNSUPPORTED', 'Only MP4 or MOV video files can be uploaded');
     if (staging >= 2) fail(429, 'TOO_MANY_UPLOADS', 'Another upload is in progress. Try again in a moment.');
     staging += 1;
     try {
-      const m = await uploads.stage(req, req.headers['x-file-name']);
+      const m = await uploads.stage(session.uid, req, req.headers['x-file-name']);
       const errs = [];
       if (m.durationSeconds < cfg.core.minVideoSeconds) errs.push('VIDEO_TOO_SHORT');
       if (m.durationSeconds > cfg.core.maxVideoSeconds) errs.push('VIDEO_TOO_LONG');
       if (errs.length) {
-        await uploads.remove(m.id);
+        await uploads.remove(session.uid, m.id);
         fail(422, 'VIDEO_DURATION_OUT_OF_RANGE', `The video must be between ${cfg.core.minVideoSeconds} and ${cfg.core.maxVideoSeconds} seconds`, { errors: errs, durationSeconds: m.durationSeconds });
       }
       return sendJson(res, 201, { ok: true, upload: { uploadId: m.id, fileName: m.fileName, sizeBytes: m.sizeBytes, durationSeconds: m.durationSeconds, mimeType: m.mimeType, previewUrl: '/api/uploads/' + m.id + '/preview' } });
@@ -200,11 +205,12 @@ function createApp(cfg, deps) {
     }
   }
 
-  async function previewStaged(req, res, id) {
-    // Staged (not yet submitted) files are previewed through an authenticated route only.
-    const meta = uploads.meta(id);
+  async function previewStaged(req, res, session, id) {
+    // Staged (not yet submitted) files are previewed through an authenticated route only, and only out of the
+    // signed-in account's own folder: another account's id simply is not there.
+    const meta = uploads.meta(session.uid, id);
     if (!meta) fail(404, 'NOT_FOUND', 'Upload not found');
-    const p = path.join(cfg.uploadDir, id + '.mp4');
+    const p = uploads.filePath(session.uid, id);
     const st = await fs.promises.stat(p).catch(() => null);
     if (!st) fail(404, 'NOT_FOUND', 'Upload not found');
     const m = /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range || ''));
@@ -232,8 +238,8 @@ function createApp(cfg, deps) {
   async function submitUpload(req, res, session) {
     const body = await readJson(req);
     const uploadId = String(body.uploadId || '');
-    let meta = uploads.meta(uploadId);
-    if (!meta) meta = await uploads.describeRender(uploadId);
+    let meta = uploads.meta(session.uid, uploadId);
+    if (!meta) meta = await uploads.describeRender(session.uid, uploadId);
     if (!meta) fail(404, 'UPLOAD_NOT_FOUND', 'The uploaded file was not found. Upload it again.');
     if (cfg.publicBaseUrl && !/^https?:\/\//.test(cfg.publicBaseUrl)) fail(503, 'UPLOADS_NOT_CONFIGURED', 'PUBLIC_BASE_URL is not configured');
 
@@ -245,13 +251,14 @@ function createApp(cfg, deps) {
     const local = core.buildUploadRecord(payload, cfg.core, new Date().toISOString());
     if (!local.ok) fail(400, 'INVALID_UPLOAD', 'Some details are invalid', { errors: local.errors });
     return withLock('upload:' + uploadId, async () => {
-      if (!meta.isRender) uploads.setSubmitted(uploadId, true);
+      if (!meta.isRender) uploads.setSubmitted(session.uid, uploadId, true);
+      else uploads.claimRender(session.uid, uploadId);
       const r = await n8n.call('internal', 'reels/upload', payload);
       const created = r.status === 201;
       const dup = r.status === 200 && r.body && r.body.duplicate === true;
       if (created) hub.poke();
-      else if (dup) { if (!meta.isRender) await uploads.remove(uploadId); }
-      else if (!meta.isRender && !(r.body && r.body.error === 'N8N_TIMEOUT')) uploads.setSubmitted(uploadId, false);
+      else if (dup) { if (!meta.isRender) await uploads.remove(session.uid, uploadId); }
+      else if (!meta.isRender && !(r.body && r.body.error === 'N8N_TIMEOUT')) uploads.setSubmitted(session.uid, uploadId, false);
       return sendJson(res, r.status, r.body);
     });
   }
@@ -318,7 +325,7 @@ function createApp(cfg, deps) {
     if (p === '/api/login' && method === 'POST') return login(req, res);
 
     const session = auth.read(parseCookies(req.headers.cookie)[auth.COOKIE], Date.now());
-    if (p === '/api/session' && method === 'GET') return sendJson(res, 200, session ? { ok: true, authenticated: true, user: { name: session.name }, csrfToken: session.csrf } : { ok: true, authenticated: false });
+    if (p === '/api/session' && method === 'GET') return sendJson(res, 200, session ? { ok: true, authenticated: true, user: { id: session.uid, email: session.email || null, name: session.name }, csrfToken: session.csrf } : { ok: true, authenticated: false });
     if (!session) fail(401, 'UNAUTHENTICATED', 'Sign in to continue');
     if (method !== 'GET' && method !== 'HEAD' && !csrfOk(session, req)) fail(403, 'CSRF_FAILED', 'Reload the page and try again');
 
@@ -326,7 +333,7 @@ function createApp(cfg, deps) {
       auth.revoke(session);
       return sendJson(res, 200, { ok: true }, { 'set-cookie': auth.cookie('', 0) });
     }
-    if (p.startsWith('/api/editor/')) return editorProxy(req, res, url);
+    if (p.startsWith('/api/editor/')) return editorProxy(req, res, url, session);
     if (method === 'GET') {
       if (p === '/api/summary') return summary(res);
       if (p === '/api/reels') return listReels(res, url.searchParams);
@@ -339,12 +346,12 @@ function createApp(cfg, deps) {
       let m = /^\/api\/reels\/([^/]+)$/.exec(p);
       if (m) return getReel(res, m[1]);
       m = /^\/api\/uploads\/([a-f0-9]{32})\/preview$/.exec(p);
-      if (m) return previewStaged(req, res, m[1]);
+      if (m) return previewStaged(req, res, session, m[1]);
     }
     if (method === 'POST') {
       if (p === '/api/reels') return submitReel(req, res, session);
       if (p === '/api/reels/upload') return submitUpload(req, res, session);
-      if (p === '/api/uploads') return stageUpload(req, res);
+      if (p === '/api/uploads') return stageUpload(req, res, session);
       const m = /^\/api\/reels\/([^/]+)\/([a-z]+)$/.exec(p);
       if (m) return doAction(req, res, session, m[1], m[2]);
     }
@@ -385,16 +392,22 @@ function createApp(cfg, deps) {
     Object.keys(SECURITY_HEADERS).forEach((k) => res.setHeader(k, SECURITY_HEADERS[k]));
     try {
       const url = new URL(req.url, 'http://localhost');
+      // /media and /render are the two URLs the publishing provider downloads from, so they stay reachable
+      // without a cookie - but only for a file whose owner was recorded when it was staged or submitted. A
+      // signed-in browser is answered out of its OWN account's folder and never anyone else's.
+      const session = auth.read(parseCookies(req.headers.cookie)[auth.COOKIE], Date.now());
       const media = /^\/media\/([a-f0-9]{32})\.mp4$/.exec(url.pathname);
       if (media && (req.method === 'GET' || req.method === 'HEAD')) {
         res.removeHeader('content-security-policy');
-        if (!uploads.serve(media[1], req, res)) sendJson(res, 404, { ok: false, error: 'NOT_FOUND' });
+        const ok = session ? uploads.serve(session.uid, media[1], req, res) : uploads.servePublic(media[1], req, res);
+        if (!ok) sendJson(res, 404, { ok: false, error: 'NOT_FOUND' });
         return;
       }
       const render = /^\/render\/([a-f0-9]{32})\.mp4$/.exec(url.pathname);
       if (render && (req.method === 'GET' || req.method === 'HEAD')) {
         res.removeHeader('content-security-policy');
-        if (!uploads.serveRender(render[1], req, res)) sendJson(res, 404, { ok: false, error: 'NOT_FOUND' });
+        const ok = session ? uploads.serveRender(session.uid, render[1], req, res) : uploads.servePublicRender(render[1], req, res);
+        if (!ok) sendJson(res, 404, { ok: false, error: 'NOT_FOUND' });
         return;
       }
       if (url.pathname === '/healthz') return sendJson(res, 200, { ok: true });
@@ -419,7 +432,7 @@ function createApp(cfg, deps) {
   cleaner.unref();
 
   return {
-    server, hub, uploads,
+    server, hub, uploads, users,
     listen: () => new Promise((resolve) => server.listen(cfg.port, cfg.host, () => resolve(server.address()))),
     close: () => new Promise((resolve) => { hub.close(); clearInterval(cleaner); server.closeAllConnections && server.closeAllConnections(); server.close(() => resolve()); }),
   };

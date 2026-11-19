@@ -54,7 +54,14 @@ def do_moves(pairs, go, tag):
                 continue
             if go:
                 os.makedirs(os.path.dirname(d), exist_ok=True)
-                os.rename(s, d)
+                try:
+                    os.rename(s, d)
+                except OSError as e:
+                    # A locked path must not abandon the rest of the plan. On Windows an
+                    # editor's file watcher holds directory handles, so a rename returns
+                    # WinError 5 for that one folder while every other move is fine.
+                    skipped.append((src, dst, f"{type(e).__name__}: {e}"))
+                    continue
                 w.writerow([src, dst])
                 fh.flush()
                 os.fsync(fh.fileno())

@@ -81,7 +81,7 @@ export default function Settings() {
           <Icon name="server" size={18} color={colors.textMuted} />
           <T variant="small" muted style={{ flex: 1 }}>{isWeb ? 'This studio server' : getBaseUrl()}</T>
         </View>
-        <T variant="small" muted>Signed in as {user?.name || 'Director'}.</T>
+        <T variant="small" muted>Signed in as {user?.email || user?.name || 'Director'}.</T>
         <Button label="Sign out" icon="logout" onPress={signOut} />
       </Card>
     </Page>

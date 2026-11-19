@@ -3,7 +3,7 @@
     python gate.py out/film.mp4
     python gate.py public/soundtrack.wav --lufs -14 --tol 1.0 --tp -1.5
 
-Spec comes from references/critic-rubric.md: -14 LUFS +/- 1 integrated, true peak <= -1.5 dBFS.
+Spec comes from references/critic-rubric.md: -14 LUFS +/- 1 integrated, true peak <= -1.5 dBTP on the DELIVERED file. (scorelib finalize() mixes to TP -2.0 to leave encode headroom.)
 """
 import argparse
 import json

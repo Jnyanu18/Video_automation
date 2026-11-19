@@ -37,6 +37,7 @@ from services.render import render_final_info, render_preview_info  # noqa: E402
 from studio import analytics, animator, carousel as carousel_mod, director, health, ingest as ingest_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
 from studio.presets import PRESET_STYLES, probe_video_file  # noqa: E402
 from studio.publishing import PLATFORMS, Publisher  # noqa: E402
+from studio import tenancy  # noqa: E402
 from studio.store import Store  # noqa: E402
 from styles.aggregate import aggregate as aggregate_styles  # noqa: E402
 from styles.style_extract import extract_style as do_extract_style, save_style  # noqa: E402
@@ -70,14 +71,31 @@ def _find_up(name: str, start: Path) -> Optional[Path]:
     return None
 
 
-def media_roots(work_dir: Path) -> List[Path]:
-    """Folders a video_path may live in (the API is local, but the path still comes from a request)."""
-    roots = [REPO_ROOT / "server" / "storage", work_dir, ROOT / "work"]
-    raw = _find_up("raw footage", REPO_ROOT)
+def media_roots(work_dir: Path, renders_dir: Optional[Path] = None, uploads_dir: Optional[Path] = None,
+                shared: bool = True) -> List[Path]:
+    """Folders a video_path may live in (the API is local, but the path still comes from a request).
+
+    shared=True is the legacy single-operator set. A per-account instance passes shared=False: it then sees
+    only its OWN work, renders and upload folders, so one account can never hand in a video_path that points
+    into another account's uploads. The shared "raw footage" library stays out unless the operator opts in
+    with EDITOR_SHARED_FOOTAGE=1 (it is a read-only common library, never a per-account folder).
+    """
+    roots = [Path(work_dir)]
+    if renders_dir is not None:
+        roots.append(Path(renders_dir))
+    if uploads_dir is not None:
+        roots.append(Path(uploads_dir))
+    if shared:
+        roots.append(REPO_ROOT / "server" / "storage")
+        roots.append(ROOT / "work")
+    raw = _find_up("raw footage", REPO_ROOT) if (shared or os.environ.get("EDITOR_SHARED_FOOTAGE") == "1") else None
     if raw:
         roots.append(raw)
-    for extra in filter(None, (os.environ.get("EDITOR_MEDIA_ROOTS") or "").split(os.pathsep)):
-        roots.append(Path(extra))
+    if shared:
+        # EDITOR_MEDIA_ROOTS is one global env var: honouring it per account would reopen the leak for
+        # every account at once, so it stays admin-only (single-operator mode).
+        for extra in filter(None, (os.environ.get("EDITOR_MEDIA_ROOTS") or "").split(os.pathsep)):
+            roots.append(Path(extra))
     return [r.resolve() for r in roots]
 
 
@@ -334,17 +352,38 @@ Platform facts you may rely on: the first seconds decide distribution to non-fol
 
 # ====================================================================== app factory
 def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = None, work_dir: Optional[Path] = None,
-               start_scheduler: bool = True) -> FastAPI:
+               start_scheduler: bool = True, user_id: Optional[str] = None) -> FastAPI:
+    """Build one engine instance. With user_id set it is a per-account instance: every data location
+    (state file, renders, ingest downloads, allowed media roots) lives under this account's work_dir only."""
+    tenant = user_id is not None
     work_dir = Path(work_dir or os.environ.get("EDITOR_WORK_DIR") or ROOT / "work")
     work_dir.mkdir(parents=True, exist_ok=True)
+    if renders_dir is None and tenant:
+        renders_dir = work_dir / "renders"  # never the shared runtime/renders
     renders_dir = Path(renders_dir or os.environ.get("EDITOR_RENDERS_DIR") or REPO_ROOT / "runtime" / "renders")
     renders_dir.mkdir(parents=True, exist_ok=True)
+    if state_file is None and tenant:
+        state_file = work_dir / "studio_state.json"
     store = Store(state_file or os.environ.get("EDITOR_STATE_FILE") or work_dir / "studio_state.json")
     publisher = Publisher(store, renders_dir)
-    roots = media_roots(work_dir)
+    uploads_dir = tenancy.user_uploads_dir(REPO_ROOT, user_id) if tenant else None
+    roots = media_roots(work_dir, renders_dir, uploads_dir, shared=not tenant)
     render_lock = threading.Semaphore(1)
     raw_root = _find_up("raw footage", REPO_ROOT)
-    ingest_dir = (raw_root / "ingested") if raw_root else (work_dir / "ingested")
+    if tenant:
+        ingest_dir = work_dir / "ingested"  # downloads pool per account, never in the shared raw footage folder
+    else:
+        ingest_dir = (raw_root / "ingested") if raw_root else (work_dir / "ingested")
+    # Learned style profiles are derived from a client's OWN reference reels: they are client data, not
+    # built-ins, so they are written and read per account. PRESET_STYLES/STYLE_PRESETS stay shared.
+    styles_dir = (work_dir / "styles") if tenant else (ROOT / "styles")
+    styles_dir.mkdir(parents=True, exist_ok=True)
+    # The browsable footage library. Shared "raw footage" is a common read-only library: per-account
+    # instances only see it when the operator opts in with EDITOR_SHARED_FOOTAGE=1.
+    shared_footage = (not tenant) or os.environ.get("EDITOR_SHARED_FOOTAGE") == "1"
+    footage_root = raw_root if (shared_footage and raw_root) else (work_dir / "footage" if tenant else None)
+    if footage_root is not None:
+        footage_root.mkdir(parents=True, exist_ok=True)
     ingest_jobs = ingest_mod.IngestJobs(ingest_dir)
     vs = vstudio_mod.VStudio(vstudio_mod.find_studio(REPO_ROOT))
     max_iter = int(os.environ.get("EDITOR_MAX_ITERATIONS", "10"))
@@ -360,6 +399,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     app.add_middleware(CORSMiddleware, allow_origins=["http://127.0.0.1:8787", "http://localhost:8787"],
                        allow_methods=["*"], allow_headers=["*"])
     app.state.store, app.state.publisher, app.state.vstudio = store, publisher, vs
+    app.state.user_id, app.state.work_dir, app.state.renders_dir = user_id, work_dir, renders_dir
 
     @app.exception_handler(RequestValidationError)
     async def _invalid(_request, exc: RequestValidationError):
@@ -487,7 +527,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             "captions": [], "reframe": {"mode": "center", "track": []}, "zooms": [], "transitions": [], "overlays": [],
             "style_ref": style, "notes": f"Prompt: {prompt}",
         }
-        sb = {"id": sb_id, "status": "processing", "error": None, "video_path": str(vpath), "style": style, "prompt": prompt,
+        sb = {"id": sb_id, "status": "processing", "error": None, "lane": "footage", "video_path": str(vpath), "style": style, "prompt": prompt,
               "series": series_ref, "plan": base_plan, "storyboard": None, "workdir": str(work), "agent_reply": "",
               "events": [], "messages": [], "approved": False, "approved_at": None, "latest_render": None,
               "latest_preview": None, "renders": [], "render_job": None}
@@ -558,7 +598,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     def put_settings(req: SettingsRequest):
         cur = _settings()
         if req.default_style is not None:
-            if req.default_style not in PRESET_STYLES and not (ROOT / "styles" / f"{req.default_style}.json").is_file():
+            if req.default_style not in PRESET_STYLES and not (styles_dir / f"{req.default_style}.json").is_file():
                 raise HTTPException(400, f"Unknown style '{req.default_style}'")
             cur["default_style"] = req.default_style
         if req.default_prompt is not None:
@@ -571,7 +611,6 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     # ------------------------------------------------------------ styles + media
     @app.get("/api/editor/styles")
     def list_styles():
-        styles_dir = ROOT / "styles"
         custom: Dict[str, Any] = {}
         for f in styles_dir.glob("*.json"):
             try:
@@ -592,7 +631,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             raise HTTPException(400, "Provide video_path of a reference video (URL download is not supported yet)")
         ref = safe_video_path(req.video_path, roots)
         name = "".join(ch if ch.isalnum() or ch in "_-" else "_" for ch in (req.name or f"style_{ref.stem}"))[:60]
-        target = ROOT / "styles" / f"{name}.json"
+        target = styles_dir / f"{name}.json"
         try:
             prof = await asyncio.to_thread(do_extract_style, str(ref), name)
             save_style(prof, str(target))
@@ -622,7 +661,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
                 profiles.append(do_extract_style(str(f), name=name))
             upd(message="Combining the references")
             prof = aggregate_styles(profiles, name)
-            save_style(prof, str(ROOT / "styles" / f"{name}.json"))
+            save_style(prof, str(styles_dir / f"{name}.json"))
             store.log("style", f"Learned style “{name}” from {len(profiles)} reference video(s)")
             upd(status="done", message="Done", style=name, edit_params=prof["edit_params"], pacing=prof["pacing"], learned_from=len(profiles))
         except Exception as e:
@@ -679,6 +718,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
 
     @app.get("/api/editor/media")
     def list_media():
+        # renders_dir is this account's own folder (per-account instances), so the glob below can only
+        # ever see this account's renders.
         renders = []
         by_file = {}
         for sb in store.all("storyboards"):
@@ -705,8 +746,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     def list_footage():
         """Videos the studio may edit: the raw-footage folder (staged uploads are chosen by the dashboard's uploader)."""
         out = []
-        raw = _find_up("raw footage", REPO_ROOT)
-        if raw:
+        raw = footage_root
+        if raw and raw.is_dir():
             for f in sorted(raw.rglob("*")):
                 if f.is_file() and f.suffix.lower() in VIDEO_EXT and len(f.relative_to(raw).parts) <= 3:
                     out.append({"path": str(f), "name": str(f.relative_to(raw)), "size_mb": round(f.stat().st_size / 1048576, 1)})
@@ -716,7 +757,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     @app.post("/api/editor/storyboard/create", status_code=202)
     async def create_storyboard(req: StoryboardCreateRequest):
         vpath = safe_video_path(req.video_path, roots)
-        if req.style not in PRESET_STYLES and not (ROOT / "styles" / f"{req.style}.json").is_file():
+        if req.style not in PRESET_STYLES and not (styles_dir / f"{req.style}.json").is_file():
             raise HTTPException(400, f"Unknown style '{req.style}'")
         prompt = _compose_prompt(req.prompt or DEFAULT_PROMPT, bool(req.series_mode), req.episode or 1, req.total_episodes or 3,
                                  bool(req.sendability_focus))
@@ -825,7 +866,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         if bool(req.url) == bool(req.video_path):
             raise HTTPException(400, "Give exactly one of `url` or `video_path`")
         style = req.style or "viral_hook_fast_pace"
-        if style not in PRESET_STYLES and not (ROOT / "styles" / f"{style}.json").is_file():
+        if style not in PRESET_STYLES and not (styles_dir / f"{style}.json").is_file():
             raise HTTPException(400, f"Unknown style '{style}'")
         vpath = None
         if req.url:
@@ -844,7 +885,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         sb_id = store.new_id("sb")
         work = work_dir / sb_id
         work.mkdir(parents=True, exist_ok=True)
-        sb = {"id": sb_id, "status": "processing", "error": None, "video_path": req.url or str(vpath), "source_url": req.url, "style": style,
+        sb = {"id": sb_id, "status": "processing", "error": None, "lane": "footage", "video_path": req.url or str(vpath), "source_url": req.url, "style": style,
               "prompt": f"Auto edit{(': ' + req.instruction) if req.instruction else ''}", "series": None,
               "plan": {"version": 1, "source": {}, "keep": [], "notes": ""}, "storyboard": None, "workdir": str(work), "agent_reply": "",
               "events": [], "messages": [], "approved": False, "approved_at": None, "latest_render": None, "latest_preview": None,
@@ -1028,7 +1069,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     async def create_from_recipe(req: RecipeCreateRequest):
         """Build a storyboard by running fixed tool steps (no LLM). Deterministic and repeatable."""
         vpath = safe_video_path(req.video_path, roots)
-        if req.style not in PRESET_STYLES and not (ROOT / "styles" / f"{req.style}.json").is_file():
+        if req.style not in PRESET_STYLES and not (styles_dir / f"{req.style}.json").is_file():
             raise HTTPException(400, f"Unknown style '{req.style}'")
         try:
             saved = recipes_mod.load_saved(req.recipe) if isinstance(req.recipe, str) else None
@@ -1308,8 +1349,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             return safe_video_path(p, roots)
         except Exception:
             cand = Path(p)
-            if cand.is_file():
-                return cand
+            # No bypass: an absolute path that safe_video_path refused stays refused. Only names relative
+            # to this account's own roots are resolved.
             for r in roots:
                 check = (r / p).resolve()
                 if check.is_file():
@@ -1458,7 +1499,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             if not base_plan or not base_plan.get("source"):
                 raise HTTPException(400, "Storyboard has no valid EditPlan source")
 
-            sb_wdir = ROOT / "work" / target_sb["id"]
+            sb_wdir = Path(target_sb.get("workdir") or (work_dir / target_sb["id"]))
             index_files = list(sb_wdir.glob("index_*.json")) if sb_wdir.exists() else []
             footage_index = None
             if index_files:
@@ -1577,7 +1618,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             p = resolve_media(req.footage_dir)
             if not p.is_dir():
                 # Allow raw footage fallback
-                raw_root = _find_up("raw footage", REPO_ROOT)
+                raw_root = footage_root
                 if raw_root and (raw_root / req.footage_dir).is_dir():
                     p = raw_root / req.footage_dir
                 else:
@@ -1592,7 +1633,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         try:
             p = resolve_media(req.footage_dir)
             if not p.is_dir():
-                raw_root = _find_up("raw footage", REPO_ROOT)
+                raw_root = footage_root
                 if raw_root and (raw_root / req.footage_dir).is_dir():
                     p = raw_root / req.footage_dir
                 else:
@@ -1622,7 +1663,19 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     return app
 
 
-app = create_app()
+def _build_tenant_app(user_id: str, work_dir: Path, start_scheduler: bool) -> FastAPI:
+    log.info("Building engine instance for account %s at %s (scheduler=%s)", user_id, work_dir, start_scheduler)
+    return create_app(work_dir=work_dir, start_scheduler=start_scheduler, user_id=user_id)
+
+
+def build_root_app():
+    """The ASGI app uvicorn serves. Multi-account by default; EDITOR_SINGLE_USER=1 keeps the old single app."""
+    if os.environ.get("EDITOR_SINGLE_USER") == "1":
+        return create_app()
+    return tenancy.TenantRouter(_build_tenant_app, REPO_ROOT, open_paths={"/healthz"})
+
+
+app = build_root_app()
 
 if __name__ == "__main__":
     import uvicorn

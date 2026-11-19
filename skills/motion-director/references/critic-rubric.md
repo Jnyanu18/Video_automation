@@ -66,7 +66,7 @@ Measured (all must pass):
 | Duration | The requested length ±0.05 s |
 | Resolution / fps / codec | As planned; H.264 yuv420p + AAC |
 | Loudness | −14 LUFS ±1 integrated |
-| True peak | ≤ −1.5 dBFS |
+| True peak | ≤ −1.5 dBTP on the delivered .mp4 (the mix targets −2.0 in `finalize()` to leave AAC-encode headroom) |
 | Final readable hold | ≥ 1.5 s |
 | Cuts | Present on the planned beats (scene detection ≈ the planned count) |
 

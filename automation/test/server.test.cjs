@@ -483,7 +483,9 @@ test('uploads are refused for the wrong type, bad files, bad lengths, bad metada
   await sc.login();
   const big = await uploadFile(sc, mp4(20, { padBytes: 4000 }), 'big.mp4');
   assert.deepEqual([big.status, big.body.error], [413, 'FILE_TOO_LARGE']);
-  assert.deepEqual(fs.readdirSync(small.cfg.uploadDir), [], 'nothing is left behind');
+  const leftOver = fs.existsSync(path.join(small.cfg.uploadDir, 'users', 'operator'))
+    ? fs.readdirSync(path.join(small.cfg.uploadDir, 'users', 'operator')) : [];
+  assert.deepEqual(leftOver, [], 'nothing is left behind in the account folder');
 });
 
 test('uploading identical content twice yields one record and no orphan file', async () => {
@@ -648,27 +650,35 @@ test('the backend source never contains provider credentials or reads them from 
   assert.ok(!/api\.heygen\.com|api\.openai\.com|api\.apify\.com|backend\.blotato\.com/.test(src), 'no provider hosts: providers are reached only through n8n');
 });
 
-test('rendered videos are served at /render/<id>.mp4 with range support; unknown ids are 404', async () => {
-  const renderDir = fs.mkdtempSync(path.join(tmp, 'renders-'));
+test('rendered videos are served at /render/<id>.mp4 to their own account, with range support; unknown ids are 404', async () => {
+  // Renders live in the account's own engine workspace: <EDITOR_USERS_DIR>/<accountId>/renders.
+  const usersDir = fs.mkdtempSync(path.join(tmp, 'users-'));
   const id = 'a'.repeat(32);
-  fs.writeFileSync(path.join(renderDir, id + '.mp4'), Buffer.from('0123456789'));
-  const b = await startBackend({ RENDER_DIR: renderDir });
+  fs.mkdirSync(path.join(usersDir, 'operator', 'renders'), { recursive: true });
+  fs.writeFileSync(path.join(usersDir, 'operator', 'renders', id + '.mp4'), Buffer.from('0123456789'));
+  const b = await startBackend({ EDITOR_USERS_DIR: usersDir });
   extraApps.push(b.app);
-  const full = await fetch(b.base + '/render/' + id + '.mp4');
+  // An id alone is not access control: without a session (and before the render is submitted) it is refused.
+  assert.equal((await fetch(b.base + '/render/' + id + '.mp4')).status, 404);
+  const c = new Client(b.base);
+  await c.login();
+  const full = await c.raw('GET', '/render/' + id + '.mp4');
   assert.equal(full.status, 200);
   assert.equal(full.headers.get('content-type'), 'video/mp4');
   assert.equal(await full.text(), '0123456789');
-  const part = await fetch(b.base + '/render/' + id + '.mp4', { headers: { range: 'bytes=2-4' } });
+  const part = await c.raw('GET', '/render/' + id + '.mp4', { headers: { range: 'bytes=2-4' } });
   assert.equal(part.status, 206);
   assert.equal(await part.text(), '234');
-  assert.equal((await fetch(b.base + '/render/' + 'b'.repeat(32) + '.mp4')).status, 404);
+  assert.equal((await c.raw('GET', '/render/' + 'b'.repeat(32) + '.mp4')).status, 404);
 });
 
 test('an editor render enters the approval pipeline with its real duration and /render URL (hash-deduplicated)', async () => {
-  const renderDir = fs.mkdtempSync(path.join(tmp, 'renders-'));
+  const usersDir = fs.mkdtempSync(path.join(tmp, 'users-'));
   const id = 'c'.repeat(32);
+  const renderDir = path.join(usersDir, 'operator', 'renders');
+  fs.mkdirSync(renderDir, { recursive: true });
   fs.writeFileSync(path.join(renderDir, id + '.mp4'), mp4(21));
-  const b = await startBackend({ RENDER_DIR: renderDir });
+  const b = await startBackend({ EDITOR_USERS_DIR: usersDir });
   extraApps.push(b.app);
   const login = await fetch(b.base + '/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: PASSWORD }) });
   const cookie = login.headers.get('set-cookie').split(';')[0];

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Composition, registerRoot} from 'remotion';
 import {Film} from './kit/film';
-import {film} from './film';
+import {film} from '../examples/sample-film';
 
 // Props cross a JSON boundary, so the film config (which holds functions) is captured here, not passed as a prop.
 const FilmComp: React.FC<{blur: boolean}> = ({blur}) => <Film cfg={film} blur={blur} />;

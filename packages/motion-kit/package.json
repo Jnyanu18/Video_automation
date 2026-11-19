@@ -1,5 +1,5 @@
 {
-  "name": "motion-director-kit",
+  "name": "@ailo/motion-kit",
   "version": "1.0.0",
   "private": true,
   "type": "module",

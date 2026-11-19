@@ -63,10 +63,13 @@ Verified by reading the source, not the docs:
 - **Auth that is nearly right.** `automation/server/auth.cjs` already does scrypt password hashing,
   a signed HttpOnly session cookie, CSRF tokens and login throttling. It checks *one* password
   because it was written for one operator — not because it cannot carry a user id.
-- **An application factory already parameterised by its data locations:**
-  `create_app(state_file, renders_dir, work_dir, start_scheduler)` in `api_server.py`. Inside it,
-  the store, publisher, media roots, ingest directory and render lock are **all derived from those
-  arguments**. This is the single most important fact in this prompt — see Developer 1's task D1-3.
+- **An application factory partly parameterised by its data locations:**
+  `create_app(state_file, renders_dir, work_dir, start_scheduler)` in `api_server.py`. The store
+  and the render lock genuinely derive from those arguments, which is what makes per-user
+  workspaces cheap. **But three data locations do not**, and calling
+  `create_app(work_dir=...)` alone will pass a casual look and still leak between accounts. The
+  exact sites are named in Developer 1's task D1-3. Read that before assuming isolation is one
+  argument.
 - **A dashboard that already aggregates**: `studio/analytics.py` → `overview(store)` computes the
   pipeline (analyzing, awaiting approval, approved, rendering, rendered, scheduled, published).
   Because it takes the store as an argument, it becomes per-user for free once D1-3 lands.
@@ -119,8 +122,13 @@ from overwriting each other, so repeat it to them and enforce it at integration.
 > **Files you must NOT touch:** anything under `automation/app/`, `studio/motion_reel.py`, or any
 > new router file — Developer 2 owns those.
 >
-> **D1-1 · Users table.** Add `users` (id, email, password_hash, created_at) to the schema with a
-> migration. *Done when:* the migration runs clean on both an empty database and the existing one.
+> **D1-1 · User records.** There is **no database to put a users table in.** The only `schema.sql`
+> belongs to a separate Supabase/Postgres service the dashboard never calls, and the Node server
+> has zero npm dependencies. Do **not** install Postgres or add a database driver — that is out of
+> scope and would not survive the day. Instead store users as a small JSON file under
+> `automation/server/storage/`, written atomically, each record holding id, email, the scrypt hash
+> that `auth.cjs` already computes, and created_at. *Done when:* two users exist in that file, the
+> file survives a restart, and a partial write cannot corrupt it.
 >
 > **D1-2 · Multi-user login.** Keep the existing cookie machinery in `auth.cjs` exactly as it is —
 > scrypt, the signed HttpOnly cookie, CSRF, login throttling. Change only the password check, from
@@ -130,13 +138,24 @@ from overwriting each other, so repeat it to them and enforce it at integration.
 > pilot needs no sign-up page. *Done when:* two accounts can be logged in from two browsers at the
 > same time, each with its own session, and a wrong password is still throttled.
 >
-> **D1-3 · Per-user workspace — the core task.** `create_app()` already takes `work_dir`, and
-> everything inside it (store, publisher, media roots, ingest, render lock) derives from that
-> argument. Build a lazy cache keyed by user id that calls
-> `create_app(work_dir=<base>/users/<user_id>, start_scheduler=False)` and routes each request to
-> the caller's own instance. Keep `start_scheduler=True` for exactly one instance. Node
-> authenticates and passes the user id to the engine as a trusted header. *Done when:* two
-> accounts each have their own directory, and files uploaded by one never appear in the other's.
+> **D1-3 · Per-user workspace — the core task, and it is five fixes, not one.** Build a lazy cache
+> keyed by user id that calls `create_app(work_dir=<base>/users/<user_id>, start_scheduler=False)`
+> and routes each request to the caller's own instance, keeping `start_scheduler=True` for exactly
+> one instance. Node authenticates and passes the user id to the engine as a trusted header.
+>
+> That alone is **not** isolation. These five places still reach shared storage, and each one was
+> read from the source — fix every one:
+>
+> | Where | What leaks |
+> |---|---|
+> | `api_server.py:340` | `renders_dir` defaults to `REPO_ROOT/runtime/renders`, ignoring `work_dir`. Pass it per user. |
+> | `api_server.py:73-80` | `media_roots()` always appends `server/storage`, `ROOT/work` and the global `raw footage`, so one account can pass a `video_path` pointing into another's uploads and validation accepts it. |
+> | `api_server.py:347` | `ingest_dir` becomes the global `raw footage/ingested` whenever that folder exists — and it does — so every download pools in one place. |
+> | `api_server.py:687` | The media listing does `renders_dir.glob("*.mp4")`, returning **every** account's renders. |
+> | `server/uploads.cjs:114-124` | `serve()` and `serveRender()` stream any id with no ownership check. The code's own comment calls the id "unguessable", which is not an access control. |
+>
+> *Done when:* two accounts each have their own directory **and** each of the five sites above is
+> scoped, proven by trying to reach the other account's upload, render and media listing.
 >
 > **D1-4 · Lock the engine down.** Bind the engine to `127.0.0.1` so its trusted user-id header
 > can never arrive from outside. Set `NODE_ENV=production`, a real 32-character `SESSION_SECRET`,
