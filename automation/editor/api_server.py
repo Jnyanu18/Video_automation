@@ -38,6 +38,7 @@ from studio import analytics, animator, carousel as carousel_mod, director, heal
 from studio.presets import PRESET_STYLES, probe_video_file  # noqa: E402
 from studio.publishing import PLATFORMS, Publisher  # noqa: E402
 from studio import tenancy  # noqa: E402
+from studio.motion_api import register_motion_routes  # noqa: E402
 from studio.store import Store  # noqa: E402
 from styles.aggregate import aggregate as aggregate_styles  # noqa: E402
 from styles.style_extract import extract_style as do_extract_style, save_style  # noqa: E402
@@ -1348,14 +1349,21 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         try:
             return safe_video_path(p, roots)
         except Exception:
-            cand = Path(p)
-            # No bypass: an absolute path that safe_video_path refused stays refused. Only names relative
-            # to this account's own roots are resolved.
-            for r in roots:
-                check = (r / p).resolve()
-                if check.is_file():
-                    return check
-            return cand
+            # No bypass. safe_video_path only accepts files, so a folder (or a name relative to one of this
+            # account's roots) still has to resolve here - but only INSIDE this account's roots. Joining a
+            # root onto an absolute path just yields that absolute path again, so absolute paths are checked
+            # against the roots directly, and anything outside them comes back as a path that cannot exist.
+            cand = Path(p).expanduser()
+            if cand.is_absolute():
+                rp = cand.resolve()
+                if any(rp == r or r in rp.parents for r in roots):
+                    return rp
+            else:
+                for r in roots:
+                    check = (r / p)
+                    if check.exists():
+                        return check.resolve()
+            return roots[0] / "__outside_this_accounts_media_roots__"
 
     @app.get("/api/editor/media/index")
     async def get_media_index(video_path: str = Query(...)):
@@ -1619,7 +1627,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             if not p.is_dir():
                 # Allow raw footage fallback
                 raw_root = footage_root
-                if raw_root and (raw_root / req.footage_dir).is_dir():
+                if raw_root and not Path(req.footage_dir).is_absolute() and (raw_root / req.footage_dir).is_dir():
                     p = raw_root / req.footage_dir
                 else:
                     raise HTTPException(404, f"Footage directory not found: {req.footage_dir}")
@@ -1634,7 +1642,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             p = resolve_media(req.footage_dir)
             if not p.is_dir():
                 raw_root = footage_root
-                if raw_root and (raw_root / req.footage_dir).is_dir():
+                if raw_root and not Path(req.footage_dir).is_absolute() and (raw_root / req.footage_dir).is_dir():
                     p = raw_root / req.footage_dir
                 else:
                     raise HTTPException(404, f"Footage directory not found: {req.footage_dir}")
@@ -1660,6 +1668,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         except Exception as e:
             raise HTTPException(500, f"AVE Review failed: {e}")
 
+    register_motion_routes(app, store, work_dir, renders_dir, render_lock, roots)
     return app
 
 

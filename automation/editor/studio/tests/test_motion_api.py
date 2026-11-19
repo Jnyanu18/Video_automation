@@ -32,14 +32,17 @@ def make_mp4(path: Path, seconds: float = 3.0) -> None:
 def env(tmp_path, monkeypatch):
     work, renders = tmp_path / "work", tmp_path / "renders"
     work.mkdir()
-    monkeypatch.delenv("EDITOR_MEDIA_ROOTS", raising=False)
+    media = tmp_path / "media"
+    media.mkdir()
+    # create_app now mounts the motion lane itself (api_server calls register_motion_routes at the end of the
+    # factory), and that mount is idempotent, so a second hand-rolled call here would be a no-op and its roots
+    # would be silently ignored. Declare the media folder as an allowed root BEFORE the factory runs instead,
+    # so these tests exercise the routes exactly as they are mounted in production.
+    monkeypatch.setenv("EDITOR_MEDIA_ROOTS", str(media))
     monkeypatch.setattr(health, "gemini_probe", lambda: {"status": "ONLINE", "detail": "test", "provider": "test"})
     monkeypatch.setattr(motion_api, "render_motion_project",
                         lambda project_dir, out_mp4, fps=30.0, quality="looks": make_mp4(Path(out_mp4)))
     app = api_server.create_app(tmp_path / "state.json", renders, work, start_scheduler=False)
-    media = tmp_path / "media"
-    media.mkdir()
-    motion_api.register_motion_routes(app, app.state.store, work, renders, threading.Semaphore(1), [media])
     return {"app": app, "client": TestClient(app), "store": app.state.store, "tmp": tmp_path, "media": media}
 
 

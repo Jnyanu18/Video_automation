@@ -5,9 +5,15 @@ rendered once to an mp4. That mp4 becomes the `source` of an ordinary EditPlan, 
 ordinary storyboard record: the SAME approve endpoint, the SAME approval gate and the SAME render endpoint act on
 it unchanged. There is no second approval flow and no second render endpoint here.
 
-Every path comes from the arguments of register_motion_routes (store, work_dir, renders_dir, render_lock) so one
-app instance per user stays isolated; nothing here builds a path of its own or reads a directory from the
+Every path comes from the arguments of register_motion_routes (store, work_dir, renders_dir, render_lock, roots)
+so one app instance per user stays isolated; nothing here builds a path of its own or reads a directory from the
 environment.
+
+INVARIANT, read this before adding a route that edits a reel: a stored motion spec must never be mutated after
+creation unless the mutating route re-runs check_media(spec, roots) on the new spec. motion_reel copies and runs
+FFmpeg on whatever `src` a spec names, so check_media is the only thing standing between a client-supplied spec
+and any readable file on the machine. A "revise this motion reel" endpoint that stores an edited spec without
+that call silently disables the control. _run_motion_job re-checks at the point of use for the same reason.
 """
 from __future__ import annotations
 
@@ -272,6 +278,7 @@ def register_motion_routes(app, store, work_dir, renders_dir, render_lock, roots
         work = Path(sb["workdir"])
         try:
             project = work / "motion"
+            check_media(spec, roots)  # again at the point of use: the file is read HERE, whatever route stored it
             motion_reel.build(spec, project)
             mp4 = work / "motion.mp4"
             with render_lock:  # the browser render is heavy: one at a time, like the footage lane

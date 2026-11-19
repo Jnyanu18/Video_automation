@@ -10,7 +10,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["node", "react"]
+    "types": ["node", "react"],
+    "baseUrl": ".",
+    "paths": {"@film": ["examples/sample-film"], "@kit/*": ["src/kit/*"]}
   },
-  "include": ["src"]
+  "include": ["src", "examples"]
 }

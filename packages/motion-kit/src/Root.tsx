@@ -1,7 +1,8 @@
 import React from 'react';
 import {Composition, registerRoot} from 'remotion';
 import {Film} from './kit/film';
-import {film} from '../examples/sample-film';
+// '@film' is aliased by render.mjs (webpack) and tsconfig paths to the active film: a project's src/film.tsx, or examples/sample-film.
+import {film} from '@film';
 
 // Props cross a JSON boundary, so the film config (which holds functions) is captured here, not passed as a prop.
 const FilmComp: React.FC<{blur: boolean}> = ({blur}) => <Film cfg={film} blur={blur} />;

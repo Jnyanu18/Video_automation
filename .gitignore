@@ -28,3 +28,8 @@ agentic-video-editor/
 # --- machine state ---
 Thumbs.db
 .DS_Store
+
+# motion-api job workspaces (each holds a copied kit + renders)
+apps/motion-api/.jobs/
+packages/motion-kit/out/
+packages/motion-kit/.bundle/

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Screen } from '../../components/Screen';
 import { Badge, Banner, Button, Card, Field, Input, SectionTitle, T } from '../../components/ui';
@@ -28,7 +28,6 @@ export default function MotionGraphics() {
   const [sb, setSb] = useState<Storyboard | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const brief = () => ({
     prompt: prompt.trim(),
@@ -38,18 +37,17 @@ export default function MotionGraphics() {
     ...(tagline.trim() ? { tagline: tagline.trim() } : {}),
   });
 
-  // Poll while the reel is being built or rendered; stop as soon as it settles.
-  const poll = useCallback(async (id: string) => {
-    try {
-      const next = await editor.storyboard(id);
-      setSb(next);
-      const working = next.status === 'processing' || next.render_job?.status === 'running' || next.render_job?.status === 'queued';
-      if (working) timer.current = setTimeout(() => poll(id), 1500);
-    } catch (e) {
-      setError(errorText(e));
-    }
+  const refresh = useCallback(async (id: string) => {
+    try { setSb(await editor.storyboard(id)); } catch (e) { setError(errorText(e)); }
   }, []);
-  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  // Ask again while the reel is being built or rendered; the effect reschedules itself and stops when it settles.
+  const settling = sb !== null && (sb.status === 'processing' || sb.render_job?.status === 'running' || sb.render_job?.status === 'queued');
+  useEffect(() => {
+    if (!sb || !settling) return undefined;
+    const t = setTimeout(() => { refresh(sb.id); }, 1500);
+    return () => clearTimeout(t);
+  }, [sb, settling, refresh]);
 
   async function act(name: string, fn: () => Promise<unknown>, done?: string) {
     setBusy(name); setError(null);
@@ -66,7 +64,6 @@ export default function MotionGraphics() {
     await act('build', async () => {
       const r = await editor.motionCreate(brief());
       setSb(r.data);
-      poll(r.storyboard_id);
     }, 'Building your motion reel.');
   }
 
@@ -82,7 +79,7 @@ export default function MotionGraphics() {
         <Card style={{ gap: spacing.lg }}>
           <Banner tone="info">
             Write what the reel should say. The first sentence becomes the hook on screen, the rest become the beats,
-            and any number ("20 hrs saved every week") becomes a stat card. Nothing is rendered until you approve it.
+            and any number, such as 20 hrs saved every week, becomes a stat card. Nothing is rendered until you approve it.
           </Banner>
           <Field label="The brief" hint="One sentence per beat. For example: Still editing reels by hand. Cutting, captions, sound, posting. 20 hrs saved every week.">
             <Input value={prompt} onChangeText={setPrompt} multiline style={{ minHeight: 110 }}
@@ -124,12 +121,12 @@ export default function MotionGraphics() {
             <View style={styles.row}>
               {sb.approved
                 ? <Button label="Withdraw approval" icon="x" loading={busy === 'unapprove'}
-                    onPress={() => act('unapprove', async () => { await editor.unapprove(sb.id); await poll(sb.id); }, 'Approval withdrawn')} />
+                    onPress={() => act('unapprove', async () => { await editor.unapprove(sb.id); await refresh(sb.id); }, 'Approval withdrawn')} />
                 : <Button label="Approve" variant="primary" icon="check" loading={busy === 'approve'} disabled={!ready}
-                    hint="The reel is still being built" onPress={() => act('approve', async () => { await editor.approve(sb.id); await poll(sb.id); }, 'Approved. You can render it now.')} />}
+                    hint="The reel is still being built" onPress={() => act('approve', async () => { await editor.approve(sb.id); await refresh(sb.id); }, 'Approved. You can render it now.')} />}
               <Button label="Final render" variant={sb.approved ? 'primary' : 'secondary'} icon="film" loading={busy === 'final'}
                 disabled={!sb.approved || !ready || rendering} hint="Approve the reel first"
-                onPress={() => act('final', async () => { await editor.render(sb.id, 'final'); poll(sb.id); }, 'Final render started')} />
+                onPress={() => act('final', async () => { await editor.render(sb.id, 'final'); await refresh(sb.id); }, 'Final render started')} />
               <Button label="Start another" icon="plus" onPress={() => { setSb(null); setPreview(null); setError(null); }} />
             </View>
           </View>
