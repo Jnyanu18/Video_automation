@@ -1,0 +1,40 @@
+name: school-annual-day
+description: School annual day showcase capturing performances, speeches, awards, and the grand finale.
+target_duration: 300
+beats:
+  - id: welcome_and_intro
+    must_have: [ceremony]
+    duration: [20, 40]
+    search: ["welcome address", "opening ceremony", "lighting lamp", "audience", "stage"]
+    transition: cut
+  - id: principal_speech
+    must_have: [speech]
+    duration: [30, 60]
+    search: ["principal address", "annual report", "speech", "podium"]
+    prefer: speech_whole
+    transition: cut
+  - id: primary_performance
+    must_have: [performance]
+    duration: [40, 70]
+    search: ["kindergarten dance", "junior choir", "drama", "kids performance", "costumes"]
+    transition: cut
+  - id: cultural_dance
+    must_have: [performance]
+    duration: [50, 80]
+    search: ["folk dance", "classical dance", "fusion", "group choreography", "dancers"]
+    transition: cut
+  - id: musical_orchestra
+    must_have: [music]
+    duration: [35, 60]
+    search: ["orchestra", "band", "choir", "singing", "instruments"]
+    transition: cut
+  - id: prize_distribution
+    must_have: [ceremony]
+    duration: [40, 70]
+    search: ["awards", "trophy", "medals", "prize distribution", "felicitation", "applause"]
+    transition: cut
+  - id: grand_finale
+    must_have: [audience]
+    duration: [30, 50]
+    search: ["curtain call", "grand finale", "national anthem", "cheering", "bow"]
+    transition: dip_to_black

@@ -1,0 +1,35 @@
+name: corporate-event
+description: Corporate conference / summit recap video highlighting keynotes, announcements, panel discussions, and networking.
+target_duration: 180
+beats:
+  - id: registration_and_networking
+    must_have: [networking]
+    duration: [15, 30]
+    search: ["registration", "badge", "networking", "coffee", "lobby", "attendees"]
+    transition: cut
+  - id: keynote_opening
+    must_have: [speech]
+    duration: [30, 50]
+    search: ["keynote speaker", "stage", "presentation", "opening remarks", "welcome"]
+    prefer: speech_whole
+    transition: cut
+  - id: product_announcement
+    must_have: [presentation]
+    duration: [25, 45]
+    search: ["product launch", "reveal", "demo", "screen presentation", "slides", "innovation"]
+    transition: cut
+  - id: panel_discussion
+    must_have: [speech]
+    duration: [25, 45]
+    search: ["panel discussion", "fireside chat", "qa", "speakers", "discussion"]
+    transition: cut
+  - id: awards_recognition
+    must_have: [awards]
+    duration: [20, 35]
+    search: ["employee awards", "recognition", "stage photo", "handshake", "trophy"]
+    transition: cut
+  - id: cocktail_closing
+    must_have: [networking]
+    duration: [15, 30]
+    search: ["cocktail reception", "celebration", "networking drinks", "wrap up", "cheers"]
+    transition: dip_to_black

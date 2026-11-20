@@ -206,3 +206,207 @@ class LongformManager:
             "total_rejected": len(rejected),
             "rejected_shots": rejected,
         }
+
+    def _plan_path(self, project_id: str, plan_id: str) -> Path:
+        pdir = self.longform_dir / project_id / "plans"
+        pdir.mkdir(parents=True, exist_ok=True)
+        return pdir / f"{plan_id}.json"
+
+    def start_plan_job(
+        self,
+        project_id: str,
+        template: str,
+        target_duration: Optional[float] = None,
+        must_include: Optional[List[str]] = None,
+        never_include: Optional[List[str]] = None,
+        music_path: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Start background film planning job."""
+        if not is_footage_available():
+            raise RuntimeError("Footage package is not installed.")
+
+        import footage.index
+        import footage.plan
+        import footage.editplan
+
+        idx_path = self._index_path(project_id)
+        if not idx_path.is_file():
+            raise FileNotFoundError(f"Index not found for project: {project_id}")
+
+        jid = f"lfp_{uuid.uuid4().hex[:10]}"
+        job = {
+            "id": jid,
+            "job_id": jid,
+            "project_id": project_id,
+            "template": template,
+            "status": "running",
+            "progress": 0.0,
+            "message": "Planning film edit",
+            "plan_id": None,
+            "plan": None,
+            "error": None,
+            "created_at": time.time(),
+            "updated_at": time.time(),
+        }
+        self.store.put("longform_jobs", jid, job)
+
+        def run():
+            try:
+                index = footage.index.read_index(idx_path)
+                plan = footage.plan.plan_rundown(
+                    index=index,
+                    template=template,
+                    target_duration=target_duration,
+                    must_include=must_include,
+                    never_include=never_include,
+                    music_path=music_path,
+                )
+                plan_file = self._plan_path(project_id, plan.plan_id)
+                footage.editplan.write_edit_plan(plan, plan_file)
+
+                self.store.update(
+                    "longform_jobs",
+                    jid,
+                    lambda rec: rec.update(
+                        status="done",
+                        progress=1.0,
+                        message="Plan generated successfully",
+                        plan_id=plan.plan_id,
+                        plan=plan.model_dump(),
+                        updated_at=time.time(),
+                    ),
+                )
+            except Exception as e:
+                logger.exception("Longform plan job failed: %s", e)
+                self.store.update(
+                    "longform_jobs",
+                    jid,
+                    lambda rec: rec.update(
+                        status="failed",
+                        error=str(e),
+                        message=f"Planning failed: {e}",
+                        updated_at=time.time(),
+                    ),
+                )
+
+        thread = threading.Thread(target=run, daemon=True, name=f"plan_{jid}")
+        thread.start()
+        return dict(job)
+
+    def get_plan(self, project_id: str, plan_id: str) -> Dict[str, Any]:
+        """Retrieve an existing plan including missing-beat report."""
+        if not is_footage_available():
+            raise RuntimeError("Footage package is not installed.")
+
+        import footage.editplan
+
+        plan_file = self._plan_path(project_id, plan_id)
+        if not plan_file.is_file():
+            raise FileNotFoundError(f"Plan not found: {plan_id} for project {project_id}")
+
+        plan = footage.editplan.read_edit_plan(plan_file)
+        return plan.model_dump()
+
+    def approve_plan(self, project_id: str, plan_id: str) -> Dict[str, Any]:
+        """Approve an edit plan for final conform rendering."""
+        if not is_footage_available():
+            raise RuntimeError("Footage package is not installed.")
+
+        import footage.editplan
+
+        plan_file = self._plan_path(project_id, plan_id)
+        if not plan_file.is_file():
+            raise FileNotFoundError(f"Plan not found: {plan_id} for project {project_id}")
+
+        plan = footage.editplan.read_edit_plan(plan_file)
+        plan = footage.editplan.approve_plan(plan)
+        footage.editplan.write_edit_plan(plan, plan_file)
+        return plan.model_dump()
+
+    def start_render_job(
+        self,
+        project_id: str,
+        plan_id: str,
+        deliverable: str = "highlight",
+        allow_unapproved: bool = False,
+    ) -> Dict[str, Any]:
+        """Start conform render job for an approved plan."""
+        if not is_footage_available():
+            raise RuntimeError("Footage package is not installed.")
+
+        import footage.editplan
+        import footage.render
+        import footage.index
+
+        plan_file = self._plan_path(project_id, plan_id)
+        if not plan_file.is_file():
+            raise FileNotFoundError(f"Plan not found: {plan_id} for project {project_id}")
+
+        plan = footage.editplan.read_edit_plan(plan_file)
+        if not plan.approved and not allow_unapproved:
+            from footage.render import PlanNotApprovedError
+            raise PlanNotApprovedError(
+                f"Plan '{plan_id}' is not approved. 409 NOT_APPROVED: Call approve endpoint before rendering."
+            )
+
+        idx_path = self._index_path(project_id)
+        index = footage.index.read_index(idx_path) if idx_path.is_file() else None
+
+        jid = f"lfr_{uuid.uuid4().hex[:10]}"
+        out_mp4 = self.longform_dir / project_id / "renders" / f"{plan.project_id}_{deliverable}_{jid}.mp4"
+        out_mp4.parent.mkdir(parents=True, exist_ok=True)
+
+        job = {
+            "id": jid,
+            "job_id": jid,
+            "project_id": project_id,
+            "plan_id": plan_id,
+            "deliverable": deliverable,
+            "status": "running",
+            "progress": 0.0,
+            "message": "Rendering conform edit",
+            "output_path": None,
+            "result": None,
+            "error": None,
+            "created_at": time.time(),
+            "updated_at": time.time(),
+        }
+        self.store.put("longform_jobs", jid, job)
+
+        def run():
+            try:
+                res = footage.render.conform_render(
+                    plan=plan,
+                    out_path=out_mp4,
+                    deliverable=deliverable,
+                    index=index,
+                    allow_unapproved=allow_unapproved,
+                )
+                self.store.update(
+                    "longform_jobs",
+                    jid,
+                    lambda rec: rec.update(
+                        status="done",
+                        progress=1.0,
+                        message="Render complete",
+                        output_path=str(out_mp4),
+                        result=res,
+                        updated_at=time.time(),
+                    ),
+                )
+            except Exception as e:
+                logger.exception("Longform render job failed: %s", e)
+                self.store.update(
+                    "longform_jobs",
+                    jid,
+                    lambda rec: rec.update(
+                        status="failed",
+                        error=str(e),
+                        message=f"Render failed: {e}",
+                        updated_at=time.time(),
+                    ),
+                )
+
+        thread = threading.Thread(target=run, daemon=True, name=f"render_{jid}")
+        thread.start()
+        return dict(job)

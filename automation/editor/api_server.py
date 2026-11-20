@@ -203,6 +203,20 @@ class LongformIndexReq(BaseModel):
     camera_map: Optional[Dict[str, str]] = None
 
 
+class LongformPlanReq(BaseModel):
+    template: str
+    target_duration: Optional[float] = None
+    must_include: Optional[List[str]] = None
+    never_include: Optional[List[str]] = None
+    music_path: Optional[str] = None
+
+
+class LongformRenderReq(BaseModel):
+    plan_id: str
+    deliverable: str = "highlight"
+    allow_unapproved: bool = False
+
+
 # ====================================================================== request models
 class StyleExtractRequest(BaseModel):
     video_path: Optional[str] = None
@@ -1714,6 +1728,12 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         }
         if job["status"] == "done":
             res["stats"] = job.get("stats")
+            if "plan_id" in job:
+                res["plan_id"] = job.get("plan_id")
+            if "output_path" in job:
+                res["output_path"] = job.get("output_path")
+            if "result" in job:
+                res["result"] = job.get("result")
         elif job["status"] == "failed":
             res["error"] = job.get("error")
         return res
@@ -1745,6 +1765,77 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             raise HTTPException(404, str(e))
         except Exception as e:
             raise HTTPException(500, f"Failed to retrieve rejected shots: {e}")
+
+    @app.post("/api/editor/longform/{project_id}/plan", status_code=202)
+    def post_longform_plan(project_id: str, req: LongformPlanReq):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        try:
+            job = longform_mgr.start_plan_job(
+                project_id=project_id,
+                template=req.template,
+                target_duration=req.target_duration,
+                must_include=req.must_include,
+                never_include=req.never_include,
+                music_path=req.music_path,
+            )
+            return job
+        except FileNotFoundError as e:
+            raise HTTPException(404, str(e))
+        except Exception as e:
+            raise HTTPException(500, f"Failed starting longform plan job: {e}")
+
+    @app.get("/api/editor/longform/{project_id}/plan/{plan_id}")
+    def get_longform_plan(project_id: str, plan_id: str):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        try:
+            return longform_mgr.get_plan(project_id, plan_id)
+        except FileNotFoundError as e:
+            raise HTTPException(404, str(e))
+        except Exception as e:
+            raise HTTPException(500, f"Failed retrieving plan: {e}")
+
+    @app.post("/api/editor/longform/{project_id}/plan/{plan_id}/approve")
+    def post_longform_approve_plan(project_id: str, plan_id: str):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        try:
+            return longform_mgr.approve_plan(project_id, plan_id)
+        except FileNotFoundError as e:
+            raise HTTPException(404, str(e))
+        except Exception as e:
+            raise HTTPException(500, f"Failed approving plan: {e}")
+
+    @app.post("/api/editor/longform/{project_id}/render", status_code=202)
+    def post_longform_render(project_id: str, req: LongformRenderReq):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        try:
+            job = longform_mgr.start_render_job(
+                project_id=project_id,
+                plan_id=req.plan_id,
+                deliverable=req.deliverable,
+                allow_unapproved=req.allow_unapproved,
+            )
+            return job
+        except FileNotFoundError as e:
+            raise HTTPException(404, str(e))
+        except Exception as e:
+            if hasattr(e, "status_code") and e.status_code == 409:
+                raise HTTPException(409, str(e))
+            if "409" in str(e) or "NOT_APPROVED" in str(e):
+                raise HTTPException(409, str(e))
+            raise HTTPException(500, f"Failed starting render job: {e}")
+
+    @app.get("/api/editor/longform/{project_id}/render/{jid}")
+    def get_longform_render_status(project_id: str, jid: str):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        job = longform_mgr.get_job(jid)
+        if not job:
+            raise HTTPException(404, f"Longform render job not found: {jid}")
+        return job
 
     register_motion_routes(app, store, work_dir, renders_dir, render_lock, roots)
     return app

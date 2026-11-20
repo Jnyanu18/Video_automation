@@ -14,6 +14,7 @@ import numpy as np
 
 from footage.index import index_footage, read_index
 from footage.schema import FootageIndex
+from footage import cli_plan
 
 # Setup stderr logger for CLI
 logging.basicConfig(
@@ -214,7 +215,12 @@ def main() -> int:
     p_sheet.add_argument("--out", "-o", required=True, help="Output directory for sheets")
     p_sheet.add_argument("--kept-only", action="store_true", help="Only include kept moments")
 
+    cli_plan.register(subparsers)
+
     args = parser.parse_args()
+
+    if hasattr(args, "func"):
+        return args.func(args)
 
     if args.command == "index":
         return cmd_index(args)
