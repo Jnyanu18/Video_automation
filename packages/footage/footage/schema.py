@@ -110,11 +110,25 @@ class Moment(BaseModel):
     tags: List[str] = Field(default_factory=list)
     description: Optional[str] = None
     speech: Optional[MomentSpeech] = None
+    energy: int = 0                       # 1-5, 0 = unset
+    people: List[str] = Field(default_factory=list) # person_id values, see Person
+    highlight_score: float = 0.0
+    novelty: float = 0.0                  # 1.0 = unlike anything else kept
+    describe_source: str = "local"        # "local" | "model"
 
     @property
     def duration(self) -> float:
         """Duration in synced wall-clock seconds (t_wall)."""
         return max(0.0, self.t_end - self.t_start)
+
+
+class Person(BaseModel):
+    """A person cluster discovered across footage."""
+    person_id: str
+    name: Optional[str] = None        # set by a human, never guessed
+    moment_ids: List[str] = Field(default_factory=list)
+    thumb_path: Optional[str] = None
+    cluster_size: int = 0
 
 
 class WordTimestamp(BaseModel):
@@ -169,4 +183,5 @@ class FootageIndex(BaseModel):
     shots: List[Shot] = Field(default_factory=list)
     moments: List[Moment] = Field(default_factory=list)
     speech: List[SpeechSegment] = Field(default_factory=list)
+    people: List[Person] = Field(default_factory=list)
     stats: IndexStats

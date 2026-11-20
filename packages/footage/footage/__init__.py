@@ -14,8 +14,11 @@ from footage.schema import (
     WordTimestamp,
     IndexStats,
     RejectReason,
+    Person,
 )
 from footage.index import read_index, write_index, index_footage
+from footage.score import highlight_score, ScoreConfig
+from footage.search import find_moments
 
 __all__ = [
     "FootageIndex",
@@ -32,4 +35,8 @@ __all__ = [
     "read_index",
     "write_index",
     "index_footage",
+    "Person",
+    "highlight_score",
+    "ScoreConfig",
+    "find_moments",
 ]
