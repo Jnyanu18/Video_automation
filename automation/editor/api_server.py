@@ -34,7 +34,7 @@ from agent.openai_compat import load_dotenv  # noqa: E402
 from agent.review import run_scorecard  # noqa: E402
 from services.api.editor_api import adapters  # noqa: E402
 from services.render import render_final_info, render_preview_info  # noqa: E402
-from studio import analytics, animator, carousel as carousel_mod, director, health, ingest as ingest_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
+from studio import analytics, animator, carousel as carousel_mod, director, health, ingest as ingest_mod, longform as longform_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
 from studio.presets import PRESET_STYLES, probe_video_file  # noqa: E402
 from studio.publishing import PLATFORMS, Publisher  # noqa: E402
 from studio import tenancy  # noqa: E402
@@ -195,6 +195,12 @@ def format_storyboard(plan: dict, workdir: str) -> dict:
             "checks": checks,
         },
     }
+
+
+class LongformIndexReq(BaseModel):
+    source_dir: str
+    project_id: Optional[str] = None
+    camera_map: Optional[Dict[str, str]] = None
 
 
 # ====================================================================== request models
@@ -386,6 +392,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     if footage_root is not None:
         footage_root.mkdir(parents=True, exist_ok=True)
     ingest_jobs = ingest_mod.IngestJobs(ingest_dir)
+    longform_mgr = longform_mod.LongformManager(store, work_dir)
     vs = vstudio_mod.VStudio(vstudio_mod.find_studio(REPO_ROOT))
     max_iter = int(os.environ.get("EDITOR_MAX_ITERATIONS", "10"))
 
@@ -1668,6 +1675,77 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         except Exception as e:
             raise HTTPException(500, f"AVE Review failed: {e}")
 
+    # ------------------------------------------------------------ Longform Footage routes
+    @app.post("/api/editor/longform/index", status_code=202)
+    def post_longform_index(req: LongformIndexReq):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package (packages/footage) is not installed.")
+        try:
+            p = Path(req.source_dir)
+            if not p.is_dir():
+                raw_root = _find_up("raw footage", REPO_ROOT)
+                if raw_root and (raw_root / req.source_dir).is_dir():
+                    p = raw_root / req.source_dir
+                else:
+                    raise HTTPException(404, f"Source footage directory not found: {req.source_dir}")
+            job = longform_mgr.start_index_job(
+                source_dir=p,
+                project_id=req.project_id,
+                camera_map=req.camera_map,
+            )
+            return {"job_id": job["id"], "status": job["status"], "project_id": job["project_id"]}
+        except HTTPException:
+            raise
+        except Exception as e:
+            raise HTTPException(500, f"Failed starting longform index job: {e}")
+
+    @app.get("/api/editor/longform/index/{jid}")
+    def get_longform_index_status(jid: str):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        job = longform_mgr.get_job(jid)
+        if not job:
+            raise HTTPException(404, f"Index job not found: {jid}")
+        res = {
+            "job_id": job["id"],
+            "status": job["status"],
+            "progress": job.get("progress", 0.0),
+            "message": job.get("message", ""),
+        }
+        if job["status"] == "done":
+            res["stats"] = job.get("stats")
+        elif job["status"] == "failed":
+            res["error"] = job.get("error")
+        return res
+
+    @app.get("/api/editor/longform/{project_id}/moments")
+    def get_longform_moments(
+        project_id: str,
+        tag: Optional[str] = Query(None),
+        keep: Optional[bool] = Query(None),
+        page: int = Query(1, ge=1),
+        limit: int = Query(50, ge=1, le=500),
+    ):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        try:
+            return longform_mgr.get_moments(project_id, tag=tag, keep=keep, page=page, limit=limit)
+        except FileNotFoundError as e:
+            raise HTTPException(404, str(e))
+        except Exception as e:
+            raise HTTPException(500, f"Failed to retrieve moments: {e}")
+
+    @app.get("/api/editor/longform/{project_id}/rejected")
+    def get_longform_rejected(project_id: str):
+        if not longform_mod.is_footage_available():
+            raise HTTPException(503, "Longform footage indexing package is not installed.")
+        try:
+            return longform_mgr.get_rejected(project_id)
+        except FileNotFoundError as e:
+            raise HTTPException(404, str(e))
+        except Exception as e:
+            raise HTTPException(500, f"Failed to retrieve rejected shots: {e}")
+
     register_motion_routes(app, store, work_dir, renders_dir, render_lock, roots)
     return app
 
@@ -1689,5 +1767,12 @@ app = build_root_app()
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("EDITOR_PORT", 8793))
-    log.info("Starting AI Video Editor Engine on http://127.0.0.1:%s", port)
-    uvicorn.run(app, host="127.0.0.1", port=port, log_level="info")
+    # Localhost by default: the engine has no authentication of its own and trusts the
+    # X-Studio-User header the dashboard sets, so anything that can reach this port can
+    # read every account. EDITOR_HOST=0.0.0.0 is for containers, where the port is bound
+    # inside an isolated network and never published to the host.
+    host = os.environ.get("EDITOR_HOST", "127.0.0.1")
+    log.info("Starting AI Video Editor Engine on http://%s:%s", host, port)
+    # One worker only: the per-account store is a JSON file guarded by an in-process
+    # lock, so a second worker would silently lose the first one's writes.
+    uvicorn.run(app, host=host, port=port, log_level="info")

@@ -14,7 +14,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
-COLLECTIONS = ("storyboards", "series", "publishing", "settings", "carousels")
+COLLECTIONS = ("storyboards", "series", "publishing", "settings", "carousels", "longform_jobs")
 MAX_EVENTS = 300
 
 
@@ -49,6 +49,10 @@ class Store:
             if c.get("status") in ("writing", "rendering"):
                 c["status"] = "failed"
                 c["error"] = "The editor service restarted while this carousel was being made. Make it again."
+        for c in self.data.get("longform_jobs", {}).values():
+            if c.get("status") in ("running", "queued"):
+                c["status"] = "failed"
+                c["error"] = "The editor service restarted while this index job was running."
         # jobs that were running when the process died can never finish: surface that instead of spinning forever
         for sb in self.data["storyboards"].values():
             if sb.get("status") == "processing":
