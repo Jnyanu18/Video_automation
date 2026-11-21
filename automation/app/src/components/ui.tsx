@@ -23,11 +23,30 @@ export function Card({ children, style, pad = true, onPress, accessibilityLabel 
   children: React.ReactNode; style?: StyleProp<ViewStyle>; pad?: boolean; onPress?: () => void; accessibilityLabel?: string;
 }) {
   const { colors } = useTheme();
-  const base = [styles.card, { backgroundColor: colors.surface, borderColor: colors.border }, shadow(colors), pad && { padding: spacing.lg }, style];
+  const base = [
+    styles.card,
+    { backgroundColor: colors.surface, borderColor: colors.border },
+    shadow(colors),
+    pad && { padding: spacing.lg },
+    style,
+  ];
   if (onPress) {
     return (
-      <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel} onPress={onPress}
-        style={({ pressed, hovered }: any) => [base, hovered && { borderColor: colors.primary }, pressed && { opacity: 0.85 }]}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        onPress={onPress}
+        style={({ pressed, hovered }: any) => [
+          base,
+          hovered && { borderColor: colors.borderLight, backgroundColor: colors.surfaceAlt },
+          pressed && { opacity: 0.9 },
+          Platform.OS === 'web' && ({
+            cursor: 'pointer',
+            transition: 'all 160ms cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: pressed ? 'scale(0.995)' : hovered ? 'translateY(-1px)' : 'none',
+          } as any),
+        ]}
+      >
         {children}
       </Pressable>
     );
@@ -38,7 +57,7 @@ export function Card({ children, style, pad = true, onPress, accessibilityLabel 
 export function SectionTitle({ title, right }: { title: string; right?: React.ReactNode }) {
   return (
     <View style={styles.sectionTitle}>
-      <T variant="h2" style={{ flex: 1 }}>{title}</T>
+      <T variant="h2" style={{ flex: 1, letterSpacing: -0.2 }}>{title}</T>
       {right}
     </View>
   );
@@ -74,9 +93,14 @@ export function Button({ label, onPress, variant = 'secondary', icon, loading, d
         full && { width: '100%' },
         { backgroundColor: palette.bg, borderColor: palette.border },
         variant === 'primary' && hovered && !off && { backgroundColor: colors.primaryPressed },
-        variant !== 'primary' && hovered && !off && { borderColor: colors.primary },
-        pressed && !off && { opacity: 0.8 },
+        variant !== 'primary' && hovered && !off && { borderColor: colors.primary, backgroundColor: colors.surfaceAlt },
+        pressed && !off && { opacity: 0.88 },
         off && { opacity: 0.45 },
+        Platform.OS === 'web' && ({
+          cursor: off ? 'not-allowed' : 'pointer',
+          transition: 'all 140ms cubic-bezier(0.16, 1, 0.3, 1)',
+          transform: pressed && !off ? 'scale(0.97)' : hovered && !off ? 'translateY(-1px)' : 'none',
+        } as any),
       ]}
     >
       {loading ? <ActivityIndicator size="small" color={palette.fg} /> : icon ? <Icon name={icon} size={small ? 16 : 18} color={palette.fg} /> : null}
@@ -147,9 +171,19 @@ export function Input({ style, multiline, invalid, ...rest }: TextInputProps & {
       placeholderTextColor={colors.textFaint}
       style={[
         styles.input,
-        { backgroundColor: colors.surface, color: colors.text, borderColor: invalid ? colors.danger : focus ? colors.primary : colors.border },
+        {
+          backgroundColor: colors.surface,
+          color: colors.text,
+          borderColor: invalid ? colors.danger : focus ? colors.primary : colors.border,
+        },
+        focus && Platform.OS === 'web' && ({
+          boxShadow: '0 0 0 3px rgba(255, 90, 31, 0.18)',
+        } as any),
         multiline && { minHeight: 96, textAlignVertical: 'top', paddingTop: 12 },
-        Platform.OS === 'web' && ({ outlineStyle: 'none' } as any),
+        Platform.OS === 'web' && ({
+          outlineStyle: 'none',
+          transition: 'border-color 140ms ease, box-shadow 140ms ease',
+        } as any),
         style,
       ]}
     />
@@ -303,10 +337,10 @@ export function LinkText({ href, children }: { href: string; children: React.Rea
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: radius.lg, borderWidth: StyleSheet.hairlineWidth * 2 },
+  card: { borderRadius: radius.lg, borderWidth: 1 },
   sectionTitle: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.md, gap: spacing.sm },
-  btn: { minHeight: 44, paddingHorizontal: 18, borderRadius: radius.md, borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, alignSelf: 'flex-start' },
-  btnSmall: { minHeight: 34, paddingHorizontal: 12, borderRadius: radius.sm },
+  btn: { minHeight: 42, paddingHorizontal: 18, borderRadius: radius.md, borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, alignSelf: 'flex-start' },
+  btnSmall: { minHeight: 32, paddingHorizontal: 12, borderRadius: radius.sm },
   iconBtn: { width: 40, height: 40, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   badge: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill, alignSelf: 'flex-start' },
   dot: { width: 6, height: 6, borderRadius: 3 },
@@ -320,7 +354,7 @@ const styles = StyleSheet.create({
   sheetHead: { flexDirection: 'row', alignItems: 'center', paddingLeft: spacing.lg, paddingRight: spacing.sm, paddingVertical: spacing.sm },
   dialog: { width: '100%', maxWidth: 420, borderRadius: radius.lg, padding: spacing.xl },
   dialogActions: { flexDirection: 'row', justifyContent: 'flex-end', gap: spacing.sm, marginTop: spacing.xl },
-  empty: { alignItems: 'center', gap: spacing.md, paddingVertical: spacing.xxl, paddingHorizontal: spacing.lg },
-  emptyIcon: { width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center' },
-  banner: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, padding: spacing.md, borderRadius: radius.md },
+  empty: { alignItems: 'center', gap: spacing.md, paddingVertical: spacing.xxl + 8, paddingHorizontal: spacing.lg },
+  emptyIcon: { width: 64, height: 64, borderRadius: 32, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: 'rgba(255, 90, 31, 0.25)' },
+  banner: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.sm, padding: spacing.md, borderRadius: radius.md, borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.08)' },
 });

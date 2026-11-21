@@ -9,13 +9,13 @@ export function Page({ title, subtitle, children }: { title: string; subtitle?: 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
       <TopNav title={title} subtitle={subtitle} />
-      <ScrollView contentContainerStyle={styles.content}>{children}</ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>{children}</ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  content: { padding: spacing.lg, gap: spacing.lg, width: '100%', maxWidth: MAX_CONTENT_WIDTH, alignSelf: 'center', paddingBottom: spacing.xxl * 2 },
+  content: { padding: spacing.xl, gap: spacing.lg, width: '100%', maxWidth: MAX_CONTENT_WIDTH, alignSelf: 'center', paddingBottom: spacing.xxl * 2 },
 });
 
 export const Row = ({ children, gap = spacing.md, style }: { children: React.ReactNode; gap?: number; style?: any }) => (

@@ -21,10 +21,13 @@ export function Stat({ label, value, sub, tone }: { label: string; value: string
   const { colors } = useTheme();
   const color = tone === 'warning' ? colors.warning : tone === 'danger' ? colors.danger : tone === 'success' ? colors.success : colors.text;
   return (
-    <Card style={{ flexGrow: 1, flexBasis: 150, minWidth: 150 }}>
-      <T variant="label" muted>{label.toUpperCase()}</T>
-      <T variant="stat" color={color} style={{ marginTop: 6 }}>{value}</T>
-      {sub ? <T variant="small" muted style={{ marginTop: 2 }}>{sub}</T> : null}
+    <Card style={{ flexGrow: 1, flexBasis: 160, minWidth: 160, paddingVertical: 18, paddingHorizontal: 20 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <T variant="label" muted style={{ fontSize: 11, letterSpacing: 0.8 }}>{label.toUpperCase()}</T>
+        {tone ? <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: color }} /> : null}
+      </View>
+      <T variant="stat" color={color} style={{ marginTop: 8, fontSize: 30, letterSpacing: -1 }}>{value}</T>
+      {sub ? <T variant="small" muted style={{ marginTop: 4, fontSize: 11 }}>{sub}</T> : null}
     </Card>
   );
 }

@@ -19,6 +19,7 @@ async function main() {
   const uploadDir = fs.mkdtempSync(path.join(os.tmpdir(), 'reels-dev-uploads-'));
   const cfg = loadConfig({
     PORT: process.env.PORT || '8787', HOST: '127.0.0.1', DASHBOARD_PASSWORD: PASSWORD, SESSION_SECRET: 'dev-session-secret-dev-session-secret-0000',
+    USERS_FILE: process.env.USERS_FILE || path.join(__dirname, '..', 'server', 'storage', 'users.json'),
     N8N_WEBHOOK_BASE: simUrl, N8N_INTAKE_TOKEN: sim.tokens.intake, N8N_APPROVAL_TOKEN: sim.tokens.approval, N8N_INTERNAL_TOKEN: sim.tokens.internal,
     AIRTABLE_BASE_URL: mockUrl, AIRTABLE_BASE_ID: 'appSIM', AIRTABLE_TABLE: 'Reels', AIRTABLE_READ_TOKEN: 'sim-airtable',
     PUBLIC_BASE_URL: process.env.DEV_PUBLIC_BASE_URL || 'https://reels.example.test', UPLOAD_DIR: uploadDir,
