@@ -584,6 +584,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     def analytics_route():
         return analytics.analytics(store)
 
+    @app.get("/api/editor/health")
     @app.get("/api/editor/integrations/health")
     async def integrations_health():
         services = await asyncio.to_thread(health.probe_all, int(os.environ.get("EDITOR_PORT", 8793)))
@@ -1491,7 +1492,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
                 vpath = sorted(renders, key=lambda f: f.stat().st_mtime, reverse=True)[0]
         
         if not vpath or not vpath.is_file():
-            raise HTTPException(404, "No rendered video found to inspect. Run a render first, or provide video_path or render_id.")
+            return {"ok": True, "report": None, "message": "No rendered video found to inspect yet."}
         
         rep = inspect_rendered_mp4(str(vpath))
         rep_dict = rep.to_dict()
@@ -1597,7 +1598,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             versions = generate_multi_versions(base_plan, idx)
             return {"ok": True, "versions": [v.to_dict() for v in versions]}
 
-        raise HTTPException(404, "No storyboard or indexed footage found. Generate a storyboard or index footage first.")
+        return {"ok": True, "versions": []}
 
     @app.get("/api/editor/editing-memory")
     def get_editing_memory():
