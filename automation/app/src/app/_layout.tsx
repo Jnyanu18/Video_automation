@@ -9,6 +9,7 @@ import {
 import { AuthProvider, useAuth } from '../state/auth';
 import { LiveProvider } from '../state/live';
 import { ToastProvider } from '../state/toast';
+import { DevModeProvider } from '../state/devMode';
 import { useTheme } from '../theme';
 
 function Gate() {
@@ -53,11 +54,13 @@ export default function RootLayout() {
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <AuthProvider>
         <LiveProvider>
-          <ToastProvider>
-            <View style={{ flex: 1, backgroundColor: colors.bg }}>
-              <Gate />
-            </View>
-          </ToastProvider>
+          <DevModeProvider>
+            <ToastProvider>
+              <View style={{ flex: 1, backgroundColor: colors.bg }}>
+                <Gate />
+              </View>
+            </ToastProvider>
+          </DevModeProvider>
         </LiveProvider>
       </AuthProvider>
     </SafeAreaProvider>

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View, Platform } from 'react-native';
+import { Pressable, StyleSheet, Text, View, Platform, ScrollView } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, IconName } from './Icon';
 import { T, Badge } from './ui';
 import { font, radius, spacing, useTheme } from '../theme';
 import { useAuth } from '../state/auth';
+import { useDevMode } from '../state/devMode';
 
 export interface NavItem {
   href: string;
@@ -19,7 +20,7 @@ export interface NavSection {
   items: NavItem[];
 }
 
-export const NAV_SECTIONS: NavSection[] = [
+export const BASE_NAV_SECTIONS: NavSection[] = [
   {
     title: 'WORKSPACE',
     items: [
@@ -28,18 +29,12 @@ export const NAV_SECTIONS: NavSection[] = [
       { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
       { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
       { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
-      { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
-      { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
-      { href: '/versions', label: 'Multi-Version Studio', icon: 'copy' },
-      { href: '/intelligence', label: 'Content Intelligence', icon: 'cpu' },
-      { href: '/qa', label: 'Render QA', icon: 'check-circle' },
     ],
   },
   {
     title: 'OPERATIONS',
     items: [
       { href: '/series', label: 'Series Engine', icon: 'tv' },
-      { href: '/vstudio', label: 'Vishnu Studio', icon: 'film' },
       { href: '/media', label: 'Media Library', icon: 'music' },
       { href: '/publishing', label: 'Publishing', icon: 'send' },
       { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
@@ -56,6 +51,22 @@ export const NAV_SECTIONS: NavSection[] = [
   },
 ];
 
+export const DEVELOP_NAV_ITEMS: NavItem[] = [
+  { href: '/vstudio', label: 'Vishnu Studio', icon: 'film' },
+  { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
+  { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
+  { href: '/versions', label: 'Multi-Version Studio', icon: 'copy' },
+  { href: '/intelligence', label: 'Content Intelligence', icon: 'cpu' },
+  { href: '/qa', label: 'Render QA', icon: 'check-circle' },
+];
+
+export const DEVELOP_NAV_SECTION: NavSection = {
+  title: 'DEVELOP',
+  items: DEVELOP_NAV_ITEMS,
+};
+
+export const NAV_SECTIONS: NavSection[] = BASE_NAV_SECTIONS;
+
 function isActive(path: string, href: string) {
   if (href === '/') return path === '/' || path === '/(app)';
   return path === href || path.startsWith(href + '/');
@@ -66,6 +77,11 @@ export function Sidebar() {
   const path = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const { devMode } = useDevMode();
+
+  const sections = devMode
+    ? [...BASE_NAV_SECTIONS.slice(0, 2), DEVELOP_NAV_SECTION, ...BASE_NAV_SECTIONS.slice(2)]
+    : BASE_NAV_SECTIONS;
 
   return (
     <View style={[styles.side, { backgroundColor: colors.sidebar, borderRightColor: colors.border }]}>
@@ -88,8 +104,8 @@ export function Sidebar() {
       </View>
 
       {/* Navigation Sections */}
-      <View style={{ gap: spacing.lg, flex: 1 }}>
-        {NAV_SECTIONS.map((sec) => (
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ gap: spacing.lg }} style={{ flex: 1 }}>
+        {sections.map((sec) => (
           <View key={sec.title} style={{ gap: 4 }}>
             <T variant="label" style={{ fontSize: 10, color: colors.textFaint, paddingHorizontal: 12, marginBottom: 2 }}>
               {sec.title}
@@ -127,7 +143,7 @@ export function Sidebar() {
             })}
           </View>
         ))}
-      </View>
+      </ScrollView>
 
       {/* User Footer */}
       <View style={[styles.user, { borderTopColor: colors.border }]}>
@@ -199,7 +215,7 @@ export function BottomNav() {
     { href: '/', label: 'Overview', icon: 'grid' as const },
     { href: '/studio', label: 'Studio', icon: 'camera' as const },
     { href: '/storyboard', label: 'Storyboard', icon: 'layers' as const },
-    { href: '/intelligence', label: 'Intel', icon: 'cpu' as const },
+    { href: '/media', label: 'Media', icon: 'music' as const },
     { href: '/settings', label: 'Settings', icon: 'settings' as const },
   ];
 

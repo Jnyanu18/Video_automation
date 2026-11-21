@@ -1,18 +1,61 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Switch, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Page, Row } from '../../components/Page';
 import { Badge, Banner, Button, Card, Chips, ErrorState, Field, Input, SectionTitle, Skeleton, T } from '../../components/ui';
-import { Icon } from '../../components/Icon';
+import { Icon, IconName } from '../../components/Icon';
 import { errorText, get, getBaseUrl, isWeb, request } from '../../api/client';
 import { editor } from '../../api/editor';
 import { useAuth } from '../../state/auth';
 import { useToast } from '../../state/toast';
+import { useDevMode } from '../../state/devMode';
 import { spacing, useTheme } from '../../theme';
+
+const DEV_TOOLS: { title: string; href: string; icon: IconName; desc: string }[] = [
+  {
+    title: 'Vishnu Studio',
+    href: '/vstudio',
+    icon: 'film',
+    desc: 'Real presenter workspace, avatar synthesis, and talking-head recording pipelines.',
+  },
+  {
+    title: 'Style DNA',
+    href: '/styles',
+    icon: 'sparkles',
+    desc: 'Visual presets, pacing archetypes, typography palettes, and color grade definitions.',
+  },
+  {
+    title: 'Footage Intelligence',
+    href: '/footage',
+    icon: 'eye',
+    desc: 'Multimodal asset catalog, shot classification, speech transcripts, and face clustering.',
+  },
+  {
+    title: 'Multi-Version Studio',
+    href: '/versions',
+    icon: 'copy',
+    desc: 'Simultaneous multi-angle, multi-platform aspect ratio, and language variant generator.',
+  },
+  {
+    title: 'Content Intelligence',
+    href: '/intelligence',
+    icon: 'cpu',
+    desc: 'Audience retention heuristics, script scoring, competitor benchmarks, and hook analytics.',
+  },
+  {
+    title: 'Render QA',
+    href: '/qa',
+    icon: 'check-circle',
+    desc: 'Deep automated verification: flash frame checks, jump cuts, and -14 LUFS loudness mastering.',
+  },
+];
 
 export default function Settings() {
   const { colors } = useTheme();
   const toast = useToast();
+  const router = useRouter();
   const { signOut, user } = useAuth();
+  const { devMode, setDevMode } = useDevMode();
   const [data, setData] = useState<any>(null);
   const [styles_, setStyles] = useState<{ value: string; label: string }[]>([]);
   const [style, setStyle] = useState('');
@@ -74,6 +117,65 @@ export default function Settings() {
         <Row style={{ justifyContent: 'space-between' }}><T>Publishing adapter</T><T muted>{data.publishing.adapter}</T></Row>
         <Row style={{ justifyContent: 'space-between' }}><T>Public media URL</T><T muted>{data.publishing.public_base_url ?? 'not set (needed to publish)'}</T></Row>
       </Card>
+
+      <SectionTitle title="Developer Mode" />
+      <Card style={{ gap: spacing.sm }}>
+        <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ flex: 1, paddingRight: spacing.md, gap: 2 }}>
+            <T variant="h3">Enable Developer Tools</T>
+            <T variant="small" muted>
+              Show internal experimental suites and debug modules (Vishnu Studio, Style DNA, Footage Intelligence, Multi-Version Studio, Content Intelligence, and Render QA).
+            </T>
+          </View>
+          <Switch
+            value={devMode}
+            onValueChange={setDevMode}
+            trackColor={{ false: colors.border, true: colors.primary }}
+            thumbColor={devMode ? colors.onPrimary : colors.surface}
+          />
+        </Row>
+      </Card>
+
+      {devMode ? (
+        <>
+          <SectionTitle
+            title="Develop"
+            right={<Badge label="DEVELOPER MODE ACTIVE" tone="warning" dot />}
+          />
+          <View style={{ gap: spacing.sm }}>
+            {DEV_TOOLS.map((tool) => (
+              <Card
+                key={tool.href}
+                onPress={() => router.navigate(tool.href as any)}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md }}
+              >
+                <View
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: 8,
+                    backgroundColor: colors.primarySoft,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Icon name={tool.icon} size={18} color={colors.primary} />
+                </View>
+                <View style={{ flex: 1, gap: 2 }}>
+                  <T variant="body" style={{ fontWeight: '600' }}>{tool.title}</T>
+                  <T variant="small" muted>{tool.desc}</T>
+                </View>
+                <Button
+                  label="Open"
+                  variant="secondary"
+                  small
+                  onPress={() => router.navigate(tool.href as any)}
+                />
+              </Card>
+            ))}
+          </View>
+        </>
+      ) : null}
 
       <SectionTitle title="Account & session" />
       <Card style={{ gap: spacing.md }}>
