@@ -1,17 +1,19 @@
 import React from 'react';
-import Svg, { Path, Circle, Rect, Polyline, Line } from 'react-native-svg';
+import Svg, { Path, Circle, Rect, Polyline, Line, Ellipse } from 'react-native-svg';
 
 export type IconName =
   | 'home' | 'film' | 'plus' | 'settings' | 'logout' | 'check' | 'x' | 'refresh' | 'play' | 'alert'
   | 'back' | 'chevron' | 'forward' | 'search' | 'upload' | 'download' | 'link' | 'external' | 'clock' | 'send' | 'edit' | 'sparkles'
   | 'inbox' | 'server' | 'grid' | 'camera' | 'layers' | 'cpu' | 'tv' | 'music' | 'share' | 'bar-chart'
-  | 'sliders' | 'bell' | 'volume' | 'copy' | 'eye' | 'trash' | 'zap' | 'filter' | 'check-circle';
+  | 'sliders' | 'bell' | 'volume' | 'copy' | 'eye' | 'trash' | 'zap' | 'filter' | 'check-circle'
+  | 'folder' | 'calendar' | 'database' | 'book' | 'users' | 'gift' | 'lightbulb' | 'chevron-left' | 'chevron-right' | 'chevron-down' | 'chevron-up'
+  | 'smartphone' | 'square' | 'monitor' | 'type' | 'arrow-left' | 'arrow-right' | 'alert-triangle';
 
 /** Stroke icons on a 24px grid (Feather-style), drawn with react-native-svg so they render identically on web and native. */
 export function Icon({ name, size = 20, color = '#000', strokeWidth = 2 }: { name: IconName; size?: number; color?: string; strokeWidth?: number }) {
   const p = { stroke: color, strokeWidth, fill: 'none', strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+    <Svg width={size} height={size} viewBox="0 0 24 24" aria-hidden={true}>
       {render(name, p)}
     </Svg>
   );
@@ -60,14 +62,34 @@ function render(name: IconName, p: any) {
     case 'copy': return <><Rect {...p} x="9" y="9" width="13" height="13" rx="2" /><Path {...p} d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></>;
     case 'eye': return <><Path {...p} d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><Circle {...p} cx="12" cy="12" r="3" /></>;
     case 'filter': return <Polygon {...p} points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />;
+    case 'folder': return <Path {...p} d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />;
+    case 'calendar': return <><Rect {...p} x="3" y="4" width="18" height="18" rx="2" /><Line {...p} x1="16" y1="2" x2="16" y2="6" /><Line {...p} x1="8" y1="2" x2="8" y2="6" /><Line {...p} x1="3" y1="10" x2="21" y2="10" /></>;
+    case 'database': return <><Ellipse {...p} cx="12" cy="5" rx="9" ry="3" /><Path {...p} d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><Path {...p} d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></>;
+    case 'book': return <><Path {...p} d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><Path {...p} d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></>;
+    case 'users': return <><Path {...p} d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><Circle {...p} cx="9" cy="7" r="4" /><Path {...p} d="M23 21v-2a4 4 0 0 0-3-3.87" /><Path {...p} d="M16 3.13a4 4 0 0 1 0 7.75" /></>;
+    case 'gift': return <><Polyline {...p} points="20 12 20 22 4 22 4 12" /><Rect {...p} x="2" y="7" width="20" height="5" /><Line {...p} x1="12" y1="22" x2="12" y2="7" /><Path {...p} d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" /><Path {...p} d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></>;
+    case 'lightbulb': return <><Path {...p} d="M9 18h6" /><Path {...p} d="M10 22h4" /><Path {...p} d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .5 2.5 1.5 3.5.76.76 1.23 1.52 1.41 2.5" /></>;
+    case 'chevron-left': return <Polyline {...p} points="15 18 9 12 15 6" />;
+    case 'chevron-right': return <Polyline {...p} points="9 18 15 12 9 6" />;
+    case 'chevron-down': return <Polyline {...p} points="6 9 12 15 18 9" />;
+    case 'chevron-up': return <Polyline {...p} points="18 15 12 9 6 15" />;
+    case 'smartphone': return <><Rect {...p} x="5" y="2" width="14" height="20" rx="2" /><Line {...p} x1="12" y1="18" x2="12.01" y2="18" /></>;
+    case 'square': return <Rect {...p} x="3" y="3" width="18" height="18" rx="2" />;
+    case 'monitor': return <><Rect {...p} x="2" y="3" width="20" height="14" rx="2" /><Line {...p} x1="8" y1="21" x2="16" y2="21" /><Line {...p} x1="12" y1="17" x2="12" y2="21" /></>;
+    case 'type': return <><Polyline {...p} points="4 7 4 4 20 4 20 7" /><Line {...p} x1="9" y1="20" x2="15" y2="20" /><Line {...p} x1="12" y1="4" x2="12" y2="20" /></>;
+    case 'arrow-left': return <><Line {...p} x1="19" y1="12" x2="5" y2="12" /><Polyline {...p} points="12 19 5 12 12 19" /><Polyline {...p} points="12 5 5 12 12 19" /></>;
+    case 'arrow-right': return <><Line {...p} x1="5" y1="12" x2="19" y2="12" /><Polyline {...p} points="12 5 19 12 12 19" /></>;
+    case 'alert-triangle': return <><Path {...p} d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><Line {...p} x1="12" y1="9" x2="12" y2="13" /><Line {...p} x1="12" y1="17" x2="12.01" y2="17" /></>;
     default: return <Circle {...p} cx="12" cy="12" r="10" />;
   }
 }
 
 function Polygon(props: any) {
   const { points, ...rest } = props;
-  const pts = points.split(' ').map((coord: string) => coord.split(',').map(Number));
-  if (pts.length < 3) return null;
+  const coords = points.split(' ').map(Number);
+  if (coords.length < 6) return null;
+  const pts = [];
+  for (let i = 0; i < coords.length; i += 2) pts.push([coords[i], coords[i + 1]]);
   const d = `M${pts[0][0]} ${pts[0][1]} ` + pts.slice(1).map((p: any) => `L${p[0]} ${p[1]}`).join(' ') + ' Z';
   return <Path {...rest} d={d} />;
 }

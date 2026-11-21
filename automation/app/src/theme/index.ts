@@ -43,10 +43,39 @@ const dark = {
   shadow: '#000000',
 };
 
-// GrowthOS defaults to Cinematic Dark mode
-const light = { ...dark };
+// Light theme - Choppity-style clean SaaS layout with confident purple accent
+const light = {
+  bg: '#F8F9FA',
+  sidebar: '#FFFFFF',
+  surface: '#FFFFFF',
+  surfaceAlt: '#F4F5F7',
+  border: '#E5E7EB',
+  borderLight: '#F3F4F6',
+  text: '#111827',
+  textMuted: '#6B7280',
+  textFaint: '#9CA3AF',
+  primary: '#6C4CF0',
+  primaryPressed: '#5838D6',
+  primarySoft: 'rgba(108, 76, 240, 0.12)',
+  onPrimary: '#FFFFFF',
+  brandPeach: '#FF5A1F',
+  brandPeachSoft: '#FFF5F0',
+  success: '#10B981',
+  successSoft: '#F0FDF4',
+  warning: '#F59E0B',
+  warningSoft: '#FFFBEB',
+  danger: '#EF4444',
+  dangerSoft: '#FEF2F2',
+  info: '#6C4CF0',
+  infoSoft: 'rgba(108, 76, 240, 0.08)',
+  overlay: 'rgba(15, 23, 42, 0.45)',
+  shadow: '#000000',
+};
 
-export type Colors = typeof dark;
+// GrowthOS uses light mode for client demo
+const darkMode = { ...dark };
+
+export type Colors = typeof light;
 
 export const spacing = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32 } as const;
 export const radius = { sm: 6, md: 8, lg: 12, pill: 999 } as const;
@@ -75,7 +104,7 @@ export const BREAKPOINT_WIDE = 960;
 export const MAX_CONTENT_WIDTH = 1440;
 
 export function useTheme(): { colors: Colors; isDark: boolean } {
-  return { colors: dark, isDark: true };
+  return { colors: light, isDark: false };
 }
 
 export const shadow = (c: Colors, level: 1 | 2 = 1) =>

@@ -47,7 +47,7 @@ export default function EditingMemoryScreen() {
       type: 'SHAREABILITY_ANALYSIS',
       title: 'High DM Send Velocity on Fast-Paced Cuts',
       evidence: 'Fast-paced reels generated a median of 40.5 DM shares per 1,000 reach, placing your content in the top quartile of Instagram explore distribution.',
-      action: 'Maintain cut intervals below 2.0s and conclude with an explicit peer-share trigger (“Send this to your cofounder”).',
+      action: 'Maintain cut intervals below 2.0s and conclude with an explicit peer-share trigger ("Send this to your cofounder").',
       sample_size: 4,
       confidence: 0.91,
     },

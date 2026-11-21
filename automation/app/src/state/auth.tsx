@@ -20,14 +20,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const recheck = useCallback(async () => {
     try {
       await loadServerUrl();
-      const s = await get('/api/session', { quiet401: true });
-      if (s.authenticated) {
-        setCsrf(s.csrfToken);
-        setUser(s.user);
-        setStatus('signedIn');
-        return;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      try {
+        const s = await get('/api/session', { quiet401: true });
+        clearTimeout(timeoutId);
+        if (s.authenticated) {
+          setCsrf(s.csrfToken);
+          setUser(s.user);
+          setStatus('signedIn');
+          return;
+        }
+      } catch (e) {
+        clearTimeout(timeoutId);
+        throw e;
       }
-    } catch { /* unreachable server → show sign-in so the address can be changed */ }
+    } catch { /* unreachable server or timeout */ }
     setUser(null);
     setStatus('signedOut');
   }, []);

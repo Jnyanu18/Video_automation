@@ -1,292 +1,687 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View, Platform, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Modal, Platform, Pressable, StyleSheet, Text, View, ScrollView } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, IconName } from './Icon';
-import { T, Badge } from './ui';
 import { font, radius, spacing, useTheme } from '../theme';
 import { useAuth } from '../state/auth';
 import { useDevMode } from '../state/devMode';
 
-export interface NavItem {
+export interface NavRailItem {
+  id: string;
   href: string;
   label: string;
   icon: IconName;
   badge?: string;
+  isAction?: boolean;
 }
 
-export interface NavSection {
-  title: string;
-  items: NavItem[];
-}
-
-export const BASE_NAV_SECTIONS: NavSection[] = [
-  {
-    title: 'WORKSPACE',
-    items: [
-      { href: '/', label: 'Overview', icon: 'grid' },
-      { href: '/studio', label: 'AI Studio', icon: 'camera' },
-      { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
-      { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
-      { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
-    ],
-  },
-  {
-    title: 'OPERATIONS',
-    items: [
-      { href: '/series', label: 'Series Engine', icon: 'tv' },
-      { href: '/media', label: 'Media Library', icon: 'music' },
-      { href: '/publishing', label: 'Publishing', icon: 'send' },
-      { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
-      { href: '/editing-memory', label: 'Editing Memory', icon: 'clock' },
-      { href: '/automation', label: 'Automation', icon: 'zap' },
-    ],
-  },
-  {
-    title: 'SYSTEM',
-    items: [
-      { href: '/settings', label: 'Settings', icon: 'settings' },
-      { href: '/integrations', label: 'Integrations', icon: 'server' },
-    ],
-  },
+export const PRIMARY_RAIL_ITEMS: NavRailItem[] = [
+  { id: 'projects', href: '/', label: 'Projects', icon: 'folder' },
+  { id: 'templates', href: '/settings', label: 'Templates', icon: 'layers' },
+  { id: 'calendar', href: '/publishing', label: 'Calendar', icon: 'calendar' },
+  { id: 'analytics', href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
+  { id: 'share', href: '/integrations', label: 'Social & Share', icon: 'share' },
+  { id: 'storage', href: '/media', label: 'Media Storage', icon: 'database' },
 ];
 
-export const DEVELOP_NAV_ITEMS: NavItem[] = [
-  { href: '/vstudio', label: 'Vishnu Studio', icon: 'film' },
-  { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
-  { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
-  { href: '/versions', label: 'Multi-Version Studio', icon: 'copy' },
-  { href: '/intelligence', label: 'Content Intelligence', icon: 'cpu' },
-  { href: '/qa', label: 'Render QA', icon: 'check-circle' },
+export const BOTTOM_RAIL_ITEMS: NavRailItem[] = [
+  { id: 'settings', href: '/settings', label: 'Settings', icon: 'settings' },
+  { id: 'learning', href: '/demo', label: 'Tutorials', icon: 'book' },
+  { id: 'community', href: 'https://discord.gg', label: 'Community', icon: 'users', isAction: true },
+  { id: 'refer', href: '#refer', label: 'Refer & Earn', icon: 'gift', isAction: true },
 ];
 
-export const DEVELOP_NAV_SECTION: NavSection = {
-  title: 'DEVELOP',
-  items: DEVELOP_NAV_ITEMS,
-};
+export const CORE_MODES = [
+  { id: 'clipper', href: '/', label: 'Clipper' },
+  { id: 'studio', href: '/studio', label: 'Studio' },
+  { id: 'storyboard', href: '/storyboard', label: 'Storyboard' },
+  { id: 'motion', href: '/motion', label: 'Motion' },
+  { id: 'planner', href: '/series', label: 'Planner' },
+];
 
-export const NAV_SECTIONS: NavSection[] = BASE_NAV_SECTIONS;
-
-function isActive(path: string, href: string) {
-  if (href === '/') return path === '/' || path === '/(app)';
-  return path === href || path.startsWith(href + '/');
+function isPathActive(currentPath: string, targetHref: string) {
+  if (targetHref === '/') {
+    return currentPath === '/' || currentPath === '/(app)' || currentPath === '';
+  }
+  return currentPath === targetHref || currentPath.startsWith(targetHref + '/');
 }
 
-export function Sidebar() {
+/**
+ * Choppity-Style Left Rail (≈56-60px collapsed, expand to reveal labels)
+ */
+export function LeftRail() {
   const { colors } = useTheme();
   const path = usePathname();
   const router = useRouter();
-  const { user, signOut } = useAuth();
-  const { devMode } = useDevMode();
+  const [expanded, setExpanded] = useState(false);
+  const [showReferModal, setShowReferModal] = useState(false);
 
-  const sections = devMode
-    ? [...BASE_NAV_SECTIONS.slice(0, 2), DEVELOP_NAV_SECTION, ...BASE_NAV_SECTIONS.slice(2)]
-    : BASE_NAV_SECTIONS;
+  const handleItemPress = (item: NavRailItem) => {
+    if (item.id === 'refer') {
+      setShowReferModal(true);
+      return;
+    }
+    if (item.href.startsWith('http')) {
+      if (typeof window !== 'undefined') {
+        window.open(item.href, '_blank');
+      }
+      return;
+    }
+    router.navigate(item.href as any);
+  };
+
+  const railWidth = expanded ? 210 : 60;
 
   return (
-    <View style={[styles.side, { backgroundColor: colors.sidebar, borderRightColor: colors.border }]}>
-      {/* Brand Header */}
-      <View style={styles.brand}>
-        <View style={[styles.logo, { backgroundColor: colors.primary }]}>
-          <Icon name="sparkles" size={17} color={colors.onPrimary} />
-        </View>
-        <View style={{ flex: 1, gap: 1 }}>
-          <T variant="h3" style={{ letterSpacing: 0.3, fontWeight: '700' }}>GROWTHOS</T>
-          <T variant="mono" style={{ fontSize: 9, color: colors.primary, letterSpacing: 1.4, fontWeight: '500' }}>CREATIVE STUDIO</T>
-        </View>
-      </View>
-
-      {/* Workspace Selector Pill */}
-      <View style={[styles.workspaceCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: colors.success }} />
-        <T variant="small" style={{ flex: 1, fontFamily: font.mono, fontWeight: '500' }} numberOfLines={1}>Rockcastle Studio</T>
-        <T variant="mono" style={{ fontSize: 10, color: colors.textFaint }}>v2.4</T>
-      </View>
-
-      {/* Navigation Sections */}
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ gap: spacing.lg, paddingBottom: spacing.sm }} style={{ flex: 1 }}>
-        {sections.map((sec) => (
-          <View key={sec.title} style={{ gap: 3 }}>
-            <T variant="label" style={{ fontSize: 10, color: colors.textFaint, paddingHorizontal: 12, marginBottom: 4, letterSpacing: 1.1 }}>
-              {sec.title}
-            </T>
-            {sec.items.map((n) => {
-              const on = isActive(path, n.href);
-              return (
-                <Pressable
-                  key={n.href}
-                  accessibilityRole="link"
-                  accessibilityState={{ selected: on }}
-                  onPress={() => router.navigate(n.href as any)}
-                  style={({ pressed, hovered }: any) => [
-                    styles.item,
-                    {
-                      backgroundColor: on
-                        ? 'rgba(255, 90, 31, 0.12)'
-                        : hovered
-                        ? 'rgba(255, 255, 255, 0.05)'
-                        : 'transparent',
-                      borderColor: on
-                        ? 'rgba(255, 90, 31, 0.28)'
-                        : 'transparent',
-                    },
-                    Platform.OS === 'web' && ({
-                      cursor: 'pointer',
-                      transition: 'all 120ms cubic-bezier(0.16, 1, 0.3, 1)',
-                      transform: pressed ? 'scale(0.98)' : 'none',
-                    } as any),
-                  ]}
-                >
-                  <Icon name={n.icon} size={17} color={on ? colors.primary : colors.textMuted} />
-                  <Text
-                    style={{
-                      fontFamily: on ? font.semibold : font.medium,
-                      fontSize: 13,
-                      color: on ? colors.text : colors.textMuted,
-                      flex: 1,
-                    }}
-                  >
-                    {n.label}
-                  </Text>
-                  {on ? (
-                    <View style={{ width: 5, height: 5, borderRadius: 3, backgroundColor: colors.primary }} />
-                  ) : n.badge ? (
-                    <Badge label={n.badge} tone="info" />
-                  ) : null}
-                </Pressable>
-              );
-            })}
-          </View>
-        ))}
-      </ScrollView>
-
-      {/* User Footer */}
-      <View style={[styles.user, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <View style={[styles.avatar, { backgroundColor: colors.primarySoft, borderColor: colors.primary, borderWidth: 1 }]}>
-          <Text style={{ fontFamily: font.bold, fontSize: 13, color: colors.primary }}>
-            {(user?.name || user?.email || 'U').charAt(0).toUpperCase()}
-          </Text>
-        </View>
-        <View style={{ flex: 1, gap: 1 }}>
-          <T variant="small" style={{ fontWeight: '600' }} numberOfLines={1}>{user?.name || user?.email || 'Director'}</T>
-          <T variant="mono" style={{ fontSize: 10, color: colors.textMuted }}>Producer</T>
-        </View>
+    <>
+      <View
+        style={[
+          styles.railContainer,
+          {
+            width: railWidth,
+            backgroundColor: colors.surface,
+            borderRightColor: colors.border,
+          },
+          Platform.OS === 'web' && ({
+            transition: 'width 180ms cubic-bezier(0.16, 1, 0.3, 1)',
+          } as any),
+        ]}
+      >
+        {/* Top Rail Brand Icon */}
         <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Sign out"
-          onPress={signOut}
-          hitSlop={8}
-          style={({ hovered }: any) => [
-            styles.logoutBtn,
-            { backgroundColor: hovered ? colors.surfaceAlt : 'transparent' },
-            Platform.OS === 'web' && ({ cursor: 'pointer', transition: 'background-color 150ms ease' } as any),
-          ]}
+          onPress={() => router.navigate('/')}
+          style={[styles.railBrandButton, Platform.OS === 'web' && ({ cursor: 'pointer' } as any)]}
         >
-          <Icon name="logout" size={16} color={colors.textMuted} />
+          <View style={[styles.brandIconBox, { backgroundColor: colors.primary }]}>
+            <Icon name="sparkles" size={17} color="#FFFFFF" />
+          </View>
+          {expanded && (
+            <View style={{ marginLeft: 10, flex: 1 }}>
+              <Text style={[styles.brandTitle, { color: colors.text }]}>ROCKCASTLE</Text>
+              <Text style={[styles.brandSub, { color: colors.primary }]}>GrowthOS AI</Text>
+            </View>
+          )}
         </Pressable>
+
+        {/* Primary Stack */}
+        <View style={styles.primaryItemsList}>
+          {PRIMARY_RAIL_ITEMS.map((item) => {
+            const active = isPathActive(path, item.href);
+            return (
+              <Pressable
+                key={item.id}
+                onPress={() => handleItemPress(item)}
+                accessibilityLabel={item.label}
+                style={({ pressed, hovered }: any) => [
+                  styles.railItem,
+                  {
+                    backgroundColor: active
+                      ? 'rgba(108, 76, 240, 0.14)'
+                      : hovered
+                      ? colors.surfaceAlt
+                      : 'transparent',
+                    justifyContent: expanded ? 'flex-start' : 'center',
+                    paddingHorizontal: expanded ? 14 : 0,
+                  },
+                  Platform.OS === 'web' && ({
+                    cursor: 'pointer',
+                    transition: 'all 120ms ease',
+                    transform: pressed ? 'scale(0.96)' : 'none',
+                  } as any),
+                ]}
+              >
+                <View style={[styles.iconFrame, active && { backgroundColor: 'transparent' }]}>
+                  <Icon
+                    name={item.icon}
+                    size={20}
+                    color={active ? colors.primary : colors.textMuted}
+                  />
+                </View>
+                {expanded && (
+                  <Text
+                    style={[
+                      styles.expandedItemLabel,
+                      {
+                        color: active ? colors.primary : colors.text,
+                        fontFamily: active ? font.semibold : font.medium,
+                      },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {item.label}
+                  </Text>
+                )}
+              </Pressable>
+            );
+          })}
+        </View>
+
+        {/* Divider */}
+        <View style={[styles.railDivider, { backgroundColor: colors.borderLight }]} />
+
+        {/* Bottom Stack */}
+        <View style={styles.bottomItemsList}>
+          {BOTTOM_RAIL_ITEMS.map((item) => {
+            const active = !item.isAction && isPathActive(path, item.href);
+            return (
+              <Pressable
+                key={item.id}
+                onPress={() => handleItemPress(item)}
+                accessibilityLabel={item.label}
+                style={({ pressed, hovered }: any) => [
+                  styles.railItem,
+                  {
+                    backgroundColor: active
+                      ? 'rgba(108, 76, 240, 0.14)'
+                      : hovered
+                      ? colors.surfaceAlt
+                      : 'transparent',
+                    justifyContent: expanded ? 'flex-start' : 'center',
+                    paddingHorizontal: expanded ? 14 : 0,
+                  },
+                  Platform.OS === 'web' && ({
+                    cursor: 'pointer',
+                    transition: 'all 120ms ease',
+                    transform: pressed ? 'scale(0.96)' : 'none',
+                  } as any),
+                ]}
+              >
+                <View style={styles.iconFrame}>
+                  <Icon
+                    name={item.icon}
+                    size={19}
+                    color={active ? colors.primary : colors.textMuted}
+                  />
+                </View>
+                {expanded && (
+                  <Text
+                    style={[
+                      styles.expandedItemLabel,
+                      {
+                        color: active ? colors.primary : colors.text,
+                        fontFamily: active ? font.semibold : font.medium,
+                      },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {item.label}
+                  </Text>
+                )}
+              </Pressable>
+            );
+          })}
+
+          {/* Expand/Collapse Chevron Button */}
+          <Pressable
+            onPress={() => setExpanded(!expanded)}
+            style={({ pressed, hovered }: any) => [
+              styles.expandToggleBtn,
+              {
+                backgroundColor: hovered ? colors.surfaceAlt : 'transparent',
+                justifyContent: expanded ? 'flex-start' : 'center',
+                paddingHorizontal: expanded ? 14 : 0,
+              },
+              Platform.OS === 'web' && ({
+                cursor: 'pointer',
+                transform: pressed ? 'scale(0.96)' : 'none',
+              } as any),
+            ]}
+          >
+            <View style={styles.iconFrame}>
+              <Icon
+                name={expanded ? 'chevron-left' : 'chevron-right'}
+                size={18}
+                color={colors.textFaint}
+              />
+            </View>
+            {expanded && (
+              <Text style={[styles.expandedItemLabel, { color: colors.textFaint }]}>
+                Collapse menu
+              </Text>
+            )}
+          </Pressable>
+        </View>
       </View>
-    </View>
+
+      {/* Refer & Earn Modal */}
+      {showReferModal && (
+        <Modal visible transparent animationType="fade" onRequestClose={() => setShowReferModal(false)}>
+          <View style={[styles.modalBackdrop, { backgroundColor: colors.overlay }]}>
+            <View style={[styles.referModalCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+              <View style={[styles.referIconBadge, { backgroundColor: 'rgba(108, 76, 240, 0.12)' }]}>
+                <Icon name="gift" size={26} color={colors.primary} />
+              </View>
+              <Text style={[styles.referTitle, { color: colors.text }]}>Refer a creator, earn 3 free hours</Text>
+              <Text style={[styles.referDesc, { color: colors.textMuted }]}>
+                Share your personal GrowthOS invite link. When a creator signs up and exports their first reel, you both get 3 hours of free AI auto-clipping.
+              </Text>
+              <View style={[styles.linkBox, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                <Text style={[styles.linkText, { color: colors.text }]}>https://growthos.ai/r/rockcastle-jnyan</Text>
+                <Pressable
+                  onPress={() => setShowReferModal(false)}
+                  style={[styles.copyBtn, { backgroundColor: colors.primary }]}
+                >
+                  <Text style={styles.copyBtnText}>Copy Link</Text>
+                </Pressable>
+              </View>
+              <Pressable
+                onPress={() => setShowReferModal(false)}
+                style={[styles.closeReferBtn, { borderColor: colors.border }]}
+              >
+                <Text style={[styles.closeReferText, { color: colors.textMuted }]}>Done</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      )}
+    </>
   );
 }
 
-export function TopNav({ title, subtitle, breadcrumb }: { title?: string; subtitle?: string; breadcrumb?: string }) {
+/**
+ * Choppity-Style Top Header Bar (Full width, white, segmented pill control for core modes)
+ */
+export function TopHeader({ title, subtitle }: { title?: string; subtitle?: string } = {}) {
   const { colors } = useTheme();
+  const path = usePathname();
   const router = useRouter();
+  const { user } = useAuth();
 
   return (
-    <View style={[styles.topnav, { backgroundColor: colors.bg, borderBottomColor: colors.border }]}>
-      <View style={{ flex: 1, gap: 2 }}>
-        {breadcrumb ? (
-          <T variant="mono" style={{ fontSize: 11, color: colors.textMuted, letterSpacing: 0.5 }}>
-            {breadcrumb}
-          </T>
-        ) : null}
-        {title ? <T variant="h2">{title}</T> : null}
-        {subtitle ? <T variant="small" muted>{subtitle}</T> : null}
+    <View style={[styles.topHeaderContainer, { backgroundColor: '#FFFFFF', borderBottomColor: colors.borderLight }]}>
+      {/* Wordmark branding */}
+      <View style={styles.headerWordmarkGroup}>
+        <Text style={[styles.headerBrandTitle, { color: colors.text }]}>Rockcastle</Text>
+        <View style={styles.headerDotDivider} />
+        <Text style={[styles.headerSubTitle, { color: colors.textMuted }]}>{title || 'GrowthOS Video'}</Text>
       </View>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
-        {/* Real-time Health Pill */}
-        <View style={[styles.pill, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <View style={[styles.pulseDot, { backgroundColor: colors.success }]} />
-          <T variant="mono" style={{ fontSize: 11, color: colors.textMuted, letterSpacing: 0.5 }}>ALL SERVICES ACTIVE</T>
-        </View>
+      {/* Segmented Control for Core Modes */}
+      <View style={[styles.segmentedControlCard, { backgroundColor: colors.surfaceAlt }]}>
+        {CORE_MODES.map((mode) => {
+          const isSelected = isPathActive(path, mode.href);
+          return (
+            <Pressable
+              key={mode.id}
+              onPress={() => router.navigate(mode.href as any)}
+              style={({ pressed }: any) => [
+                styles.segmentTab,
+                isSelected && styles.segmentTabActive,
+                Platform.OS === 'web' && ({
+                  cursor: 'pointer',
+                  transition: 'all 120ms ease',
+                  transform: pressed ? 'scale(0.97)' : 'none',
+                } as any),
+              ]}
+            >
+              <Text
+                style={[
+                  styles.segmentTabText,
+                  {
+                    color: isSelected ? colors.text : colors.textMuted,
+                    fontFamily: isSelected ? font.semibold : font.medium,
+                  },
+                ]}
+              >
+                {mode.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
 
-        {/* Quick Action Button */}
+      {/* User Avatar */}
+      <View style={styles.headerRightGroup}>
         <Pressable
-          accessibilityRole="button"
-          onPress={() => router.navigate('/studio' as any)}
-          style={({ pressed, hovered }: any) => [
-            styles.quickBtn,
-            { backgroundColor: hovered ? colors.primaryPressed : colors.primary },
-            pressed && { opacity: 0.9 },
+          onPress={() => router.navigate('/settings')}
+          style={({ pressed }: any) => [
+            styles.avatarCircle,
+            { backgroundColor: colors.primary },
             Platform.OS === 'web' && ({
               cursor: 'pointer',
-              transition: 'all 150ms cubic-bezier(0.16, 1, 0.3, 1)',
-              transform: pressed ? 'scale(0.97)' : hovered ? 'translateY(-1px)' : 'none',
-              boxShadow: '0 2px 8px rgba(255, 90, 31, 0.3)',
+              transform: pressed ? 'scale(0.95)' : 'none',
             } as any),
           ]}
         >
-          <Icon name="plus" size={16} color={colors.onPrimary} />
-          <Text style={{ fontFamily: font.semibold, fontSize: 13, color: colors.onPrimary }}>New Reel</Text>
+          <Text style={styles.avatarInitial}>
+            {user?.name ? user.name.charAt(0).toUpperCase() : 'J'}
+          </Text>
         </Pressable>
       </View>
     </View>
   );
 }
 
-export function BottomNav() {
+/**
+ * Choppity-Style Soft Dismissible Alert / Banner Slot
+ */
+export function BannerAlertSlot({
+  title = 'Pro Auto-Clipping Active',
+  message = 'You have 4 hours of remaining GPU transcription & auto-framing on your team workspace.',
+  actionLabel = 'Upgrade Plan',
+  onAction,
+}: {
+  title?: string;
+  message?: string;
+  actionLabel?: string;
+  onAction?: () => void;
+}) {
   const { colors } = useTheme();
-  const path = usePathname();
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
+  const [dismissed, setDismissed] = useState(false);
 
-  const primaryItems = [
-    { href: '/', label: 'Overview', icon: 'grid' as const },
-    { href: '/studio', label: 'Studio', icon: 'camera' as const },
-    { href: '/storyboard', label: 'Storyboard', icon: 'layers' as const },
-    { href: '/media', label: 'Media', icon: 'music' as const },
-    { href: '/settings', label: 'Settings', icon: 'settings' as const },
-  ];
+  if (dismissed) return null;
 
   return (
-    <View style={[styles.bottom, { backgroundColor: colors.sidebar, borderTopColor: colors.border, paddingBottom: Math.max(insets.bottom, 8) }]}>
-      {primaryItems.map((n) => {
-        const on = isActive(path, n.href);
-        return (
+    <View style={styles.bannerAlertWrapper}>
+      <View style={[styles.bannerAlertCard, { borderColor: '#FED7AA' }]}>
+        <View style={styles.bannerLeftRow}>
+          <View style={styles.bannerWarningCircle}>
+            <Icon name="sparkles" size={15} color="#FF5A1F" />
+          </View>
+          <View style={{ flex: 1, gap: 1 }}>
+            <Text style={styles.bannerTitleText}>{title}</Text>
+            <Text style={styles.bannerMessageText}>{message}</Text>
+          </View>
+        </View>
+        <View style={styles.bannerRightRow}>
+          {onAction && (
+            <Pressable
+              onPress={onAction}
+              style={({ pressed }: any) => [
+                styles.bannerActionButton,
+                { backgroundColor: colors.primary },
+                Platform.OS === 'web' && ({
+                  cursor: 'pointer',
+                  transform: pressed ? 'scale(0.97)' : 'none',
+                } as any),
+              ]}
+            >
+              <Text style={styles.bannerActionText}>{actionLabel}</Text>
+            </Pressable>
+          )}
           <Pressable
-            key={n.href}
-            accessibilityRole="tab"
-            accessibilityLabel={n.label}
-            accessibilityState={{ selected: on }}
-            onPress={() => router.navigate(n.href as any)}
-            style={styles.tab}
+            onPress={() => setDismissed(true)}
+            style={[styles.bannerCloseBtn, Platform.OS === 'web' && ({ cursor: 'pointer' } as any)]}
           >
-            <Icon name={n.icon} size={20} color={on ? colors.primary : colors.textFaint} />
-            <Text style={{ fontFamily: font.medium, fontSize: 10, color: on ? colors.primary : colors.textFaint }}>
-              {n.label}
-            </Text>
+            <Icon name="x" size={16} color="#9CA3AF" />
           </Pressable>
-        );
-      })}
+        </View>
+      </View>
     </View>
   );
 }
 
+// Fallback compatibility exports
+export const Sidebar = LeftRail;
+export const BottomNav = () => null;
+export const TopNav = TopHeader;
+
 const styles = StyleSheet.create({
-  side: { width: 260, borderRightWidth: 1, paddingVertical: spacing.lg, paddingHorizontal: spacing.md, gap: spacing.md },
-  brand: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 6, paddingTop: 2 },
-  logo: { width: 32, height: 32, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
-  workspaceCard: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 8, borderRadius: radius.md, borderWidth: 1, marginHorizontal: 2 },
-  item: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, height: 38, borderRadius: radius.md, borderWidth: 1 },
-  user: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 10, borderRadius: radius.md, borderWidth: 1, marginTop: 2 },
-  avatar: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
-  logoutBtn: { padding: 6, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' },
-  topnav: { paddingHorizontal: spacing.xl, paddingVertical: spacing.md, borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: spacing.lg },
-  pill: { flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 11, paddingVertical: 6, borderRadius: radius.pill, borderWidth: 1 },
-  pulseDot: { width: 7, height: 7, borderRadius: 4 },
-  quickBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 15, paddingVertical: 8, borderRadius: radius.md },
-  bottom: { position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', borderTopWidth: 1, paddingTop: 6 },
-  tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 2, minHeight: 46 },
+  railContainer: {
+    height: '100%',
+    paddingVertical: 14,
+    borderRightWidth: 1,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  railBrandButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 11,
+    marginBottom: 20,
+  },
+  brandIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  brandTitle: {
+    fontSize: 13,
+    fontFamily: font.bold,
+    letterSpacing: 0.5,
+  },
+  brandSub: {
+    fontSize: 10,
+    fontFamily: font.semibold,
+  },
+  primaryItemsList: {
+    flex: 1,
+    width: '100%',
+    gap: 10,
+    alignItems: 'center',
+  },
+  railItem: {
+    width: '88%',
+    height: 42,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconFrame: {
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  expandedItemLabel: {
+    fontSize: 13,
+    marginLeft: 8,
+  },
+  railDivider: {
+    width: '70%',
+    height: 1,
+    marginVertical: 12,
+  },
+  bottomItemsList: {
+    width: '100%',
+    gap: 6,
+    alignItems: 'center',
+  },
+  expandToggleBtn: {
+    width: '88%',
+    height: 38,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  topHeaderContainer: {
+    height: 60,
+    width: '100%',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+  },
+  headerWordmarkGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  headerBrandTitle: {
+    fontSize: 16,
+    fontFamily: font.bold,
+  },
+  headerDotDivider: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#D1D5DB',
+  },
+  headerSubTitle: {
+    fontSize: 13,
+    fontFamily: font.medium,
+  },
+  segmentedControlCard: {
+    flexDirection: 'row',
+    padding: 3,
+    borderRadius: radius.pill,
+  },
+  segmentTab: {
+    paddingHorizontal: 16,
+    paddingVertical: 7,
+    borderRadius: radius.pill,
+  },
+  segmentTabActive: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  segmentTabText: {
+    fontSize: 13,
+  },
+  headerRightGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  avatarCircle: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarInitial: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontFamily: font.bold,
+  },
+  bannerAlertWrapper: {
+    width: '100%',
+    maxWidth: 840,
+    alignSelf: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  bannerAlertCard: {
+    backgroundColor: '#FFF7ED', // Soft warm peach
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  bannerLeftRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    flex: 1,
+  },
+  bannerWarningCircle: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#FFEDD5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bannerTitleText: {
+    fontSize: 13,
+    fontFamily: font.bold,
+    color: '#9A3412',
+  },
+  bannerMessageText: {
+    fontSize: 12,
+    fontFamily: font.regular,
+    color: '#7C2D12',
+  },
+  bannerRightRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  bannerActionButton: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
+  },
+  bannerActionText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontFamily: font.semibold,
+  },
+  bannerCloseBtn: {
+    padding: 4,
+  },
+  modalBackdrop: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: spacing.lg,
+  },
+  referModalCard: {
+    width: '100%',
+    maxWidth: 440,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    padding: spacing.xl,
+    alignItems: 'center',
+    gap: 14,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  referIconBadge: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  referTitle: {
+    fontSize: 17,
+    fontFamily: font.bold,
+    textAlign: 'center',
+  },
+  referDesc: {
+    fontSize: 13,
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  linkBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingLeft: 12,
+    paddingRight: 4,
+    paddingVertical: 4,
+    borderRadius: radius.md,
+    borderWidth: 1,
+  },
+  linkText: {
+    fontSize: 12,
+    fontFamily: font.mono,
+  },
+  copyBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: radius.sm,
+  },
+  copyBtnText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontFamily: font.semibold,
+  },
+  closeReferBtn: {
+    marginTop: 4,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: radius.pill,
+    borderWidth: 1,
+  },
+  closeReferText: {
+    fontSize: 13,
+    fontFamily: font.medium,
+  },
 });

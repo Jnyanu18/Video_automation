@@ -27,13 +27,14 @@ const PRESETS = {
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.ico': 'image/x-icon', '.json': 'application/json; charset=utf-8', '.map': 'application/json', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.txt': 'text/plain; charset=utf-8',
+  '.mp4': 'video/mp4', '.webm': 'video/webm', '.mov': 'video/quicktime',
 };
 
 const SECURITY_HEADERS = {
   'x-content-type-options': 'nosniff',
   'x-frame-options': 'DENY',
   'referrer-policy': 'no-referrer',
-  'content-security-policy': "default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+  'content-security-policy': "default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
 };
 
 function createApp(cfg, deps) {
@@ -396,6 +397,31 @@ function createApp(cfg, deps) {
       // without a cookie - but only for a file whose owner was recorded when it was staged or submitted. A
       // signed-in browser is answered out of its OWN account's folder and never anyone else's.
       const session = auth.read(parseCookies(req.headers.cookie)[auth.COOKIE], Date.now());
+
+      // Serve demo videos from /media/filename.mp4
+      const demoMedia = /^\/media\/([a-zA-Z0-9._\-() ]+\.mp4)$/.exec(url.pathname);
+      if (demoMedia && (req.method === 'GET' || req.method === 'HEAD')) {
+        res.removeHeader('content-security-policy');
+        const filename = demoMedia[1];
+        const filepath = path.join(__dirname, '..', 'media', filename);
+        if (fs.existsSync(filepath)) {
+          const stat = fs.statSync(filepath);
+          const filesize = stat.size;
+          const range = req.headers.range;
+          if (range) {
+            const parts = range.replace(/bytes=/, "").split("-");
+            const start = parseInt(parts[0], 10);
+            const end = parts[1] ? parseInt(parts[1], 10) : filesize - 1;
+            res.writeHead(206, { 'Content-Range': `bytes ${start}-${end}/${filesize}`, 'Accept-Ranges': 'bytes', 'Content-Length': (end - start) + 1, 'Content-Type': 'video/mp4' });
+            fs.createReadStream(filepath, { start, end }).pipe(res);
+          } else {
+            res.writeHead(200, { 'Content-Length': filesize, 'Content-Type': 'video/mp4', 'Accept-Ranges': 'bytes' });
+            fs.createReadStream(filepath).pipe(res);
+          }
+          return;
+        }
+      }
+
       const media = /^\/media\/([a-f0-9]{32})\.mp4$/.exec(url.pathname);
       if (media && (req.method === 'GET' || req.method === 'HEAD')) {
         res.removeHeader('content-security-policy');

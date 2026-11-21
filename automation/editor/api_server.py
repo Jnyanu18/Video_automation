@@ -570,7 +570,9 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         return full
 
     # ------------------------------------------------------------ basics
+    @app.get("/")
     @app.get("/health")
+    @app.get("/healthz")
     def health_route():
         c = {k: len(store.data[k]) for k in ("storyboards", "series", "publishing")}
         return {"ok": True, "service": "ai-video-editor", "version": app.version, "time": time.time(),

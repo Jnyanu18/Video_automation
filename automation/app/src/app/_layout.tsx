@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold,
 } from '@expo-google-fonts/inter';
+import { T } from '../components/ui';
 import { AuthProvider, useAuth } from '../state/auth';
 import { LiveProvider } from '../state/live';
 import { ToastProvider } from '../state/toast';
@@ -18,6 +19,12 @@ function Gate() {
   const router = useRouter();
   const { colors } = useTheme();
   const onLogin = segments[0] === 'login';
+  const [timeoutMsg, setTimeoutMsg] = React.useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeoutMsg(true), 2000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (status === 'signedOut' && !onLogin) router.replace('/login');
@@ -26,8 +33,9 @@ function Gate() {
 
   if (status === 'loading') {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bg }}>
-        <ActivityIndicator color={colors.primary} />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bg, gap: 16 }}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        {timeoutMsg && <T muted>Connecting to server...</T>}
       </View>
     );
   }
@@ -36,10 +44,12 @@ function Gate() {
 
 export default function RootLayout() {
   const { isDark, colors } = useTheme();
-  const [loaded] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
+  useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
+      document.body.style.backgroundColor = colors.bg;
+      document.body.style.color = colors.text;
       if (!document.getElementById('growthos-google-fonts')) {
         const link = document.createElement('link');
         link.id = 'growthos-google-fonts';
@@ -69,9 +79,8 @@ export default function RootLayout() {
         document.head.appendChild(style);
       }
     }
-  }, []);
+  }, [colors.bg, colors.text]);
 
-  if (!loaded) return <View style={{ flex: 1, backgroundColor: colors.bg }} />;
   return (
     <SafeAreaProvider>
       <StatusBar style={isDark ? 'light' : 'dark'} />

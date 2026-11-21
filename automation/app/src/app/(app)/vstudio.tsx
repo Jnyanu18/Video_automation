@@ -94,7 +94,7 @@ export default function VishnuStudio() {
         {install?.status === 'failed' ? <View style={{ marginTop: spacing.sm }}><Banner tone="danger">{install.error}</Banner></View> : null}
         {install?.status === 'done' ? <View style={{ marginTop: spacing.sm }}><Banner tone="success">Remotion is installed. The first render also downloads a headless browser (about 110 MB).</Banner></View> : null}
         <T variant="small" faint style={{ marginTop: spacing.sm }}>
-          Narration for the animated lane: {status.voice_mode === 'elevenlabs' ? 'ElevenLabs' : status.voice_mode === 'stand-in' ? 'free stand-in voice only (the studio marks those videos “Do not publish”)' : 'not available'}. The animated lane uses hand-built scenes, so it stays a human-directed process; carousels are automatic.
+          Narration for the animated lane: {status.voice_mode === 'elevenlabs' ? 'ElevenLabs' : status.voice_mode === 'stand-in' ? 'free stand-in voice only (the studio marks those videos "Do not publish")' : 'not available'}. The animated lane uses hand-built scenes, so it stays a human-directed process; carousels are automatic.
         </T>
       </Card>
 

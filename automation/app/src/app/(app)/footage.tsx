@@ -20,7 +20,7 @@ export default function FootageIntelligence() {
       end: 3.2,
       duration: 3.2,
       match_type: 'speech',
-      snippet: '“Never build features nobody asked for...”',
+      snippet: '"Never build features nobody asked for..."',
       confidence: 0.98,
       keyframe_path: '/media/kf1.jpg',
     },
@@ -30,7 +30,7 @@ export default function FootageIntelligence() {
       end: 22.0,
       duration: 8.0,
       match_type: 'visual',
-      snippet: '[Visual Tag: Pricing] “Our pricing model starts at 29 dollars per month...”',
+      snippet: '[Visual Tag: Pricing] "Our pricing model starts at 29 dollars per month..."',
       confidence: 0.88,
       keyframe_path: '/media/kf3.jpg',
     },
@@ -137,7 +137,7 @@ export default function FootageIntelligence() {
                 </View>
                 <T variant="body" style={{ fontWeight: '600', marginTop: spacing.xs }}>{s.framing}</T>
                 <T variant="caption" muted style={{ fontStyle: 'italic', marginVertical: 4 }}>
-                  “{s.text}”
+                  "{s.text}"
                 </T>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
                   {s.tags.map((t) => (

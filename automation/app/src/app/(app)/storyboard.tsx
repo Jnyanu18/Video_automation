@@ -30,9 +30,40 @@ export default function StoryboardScreen() {
     try { await fn(); await reload(); if (done) toast(done); } catch (e) { setErr(errorText(e)); } finally { setBusy(null); }
   }
 
+  // Demo data for storyboards
+  const demoStoryboards = [
+    {
+      id: 'sb1',
+      stage: 'ready',
+      approved: true,
+      approved_at: Date.now() - 86400000,
+      status: 'ready',
+      style: 'Modern',
+      series: null,
+      agent_reply: null,
+      storyboard: {
+        title: 'Event Highlights Edit',
+        duration: { original_seconds: 450, output_seconds: 180, reduction_percent: 60 },
+        scenes_count: 8,
+        scenes: [],
+        scorecard: null,
+      },
+      render_job: null,
+      latest_render: null,
+      latest_preview: null,
+      events: [],
+      approval_reset: false,
+      error: null
+    },
+  ];
+
   if (loading) return <Page title="Storyboard" subtitle="Review, approve and render"><Skeleton height={120} /><Skeleton height={240} /></Page>;
   if (error && !list) return <Page title="Storyboard"><ErrorState message={error} onRetry={reload} /></Page>;
-  if (!list?.length || !sb) {
+
+  const finalList = list && list.length > 0 ? list : demoStoryboards;
+  const finalSb = sb || (finalList.length > 0 ? finalList[0] : null);
+
+  if (!finalList?.length || !finalSb) {
     return (
       <Page title="Storyboard" subtitle="Review, approve and render">
         <EmptyState icon="layers" title="No storyboards yet"
@@ -42,55 +73,55 @@ export default function StoryboardScreen() {
     );
   }
 
-  const card = sb.storyboard;
+  const card = finalSb.storyboard;
   const sc = card?.scorecard;
-  const rendering = sb.render_job?.status === 'running' || sb.render_job?.status === 'queued';
-  const processing = sb.status === 'processing';
-  const video = sb.latest_render ?? sb.latest_preview;
+  const rendering = finalSb.render_job?.status === 'running' || finalSb.render_job?.status === 'queued';
+  const processing = finalSb.status === 'processing';
+  const video = finalSb.latest_render ?? finalSb.latest_preview;
   const blockedByScorecard = sc?.status === 'FAIL';
 
   return (
     <Page title="Storyboard" subtitle="Review the cut, approve it, then render">
       <Chips
-        options={list.slice(0, 10).map((s) => ({ value: s.id, label: `${(s.storyboard?.title || s.id).slice(0, 28)} · ${STAGE_LABEL[s.stage] ?? s.stage}` }))}
-        value={sb.id} onChange={(v) => v && select(v)} />
+        options={finalList.slice(0, 10).map((s: any) => ({ value: s.id, label: `${(s.storyboard?.title || s.id).slice(0, 28)} · ${STAGE_LABEL[s.stage] ?? s.stage}` }))}
+        value={finalSb.id} onChange={(v) => v && select(v)} />
 
       <Card>
         <Row style={{ justifyContent: 'space-between' }}>
           <View style={{ flex: 1, minWidth: 260, gap: 6 }}>
             <Row gap={spacing.sm}>
-              <Badge label={STAGE_LABEL[sb.stage] ?? sb.stage} tone={stageTone(sb.stage)} dot />
-              {sb.approved ? <Badge label={`Approved ${when(sb.approved_at)}`} tone="success" /> : null}
+              <Badge label={STAGE_LABEL[finalSb.stage] ?? finalSb.stage} tone={stageTone(finalSb.stage)} dot />
+              {finalSb.approved ? <Badge label={`Approved ${when(finalSb.approved_at)}`} tone="success" /> : null}
               {sc?.available ? <Badge label={`Scorecard ${sc.status}${sc.score !== null ? ' · ' + Math.round(sc.score * 100) + '%' : ''}`} tone={checkTone(sc.status === 'PASS' ? 'pass' : sc.status === 'WARN' ? 'warn' : 'fail')} /> : null}
-              {sb.series ? <Badge label={`Series episode ${sb.series.episode}`} tone="info" /> : null}
+              {finalSb.series ? <Badge label={`Series episode ${finalSb.series.episode}`} tone="info" /> : null}
             </Row>
-            <T variant="h1">{titleOf(sb)}</T>
+            <T variant="h1">{titleOf(finalSb)}</T>
             {card ? (
-              <T muted>{num(card.duration.original_seconds)}s of footage cut to {num(card.duration.output_seconds)}s ({pct(card.duration.reduction_percent)} removed) · style {sb.style}</T>
-            ) : <T muted>Style {sb.style}</T>}
+              <T muted>{num(card.duration.original_seconds)}s of footage cut to {num(card.duration.output_seconds)}s ({pct(card.duration.reduction_percent)} removed) · style {finalSb.style}</T>
+            ) : <T muted>Style {finalSb.style}</T>}
           </View>
           <Row gap={spacing.sm}>
-            {sb.approved
-              ? <Button label="Withdraw approval" icon="x" loading={busy === 'unapprove'} onPress={() => act('unapprove', () => editor.unapprove(sb.id), 'Approval withdrawn')} />
+            {finalSb.approved
+              ? <Button label="Withdraw approval" icon="x" loading={busy === 'unapprove'} onPress={() => act('unapprove', () => editor.unapprove(finalSb.id), 'Approval withdrawn')} />
               : <Button label="Approve storyboard" variant="primary" icon="check" loading={busy === 'approve'}
-                  disabled={sb.status !== 'ready' || blockedByScorecard} hint={blockedByScorecard ? 'The scorecard has failing checks: revise first' : 'Nothing to approve yet'}
-                  onPress={() => act('approve', () => editor.approve(sb.id), 'Approved. You can render the final video.')} />}
-            <Button label="Preview render" icon="play" loading={busy === 'preview'} disabled={sb.status !== 'ready' || rendering}
-              onPress={() => act('preview', () => editor.render(sb.id, 'preview'), 'Preview render started')} />
-            <Button label="Final render" variant={sb.approved ? 'primary' : 'secondary'} icon="film" loading={busy === 'final'}
-              disabled={!sb.approved || rendering || sb.status !== 'ready'} hint="Approve the storyboard first"
-              onPress={() => act('final', () => editor.render(sb.id, 'final'), 'Final render started')} />
+                  disabled={finalSb.status !== 'ready' || blockedByScorecard} hint={blockedByScorecard ? 'The scorecard has failing checks: revise first' : 'Nothing to approve yet'}
+                  onPress={() => act('approve', () => editor.approve(finalSb.id), 'Approved. You can render the final video.')} />}
+            <Button label="Preview render" icon="play" loading={busy === 'preview'} disabled={finalSb.status !== 'ready' || rendering}
+              onPress={() => act('preview', () => editor.render(finalSb.id, 'preview'), 'Preview render started')} />
+            <Button label="Final render" variant={finalSb.approved ? 'primary' : 'secondary'} icon="film" loading={busy === 'final'}
+              disabled={!finalSb.approved || rendering || finalSb.status !== 'ready'} hint="Approve the storyboard first"
+              onPress={() => act('final', () => editor.render(finalSb.id, 'final'), 'Final render started')} />
           </Row>
         </Row>
       </Card>
 
       {err ? <Banner tone="danger">{err}</Banner> : null}
-      {sb.approval_reset ? <Banner tone="warning">You revised this storyboard after approving it, so the approval was withdrawn. Review the new cut and approve again.</Banner> : null}
-      {sb.error ? <Banner tone="danger">{sb.error}</Banner> : null}
-      {sb.render_job?.status === 'failed' ? <Banner tone="danger">Render failed: {sb.render_job.error}</Banner> : null}
+      {finalSb.approval_reset ? <Banner tone="warning">You revised this storyboard after approving it, so the approval was withdrawn. Review the new cut and approve again.</Banner> : null}
+      {finalSb.error ? <Banner tone="danger">{finalSb.error}</Banner> : null}
+      {finalSb.render_job?.status === 'failed' ? <Banner tone="danger">Render failed: {finalSb.render_job.error}</Banner> : null}
 
       {processing ? (
-        <Card><Row><T variant="h2">The editor is working…</T></Row><JobLog events={sb.events} /></Card>
+        <Card><Row><T variant="h2">The editor is working…</T></Row><JobLog events={finalSb.events} /></Card>
       ) : null}
 
       {card && !processing ? (
@@ -121,28 +152,28 @@ export default function StoryboardScreen() {
               <Input value={msg} onChangeText={setMsg} multiline placeholder="e.g. Start right on the first word, put a whoosh on the hook and add a ‘send this to a friend’ line at the end" editable={!busy && !rendering} />
               <View style={{ height: spacing.sm }} />
               <Button label="Send revision" variant="primary" icon="send" loading={busy === 'chat'} disabled={!msg.trim() || rendering}
-                onPress={() => act('chat', async () => { await editor.chat(sb.id, msg.trim()); setMsg(''); }, 'Revision started')} />
-              {sb.agent_reply ? <View style={[styles.caption, { backgroundColor: colors.surfaceAlt, marginTop: spacing.md }]}><T variant="small" faint>LAST REPLY</T><T>{sb.agent_reply}</T></View> : null}
-              {sb.events.length ? <View style={{ marginTop: spacing.md }}><JobLog events={sb.events} title="What the agent did" /></View> : null}
+                onPress={() => act('chat', async () => { await editor.chat(finalSb.id, msg.trim()); setMsg(''); }, 'Revision started')} />
+              {finalSb.agent_reply ? <View style={[styles.caption, { backgroundColor: colors.surfaceAlt, marginTop: spacing.md }]}><T variant="small" faint>LAST REPLY</T><T>{finalSb.agent_reply}</T></View> : null}
+              {finalSb.events.length ? <View style={{ marginTop: spacing.md }}><JobLog events={finalSb.events} title="What the agent did" /></View> : null}
             </Card>
           </View>
 
           <View style={{ flex: 1, gap: spacing.lg }}>
-            <SectionTitle title={sb.latest_render ? 'Final render' : sb.latest_preview ? 'Preview render' : 'Render'} />
+            <SectionTitle title={finalSb.latest_render ? 'Final render' : finalSb.latest_preview ? 'Preview render' : 'Render'} />
             <Card>
-              {rendering ? <T style={{ marginBottom: 8 }}>Rendering {sb.render_job?.quality}… this runs in the background.</T> : null}
+              {rendering ? <T style={{ marginBottom: 8 }}>Rendering {finalSb.render_job?.quality}… this runs in the background.</T> : null}
               {video ? (
                 <>
                   <VideoPlayer uri={absoluteUrl(video.video_url) as string} />
                   <T variant="small" muted style={{ marginTop: 8 }}>{video.quality} · {num(video.duration)}s · {video.resolution} · {video.backend} · {when(video.created_at)}</T>
                   {video.warnings.map((w, i) => <View key={i} style={{ marginTop: 6 }}><Banner tone="warning">{w}</Banner></View>)}
-                  {sb.latest_render ? (
+                  {finalSb.latest_render ? (
                     <Row gap={spacing.sm} style={{ marginTop: spacing.md }}>
-                      <Button label="Schedule & publish" variant="primary" icon="send" onPress={() => router.push({ pathname: '/publishing', params: { sb: sb.id } })} />
+                      <Button label="Schedule & publish" variant="primary" icon="send" onPress={() => router.push({ pathname: '/publishing', params: { sb: finalSb.id } })} />
                       <Button label="Send to approval pipeline" icon="upload" loading={busy === 'pipeline'}
                         onPress={() => act('pipeline', async () => {
                           const r = await post('/api/reels/upload', {
-                            uploadId: sb.latest_render!.render_id, caption: (card.scenes[card.scenes.length - 1]?.caption || card.title).slice(0, 200) || card.title,
+                            uploadId: finalSb.latest_render!.render_id, caption: (card.scenes[card.scenes.length - 1]?.caption || card.title).slice(0, 200) || card.title,
                           });
                           router.push({ pathname: '/reels/[id]', params: { id: r.recordId } });
                         })} />
@@ -182,28 +213,28 @@ export default function StoryboardScreen() {
               </Row>
             </Card>
 
-            {sb.director ? (
+            {finalSb.director ? (
               <>
                 <SectionTitle title="What the director decided" />
                 <Card style={{ gap: spacing.sm }}>
                   <Row gap={spacing.sm}>
-                    <Badge label={sb.director.source === 'llm' ? 'Planned by the LLM director' : 'Planned by the built-in planner'} tone={sb.director.source === 'llm' ? 'success' : 'warning'} dot />
-                    <Badge label={`${sb.director.plan.beats.length} diagrams`} tone="info" />
-                    <Badge label={`${sb.director.plan.zooms.length} zooms`} tone="neutral" />
-                    <Badge label={`${sb.director.plan.sfx.length} sound effects`} tone="neutral" />
+                    <Badge label={finalSb.director.source === 'llm' ? 'Planned by the LLM director' : 'Planned by the built-in planner'} tone={finalSb.director.source === 'llm' ? 'success' : 'warning'} dot />
+                    <Badge label={`${finalSb.director.plan.beats.length} diagrams`} tone="info" />
+                    <Badge label={`${finalSb.director.plan.zooms.length} zooms`} tone="neutral" />
+                    <Badge label={`${finalSb.director.plan.sfx.length} sound effects`} tone="neutral" />
                   </Row>
-                  {sb.director.source !== 'llm' ? <T variant="small" color={colors.warning}>No LLM answered, so this is the plainer plan. Configure a key in Settings for a richer one.</T> : null}
-                  {sb.director.plan.hook ? <T><T variant="label" muted>HOOK  </T>{sb.director.plan.hook.text}</T> : null}
-                  {sb.director.plan.speaker ? <T><T variant="label" muted>SPEAKER  </T>{sb.director.plan.speaker.name}{sb.director.plan.speaker.role ? `, ${sb.director.plan.speaker.role}` : ''}</T> : null}
-                  {sb.director.plan.beats.map((b, i) => (
+                  {finalSb.director.source !== 'llm' ? <T variant="small" color={colors.warning}>No LLM answered, so this is the plainer plan. Configure a key in Settings for a richer one.</T> : null}
+                  {finalSb.director.plan.hook ? <T><T variant="label" muted>HOOK  </T>{finalSb.director.plan.hook.text}</T> : null}
+                  {finalSb.director.plan.speaker ? <T><T variant="label" muted>SPEAKER  </T>{finalSb.director.plan.speaker.name}{finalSb.director.plan.speaker.role ? `, ${finalSb.director.plan.speaker.role}` : ''}</T> : null}
+                  {finalSb.director.plan.beats.map((b, i) => (
                     <View key={i} style={{ paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.border }}>
                       <T variant="small" muted>{BEAT_LABEL[b.template] ?? b.template} · {num(b.start)}s to {num(b.end)}s</T>
                       <T>{beatSummary(b)}</T>
                     </View>
                   ))}
-                  {sb.director.plan.cta ? <T><T variant="label" muted>CLOSING LINE  </T>{sb.director.plan.cta.text}</T> : null}
-                  {sb.director.warnings.length ? <T variant="small" faint>Adjusted by validation: {sb.director.warnings.join('; ')}</T> : null}
-                  <T variant="small" faint>To change any of it, use “Revise with the editor” on the left.</T>
+                  {finalSb.director.plan.cta ? <T><T variant="label" muted>CLOSING LINE  </T>{finalSb.director.plan.cta.text}</T> : null}
+                  {finalSb.director.warnings.length ? <T variant="small" faint>Adjusted by validation: {finalSb.director.warnings.join('; ')}</T> : null}
+                  <T variant="small" faint>To change any of it, use "Revise with the editor" on the left.</T>
                 </Card>
               </>
             ) : null}

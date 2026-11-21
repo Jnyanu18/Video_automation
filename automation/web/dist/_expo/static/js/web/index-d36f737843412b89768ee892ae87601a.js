@@ -1,1 +1,0 @@
-__d(function(g,r,i,a,m,e,d){"use strict";Object.defineProperty(e,'__esModule',{value:!0}),Object.defineProperty(e,"default",{enumerable:!0,get:function(){return n}});var t=r(d[0]),u=r(d[1]);function n(){const n=(0,u.useRouter)();return(0,t.useEffect)(()=>{n.replace('/studio')},[n]),null}},765,[12,785]);
