@@ -122,13 +122,16 @@ try {
         for (let attempt = 1; ; attempt++) {
           try {
             lastLogged = -1;
-            await renderMedia({...base, frameRange: [a, b], muted: true, outputLocation: part});
+            await renderMedia({...base, puppeteerInstance: browser, frameRange: [a, b], muted: true, outputLocation: part});
             log(`chunk ${i + 1}/${Math.ceil(N / size)} frames ${a}-${b} done (${new Date().toLocaleTimeString()})`);
             break;
           } catch (e) {
             rmSync(part, {force: true});
             if (attempt >= 3) throw e;
-            log(`chunk ${i + 1} attempt ${attempt} failed: ${String(e?.message ?? e).slice(0, 200)} — retrying`);
+            log(`chunk ${i + 1} attempt ${attempt} failed: ${String(e?.message ?? e).slice(0, 200)} — retrying with a fresh browser`);
+            // A crashed Chrome stays dead: every later call on it fails with "Target closed". Replace it.
+            await browser?.close({silent: true}).catch(() => {});
+            browser = await openBrowser('chrome', {browserExecutable: process.env.CHROME_PATH});
           }
         }
       }
