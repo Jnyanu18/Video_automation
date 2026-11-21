@@ -1,0 +1,48 @@
+{
+  "id": "flux-demo-kit",
+  "revision": 1,
+  "name": "Flux",
+  "visual": {
+    "name": "Flux",
+    "background": "#F5F4EF",
+    "foreground": "#14151B",
+    "primary": "#4B47F5",
+    "secondary": "#FA6944",
+    "surface": "#FFFFFF",
+    "muted": "#646571",
+    "fontFamily": "DejaVu Sans",
+    "radius": 28,
+    "fontAssetId": "demo-font"
+  },
+  "tone": "Clear, confident, concise",
+  "language": "en",
+  "website": "your-domain.example",
+  "cta": "Create your story",
+  "approvedClaims": [],
+  "forbiddenClaims": [
+    "Do not invent customer counts, conversion lifts, revenue or testimonials."
+  ],
+  "voice": {
+    "provider": "elevenlabs",
+    "voiceId": null,
+    "note": "Set an authorized voice ID in server configuration before narration generation."
+  },
+  "note": "Fictional example brand; replace with the app user's saved kit.",
+  "strategy": {
+    "objective": "Introduce the product and invite users to create a video",
+    "audience": "Small teams creating branded product videos",
+    "message": "Turn a prompt and saved brand kit into an editable video project"
+  },
+  "defaults": {
+    "durationSeconds": 15,
+    "format": "landscape",
+    "fps": 60,
+    "narration": true,
+    "energy": "balanced",
+    "allowOrbit": true
+  },
+  "rules": {
+    "lockedFields": [],
+    "approvedMetricValues": []
+  }
+}

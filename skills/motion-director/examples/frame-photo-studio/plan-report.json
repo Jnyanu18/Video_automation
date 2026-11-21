@@ -1,0 +1,51 @@
+{
+  "skillVersion": "1.6",
+  "projectId": "frame-studio-reel",
+  "revision": 1,
+  "renderer": "Registered custom Remotion composition FramePhotoStudio",
+  "timelineContiguous": true,
+  "sharedAudioEventFrames": true,
+  "resolvedCues": [
+    {
+      "id": "original-score",
+      "assetId": "score",
+      "from": 0,
+      "durationInFrames": 900,
+      "gain": 1,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 0,
+      "role": "music"
+    }
+  ],
+  "reviewFrames": [
+    0,
+    16,
+    52,
+    119,
+    120,
+    144,
+    172,
+    269,
+    270,
+    282,
+    322,
+    419,
+    420,
+    450,
+    472,
+    569,
+    570,
+    622,
+    719,
+    720,
+    762,
+    780,
+    899
+  ],
+  "notes": [
+    "Custom StudioSchema, not standard seven-scene Project v1 JSON.",
+    "One hero object remains mounted; a back face reveals a different asset during the Y flip.",
+    "Original generated photos are raster assets; no real client portfolio is claimed.",
+    "Timing arithmetic does not prove perceived sound synchronization."
+  ]
+}

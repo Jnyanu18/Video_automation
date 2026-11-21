@@ -1,0 +1,36 @@
+# Pinned production dependencies for the container image.
+#
+# requirements.txt uses floating >= constraints, which is fine for development and
+# wrong for deployment: a release upstream can break production with no change here.
+# These versions are the ones verified working on 2026-11-20
+# (433 Python tests passed / 1 skipped, 224 Node tests passed).
+#
+# Regenerate deliberately, never automatically:
+#   python -m pip freeze | grep -iE '^(fastapi|uvicorn|...)='
+#
+# Not included on purpose:
+#   pytest      -- test-only; the production image does not run the suite
+#   opencv-python -- replaced below by the headless build (see note)
+
+fastapi==0.141.1
+uvicorn==0.54.0
+pydantic==2.14.3
+httpx==0.28.1
+python-multipart==0.0.9
+numpy==1.26.4
+jsonschema==4.25.1
+
+# Headless OpenCV: identical cv2 API, without the GUI/X11 shared libraries that the
+# normal wheel links against and that are absent from a slim container.
+opencv-python-headless==4.9.0.80
+
+# Transcription. ctranslate2 is pinned explicitly because it is the piece that must
+# have a linux/aarch64 wheel for the Oracle Ampere build; CPU inference only on ARM.
+faster-whisper==1.2.1
+ctranslate2==4.8.5
+
+# LLM clients. Gemini is reached over its OpenAI-compatible REST endpoint via httpx
+# (agent/openai_compat.py), so no google SDK is required.
+anthropic==2.4.0
+
+yt-dlp==2026.10.26

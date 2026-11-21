@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "projectRevision": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991,
+      "exclusiveMinimum": 0
+    },
+    "fps": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991,
+      "exclusiveMinimum": 0
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "cueId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "sourceSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "audioOffsetFrames": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "default": 0
+          },
+          "toleranceFrames": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "default": 1
+          },
+          "observedVisualFrame": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          }
+        },
+        "required": [
+          "eventId",
+          "cueId",
+          "sourceSeconds",
+          "evidence"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 300
+    }
+  },
+  "required": [
+    "projectId",
+    "projectRevision",
+    "fps",
+    "checks"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

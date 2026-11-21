@@ -1,0 +1,246 @@
+{
+  "projectId": "event-studio-stage-study",
+  "revision": 1,
+  "skillVersion": "2.1.0",
+  "file": "public/event-stage-score.wav",
+  "sha256": "6a0e4261c6bf390f472d449c5b8a3cfcd5284e68d5724b8dc9809790781c218a",
+  "origin": "Original deterministic oscillator/noise composition, synthesis and mix",
+  "seed": 6821973,
+  "downloadedMedia": false,
+  "providerCalls": false,
+  "voiceover": false,
+  "style": "Original tight electronic house groove; rounded kick/bass, crisp claps, offbeat chords, spacious plucks and event-linked movement accents",
+  "durationSeconds": 15.0,
+  "sampleRate": 48000,
+  "channels": 2,
+  "encoding": "PCM signed24 little-endian WAV",
+  "samplesPerChannel": 720000,
+  "bpm": 120,
+  "beatPhaseFrame": 0,
+  "visualFps": 60,
+  "sceneBoundaryFrames": [
+    0,
+    120,
+    270,
+    420,
+    570,
+    750,
+    900
+  ],
+  "events": [
+    {
+      "eventId": "spark-contact",
+      "targetFrame": 30,
+      "kind": "impact",
+      "cueStartSeconds": 0.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "stage-unfold",
+      "targetFrame": 120,
+      "kind": "tick",
+      "cueStartSeconds": 2.0,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "stage-arrival",
+      "targetFrame": 150,
+      "kind": "whoosh",
+      "cueStartSeconds": 2.2,
+      "sourceMarkerSeconds": 0.3,
+      "sourceMarker": "authored envelope crest",
+      "plannedOffsetFrames": 0,
+      "evidence": "18-frame lead envelope, not noisy sample peak"
+    },
+    {
+      "eventId": "stage-arrival",
+      "targetFrame": 150,
+      "kind": "impact",
+      "cueStartSeconds": 2.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "lights",
+      "targetFrame": 270,
+      "kind": "impact",
+      "cueStartSeconds": 4.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "energy",
+      "targetFrame": 300,
+      "kind": "tick",
+      "cueStartSeconds": 5.0,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "action",
+      "targetFrame": 330,
+      "kind": "impact",
+      "cueStartSeconds": 5.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "detail-burst",
+      "targetFrame": 420,
+      "kind": "whoosh",
+      "cueStartSeconds": 6.7,
+      "sourceMarkerSeconds": 0.3,
+      "sourceMarker": "authored envelope crest",
+      "plannedOffsetFrames": 0,
+      "evidence": "18-frame lead envelope, not noisy sample peak"
+    },
+    {
+      "eventId": "detail-burst",
+      "targetFrame": 420,
+      "kind": "impact",
+      "cueStartSeconds": 7.0,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "detail-lock",
+      "targetFrame": 450,
+      "kind": "tick",
+      "cueStartSeconds": 7.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "moment-pullback",
+      "targetFrame": 570,
+      "kind": "whoosh",
+      "cueStartSeconds": 9.2,
+      "sourceMarkerSeconds": 0.3,
+      "sourceMarker": "authored envelope crest",
+      "plannedOffsetFrames": 0,
+      "evidence": "18-frame lead envelope, not noisy sample peak"
+    },
+    {
+      "eventId": "moment-pullback",
+      "targetFrame": 570,
+      "kind": "impact",
+      "cueStartSeconds": 9.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "moment-lock",
+      "targetFrame": 600,
+      "kind": "impact",
+      "cueStartSeconds": 10.0,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    },
+    {
+      "eventId": "brand-cover",
+      "targetFrame": 720,
+      "kind": "whoosh",
+      "cueStartSeconds": 11.7,
+      "sourceMarkerSeconds": 0.3,
+      "sourceMarker": "authored envelope crest",
+      "plannedOffsetFrames": 0,
+      "evidence": "18-frame lead envelope, not noisy sample peak"
+    },
+    {
+      "eventId": "logo-arrival",
+      "targetFrame": 750,
+      "kind": "impact",
+      "cueStartSeconds": 12.5,
+      "sourceMarkerSeconds": 0,
+      "sourceMarker": "authored attack onset",
+      "plannedOffsetFrames": 0,
+      "evidence": "sample scheduling; attack ramp below1ms"
+    }
+  ],
+  "soundCounts": {
+    "wide-chord": 6,
+    "bass": 36,
+    "pluck": 25,
+    "offbeat-chord": 12,
+    "kick": 25,
+    "clap": 12,
+    "hat": 22,
+    "ghost-hat": 10,
+    "logo-kick": 1,
+    "closing-tone": 1,
+    "event-impact": 8,
+    "event-tick": 3,
+    "event-whoosh": 4
+  },
+  "measuredIntegratedLufs": -14.5,
+  "measuredTruePeakDbtp": -3.9,
+  "decodedSamplePeakDbfs": -3.920383749603584,
+  "decodedRmsDbfs": -15.50000103784596,
+  "channelPeakDbfs": [
+    -3.933670902108863,
+    -3.920383749603584
+  ],
+  "firstAndLastSamplesAreZero": true,
+  "endingFadeSeconds": 0.65,
+  "initialMeasurement": {
+    "integratedLufs": -17.0,
+    "truePeakDbtp": -6.4
+  },
+  "masterGainDb": 10.97587540462057,
+  "masterProcessing": [
+    "27Hz infrasonic cleanup",
+    "Gentle tanh crest rounding",
+    "Measured final gain with -1.2dBTP ceiling",
+    "8ms entrance and650ms ending fades"
+  ],
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "pcm_s24le",
+        "sample_rate": "48000",
+        "channels": 2,
+        "bits_per_sample": 24,
+        "duration": "15.000000"
+      }
+    ],
+    "format": {
+      "duration": "15.000000"
+    }
+  },
+  "verification": [
+    "Script executed",
+    "Read back PCM24 duration/channel/sample count",
+    "Finite samples with first/last zero",
+    "FFmpeg ebur128 integrated LUFS and oversampled true peak",
+    "Cues dynamically read from canonical project event ledger"
+  ],
+  "limitations": [
+    "No human listening review performed",
+    "Authored cue/beat arithmetic is not a perceptual playback assessment",
+    "Event onset and whoosh envelope markers differ from noisy waveform sample peaks"
+  ]
+}

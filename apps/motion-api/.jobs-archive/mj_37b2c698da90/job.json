@@ -1,0 +1,17 @@
+{
+  "id": "mj_37b2c698da90",
+  "brief": "a film",
+  "status": "failed",
+  "created": 1795086443.8030972,
+  "updated": 1795086832.5086076,
+  "rounds": 0,
+  "stills": [],
+  "final_path": null,
+  "scorecard": null,
+  "errors": [
+    "Not a real brief - left behind by a provider-switch check while setting up handoff mode. No film was directed for it."
+  ],
+  "stopped": "",
+  "base": "J:\\ai editor\\apps\\motion-api\\.jobs",
+  "dir": "J:\\ai editor\\apps\\motion-api\\.jobs\\mj_37b2c698da90"
+}

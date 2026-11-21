@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "projectId": "flux-launch",
+  "projectRevision": 1,
+  "fps": 60,
+  "direction": "hybrid",
+  "ending": {
+    "sceneId": "close",
+    "goal": "Keep the approved CTA and supplied example destination readable.",
+    "holdFrames": 180,
+    "settledFromLocalFrame": 60
+  },
+  "shots": [
+    {
+      "sceneId": "hook",
+      "purpose": "Introduce the editable motion promise",
+      "focalElement": "Headline",
+      "entry": "Stagger the headline with the registered text treatment.",
+      "hold": "Keep the complete phrase readable.",
+      "exit": "Give the next input scene a distinct focal point.",
+      "camera": {
+        "mode": "locked",
+        "path": "Fixed composition; only the registered scene/transition moves."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "build",
+        "mode": "occlusion",
+        "anchor": "Consistent brand typography and composition center",
+        "becomes": "Cut to the input using the registered iris; no shared-layout morph is claimed."
+      }
+    },
+    {
+      "sceneId": "build",
+      "purpose": "Show the prompt input",
+      "focalElement": "Input field and its value",
+      "entry": "Reveal the registered input panel.",
+      "hold": "Read the input and checklist.",
+      "exit": "Hand focus to the gallery title.",
+      "camera": {
+        "mode": "locked",
+        "path": "Fixed composition; only the registered scene/transition moves."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "choose",
+        "mode": "action",
+        "anchor": "Consistent brand typography and composition center",
+        "becomes": "Push to gallery cards; preserve brand palette and type."
+      }
+    },
+    {
+      "sceneId": "choose",
+      "purpose": "Show consistent branded outputs",
+      "focalElement": "Three editable cards",
+      "entry": "Stage the registered gallery cards.",
+      "hold": "Read the labels.",
+      "exit": "Prepare a distinct proof beat.",
+      "camera": {
+        "mode": "locked",
+        "path": "Fixed composition; only the registered scene/transition moves."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "proof",
+        "mode": "hard-cut",
+        "anchor": "Consistent brand typography and composition center",
+        "becomes": "Hard cut to the illustrative metric, explicitly marked as demonstration data."
+      }
+    },
+    {
+      "sceneId": "proof",
+      "purpose": "Introduce an illustrative result",
+      "focalElement": "Metric and example label",
+      "entry": "Use the registered counter treatment.",
+      "hold": "Keep the illustrative-data label readable.",
+      "exit": "Move focus to connected objects.",
+      "camera": {
+        "mode": "locked",
+        "path": "Fixed composition; only the registered scene/transition moves."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "connect",
+        "mode": "occlusion",
+        "anchor": "Consistent brand typography and composition center",
+        "becomes": "Iris into the orbit field; no factual relationship is implied."
+      }
+    },
+    {
+      "sceneId": "connect",
+      "purpose": "Create a brief visual payoff",
+      "focalElement": "Orbit field and headline",
+      "entry": "Bring in the registered orbit composition.",
+      "hold": "Let the headline settle while particles move.",
+      "exit": "Prepare a quieter call to action.",
+      "camera": {
+        "mode": "locked",
+        "path": "Fixed composition; only the registered scene/transition moves."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "close",
+        "mode": "action",
+        "anchor": "Consistent brand typography and composition center",
+        "becomes": "Push to the final lockup and stop camera travel."
+      }
+    },
+    {
+      "sceneId": "close",
+      "purpose": "Invite the next action",
+      "focalElement": "CTA button and destination",
+      "entry": "Reveal the final registered CTA.",
+      "hold": "Hold the full lockup and supplied destination.",
+      "exit": "End with a stable frame.",
+      "camera": {
+        "mode": "locked",
+        "path": "Fixed composition; only the registered scene/transition moves."
+      },
+      "assetUses": []
+    }
+  ],
+  "events": [
+    {
+      "id": "cue-1-event",
+      "sceneId": "hook",
+      "localFrame": 12,
+      "kind": "accent",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-2-event",
+      "sceneId": "build",
+      "localFrame": 0,
+      "kind": "arrival",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-3-event",
+      "sceneId": "build",
+      "localFrame": 95,
+      "kind": "accent",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-4-event",
+      "sceneId": "choose",
+      "localFrame": 8,
+      "kind": "accent",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-5-event",
+      "sceneId": "proof",
+      "localFrame": 6,
+      "kind": "accent",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-6-event",
+      "sceneId": "connect",
+      "localFrame": 0,
+      "kind": "arrival",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-7-event",
+      "sceneId": "close",
+      "localFrame": 0,
+      "kind": "arrival",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    },
+    {
+      "id": "cue-8-event",
+      "sceneId": "close",
+      "localFrame": 55,
+      "kind": "accent",
+      "description": "Illustrative alignment marker for the pre-existing starter cue; verify by playback."
+    }
+  ],
+  "audioCues": [
+    {
+      "id": "cue-1",
+      "assetId": "pop",
+      "durationInFrames": 10,
+      "gain": 0.55,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-1-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "onset",
+        "sourceFrame": 0,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-2",
+      "assetId": "whoosh",
+      "durationInFrames": 20,
+      "gain": 0.45,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-2-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "perceptual-peak",
+        "sourceFrame": 5,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-3",
+      "assetId": "click",
+      "durationInFrames": 5,
+      "gain": 0.55,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-3-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "onset",
+        "sourceFrame": 0,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-4",
+      "assetId": "pop",
+      "durationInFrames": 10,
+      "gain": 0.55,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-4-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "onset",
+        "sourceFrame": 0,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-5",
+      "assetId": "click",
+      "durationInFrames": 5,
+      "gain": 0.55,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-5-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "onset",
+        "sourceFrame": 0,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-6",
+      "assetId": "whoosh",
+      "durationInFrames": 20,
+      "gain": 0.45,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-6-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "perceptual-peak",
+        "sourceFrame": 5,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-7",
+      "assetId": "whoosh",
+      "durationInFrames": 20,
+      "gain": 0.45,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-7-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "perceptual-peak",
+        "sourceFrame": 5,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    },
+    {
+      "id": "cue-8",
+      "assetId": "pop",
+      "durationInFrames": 10,
+      "gain": 0.55,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 2,
+      "role": "sfx",
+      "eventId": "cue-8-event",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "onset",
+        "sourceFrame": 0,
+        "evidence": "Illustrative marker mapping the existing starter schedule; no waveform or listening verification."
+      }
+    }
+  ]
+}

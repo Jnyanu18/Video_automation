@@ -17,9 +17,16 @@ from . import review as rv
 from .prompts import SYSTEM_PROMPT
 from .registry import load_toolspecs, to_anthropic_tools
 
-MODEL = "claude-sonnet-5-5"
-# USD per million tokens. ASSUMPTION (not verified against a price list); override via pricing=.
-DEFAULT_PRICING = {"input": 3.0, "output": 15.0, "cache_read": 0.3, "cache_write": 3.75}
+MODEL = os.environ.get("EDITOR_AGENT_MODEL") or "claude-opus-5-5"
+# Claude Opus 5.5's effort default is `medium`, one level below the rest of the family, so set it
+# explicitly rather than inheriting it. Editorial judgement over 30+ tools earns `high`; drop to
+# `medium` or `low` to cut spend (EDITOR_AGENT_EFFORT=low|medium|high|xhigh|max).
+# Note: on this model `thinking` cannot be disabled and `budget_tokens` is rejected with a 400 -
+# effort is the only depth control. Do not add either.
+EFFORT = os.environ.get("EDITOR_AGENT_EFFORT") or "high"
+# USD per million tokens for claude-opus-5-5. Override via pricing=.
+# cache_write is the standard 1.25x input multiplier, not a published figure.
+DEFAULT_PRICING = {"input": 4.0, "output": 20.0, "cache_read": 0.2, "cache_write": 5.0}
 MAX_RESULT_CHARS = 12000
 
 BUILTIN_TOOLS = [
@@ -162,6 +169,7 @@ def iter_agent(
     workdir: Optional[str] = None,
     history: Optional[List[dict]] = None,
     model: str = MODEL,
+    effort: str = EFFORT,
     max_iterations: int = 15,
     max_review_rounds: int = 3,
     max_claim_checks: int = 2,
@@ -215,7 +223,8 @@ def iter_agent(
             stop_reason = "cost_limit"
             break
         resp = client.messages.create(model=model, max_tokens=max_tokens, system=system,
-                                      tools=tool_list, messages=messages)
+                                      tools=tool_list, messages=messages,
+                                      output_config={"effort": effort})
         usage.add(resp)
         blocks = [_block_to_dict(b) for b in _g(resp, "content", [])]
         messages.append({"role": "assistant", "content": blocks})
@@ -322,6 +331,15 @@ def iter_agent(
         reply = (reply + "\n\n" if reply else "") + "(Stopped: cost limit reached.)"
     elif stop_reason == "max_tokens" and not reply:
         reply = "(The response was cut off; please try again.)"
+    elif stop_reason == "refusal":
+        # A safety classifier declined this turn: HTTP 200, but no usable content. Without this the
+        # job looks like it succeeded with an empty reply. Opus 5.5 can decline on cyber/bio/
+        # reasoning_extraction categories; stop_details is populated only for this stop_reason.
+        det = _g(resp, "stop_details", None)
+        cat = _g(det, "category", None) if det is not None else None
+        reply = (reply + "\n\n" if reply else "") + (
+            "(The model declined this request" + (f" [{cat}]" if cat else "") + ". The plan was not changed. "
+            "Rephrase what you want done to the footage, or edit it with the tools directly.)")
     final = {"plan": store.plan, "reply": reply, "stop_reason": stop_reason, "usage": usage.as_dict(),
              "versions": store.versions, "reviews": reviews, "messages": messages}
     yield ev("usage", **usage.as_dict())

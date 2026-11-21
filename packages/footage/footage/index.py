@@ -18,7 +18,7 @@ from footage.probe import probe_file, walk_media_files
 from footage.proxy import generate_proxies
 from footage.schema import FootageIndex, IndexStats, MediaFile, Shot, SpeechSegment, SyncGroup
 from footage.shots import detect_shot_boundaries
-from footage.metrics import compute_shot_metrics
+from footage.metrics import compute_shot_metrics, load_audio_track
 from footage.speech import transcribe_speech_shots
 from footage.sync import build_sync_groups
 from footage.triage import TriageConfig, triage_shots
@@ -119,6 +119,7 @@ def index_footage(
         import cv2
         shot_bounds = detect_shot_boundaries(m.proxy_path, m.duration)
         shots: List[Shot] = []
+        audio_track = load_audio_track(m.proxy_path) if m.has_audio else None
         cap = cv2.VideoCapture(str(m.proxy_path))
         try:
             for s_start, s_end in shot_bounds:
@@ -128,6 +129,7 @@ def index_footage(
                     s_end,
                     has_audio=m.has_audio,
                     cap=cap,
+                    audio_track=audio_track,
                 )
                 shots.append(
                     Shot(

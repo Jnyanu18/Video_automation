@@ -1,0 +1,16 @@
+{
+  "id": "mj_7b5dd6da1d87",
+  "brief": "x",
+  "status": "failed",
+  "created": 1795081837.4362798,
+  "updated": 1795081837.445824,
+  "rounds": 2,
+  "stills": [],
+  "final_path": null,
+  "scorecard": null,
+  "errors": [
+    "render_final: remotion bundle failed"
+  ],
+  "stopped": "end_turn",
+  "dir": "J:\\ai editor\\apps\\motion-api\\.jobs\\mj_7b5dd6da1d87"
+}

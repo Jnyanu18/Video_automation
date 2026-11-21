@@ -3,22 +3,24 @@
 from __future__ import annotations
 
 import logging
+import threading
 from typing import List, Tuple
 import cv2
 import numpy as np
 
 logger = logging.getLogger("footage.faces")
 
-_FACE_DETECTOR: cv2.CascadeClassifier | None = None
+_THREAD_LOCAL = threading.local()
 
 
 def get_face_detector() -> cv2.CascadeClassifier:
-    """Lazy-load OpenCV Haar Cascade face detector."""
-    global _FACE_DETECTOR
-    if _FACE_DETECTOR is None:
+    """Thread-local OpenCV Haar Cascade face detector."""
+    detector = getattr(_THREAD_LOCAL, "detector", None)
+    if detector is None:
         cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-        _FACE_DETECTOR = cv2.CascadeClassifier(cascade_path)
-    return _FACE_DETECTOR
+        detector = cv2.CascadeClassifier(cascade_path)
+        _THREAD_LOCAL.detector = detector
+    return detector
 
 
 def detect_faces_in_frames(
@@ -56,12 +58,16 @@ def detect_faces_in_frames(
             small_gray = gray
         small_gray = cv2.equalizeHist(small_gray)
         
-        detections = detector.detectMultiScale(
-            small_gray,
-            scaleFactor=1.2,
-            minNeighbors=4,
-            minSize=(24, 24),
-        )
+        try:
+            detections = detector.detectMultiScale(
+                small_gray,
+                scaleFactor=1.2,
+                minNeighbors=4,
+                minSize=(24, 24),
+            )
+        except Exception as e:
+            logger.warning("Face detection failed on frame: %s", e)
+            detections = ()
 
         count = len(detections)
         if count > max_count:

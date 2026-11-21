@@ -11,7 +11,7 @@ import {bundle} from '@remotion/bundler';
 import {openBrowser, selectComposition, renderMedia, renderStill} from '@remotion/renderer';
 import {resolve, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {mkdirSync, existsSync, cpSync, readdirSync, rmSync} from 'node:fs';
+import {mkdirSync, existsSync, cpSync, readdirSync, rmSync, writeFileSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 
 const kit = fileURLToPath(new URL('.', import.meta.url));
@@ -20,7 +20,11 @@ const json = args.includes('--json');
 // Machine-readable mode: stdout carries exactly one JSON object; everything else goes to stderr.
 const log = (...a) => (json ? console.error(...a) : console.log(...a));
 const flag = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : undefined; };
-const VALUE_FLAGS = ['--name', '--format', '--width', '--project'];
+const VALUE_FLAGS = ['--name', '--format', '--width', '--project', '--chunks'];
+// --chunks N: render N frame ranges (each retried up to 3x), join them losslessly, mux one audio render.
+// Long footage renders survive transient failures (e.g. Chrome's net::ERR_NETWORK_CHANGED on localhost).
+// RESUME=1 keeps finished chunks. CONCURRENCY and OFFTHREAD_THREADS tune Remotion.
+const chunks = Math.max(1, Number(flag('--chunks') ?? 1));
 
 const mode = ['--stills', '--preview', '--final'].find((m) => args.includes(m)) ?? '--final';
 const name = flag('--name') ?? 'film.mp4';
@@ -93,12 +97,48 @@ try {
   } else {
     const preview = mode === '--preview';
     const output = resolve(out, preview ? name.replace(/\.mp4$/, '-preview.mp4') : name);
-    await renderMedia({
+    let lastLogged = -1;
+    const base = {
       serveUrl, composition, puppeteerInstance: browser, inputProps,
       codec: 'h264', audioCodec: 'aac', audioBitrate: '256k', pixelFormat: 'yuv420p', colorSpace: 'bt709',
-      imageFormat: 'jpeg', jpegQuality: 95, crf: preview ? 22 : 16, scale: preview ? 0.5 : 1, concurrency: 4,
-      outputLocation: output,
-    });
+      imageFormat: 'jpeg', jpegQuality: 95, crf: preview ? 22 : 16, scale: preview ? 0.5 : 1,
+      concurrency: Number(process.env.CONCURRENCY ?? 4),
+      ...(process.env.OFFTHREAD_THREADS ? {offthreadVideoThreads: Number(process.env.OFFTHREAD_THREADS)} : {}),
+      onProgress: ({renderedFrames}) => {
+        const step = Math.floor(renderedFrames / 120);
+        if (step !== lastLogged) { lastLogged = step; log(`  rendered ${renderedFrames} frames (${new Date().toLocaleTimeString()})`); }
+      },
+    };
+    if (chunks === 1) {
+      await renderMedia({...base, outputLocation: output});
+    } else {
+      const N = composition.durationInFrames, size = Math.ceil(N / chunks), dir = resolve(out, '.chunks'), parts = [];
+      if (!process.env.RESUME) rmSync(dir, {recursive: true, force: true});
+      mkdirSync(dir, {recursive: true});
+      for (let i = 0; i * size < N; i++) {
+        const a = i * size, b = Math.min(N, (i + 1) * size) - 1, part = resolve(dir, `part${String(i).padStart(2, '0')}.mp4`);
+        parts.push(part);
+        if (process.env.RESUME && existsSync(part)) { log(`chunk ${i + 1}: kept`); continue; }
+        for (let attempt = 1; ; attempt++) {
+          try {
+            lastLogged = -1;
+            await renderMedia({...base, frameRange: [a, b], muted: true, outputLocation: part});
+            log(`chunk ${i + 1}/${Math.ceil(N / size)} frames ${a}-${b} done (${new Date().toLocaleTimeString()})`);
+            break;
+          } catch (e) {
+            rmSync(part, {force: true});
+            if (attempt >= 3) throw e;
+            log(`chunk ${i + 1} attempt ${attempt} failed: ${String(e?.message ?? e).slice(0, 200)} — retrying`);
+          }
+        }
+      }
+      const wav = resolve(dir, 'audio.wav'), list = resolve(dir, 'list.txt');
+      await renderMedia({serveUrl, composition, puppeteerInstance: browser, inputProps, codec: 'wav', outputLocation: wav});
+      writeFileSync(list, parts.map((p) => `file '${p.replace(/\\/g, '/')}'`).join('\n'));
+      const mux = spawnSync('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list, '-i', wav, '-map', '0:v', '-map', '1:a',
+        '-c:v', 'copy', '-c:a', 'aac', '-b:a', '256k', '-shortest', '-movflags', '+faststart', output], {encoding: 'utf8'});
+      if (mux.status !== 0) throw new Error(`joining chunks failed: ${mux.stderr?.slice(-400)}`);
+    }
     if (json) {
       const result = {path: output, duration: composition.durationInFrames / composition.fps, fps: composition.fps, width: composition.width, height: composition.height, lufs: null, peak: null};
       // Loudness is measured from the rendered file by gate.py (the single ffmpeg loudnorm implementation).

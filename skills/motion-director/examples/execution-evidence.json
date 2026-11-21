@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "projectId": "execution-example",
+  "projectRevision": 1,
+  "fps": 60,
+  "durationInFrames": 900,
+  "evidence": {
+    "mode": "planned",
+    "sourceHash": null,
+    "notes": "Synthetic shape example only. Replace with measurements from actual component functions/rendered samples. No capture or review is asserted."
+  },
+  "requiredProbes": [
+    "contact",
+    "beat-word",
+    "cover"
+  ],
+  "contacts": [
+    {
+      "id": "ball-contact",
+      "frame": 30,
+      "space": "world",
+      "objectBoundary": {
+        "x": 540,
+        "y": 1300
+      },
+      "surface": {
+        "x": 540,
+        "y": 1300
+      },
+      "tolerancePx": 1
+    }
+  ],
+  "beatWords": [
+    {
+      "id": "word-energy",
+      "beatFrame": 300,
+      "firstReadableFrame": 300,
+      "intentionalOffsetFrames": 0,
+      "toleranceFrames": 1
+    }
+  ],
+  "covers": [
+    {
+      "id": "identity-cover",
+      "cutFrame": 750,
+      "samples": [
+        {
+          "frame": 749,
+          "coveredFraction": 1,
+          "outgoingForegroundAlpha": 0
+        },
+        {
+          "frame": 750,
+          "coveredFraction": 1,
+          "outgoingForegroundAlpha": 0
+        },
+        {
+          "frame": 751,
+          "coveredFraction": 1,
+          "outgoingForegroundAlpha": 0
+        }
+      ]
+    }
+  ],
+  "readableHolds": [
+    {
+      "sceneId": "ending",
+      "firstReadableFrame": 780,
+      "lastReadableFrame": 899,
+      "minimumFrames": 120
+    }
+  ],
+  "ending": {
+    "firstReadableFrame": 780,
+    "minimumHoldFrames": 120,
+    "sceneId": "ending",
+    "lastReadableFrame": 899
+  },
+  "shots": [
+    {
+      "sceneId": "opening",
+      "layout": "sparse",
+      "typeMechanic": "glyph-spring",
+      "focalAction": "contact"
+    },
+    {
+      "sceneId": "body",
+      "layout": "macro",
+      "typeMechanic": "beat-word",
+      "focalAction": "stage-expansion"
+    },
+    {
+      "sceneId": "ending",
+      "layout": "identity",
+      "typeMechanic": "none",
+      "focalAction": "brand-hold"
+    }
+  ],
+  "assets": [
+    {
+      "id": "approved-logo-needed",
+      "kind": "logo",
+      "status": "placeholder",
+      "requiredForFinal": true
+    }
+  ],
+  "checks": {
+    "typecheck": "pending",
+    "randomFrameRepeat": "pending",
+    "frameInspection": "pending",
+    "fullSpeedPlayback": "pending",
+    "audioListening": "pending"
+  },
+  "findings": []
+}

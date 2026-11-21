@@ -1,0 +1,25 @@
+{
+  "name": "flux-flow-study",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "stills": "node render.mjs --stills",
+    "test": "tsx physics-check.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.544",
+    "@remotion/renderer": "4.0.544",
+    "remotion": "4.0.544",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/node": "24.19.2"
+  }
+}

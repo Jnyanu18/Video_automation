@@ -1,0 +1,212 @@
+{
+  "presets": {
+    "easing": {
+      "snap": [
+        0.16,
+        1,
+        0.3,
+        1
+      ],
+      "fastSnap": [
+        0.1,
+        1,
+        0.12,
+        1
+      ]
+    },
+    "springs": {
+      "expressive": {
+        "stiffness": 280,
+        "damping": 22,
+        "mass": 1
+      },
+      "stableUi": {
+        "stiffness": 280,
+        "damping": 32,
+        "mass": 1
+      },
+      "letters": {
+        "stiffness": 220,
+        "damping": 18,
+        "mass": 0.7
+      },
+      "camera": {
+        "stiffness": 180,
+        "damping": 28,
+        "mass": 1
+      }
+    },
+    "press": {
+      "scale": 0.95,
+      "compressionMs": 120,
+      "release": "spring"
+    },
+    "radial": {
+      "secondsPerCell": 0.04,
+      "maxDelaySeconds": 0.45
+    },
+    "perspective": {
+      "distancePx": 1200,
+      "gridRotateX": 22,
+      "gridRotateZ": -12
+    },
+    "polish": {
+      "glassBlurPx": 20,
+      "glassAlpha": 0.08,
+      "specularAlpha": 0.35,
+      "grainOpacity": 0.03
+    }
+  },
+  "depthPresets": {
+    "explosionSpring": {
+      "stiffness": 300,
+      "damping": 20,
+      "mass": 1
+    },
+    "burst": {
+      "secondsPerCell": 0.012,
+      "maxDelaySeconds": 0.3
+    },
+    "shadow": {
+      "referenceElevationDesignPx": 400,
+      "maxMultiplier": 2.5,
+      "layers": [
+        {
+          "y": 30,
+          "blur": 60,
+          "alpha": 0.2
+        },
+        {
+          "y": 4,
+          "blur": 12,
+          "alpha": 0.1
+        }
+      ]
+    },
+    "focus": {
+      "heroScale": 1.1,
+      "backgroundScale": 0.8,
+      "backgroundOpacity": 0.35,
+      "backgroundBlurPx": 12
+    },
+    "blur": {
+      "maxPx": 15,
+      "durationSeconds": 0.13333333333333333,
+      "referenceSpeedPxPerSecond": 1800
+    },
+    "impact": {
+      "durationSeconds": 0.2,
+      "amplitudePx": 18,
+      "widthPx": 160,
+      "waveSpeedPxPerSecond": 2400
+    }
+  },
+  "typeCameraPresets": {
+    "line": {
+      "travelDesignPx": 32,
+      "staggerSeconds": 0.04,
+      "durationSeconds": 0.45
+    },
+    "textFocus": {
+      "inactiveBlurDesignPx": 10,
+      "inactiveOpacity": 0.25
+    },
+    "hero": {
+      "initialScale": 0.3,
+      "targetScale": 1,
+      "authoredPeak": 1.08
+    },
+    "grid": {
+      "rotateXDegrees": 15,
+      "rotateYDegrees": -10,
+      "minZDesignPx": 0,
+      "maxZDesignPx": 80
+    },
+    "camera": {
+      "pushScale": 1.35,
+      "pushSeconds": 0.25,
+      "macroCardScale": 2.4,
+      "backgroundBlurDesignPx": 16
+    },
+    "recoil": {
+      "amplitudeDeliveryPx": 4,
+      "rotationDegrees": 0.2,
+      "durationSeconds": 0.35,
+      "frequencyHz": 8
+    }
+  },
+  "mixedMediaPresets": {
+    "acrylic": {
+      "extrusionDesignUnits": [
+        16,
+        24
+      ]
+    },
+    "impact": {
+      "referenceFps": 60,
+      "referenceFrames": [
+        2,
+        3
+      ],
+      "defaultTimingMode": "frames"
+    },
+    "halftone": {
+      "spacingDesignPx": 8,
+      "radiusDesignPx": 1.2,
+      "rotationDegrees": -15,
+      "cornerOpacity": 0.08
+    },
+    "shockwave": {
+      "dragPerSimulatedSecond": 2,
+      "slowMotionTimeScale": 0.35
+    },
+    "handoff": {
+      "directionalBlurDesignPx": 40
+    },
+    "emphasis": {
+      "peakScaleRange": [
+        6,
+        8
+      ],
+      "restScale": 1
+    }
+  },
+  "highKineticPresets": {
+    "variableType": {
+      "scaleFrom": 1,
+      "scaleTo": 4,
+      "weightFrom": 400,
+      "weightTo": 900,
+      "trackingFromEm": 0,
+      "trackingToEm": -0.03
+    },
+    "staggerSeconds": [
+      0.02,
+      0.04
+    ],
+    "beats": {
+      "subdivisionsPerQuarter": 4
+    },
+    "goo": {
+      "stdDeviationDesignPx": 12,
+      "alphaScale": 19,
+      "alphaBias": -9
+    },
+    "gridOpacity": [
+      0.05,
+      0.1
+    ]
+  },
+  "measuredTravelAt20Percent": {
+    "snap": 0.752126071676725,
+    "fastSnap": 0.867384691851641
+  },
+  "idealStepOvershoot": {
+    "expressive": 0.06453229136311507,
+    "stableUi": 0.00003499173590709807,
+    "letters": 0.03654318840904725,
+    "camera": 0
+  },
+  "idealExplosionOvershoot": 0.10845266493447325,
+  "note": "Defaults require template integration and visual tuning; values are not extracted reference keyframes."
+}

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ground: #0e1410;      /* near-black, green-tinted */
+        --paper: #f4f1e6;       /* cream */
+        --accent: #e2a233;      /* yolk amber - the farm's own accent, not AILO orange */
+        --rule: rgba(244, 241, 230, 0.28);
+        --font-display: "Archivo Black", sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--ground);
+      }
+      #root { position: relative; width: 100%; height: 100%; font-family: var(--font-display); }
+
+      /* ---------- footage ---------- */
+      .shot { position: absolute; inset: 0; will-change: transform; }
+      .shot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      /* Broadcast scrims: the HUD mono sits over bright daylight footage and failed the
+         3:1 contrast check without them. They read as part of the frame, not a patch. */
+      #scrim-top, #scrim-bot { position: absolute; left: 0; right: 0; height: 420px; z-index: 35; }
+      #scrim-top { top: 0; background: linear-gradient(to bottom, rgba(14,20,16,0.82), rgba(14,20,16,0)); }
+      #scrim-bot { bottom: 0; background: linear-gradient(to top, rgba(14,20,16,0.82), rgba(14,20,16,0)); }
+
+      /* ---------- HUD: corner brackets + mono straps (the persistent frame) ---------- */
+      #hud { position: absolute; inset: 0; pointer-events: none; z-index: 40; }
+      #hud .br {
+        position: absolute; width: 56px; height: 56px;
+        border: 3px solid var(--paper); opacity: 0.9;
+      }
+      #hud .tl { top: 150px; left: 54px; border-right: 0; border-bottom: 0; }
+      #hud .tr { top: 150px; right: 54px; border-left: 0; border-bottom: 0; }
+      #hud .bl { bottom: 150px; left: 54px; border-right: 0; border-top: 0; }
+      #hud .brr { bottom: 150px; right: 54px; border-left: 0; border-top: 0; }
+      .strap {
+        position: absolute; left: 54px; right: 54px;
+        font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.18em;
+        color: var(--paper); text-transform: uppercase;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      #strap-top { top: 196px; }
+      #strap-bot { bottom: 196px; opacity: 0.95; }
+      .hair { position: absolute; left: 54px; right: 54px; height: 2px; background: var(--rule); }
+      #hair-top { top: 258px; transform-origin: left center; }
+      #hair-bot { bottom: 258px; transform-origin: right center; }
+
+      /* ---------- type ---------- */
+      /* Centring box inset 56px on the right so centred lines clear TikTok's action rail.
+         Done with layout, not a CSS transform: #name and #lockup are GSAP-transformed. */
+      .center { position: absolute; left: 0; right: 56px; text-align: center; }
+      #name {
+        top: 830px; color: var(--paper); font-size: 76px; line-height: 0.94;
+        letter-spacing: -0.02em; text-transform: uppercase;
+      }
+      #name .ltr { display: inline-block; }
+      #name-sub {
+        top: 980px; font-family: var(--font-mono); font-size: 32px;
+        letter-spacing: 0.34em; color: var(--accent); text-transform: uppercase;
+      }
+      /* word cards - the INGEST./CAPTION./DIRECT. device, vertical */
+      .card { top: 838px; }
+      .card .bar {
+        display: inline-block; background: var(--paper); color: var(--ground);
+        font-size: 54px; line-height: 1; padding: 13px 20px 17px;
+        letter-spacing: -0.02em; text-transform: uppercase;
+        clip-path: inset(0 100% 0 0);
+      }
+      .card.amber .bar { background: var(--accent); color: var(--ground); }
+      .card .idx {
+        display: block; font-family: var(--font-mono); font-size: 28px;
+        letter-spacing: 0.3em; color: var(--paper); margin-bottom: 22px; opacity: 0.85;
+      }
+      /* payoff underline */
+      #payoff-label {
+        top: 1120px; font-family: var(--font-mono); font-size: 32px;
+        letter-spacing: 0.3em; color: var(--paper); text-transform: uppercase;
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+      }
+      #underline {
+        position: absolute; left: 282px; width: 460px; top: 1186px; height: 8px;
+        background: var(--accent); transform-origin: left center;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+      }
+      /* lockup */
+      #flood { position: absolute; inset: 0; background: var(--accent); z-index: 50; }
+      #lockup { z-index: 51; top: 860px; }
+      #lockup .mark {
+        display: inline-block; width: 74px; height: 74px; border-radius: 50%;
+        background: var(--ground); vertical-align: middle; margin-right: 26px;
+      }
+      #lockup .nm {
+        display: inline-block; vertical-align: middle; color: var(--ground);
+        font-size: 56px; letter-spacing: -0.02em; text-transform: uppercase;
+      }
+      #lockup-sub {
+        z-index: 51; top: 1010px; font-family: var(--font-mono); font-size: 26px;
+        letter-spacing: 0.3em; color: var(--ground); opacity: 0.8; text-transform: uppercase;
+      }
+      /* dip-cut scrim: the cut reads as meant, not accidental */
+      #dip { position: absolute; inset: 0; background: #000; opacity: 0; z-index: 30; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1080"
+      data-height="1920"
+      data-motion-blur="on"
+      data-composition-variables='[
+        {"id":"farm_name","type":"string","label":"Farm name","default":"NAATI ROOTS"},
+        {"id":"farm_tagline","type":"string","label":"Tagline","default":"NATIVE BREED POULTRY"}
+      ]'
+    >
+      <!-- ================= footage ================= -->
+      <div class="shot" id="sh-establish" data-track-kind="graphics">
+        <video class="clip" id="v-establish" data-start="0" data-duration="2.6"
+               data-track-index="0" src="assets/shot-establish.mp4" muted playsinline></video>
+      </div>
+      <div class="shot" id="sh-housing">
+        <video class="clip" id="v-housing" data-start="2.6" data-duration="2.1"
+               data-track-index="0" src="assets/shot-housing.mp4" muted playsinline></video>
+      </div>
+      <div class="shot" id="sh-freerange">
+        <video class="clip" id="v-freerange" data-start="4.7" data-duration="2.3"
+               data-track-index="0" src="assets/shot-freerange.mp4" muted playsinline></video>
+      </div>
+      <div class="shot" id="sh-feed">
+        <video class="clip" id="v-feed" data-start="7.0" data-duration="2.3"
+               data-track-index="0" src="assets/shot-feed.mp4" muted playsinline></video>
+      </div>
+      <div class="shot" id="sh-care">
+        <video class="clip" id="v-care" data-start="9.3" data-duration="2.0"
+               data-track-index="0" src="assets/shot-care.mp4" muted playsinline></video>
+      </div>
+      <div class="shot" id="sh-hero">
+        <video class="clip" id="v-hero" data-start="11.3" data-duration="1.6"
+               data-track-index="0" src="assets/shot-hero.mp4" muted playsinline></video>
+      </div>
+
+      <div id="scrim-top" class="clip" data-start="0" data-duration="13.0" data-track-index="1"></div>
+      <div id="scrim-bot" class="clip" data-start="0" data-duration="13.0" data-track-index="1"></div>
+
+      <!-- dip-cut scrim -->
+      <div id="dip" class="clip" data-start="0" data-duration="15" data-track-index="1"></div>
+
+      <!-- ================= HUD ================= -->
+      <div id="hud" class="clip" data-start="0.25" data-duration="12.75" data-track-index="2"
+           data-track-kind="graphics" data-layout-allow-safe-zone>
+        <div class="br tl" id="br1"></div>
+        <div class="br tr" id="br2"></div>
+        <div class="br bl" id="br3"></div>
+        <div class="br brr" id="br4"></div>
+        <div class="hair" id="hair-top"></div>
+        <div class="hair" id="hair-bot"></div>
+        <div class="strap" id="strap-top">
+          <span data-var-text="farm_tagline">NATIVE BREED POULTRY</span><span id="tc">00:00</span>
+        </div>
+        <div class="strap" id="strap-bot">
+          <span>OPEN RANGE</span><span>REC</span>
+        </div>
+      </div>
+
+      <!-- ================= hook name ================= -->
+      <h1 class="center clip" id="name" data-start="0.55" data-duration="2.05" data-track-index="3"
+          data-var-text="farm_name">NAATI ROOTS</h1>
+      <div class="center clip" id="name-sub" data-start="0.95" data-duration="1.65"
+           data-track-index="3">NATIVE BREED</div>
+
+      <!-- ================= word cards ================= -->
+      <div class="center clip card" id="card1" data-start="5.05" data-duration="1.75" data-track-index="4">
+        <span class="idx">01</span><span class="bar">FREE RANGE.</span>
+      </div>
+      <div class="center clip card" id="card2" data-start="7.35" data-duration="1.75" data-track-index="4">
+        <span class="idx">02</span><span class="bar">NATURAL FEED.</span>
+      </div>
+      <div class="center clip card amber" id="card3" data-start="9.6" data-duration="1.5" data-track-index="4">
+        <span class="idx">03</span><span class="bar">NO ANTIBIOTICS.</span>
+      </div>
+
+      <!-- payoff: label + underline. The line alone read as a strike-through. -->
+      <div class="center clip" id="payoff-label" data-start="11.95" data-duration="1.05"
+           data-track-index="4">NAATI BREED</div>
+      <div id="underline" class="clip" data-start="12.05" data-duration="0.95" data-track-index="4"></div>
+
+      <!-- ================= lockup ================= -->
+      <div id="flood" class="clip" data-start="12.9" data-duration="2.1" data-track-index="5"></div>
+      <div class="center clip" id="lockup" data-start="12.95" data-duration="2.05" data-track-index="6">
+        <span class="mark" id="lk-mark"></span><span class="nm" data-var-text="farm_name">NAATI ROOTS</span>
+      </div>
+      <div class="center clip" id="lockup-sub" data-start="13.0" data-duration="2.0"
+           data-track-index="6">RAISED RIGHT.</div>
+
+      <audio id="bed" class="clip" data-start="0" data-duration="15" src="assets/bed.wav"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const F = 1 / 30;
+
+      /* ---- HUD: brackets draw on, hairlines wipe, timecode ticks ---------------- */
+      tl.from(["#br1", "#br2", "#br3", "#br4"], {
+        opacity: 0, scale: 0.6, duration: 0.34, ease: "power4.out", stagger: 0.05
+      }, 0.25);
+      tl.from("#hair-top", { scaleX: 0, duration: 0.42, ease: "expo.out" }, 0.3);
+      tl.from("#hair-bot", { scaleX: 0, duration: 0.42, ease: "expo.out" }, 0.34);
+      tl.from(["#strap-top", "#strap-bot"], { opacity: 0, duration: 0.3, ease: "power2.out" }, 0.45);
+      // Timecode is a pure function of timeline time - no Date.now(), no counters.
+      const tc = document.getElementById("tc");
+      tl.to({}, {
+        duration: 12.75,
+        onUpdate: function () {
+          const t = 0.25 + this.progress() * 12.75;
+          const sec = Math.floor(t), fr = Math.floor((t - sec) * 30);
+          tc.textContent = String(sec).padStart(2, "0") + ":" + String(fr).padStart(2, "0");
+        }
+      }, 0.25);
+
+      /* ---- hook: the whole line blurs in (motion.md variant 3). Deliberately not a
+             per-letter split: data-var-text rewrites #name's content, which would wipe
+             any spans a script had built from it. ---------------------------------- */
+      const nameEl = document.getElementById("name");
+      tl.from(nameEl, {
+        opacity: 0, filter: "blur(12px)", duration: 0.36, ease: "power4.out"
+      }, 0.55);
+      tl.from(nameEl, { scale: 1.06, duration: 0.5, ease: "expo.out" }, 0.55);
+      // transforms only: a letterSpacing tween snaps to integer device pixels and
+      // stutters under the seek-by-frame capture engine.
+      tl.from("#name-sub", { opacity: 0, scale: 1.14, filter: "blur(6px)", duration: 0.46, ease: "expo.out" }, 0.95);
+      // land dead still, then leave on a short blur-out (exit ~45% of the entrance)
+      tl.to([nameEl, "#name-sub"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, 2.4);
+
+      /* ---- establishing push-in: scale the wrapper, never the timed <video> ---- */
+      tl.fromTo("#sh-establish", { scale: 1.0 }, { scale: 1.07, duration: 2.6, ease: "none" }, 0);
+      tl.fromTo("#sh-housing", { scale: 1.06 }, { scale: 1.0, duration: 2.1, ease: "power1.out" }, 2.6);
+
+      /* ---- dip cuts: 3 frames of darkness so each cut reads as meant ----------- */
+      [2.6, 4.7, 7.0, 9.3, 11.3].forEach((t) => {
+        tl.to("#dip", { opacity: 0.45, duration: 2 * F, ease: "power2.in" }, t - 3 * F);
+        tl.to("#dip", { opacity: 0, duration: 3 * F, ease: "power2.out" }, t);
+      });
+
+      /* ---- word cards: index fades, bar wipes open, holds dead still ----------- */
+      [["#card1", 5.05], ["#card2", 7.35], ["#card3", 9.6]].forEach(([sel, t]) => {
+        tl.from(sel + " .idx", { opacity: 0, x: -24, duration: 0.26, ease: "power3.out" }, t);
+        tl.fromTo(sel + " .bar",
+          { clipPath: "inset(0 100% 0 0)" },
+          { clipPath: "inset(0 0% 0 0)", duration: 0.34, ease: "expo.out" }, t + 0.06);
+        // exit: shorter than the entrance, one clean motion
+        tl.to(sel + " .bar", { clipPath: "inset(0 0 0 100%)", duration: 0.18, ease: "power3.in" },
+          t + (sel === "#card3" ? 1.30 : 1.55));
+        tl.to(sel + " .idx", { opacity: 0, duration: 0.14, ease: "power2.in" },
+          t + (sel === "#card3" ? 1.30 : 1.55));
+      });
+
+      /* ---- payoff: blur swap in, slow push, accent underline draws ------------- */
+      tl.from("#sh-hero", { filter: "blur(14px)", duration: 0.24, ease: "power3.out" }, 11.3);
+      tl.fromTo("#sh-hero", { scale: 1.0 }, { scale: 1.10, duration: 1.6, ease: "power1.inOut" }, 11.3);
+      tl.from("#payoff-label", { opacity: 0, filter: "blur(8px)", duration: 0.3, ease: "power3.out" }, 11.95);
+      tl.from("#underline", { scaleX: 0, duration: 0.46, ease: "expo.out" }, 12.05);
+
+      /* ---- lockup: colour flood keeps the hero, then the mark + name land ------ */
+      tl.from("#flood", { yPercent: 100, duration: 0.42, ease: "power3.inOut" }, 12.9);
+      tl.from("#lk-mark", { scale: 0, duration: 0.42, ease: "back.out(1.5)" }, 12.96);
+      tl.from("#lockup .nm", { opacity: 0, x: -30, duration: 0.38, ease: "expo.out" }, 13.0);
+      tl.from("#lockup-sub", { opacity: 0, duration: 0.34, ease: "power2.out" }, 13.05);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

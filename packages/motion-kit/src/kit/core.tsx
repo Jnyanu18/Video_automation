@@ -4,6 +4,8 @@ import React from 'react';
 export const S={W:1080,H:1920,CX:540,CY:960,fps:60};
 export function setStage(w:number,h:number,fps:number){S.W=w;S.H=h;S.CX=w/2;S.CY=h/2;S.fps=fps;}
 export const FONTS={display:'Geist',mono:'GeistMono'};
+/** Run any builder (T, fit, letters, slam, ringText, chip…) in another loaded family. Measurement caches key on the family. */
+export function withFont<R>(family:string,build:()=>R):R{const prev=FONTS.display;FONTS.display=family;try{return build();}finally{FONTS.display=prev;}}
 
 /* ---------- math ---------- */
 export const clamp=(x:number,a=0,b=1)=>x<a?a:x>b?b:x;

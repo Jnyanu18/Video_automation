@@ -4,6 +4,7 @@ import subprocess
 import pytest
 
 from agent import FakeClient, run_agent, iter_agent, response, text, tool_use
+from agent.loop import DEFAULT_PRICING, EFFORT, MODEL
 from agent.registry import load_toolspecs
 
 PLAN = {"version": 1, "source": {"path": "in.mp4", "duration": 10, "width": 1920, "height": 1080, "fps": 30},
@@ -38,8 +39,11 @@ def test_plain_reply():
     assert r["reply"].startswith("Hi!")
     assert r["plan"]["revision"] == 1
     assert [e["type"] for e in r["events"]] == ["message", "usage"]
-    assert r["usage"]["input_tokens"] == 1000 and r["usage"]["cost_usd"] == round((1000 * 3 + 200 * 15) / 1e6, 6)
-    assert c.calls[0]["model"] == "claude-sonnet-5-5"
+    # Derived from the price table, not hardcoded: a model/price change must not need a test edit.
+    expected = round((1000 * DEFAULT_PRICING["input"] + 200 * DEFAULT_PRICING["output"]) / 1e6, 6)
+    assert r["usage"]["input_tokens"] == 1000 and r["usage"]["cost_usd"] == expected
+    assert c.calls[0]["model"] == MODEL
+    assert c.calls[0]["output_config"] == {"effort": EFFORT}  # Opus 5.5 defaults to medium; we set it
     names = [t["name"] for t in c.calls[0]["tools"]]
     assert {"cut_segments", "inspect_frames", "review_plan", "get_plan"} <= set(names)
 

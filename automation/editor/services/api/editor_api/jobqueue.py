@@ -15,7 +15,7 @@ Handler = Callable[[dict], dict]
 class JobQueue(Protocol):
     def register(self, kind: str, handler: Handler) -> None: ...
     def enqueue(self, job: dict) -> None: ...
-    def join(self, timeout: float | None = None) -> None: ...
+    def join(self, timeout: float | None = None) -> bool: ...
     def shutdown(self) -> None: ...
 
 
@@ -50,12 +50,15 @@ class InProcessQueue:
                 self._q.task_done()
 
     def join(self, timeout=None):
+        """Wait for every queued job to finish. Returns False if `timeout` expired first,
+        so callers can tell "the work is done" from "I gave up waiting"."""
         if timeout is None:
             self._q.join()
-            return
+            return True
         t = threading.Thread(target=self._q.join, daemon=True)
         t.start()
         t.join(timeout)
+        return not t.is_alive()
 
     def shutdown(self):
         self._q.put(None)

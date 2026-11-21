@@ -1,0 +1,34 @@
+{
+  "name": "reference-motion-director-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "check": "tsc --noEmit",
+    "validate": "tsx ../scripts/validate.ts",
+    "schema": "tsx ../scripts/export-schema.ts",
+    "test": "tsx --test ../scripts/project.test.ts ../scripts/brief.test.ts ../scripts/motion-policy.test.ts ../scripts/depth-motion.test.ts ../scripts/type-camera.test.ts ../scripts/mixed-media.test.ts ../scripts/high-kinetic-ui.test.ts ../scripts/production-plan.test.ts ../scripts/execution-quality.test.ts ../scripts/generation-flow.test.mjs",
+    "plan": "tsx ../scripts/production-plan.ts",
+    "render": "tsx ../scripts/render.ts",
+    "review": "tsx ../scripts/execution-quality.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.544",
+    "@remotion/cli": "4.0.544",
+    "@remotion/player": "4.0.544",
+    "@remotion/renderer": "4.0.544",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.544",
+    "zod": "3.25.76",
+    "zod-to-json-schema": "3.25.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

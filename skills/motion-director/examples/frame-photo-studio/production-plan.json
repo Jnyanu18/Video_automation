@@ -1,0 +1,213 @@
+{
+  "version": 1,
+  "projectId": "frame-studio-reel",
+  "projectRevision": 1,
+  "fps": 60,
+  "direction": "hybrid",
+  "ending": {
+    "sceneId": "identity",
+    "goal": "BOOK YOUR SESSION",
+    "settledFromLocalFrame": 60,
+    "holdFrames": 120
+  },
+  "shots": [
+    {
+      "sceneId": "alive",
+      "purpose": "LOOK ALIVE.",
+      "focalElement": "Persistent portrait frame",
+      "entry": "Per-glyph springs and reciprocal strain; the photo frame grows into its first pose.",
+      "hold": "Main copy remains readable after its entrance; secondary motion serves the selected subject.",
+      "exit": "The same frame contracts while four photo cards emerge behind it.",
+      "camera": {
+        "mode": "continuous",
+        "path": "One shared 2D camera matrix above a CSS perspective stage; cursor uses matching world-to-screen projection."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "contact-sheet",
+        "mode": "match",
+        "anchor": "Persistent hero photo-card object",
+        "becomes": "The same frame contracts while four photo cards emerge behind it."
+      }
+    },
+    {
+      "sceneId": "contact-sheet",
+      "purpose": "PRESENCE. IN EVERY FRAME.",
+      "focalElement": "Hero portrait and contact sheet",
+      "entry": "A spring camera pullback reveals staggered 3D photo cards.",
+      "hold": "Main copy remains readable after its entrance; secondary motion serves the selected subject.",
+      "exit": "The cursor approaches the hero and the camera moves in.",
+      "camera": {
+        "mode": "continuous",
+        "path": "One shared 2D camera matrix above a CSS perspective stage; cursor uses matching world-to-screen projection."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "macro",
+        "mode": "match",
+        "anchor": "Persistent hero photo-card object",
+        "becomes": "The cursor approaches the hero and the camera moves in."
+      }
+    },
+    {
+      "sceneId": "macro",
+      "purpose": "GET CLOSER.",
+      "focalElement": "Portrait detail and selection point",
+      "entry": "Curved cursor path meets the projected image target; shutter accent and bounded recoil.",
+      "hold": "Main copy remains readable after its entrance; secondary motion serves the selected subject.",
+      "exit": "The same two-sided card starts a 3D Y rotation.",
+      "camera": {
+        "mode": "continuous",
+        "path": "One shared 2D camera matrix above a CSS perspective stage; cursor uses matching world-to-screen projection."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "product",
+        "mode": "morph",
+        "anchor": "Persistent hero photo-card object",
+        "becomes": "The same two-sided card starts a 3D Y rotation."
+      }
+    },
+    {
+      "sceneId": "product",
+      "purpose": "MAKE OBJECTS SPEAK.",
+      "focalElement": "Product still life",
+      "entry": "The reverse face is revealed by the card flip; other cards remain defocused.",
+      "hold": "Main copy remains readable after its entrance; secondary motion serves the selected subject.",
+      "exit": "The card joins a wider portfolio layout while the camera pulls back.",
+      "camera": {
+        "mode": "continuous",
+        "path": "One shared 2D camera matrix above a CSS perspective stage; cursor uses matching world-to-screen projection."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "personality",
+        "mode": "match",
+        "anchor": "Persistent hero photo-card object",
+        "becomes": "The card joins a wider portfolio layout while the camera pulls back."
+      }
+    },
+    {
+      "sceneId": "personality",
+      "purpose": "PEOPLE. PRODUCTS. PERSONALITY.",
+      "focalElement": "Photography categories and portfolio",
+      "entry": "Focus moves through three words while images reflow in depth.",
+      "hold": "Main copy remains readable after its entrance; secondary motion serves the selected subject.",
+      "exit": "All cards collect toward the hero, which collapses into the studio mark.",
+      "camera": {
+        "mode": "continuous",
+        "path": "One shared 2D camera matrix above a CSS perspective stage; cursor uses matching world-to-screen projection."
+      },
+      "assetUses": [],
+      "outgoing": {
+        "toSceneId": "identity",
+        "mode": "morph",
+        "anchor": "Persistent hero photo-card object",
+        "becomes": "All cards collect toward the hero, which collapses into the studio mark."
+      }
+    },
+    {
+      "sceneId": "identity",
+      "purpose": "FRAME STUDIO",
+      "focalElement": "Studio identity and CTA",
+      "entry": "The persistent card becomes an orange viewfinder mark; the wordmark settles.",
+      "hold": "Main copy remains readable after its entrance; secondary motion serves the selected subject.",
+      "exit": "Stable identity and CTA through the final frame.",
+      "camera": {
+        "mode": "locked",
+        "path": "The camera settles while the identity holds."
+      },
+      "assetUses": []
+    }
+  ],
+  "events": [
+    {
+      "id": "score-start",
+      "sceneId": "alive",
+      "localFrame": 0,
+      "kind": "accent",
+      "description": "Original score starts at sample zero"
+    },
+    {
+      "id": "hero-bloom",
+      "sceneId": "alive",
+      "localFrame": 16,
+      "kind": "accent",
+      "description": "hero-bloom"
+    },
+    {
+      "id": "depth-burst",
+      "sceneId": "contact-sheet",
+      "localFrame": 0,
+      "kind": "accent",
+      "description": "depth-burst"
+    },
+    {
+      "id": "cards-settle",
+      "sceneId": "contact-sheet",
+      "localFrame": 24,
+      "kind": "accent",
+      "description": "cards-settle"
+    },
+    {
+      "id": "select-contact",
+      "sceneId": "macro",
+      "localFrame": 12,
+      "kind": "contact",
+      "description": "select-contact"
+    },
+    {
+      "id": "card-flip",
+      "sceneId": "product",
+      "localFrame": 0,
+      "kind": "accent",
+      "description": "card-flip"
+    },
+    {
+      "id": "product-lock",
+      "sceneId": "product",
+      "localFrame": 30,
+      "kind": "accent",
+      "description": "product-lock"
+    },
+    {
+      "id": "type-accent",
+      "sceneId": "personality",
+      "localFrame": 0,
+      "kind": "accent",
+      "description": "type-accent"
+    },
+    {
+      "id": "identity-impact",
+      "sceneId": "identity",
+      "localFrame": 0,
+      "kind": "accent",
+      "description": "identity-impact"
+    },
+    {
+      "id": "cta-lock",
+      "sceneId": "identity",
+      "localFrame": 42,
+      "kind": "accent",
+      "description": "cta-lock"
+    }
+  ],
+  "audioCues": [
+    {
+      "id": "original-score",
+      "eventId": "score-start",
+      "assetId": "score",
+      "offsetFrames": 0,
+      "alignment": {
+        "kind": "onset",
+        "sourceFrame": 0,
+        "evidence": "Original score starts at sample zero; encoding and perception checked separately."
+      },
+      "durationInFrames": 900,
+      "gain": 1,
+      "fadeInFrames": 0,
+      "fadeOutFrames": 0,
+      "role": "music"
+    }
+  ]
+}

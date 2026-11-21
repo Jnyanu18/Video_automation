@@ -1,0 +1,1002 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": false,
+    "errorCount": 3,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "gsap_non_transform_motion",
+        "severity": "error",
+        "message": "GSAP tween on \"#name-sub\" uses motion that snaps to integer device pixels: letterSpacing. Layout and text-reflow properties snap during browser layout; roundProps rounds the tween value. Slow motion or an ease-out tail then stutters under the seek-by-frame capture engine. Animate transforms (x/y/scale/opacity) instead.",
+        "selector": "#name-sub",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\farm-reel\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "do not animate letterSpacing (they reflow text and snap glyph positions): for letterSpacing, split the text into per-character elements and animate each glyph's x (the spread), since uniform scale is NOT equivalent, or hold the final value statically. Transforms interpolate sub-pixel and stay smooth at any speed."
+      },
+      {
+        "code": "timeline_track_too_dense",
+        "severity": "warning",
+        "message": "This HTML file has 11 timed elements. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\farm-reel\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move coherent scene groups into separate .html files under compositions/ and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate."
+      },
+      {
+        "code": "invalid_composition_variables_declaration",
+        "severity": "error",
+        "message": "data-composition-variables entry [0] is missing or has invalid: type. Type must be one of string, number, color, boolean, enum, font, image.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\farm-reel\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Give entry [0] a string id and label, a supported type, and a default, e.g. {\"id\":\"title\",\"type\":\"string\",\"label\":\"Title\",\"default\":\"Hello\"}."
+      },
+      {
+        "code": "invalid_composition_variables_declaration",
+        "severity": "error",
+        "message": "data-composition-variables entry [1] is missing or has invalid: type. Type must be one of string, number, color, boolean, enum, font, image.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\farm-reel\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Give entry [1] a string id and label, a supported type, and a default, e.g. {\"id\":\"title\",\"type\":\"string\",\"label\":\"Title\",\"default\":\"Hello\"}."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"hud\"> is a timeline element that contains nested <div id=\"br1\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#hud",
+        "dataAttributes": {},
+        "sourceFile": "J:\\ai editor\\farm-reel\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"hud\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 6,
+    "findings": [
+      {
+        "code": "media_proxy_fallback",
+        "severity": "info",
+        "message": "[hyperframes] runtime_media_proxy_fallback: \"http://127.0.0.1:6190/assets/shot-establish.mp4\" uses a codec (h264) this browser can't decode; auto-swapped to an authoring proxy for this preview only. Render output is unaffected.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-hf-var-scope": "1",
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "15",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-motion-blur": "on",
+          "data-composition-variables": "[\n        {\"id\":\"farm_name\",\"type\":\"text\",\"label\":\"Farm name\",\"default\":\"YOUR FARM\"},\n        {\"id\":\"farm_tagline\",\"type\":\"text\",\"label\":\"Tagline\",\"default\":\"POULTRY FARM\"}\n      ]"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:6190/",
+        "line": 313
+      },
+      {
+        "code": "media_proxy_fallback",
+        "severity": "info",
+        "message": "[hyperframes] runtime_media_proxy_fallback: \"http://127.0.0.1:6190/assets/shot-housing.mp4\" uses a codec (h264) this browser can't decode; auto-swapped to an authoring proxy for this preview only. Render output is unaffected.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-hf-var-scope": "1",
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "15",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-motion-blur": "on",
+          "data-composition-variables": "[\n        {\"id\":\"farm_name\",\"type\":\"text\",\"label\":\"Farm name\",\"default\":\"YOUR FARM\"},\n        {\"id\":\"farm_tagline\",\"type\":\"text\",\"label\":\"Tagline\",\"default\":\"POULTRY FARM\"}\n      ]"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:6190/",
+        "line": 313
+      },
+      {
+        "code": "media_proxy_fallback",
+        "severity": "info",
+        "message": "[hyperframes] runtime_media_proxy_fallback: \"http://127.0.0.1:6190/assets/shot-freerange.mp4\" uses a codec (h264) this browser can't decode; auto-swapped to an authoring proxy for this preview only. Render output is unaffected.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-hf-var-scope": "1",
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "15",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-motion-blur": "on",
+          "data-composition-variables": "[\n        {\"id\":\"farm_name\",\"type\":\"text\",\"label\":\"Farm name\",\"default\":\"YOUR FARM\"},\n        {\"id\":\"farm_tagline\",\"type\":\"text\",\"label\":\"Tagline\",\"default\":\"POULTRY FARM\"}\n      ]"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:6190/",
+        "line": 313
+      },
+      {
+        "code": "media_proxy_fallback",
+        "severity": "info",
+        "message": "[hyperframes] runtime_media_proxy_fallback: \"http://127.0.0.1:6190/assets/shot-feed.mp4\" uses a codec (h264) this browser can't decode; auto-swapped to an authoring proxy for this preview only. Render output is unaffected.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-hf-var-scope": "1",
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "15",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-motion-blur": "on",
+          "data-composition-variables": "[\n        {\"id\":\"farm_name\",\"type\":\"text\",\"label\":\"Farm name\",\"default\":\"YOUR FARM\"},\n        {\"id\":\"farm_tagline\",\"type\":\"text\",\"label\":\"Tagline\",\"default\":\"POULTRY FARM\"}\n      ]"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:6190/",
+        "line": 313
+      },
+      {
+        "code": "media_proxy_fallback",
+        "severity": "info",
+        "message": "[hyperframes] runtime_media_proxy_fallback: \"http://127.0.0.1:6190/assets/shot-care.mp4\" uses a codec (h264) this browser can't decode; auto-swapped to an authoring proxy for this preview only. Render output is unaffected.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-hf-var-scope": "1",
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "15",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-motion-blur": "on",
+          "data-composition-variables": "[\n        {\"id\":\"farm_name\",\"type\":\"text\",\"label\":\"Farm name\",\"default\":\"YOUR FARM\"},\n        {\"id\":\"farm_tagline\",\"type\":\"text\",\"label\":\"Tagline\",\"default\":\"POULTRY FARM\"}\n      ]"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:6190/",
+        "line": 313
+      },
+      {
+        "code": "media_proxy_fallback",
+        "severity": "info",
+        "message": "[hyperframes] runtime_media_proxy_fallback: \"http://127.0.0.1:6190/assets/shot-hero.mp4\" uses a codec (h264) this browser can't decode; auto-swapped to an authoring proxy for this preview only. Render output is unaffected.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-hf-var-scope": "1",
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "15",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-motion-blur": "on",
+          "data-composition-variables": "[\n        {\"id\":\"farm_name\",\"type\":\"text\",\"label\":\"Farm name\",\"default\":\"YOUR FARM\"},\n        {\"id\":\"farm_tagline\",\"type\":\"text\",\"label\":\"Tagline\",\"default\":\"POULTRY FARM\"}\n      ]"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:6190/",
+        "line": 313
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 10,
+    "infoCount": 0,
+    "findings": [
+      {
+        "selector": "#strap-top > span:nth-of-type(1)",
+        "dataAttributes": {
+          "data-var-text": "farm_tagline"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 54,
+          "y": 196,
+          "width": 280.81,
+          "height": 39
+        },
+        "time": 0.833,
+        "rect": {
+          "left": 54,
+          "top": 196,
+          "right": 334.81,
+          "bottom": 235,
+          "width": 280.81,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "POULTRY FARM",
+        "message": "<span> \"POULTRY FARM\" is outside the safe area: TikTok (top edge), Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 0.833,
+        "lastSeen": 12.5,
+        "occurrences": 8,
+        "heldMs": 0,
+        "times": [
+          0.833,
+          2.5,
+          4.167,
+          5.833,
+          7.5,
+          9.167,
+          10.833,
+          12.5
+        ]
+      },
+      {
+        "selector": "#tc",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 909,
+          "y": 196,
+          "width": 117,
+          "height": 39
+        },
+        "time": 0.833,
+        "rect": {
+          "left": 909,
+          "top": 196,
+          "right": 1026,
+          "bottom": 235,
+          "width": 117,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "00:80",
+        "message": "<span> \"00:80\" is outside the safe area: TikTok (top edge), Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 0.833,
+        "lastSeen": 12.5,
+        "occurrences": 8,
+        "heldMs": 0,
+        "times": [
+          0.833,
+          2.5,
+          4.167,
+          5.833,
+          7.5,
+          9.167,
+          10.833,
+          12.5
+        ]
+      },
+      {
+        "selector": "#strap-bot > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 54,
+          "y": 1685,
+          "width": 234,
+          "height": 39
+        },
+        "time": 0.833,
+        "rect": {
+          "left": 54,
+          "top": 1685,
+          "right": 288,
+          "bottom": 1724,
+          "width": 234,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "OPEN RANGE",
+        "message": "<span> \"OPEN RANGE\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 0.833,
+        "lastSeen": 12.5,
+        "occurrences": 8,
+        "heldMs": 0,
+        "times": [
+          0.833,
+          2.5,
+          4.167,
+          5.833,
+          7.5,
+          9.167,
+          10.833,
+          12.5
+        ]
+      },
+      {
+        "selector": "#strap-bot > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 955.8,
+          "y": 1685,
+          "width": 70.2,
+          "height": 39
+        },
+        "time": 0.833,
+        "rect": {
+          "left": 955.8,
+          "top": 1685,
+          "right": 1026,
+          "bottom": 1724,
+          "width": 70.2,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "REC",
+        "message": "<span> \"REC\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 0.833,
+        "lastSeen": 12.5,
+        "occurrences": 8,
+        "heldMs": 0,
+        "times": [
+          0.833,
+          2.5,
+          4.167,
+          5.833,
+          7.5,
+          9.167,
+          10.833,
+          12.5
+        ]
+      },
+      {
+        "selector": "#name",
+        "dataAttributes": {
+          "data-start": "0.55",
+          "data-duration": "2.05",
+          "data-track-index": "3",
+          "data-var-text": "farm_name"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 162.57,
+          "y": 794.89,
+          "width": 754.85,
+          "height": 159.22
+        },
+        "time": 0.833,
+        "rect": {
+          "left": 162.57,
+          "top": 794.89,
+          "right": 917.42,
+          "bottom": 954.11,
+          "width": 754.85,
+          "height": 159.22
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "YOUR FARM",
+        "message": "<h1> \"YOUR FARM\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 0.833,
+        "lastSeen": 2.5,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          0.833,
+          2.5
+        ]
+      },
+      {
+        "selector": "#card1",
+        "dataAttributes": {
+          "data-start": "5.05",
+          "data-duration": "1.75",
+          "data-track-index": "4"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 205.16,
+          "y": 901,
+          "width": 669.67,
+          "height": 124
+        },
+        "time": 5.833,
+        "rect": {
+          "left": 205.16,
+          "top": 901,
+          "right": 874.83,
+          "bottom": 1025,
+          "width": 669.67,
+          "height": 124
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "FREE RANGE.",
+        "message": "<div> \"FREE RANGE.\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 5.833,
+        "lastSeen": 5.833,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.833
+        ]
+      },
+      {
+        "selector": "#card2",
+        "dataAttributes": {
+          "data-start": "7.35",
+          "data-duration": "1.75",
+          "data-track-index": "4"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 144.94,
+          "y": 901,
+          "width": 790.11,
+          "height": 124
+        },
+        "time": 7.5,
+        "rect": {
+          "left": 144.94,
+          "top": 901,
+          "right": 935.05,
+          "bottom": 1025,
+          "width": 790.11,
+          "height": 124
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "NATURAL FEED.",
+        "message": "<div> \"NATURAL FEED.\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 7.5,
+        "lastSeen": 7.5,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          7.5
+        ]
+      },
+      {
+        "selector": "#card3",
+        "dataAttributes": {
+          "data-start": "9.65",
+          "data-duration": "1.65",
+          "data-track-index": "4"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 110.39,
+          "y": 901,
+          "width": 859.2,
+          "height": 124
+        },
+        "time": 10.833,
+        "rect": {
+          "left": 110.39,
+          "top": 901,
+          "right": 969.59,
+          "bottom": 1025,
+          "width": 859.2,
+          "height": 124
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "NO ANTIBIOTICS.",
+        "message": "<div> \"NO ANTIBIOTICS.\" is outside the safe area: TikTok (left and right edges), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 10.833,
+        "lastSeen": 10.833,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.833
+        ]
+      },
+      {
+        "selector": "#lockup",
+        "dataAttributes": {
+          "data-start": "13.75",
+          "data-duration": "1.25",
+          "data-track-index": "6"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 266.79,
+          "y": 860,
+          "width": 664.36,
+          "height": 140
+        },
+        "time": 14.167,
+        "rect": {
+          "left": 266.79,
+          "top": 860,
+          "right": 931.15,
+          "bottom": 1000,
+          "width": 664.36,
+          "height": 140
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "YOUR FARM",
+        "message": "<div> \"YOUR FARM\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 14.167,
+        "lastSeen": 14.167,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.167
+        ]
+      },
+      {
+        "selector": "#lockup-sub",
+        "dataAttributes": {
+          "data-start": "13.95",
+          "data-duration": "1.05",
+          "data-track-index": "6"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 216,
+          "y": 1010,
+          "width": 648,
+          "height": 39
+        },
+        "time": 14.167,
+        "rect": {
+          "left": 216,
+          "top": 1010,
+          "right": 864,
+          "bottom": 1049,
+          "width": 648,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "RAISED RIGHT. EVERY DAY.",
+        "message": "<div> \"RAISED RIGHT. EVERY DAY.\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 14.167,
+        "lastSeen": 14.167,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.167
+        ]
+      }
+    ],
+    "duration": 15,
+    "samples": [
+      0.833,
+      2.5,
+      4.167,
+      5.833,
+      7.5,
+      9.167,
+      10.833,
+      12.5,
+      14.167
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 10,
+    "truncated": false,
+    "faceCheck": {
+      "ran": true,
+      "candidates": 38,
+      "faces": 2
+    }
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": false,
+    "errorCount": 3,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 1.42:1; WCAG AA requires 3:1.",
+        "text": "00:80",
+        "fg": "rgb(244,241,230)",
+        "bg": "rgb(189,206,222)",
+        "ratio": 1.42,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(115,113,108)",
+        "large": true,
+        "selector": "#tc",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 909,
+          "y": 196,
+          "width": 117,
+          "height": 39
+        },
+        "time": 0.833,
+        "times": [
+          0.833,
+          7.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.75:1; WCAG AA requires 3:1.",
+        "text": "POULTRY FARM",
+        "fg": "rgb(244,241,230)",
+        "bg": "rgb(159,143,135)",
+        "ratio": 2.75,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(71,70,67)",
+        "large": true,
+        "selector": "div > div:nth-of-type(8) > div:nth-of-type(7) > span:nth-of-type(1)",
+        "dataAttributes": {
+          "data-var-text": "farm_tagline"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 54,
+          "y": 196,
+          "width": 280.8125,
+          "height": 39
+        },
+        "time": 7.5,
+        "times": [
+          7.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.46:1; WCAG AA requires 3:1.",
+        "text": "OPEN RANGE",
+        "fg": "rgb(244,241,230)",
+        "bg": "rgb(166,153,137)",
+        "ratio": 2.46,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(78,77,74)",
+        "large": true,
+        "selector": "div > div:nth-of-type(8) > div:nth-of-type(8) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 54,
+          "y": 1685,
+          "width": 234,
+          "height": 39
+        },
+        "time": 7.5,
+        "times": [
+          7.5,
+          10.833
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 1.28:1; WCAG AA requires 3:1.",
+        "text": "REC",
+        "fg": "rgb(244,241,230)",
+        "bg": "rgb(235,209,199)",
+        "ratio": 1.28,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(122,121,115)",
+        "large": true,
+        "selector": "div > div:nth-of-type(8) > div:nth-of-type(8) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 955.796875,
+          "y": 1685,
+          "width": 70.203125,
+          "height": 39
+        },
+        "time": 10.833,
+        "times": [
+          7.5,
+          10.833
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.57:1; WCAG AA requires 3:1.",
+        "text": "03",
+        "fg": "rgb(244,241,230)",
+        "bg": "rgb(95,165,134)",
+        "ratio": 2.57,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(75,74,70)",
+        "large": true,
+        "selector": "div > div:nth-of-type(12) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 838,
+          "width": 1080,
+          "height": 37
+        },
+        "time": 10.833,
+        "times": [
+          10.833
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      0.833,
+      4.167,
+      7.5,
+      10.833,
+      14.167
+    ],
+    "checked": 21,
+    "passed": 13
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"YOUR FARM\" (2 words) is on screen 1.10 s (±0.01 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "YOUR FARM",
+        "selector": "#lockup",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 264.64,
+          "y": 860,
+          "width": 664.36,
+          "height": 140
+        },
+        "time": 13.906,
+        "words": 2,
+        "seconds": 1.098,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 13.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 13.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 13.875,
+            "opacity": 0.11,
+            "heightPx": 140
+          },
+          {
+            "time": 14,
+            "opacity": 0.93,
+            "heightPx": 140
+          },
+          {
+            "time": 14.125,
+            "opacity": 0.99,
+            "heightPx": 140
+          },
+          {
+            "time": 14.25,
+            "opacity": 1,
+            "heightPx": 140
+          },
+          {
+            "time": 14.375,
+            "opacity": 1,
+            "heightPx": 140
+          },
+          {
+            "time": 14.5,
+            "opacity": 1,
+            "heightPx": 140
+          },
+          {
+            "time": 14.625,
+            "opacity": 1,
+            "heightPx": 140
+          },
+          {
+            "time": 14.75,
+            "opacity": 1,
+            "heightPx": 140
+          },
+          {
+            "time": 14.875,
+            "opacity": 1,
+            "heightPx": 140
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"RAISED RIGHT. EVERY DAY.\" (4 words) is on screen 0.90 s (±0.01 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "RAISED RIGHT. EVERY DAY.",
+        "selector": "#lockup-sub",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 216,
+          "y": 1010,
+          "width": 648,
+          "height": 39
+        },
+        "time": 14.102,
+        "words": 4,
+        "seconds": 0.902,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 13.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 13.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 14,
+            "opacity": 0.13,
+            "heightPx": 39
+          },
+          {
+            "time": 14.125,
+            "opacity": 0.58,
+            "heightPx": 39
+          },
+          {
+            "time": 14.25,
+            "opacity": 0.79,
+            "heightPx": 39
+          },
+          {
+            "time": 14.375,
+            "opacity": 0.8,
+            "heightPx": 39
+          },
+          {
+            "time": 14.5,
+            "opacity": 0.8,
+            "heightPx": 39
+          },
+          {
+            "time": 14.625,
+            "opacity": 0.8,
+            "heightPx": 39
+          },
+          {
+            "time": 14.75,
+            "opacity": 0.8,
+            "heightPx": 39
+          },
+          {
+            "time": 14.875,
+            "opacity": 0.8,
+            "heightPx": 39
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 120
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": {
+      "triggeringAsset": "assets/shot-establish.mp4",
+      "output": {
+        "colorSpace": "BT.2020",
+        "codec": "HEVC Main10"
+      }
+    },
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

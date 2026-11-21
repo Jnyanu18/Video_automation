@@ -271,12 +271,8 @@ class Publisher:
             while not self._stop.wait(interval):
                 for pid in self.due():
                     self.publish_async(pid)
-        # a post that was mid-flight when the service died has an unknown outcome
-        for p in self.store.all("publishing"):
-            if p.get("status") == "PUBLISHING":
-                self.store.update("publishing", p["id"], lambda r: r.update(
-                    status="FAILED", outcome_unknown=True,
-                    error={"code": "OUTCOME_UNKNOWN", "message": "the service restarted while publishing; check the account before retrying", "retryable": False}))
+        # A post that was mid-flight when the service died has an unknown outcome. That sweep now
+        # lives in Store._recover_interrupted, so it happens on load even if this never starts.
         self._thread = threading.Thread(target=loop, daemon=True, name="publish-scheduler")
         self._thread.start()
 

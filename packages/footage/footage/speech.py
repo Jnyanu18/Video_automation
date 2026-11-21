@@ -3,12 +3,25 @@
 from __future__ import annotations
 
 import logging
+import subprocess
 from pathlib import Path
 from typing import Any, List, Optional
+import numpy as np
 
 from footage.schema import Shot, SpeechSegment, WordTimestamp
 
 logger = logging.getLogger("footage.speech")
+
+# PyAV 19 compatibility
+try:
+    import av
+    _orig_av_open = av.open
+    def _safe_av_open(*args, **kwargs):
+        kwargs.pop("metadata_errors", None)
+        return _orig_av_open(*args, **kwargs)
+    av.open = _safe_av_open
+except Exception:
+    pass
 
 _WHISPER_MODEL: Any = None
 
@@ -24,6 +37,27 @@ def get_whisper_model(model_size: str = "base") -> Any:
             logger.warning("Failed to initialize faster-whisper: %s", e)
             _WHISPER_MODEL = None
     return _WHISPER_MODEL
+
+
+def _load_audio_16k(file_path: Path | str) -> Optional[np.ndarray]:
+    """Load audio as 16kHz mono float32 numpy array using ffmpeg."""
+    cmd = [
+        "ffmpeg",
+        "-v", "error",
+        "-i", str(Path(file_path).resolve()),
+        "-vn",
+        "-ac", "1",
+        "-ar", "16000",
+        "-f", "f32le",
+        "-",
+    ]
+    try:
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30.0)
+        if proc.returncode == 0 and proc.stdout:
+            return np.frombuffer(proc.stdout, dtype=np.float32)
+    except Exception as e:
+        logger.warning("Failed to load 16k audio for %s: %s", file_path, e)
+    return None
 
 
 def transcribe_speech_shots(
@@ -58,17 +92,27 @@ def transcribe_speech_shots(
     if model is None:
         return []
 
+    # Decode audio to 16kHz PCM once in memory for the whole file
+    audio_16k = _load_audio_16k(p)
+    if audio_16k is None or len(audio_16k) == 0:
+        return []
+
     speech_segments: List[SpeechSegment] = []
     current_speaker_idx = 1
     last_speech_end = 0.0
 
     for shot in eligible_shots:
         try:
-            # Transcribe segment within shot
+            s_idx = max(0, int(shot.start * 16000))
+            e_idx = min(len(audio_16k), int(shot.end * 16000))
+            if e_idx <= s_idx:
+                continue
+
+            shot_audio = audio_16k[s_idx:e_idx]
+
             segments, _info = model.transcribe(
-                str(p),
+                shot_audio,
                 word_timestamps=True,
-                clip_timestamps=[(shot.start, shot.end)],
                 temperature=0.0,
             )
 
@@ -77,10 +121,11 @@ def transcribe_speech_shots(
                 if not text:
                     continue
 
-                # Check pause structure for speaker turns
-                seg_start = float(seg.start)
-                seg_end = float(seg.end)
+                # Translate segment times back to source file timebase (t_src)
+                seg_start = shot.start + float(seg.start)
+                seg_end = shot.start + float(seg.end)
 
+                # Check pause structure for speaker turns
                 if seg_start - last_speech_end > 2.5 and last_speech_end > 0.0:
                     current_speaker_idx = 2 if current_speaker_idx == 1 else 1
 
@@ -94,8 +139,8 @@ def transcribe_speech_shots(
                         words.append(
                             WordTimestamp(
                                 word=w_text,
-                                start=round(float(getattr(w, "start", seg_start)), 3),
-                                end=round(float(getattr(w, "end", seg_end)), 3),
+                                start=round(shot.start + float(getattr(w, "start", seg.start)), 3),
+                                end=round(shot.start + float(getattr(w, "end", seg.end)), 3),
                             )
                         )
 

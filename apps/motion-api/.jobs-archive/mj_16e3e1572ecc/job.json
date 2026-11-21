@@ -1,0 +1,17 @@
+{
+  "id": "mj_16e3e1572ecc",
+  "brief": "A 20 second launch film for an AI video editor built for solo\nfounders. Confident and fast, a little dry, no hype. The one\nthing it must land: editing a reel by hand eats an afternoon,\nthis does it in about thirty seconds. Open on the frustration,\nturn on the product, end on the name and a single call to\naction. Dark, high contrast, bold type. No stock footage,\nno people.",
+  "status": "failed",
+  "created": 1795086158.2052464,
+  "updated": 1795086161.6852806,
+  "rounds": 0,
+  "stills": [],
+  "final_path": null,
+  "scorecard": null,
+  "errors": [
+    "TypeError: \"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for the `Authorization` header to be explicitly omitted\""
+  ],
+  "stopped": "",
+  "base": "J:\\ai editor\\apps\\motion-api\\.jobs",
+  "dir": "J:\\ai editor\\apps\\motion-api\\.jobs\\mj_16e3e1572ecc"
+}

@@ -1,0 +1,213 @@
+{
+  "file": "public/studio-score.wav",
+  "origin": "Original deterministic procedural composition and synthesis",
+  "seed": 161803398,
+  "durationSeconds": 15,
+  "sampleRate": 48000,
+  "channels": 2,
+  "encoding": "PCM signed 24-bit little endian WAV",
+  "samplesPerChannel": 720000,
+  "sha256": "be925b726197717153e4b915d58814271f120d8d8bf088b3fb9d0d13917c389d",
+  "bpm": 120,
+  "style": "Premium punchy editorial groove: warm plucked synth/bass, compact broken kicks, soft snaps, sparse hats and mechanical photo/tape accents",
+  "voice": false,
+  "apiCalls": false,
+  "downloadedAssets": false,
+  "visualFps": 60,
+  "sceneBoundaryFrames": [
+    0,
+    120,
+    270,
+    420,
+    570,
+    720,
+    900
+  ],
+  "events": [
+    {
+      "eventId": "accent-16",
+      "targetFrame": 16,
+      "targetSeconds": 0.26666666666666666,
+      "source": "tape-click",
+      "sourceStartSeconds": 0.26666666666666666,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "accent-120",
+      "targetFrame": 120,
+      "targetSeconds": 2.0,
+      "source": "tape-click",
+      "sourceStartSeconds": 2.0,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "lead-whoosh-120",
+      "targetFrame": 120,
+      "targetSeconds": 2.0,
+      "source": "airy-whoosh",
+      "sourceStartSeconds": 1.72,
+      "anchor": "authored envelope crest",
+      "sourceAnchorOffsetSeconds": 0.28,
+      "evidence": "Envelope crest computed at target; noisy waveform/perception not peak-verified"
+    },
+    {
+      "eventId": "accent-144",
+      "targetFrame": 144,
+      "targetSeconds": 2.4,
+      "source": "tape-click",
+      "sourceStartSeconds": 2.4,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "accent-282",
+      "targetFrame": 282,
+      "targetSeconds": 4.7,
+      "source": "mechanical-shutter",
+      "sourceStartSeconds": 4.7,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "accent-420",
+      "targetFrame": 420,
+      "targetSeconds": 7.0,
+      "source": "mechanical-shutter",
+      "sourceStartSeconds": 7.0,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "accent-450",
+      "targetFrame": 450,
+      "targetSeconds": 7.5,
+      "source": "tape-click",
+      "sourceStartSeconds": 7.5,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "lead-whoosh-450",
+      "targetFrame": 450,
+      "targetSeconds": 7.5,
+      "source": "airy-whoosh",
+      "sourceStartSeconds": 7.22,
+      "anchor": "authored envelope crest",
+      "sourceAnchorOffsetSeconds": 0.28,
+      "evidence": "Envelope crest computed at target; noisy waveform/perception not peak-verified"
+    },
+    {
+      "eventId": "accent-570",
+      "targetFrame": 570,
+      "targetSeconds": 9.5,
+      "source": "tape-click",
+      "sourceStartSeconds": 9.5,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "accent-720",
+      "targetFrame": 720,
+      "targetSeconds": 12.0,
+      "source": "tape-click",
+      "sourceStartSeconds": 12.0,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    },
+    {
+      "eventId": "lead-whoosh-720",
+      "targetFrame": 720,
+      "targetSeconds": 12.0,
+      "source": "airy-whoosh",
+      "sourceStartSeconds": 11.72,
+      "anchor": "authored envelope crest",
+      "sourceAnchorOffsetSeconds": 0.28,
+      "evidence": "Envelope crest computed at target; noisy waveform/perception not peak-verified"
+    },
+    {
+      "eventId": "accent-762",
+      "targetFrame": 762,
+      "targetSeconds": 12.7,
+      "source": "tape-click",
+      "sourceStartSeconds": 12.7,
+      "anchor": "synthesized transient onset",
+      "sourceAnchorOffsetSeconds": 0,
+      "evidence": "Scheduled sample onset; perceptual alignment not reviewed"
+    }
+  ],
+  "soundCounts": {
+    "chord": 6,
+    "bass": 22,
+    "synth-pluck": 17,
+    "kick": 16,
+    "snap": 14,
+    "hat": 27,
+    "closing-chord": 1,
+    "closing-bass": 1,
+    "tape-click": 7,
+    "mechanical-shutter": 2,
+    "lead-whoosh": 3
+  },
+  "decodedSamplePeakDbfs": -1.884618058980808,
+  "decodedRmsDbfs": -17.43000139501129,
+  "measuredIntegratedLufs": -16.0,
+  "measuredTruePeakDbtp": -1.9,
+  "channelPeakDbfs": [
+    -1.884618058980808,
+    -2.342681698859959
+  ],
+  "dcOffset": [
+    -3.515881283415689e-05,
+    -4.7796903550624844e-05
+  ],
+  "fractionOfSpectralEnergyBelow30Hz": 0.00019602975674182208,
+  "masterGainDb": 14.964063934263228,
+  "initialMeasurement": {
+    "integratedLufs": -18.3,
+    "truePeakDbtp": -4.2
+  },
+  "masterProcessing": [
+    "25 Hz infrasonic cleanup",
+    "Gentle tanh transient rounding before final measured gain",
+    "Short entrance and 0.5-second ending fade; no hard clipping or brickwall limiter"
+  ],
+  "endingFadeSeconds": 0.5,
+  "firstAndLastSamplesAreZero": true,
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "pcm_s24le",
+        "sample_rate": "48000",
+        "channels": 2,
+        "bits_per_sample": 24,
+        "duration": "15.000000"
+      }
+    ],
+    "format": {
+      "duration": "15.000000"
+    }
+  },
+  "verification": [
+    "Original script executed",
+    "Decoded PCM24 duration/channels/sample count checked",
+    "FFmpeg ebur128 integrated loudness and oversampled true peak measured",
+    "Sample peak and measured true peak below -1.5 dB",
+    "First/last samples zero; finite samples; original synthesis only"
+  ],
+  "limitations": [
+    "No human listening or visual playback review completed",
+    "Event schedules verify source/envelope arithmetic, not perceptual sync"
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "status": "ready",
+  "kitSnapshot": {
+    "id": "flux-demo-kit",
+    "revision": 1,
+    "name": "Flux",
+    "visual": {
+      "name": "Flux",
+      "background": "#F5F4EF",
+      "foreground": "#14151B",
+      "primary": "#4B47F5",
+      "secondary": "#FA6944",
+      "surface": "#FFFFFF",
+      "muted": "#646571",
+      "fontFamily": "DejaVu Sans",
+      "fontAssetId": "demo-font",
+      "radius": 28
+    },
+    "tone": "Clear, confident, concise",
+    "language": "en",
+    "website": "your-domain.example",
+    "cta": "Create your story",
+    "voice": {
+      "provider": "elevenlabs",
+      "voiceId": null,
+      "note": "Set an authorized voice ID in server configuration before narration generation."
+    },
+    "strategy": {
+      "objective": "Introduce the product and invite users to create a video",
+      "audience": "Small teams creating branded product videos",
+      "message": "Turn a prompt and saved brand kit into an editable video project"
+    },
+    "defaults": {
+      "durationSeconds": 15,
+      "format": "landscape",
+      "fps": 60,
+      "narration": true,
+      "energy": "balanced",
+      "allowOrbit": true
+    },
+    "rules": {
+      "lockedFields": [],
+      "approvedMetricValues": []
+    },
+    "approvedClaims": [],
+    "forbiddenClaims": [
+      "Do not invent customer counts, conversion lifts, revenue or testimonials."
+    ],
+    "note": "Fictional example brand; replace with the app user's saved kit."
+  },
+  "decisions": {
+    "objective": {
+      "value": "Introduce the product and invite users to create a video",
+      "source": "kit"
+    },
+    "audience": {
+      "value": "Small teams creating branded product videos",
+      "source": "kit"
+    },
+    "message": {
+      "value": "Turn a prompt and saved brand kit into an editable video project",
+      "source": "kit"
+    },
+    "cta": {
+      "value": "Create your story",
+      "source": "kit"
+    },
+    "website": {
+      "value": "your-domain.example",
+      "source": "kit"
+    },
+    "durationSeconds": {
+      "value": 15,
+      "source": "prompt",
+      "evidence": "15 second"
+    },
+    "format": {
+      "value": "landscape",
+      "source": "kit"
+    },
+    "fps": {
+      "value": 60,
+      "source": "kit"
+    },
+    "spokenLanguage": {
+      "value": "en",
+      "source": "kit"
+    },
+    "onScreenLanguage": {
+      "value": "en",
+      "source": "kit"
+    },
+    "narration": {
+      "value": true,
+      "source": "kit"
+    },
+    "voiceId": {
+      "value": null,
+      "source": "kit"
+    },
+    "tone": {
+      "value": "Clear, confident, concise",
+      "source": "kit"
+    },
+    "energy": {
+      "value": "balanced",
+      "source": "kit"
+    },
+    "primaryRef": {
+      "value": "R08",
+      "source": "inference"
+    },
+    "secondaryRefs": {
+      "value": [
+        "R03",
+        "R01"
+      ],
+      "source": "inference"
+    },
+    "allowOrbit": {
+      "value": true,
+      "source": "kit"
+    },
+    "name": {
+      "value": "Flux",
+      "source": "kit"
+    },
+    "primary": {
+      "value": "#4B47F5",
+      "source": "kit"
+    },
+    "secondary": {
+      "value": "#FA6944",
+      "source": "kit"
+    },
+    "background": {
+      "value": "#F5F4EF",
+      "source": "kit"
+    },
+    "foreground": {
+      "value": "#14151B",
+      "source": "kit"
+    },
+    "surface": {
+      "value": "#FFFFFF",
+      "source": "kit"
+    },
+    "muted": {
+      "value": "#646571",
+      "source": "kit"
+    },
+    "fontFamily": {
+      "value": "DejaVu Sans",
+      "source": "kit"
+    },
+    "fontAssetId": {
+      "value": "demo-font",
+      "source": "kit"
+    },
+    "logoAssetId": {
+      "value": null,
+      "source": "product-default"
+    },
+    "radius": {
+      "value": 28,
+      "source": "kit"
+    }
+  },
+  "conflicts": [],
+  "questions": [],
+  "warnings": [
+    "Narration can be planned, but an authorized voice must be selected before speech generation."
+  ],
+  "moods": [
+    "premium"
+  ],
+  "exactCopy": [],
+  "creativeRequests": [],
+  "expected": {
+    "brand": {
+      "name": "Flux",
+      "background": "#F5F4EF",
+      "foreground": "#14151B",
+      "primary": "#4B47F5",
+      "secondary": "#FA6944",
+      "surface": "#FFFFFF",
+      "muted": "#646571",
+      "fontFamily": "DejaVu Sans",
+      "fontAssetId": "demo-font",
+      "radius": 28
+    },
+    "canvas": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 60,
+      "durationInFrames": 900
+    },
+    "style": {
+      "primaryRef": "R08",
+      "secondaryRefs": [
+        "R03",
+        "R01"
+      ],
+      "energy": "balanced"
+    },
+    "cta": "Create your story",
+    "website": "your-domain.example",
+    "narration": true,
+    "voiceId": null,
+    "spokenLanguage": "en",
+    "onScreenLanguage": "en",
+    "allowOrbit": true,
+    "approvedMetricValues": []
+  }
+}

@@ -6,6 +6,7 @@
 // The account list lives in server/storage/users.json (gitignored: it holds real scrypt password hashes).
 const { loadConfig } = require('./config.cjs');
 const { createUsers } = require('./users.cjs');
+const { loadEnvFiles } = require('./env.cjs');
 
 const USAGE = [
   'Usage:',
@@ -15,7 +16,8 @@ const USAGE = [
 ].join('\n');
 
 function main(argv) {
-  const cfg = loadConfig(process.env);
+  // Same env files the server reads, so this always writes the users.json the server loads.
+  const cfg = loadConfig(loadEnvFiles(process.env).env);
   const users = createUsers(cfg);
   const args = argv.slice(2);
 

@@ -147,11 +147,85 @@ def compute_exposure(gray_frames: List[np.ndarray]) -> float:
     return round(float(np.mean(lumas)), 4)
 
 
+def load_audio_track(media_path: Path | str, sample_rate: int = 8000) -> Optional[np.ndarray]:
+    """Load entire audio track of a media or proxy file into a float32 mono array."""
+    p = Path(media_path).resolve()
+    if not p.is_file():
+        return None
+
+    cmd = [
+        "ffmpeg",
+        "-v", "error",
+        "-i", str(p),
+        "-vn",
+        "-ac", "1",
+        "-ar", str(sample_rate),
+        "-f", "f32le",
+        "-",
+    ]
+    try:
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=20.0)
+        if proc.returncode == 0 and proc.stdout:
+            return np.frombuffer(proc.stdout, dtype=np.float32)
+    except Exception as e:
+        logger.warning("Failed to load audio track for %s: %s", p, e)
+    return None
+
+
+def classify_audio_samples(samples: np.ndarray) -> Tuple[float, str]:
+    """Calculate RMS energy and classify audio content from PCM float32 samples.
+    
+    Classes:
+    - 'silence', 'speech', 'music', 'applause', 'noise'
+    """
+    if samples is None or len(samples) == 0:
+        return 0.0, "silence"
+
+    rms = float(np.sqrt(np.mean(samples ** 2)))
+    if rms < 0.008:
+        return round(rms, 4), "silence"
+
+    frame_size = 512
+    num_frames = len(samples) // frame_size
+    if num_frames == 0:
+        return round(rms, 4), "noise"
+
+    frames = samples[:num_frames * frame_size].reshape(num_frames, frame_size)
+    frame_rms = np.sqrt(np.mean(frames ** 2, axis=1) + 1e-12)
+    rms_std = float(np.std(frame_rms))
+    rms_mean = float(np.mean(frame_rms))
+    crest_factor = rms_std / (rms_mean + 1e-6)
+
+    windowed = frames * np.hanning(frame_size)
+    fft_mag = np.abs(np.fft.rfft(windowed, axis=1)) + 1e-10
+    power = fft_mag ** 2
+    geom_mean = np.exp(np.mean(np.log(power), axis=1))
+    arith_mean = np.mean(power, axis=1)
+    flatness = float(np.mean(geom_mean / arith_mean))
+
+    zcr = float(np.mean(np.abs(np.diff(np.signbit(samples)))))
+
+    if crest_factor > 0.45 and 0.12 <= flatness <= 0.55:
+        audio_cls = "speech"
+    elif flatness < 0.18 and crest_factor < 0.55:
+        audio_cls = "music"
+    elif zcr > 0.25 and flatness > 0.40 and crest_factor > 0.35:
+        audio_cls = "applause"
+    elif flatness > 0.50:
+        audio_cls = "noise"
+    else:
+        audio_cls = "speech" if crest_factor > 0.30 else "noise"
+
+    return round(rms, 4), audio_cls
+
+
 def compute_audio_metrics(
     media_path: Path | str,
     start: float,
     end: float,
     has_audio: bool = True,
+    audio_track: Optional[np.ndarray] = None,
+    sample_rate: int = 8000,
 ) -> Tuple[float, str]:
     """Calculate audio RMS energy and classify audio content.
     
@@ -167,6 +241,13 @@ def compute_audio_metrics(
     if not has_audio or (end - start) < 0.1:
         return 0.0, "silence"
 
+    if audio_track is not None:
+        idx_start = max(0, int(start * sample_rate))
+        idx_end = min(len(audio_track), int(end * sample_rate))
+        if idx_end > idx_start:
+            return classify_audio_samples(audio_track[idx_start:idx_end])
+        return 0.0, "silence"
+
     p = Path(media_path).resolve()
     dur = max(0.1, end - start)
 
@@ -178,7 +259,7 @@ def compute_audio_metrics(
         "-i", str(p),
         "-vn",
         "-ac", "1",
-        "-ar", "8000",
+        "-ar", str(sample_rate),
         "-f", "f32le",
         "-",
     ]
@@ -198,54 +279,7 @@ def compute_audio_metrics(
         return 0.0, "silence"
 
     samples = np.frombuffer(proc.stdout, dtype=np.float32)
-    if len(samples) == 0:
-        return 0.0, "silence"
-
-    rms = float(np.sqrt(np.mean(samples ** 2)))
-    if rms < 0.008:
-        return round(rms, 4), "silence"
-
-    # Spectral analysis for classification
-    # Divide into frames of 512 samples
-    frame_size = 512
-    num_frames = len(samples) // frame_size
-    if num_frames == 0:
-        return round(rms, 4), "noise"
-
-    frames = samples[:num_frames * frame_size].reshape(num_frames, frame_size)
-    frame_rms = np.sqrt(np.mean(frames ** 2, axis=1) + 1e-12)
-    rms_std = float(np.std(frame_rms))
-    rms_mean = float(np.mean(frame_rms))
-    crest_factor = rms_std / (rms_mean + 1e-6)
-
-    # Spectral flatness on magnitude spectrum
-    windowed = frames * np.hanning(frame_size)
-    fft_mag = np.abs(np.fft.rfft(windowed, axis=1)) + 1e-10
-    power = fft_mag ** 2
-    geom_mean = np.exp(np.mean(np.log(power), axis=1))
-    arith_mean = np.mean(power, axis=1)
-    flatness = float(np.mean(geom_mean / arith_mean))
-
-    # Zero-crossing rate
-    zcr = float(np.mean(np.abs(np.diff(np.signbit(samples)))))
-
-    # Heuristic classification
-    # High dynamic bursts with moderate flatness -> speech
-    # Low flatness, steady energy, harmonic peaks -> music
-    # High zcr, high flatness, transient bursts -> applause
-    # Steady energy, high flatness -> noise
-    if crest_factor > 0.45 and 0.12 <= flatness <= 0.55:
-        audio_cls = "speech"
-    elif flatness < 0.18 and crest_factor < 0.55:
-        audio_cls = "music"
-    elif zcr > 0.25 and flatness > 0.40 and crest_factor > 0.35:
-        audio_cls = "applause"
-    elif flatness > 0.50:
-        audio_cls = "noise"
-    else:
-        audio_cls = "speech" if crest_factor > 0.30 else "noise"
-
-    return round(rms, 4), audio_cls
+    return classify_audio_samples(samples)
 
 
 def compute_shot_metrics(
@@ -254,6 +288,8 @@ def compute_shot_metrics(
     end: float,
     has_audio: bool = True,
     cap: Optional[cv2.VideoCapture] = None,
+    audio_track: Optional[np.ndarray] = None,
+    audio_sr: int = 8000,
 ) -> Dict[str, Any]:
     """Compute all L0 metrics for a shot.
     
@@ -270,7 +306,24 @@ def compute_shot_metrics(
     face_count, max_face_area = detect_faces_in_frames(bgr_frames)
 
     # Audio metrics
-    audio_rms, audio_class = compute_audio_metrics(proxy_path, start, end, has_audio)
+    audio_rms, audio_class = compute_audio_metrics(
+        proxy_path,
+        start,
+        end,
+        has_audio,
+        audio_track=audio_track,
+        sample_rate=audio_sr,
+    )
+
+    return {
+        "motion": motion,
+        "focus": focus,
+        "exposure": exposure,
+        "audio_rms": audio_rms,
+        "audio_class": audio_class,
+        "faces": face_count,
+        "face_area": max_face_area,
+    }
 
     return {
         "motion": motion,

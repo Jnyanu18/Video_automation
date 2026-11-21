@@ -1,0 +1,47 @@
+{
+  "projectId": "event-studio-stage-study",
+  "projectRevision": 1,
+  "fps": 60,
+  "durationInFrames": 900,
+  "evidence": {
+    "mode": "component-sampled",
+    "sourceHash": "8e36ad5af9a7e654d80a00a38d0c0fca77f50373f10a0643127fab4aa9131147",
+    "notes": "Samples actual functions consumed by EventStageFilm. At cut−1 coverage uses the projected opaque hero polygon with zero corner radius/hidden internal content; at cut/cut+1 EventStageFilm uses the same opaque brand-color full-canvas identity backplane. This is not pixel inspection, playback, listening, font-fit measurement, approval or an artistic rating."
+  },
+  "status": "review-pending",
+  "structuralChecksPassed": true,
+  "errors": [],
+  "warnings": [],
+  "pending": [
+    "frameInspection: pending",
+    "fullSpeedPlayback: pending",
+    "audioListening: pending"
+  ],
+  "unresolvedAssets": [],
+  "contacts": [
+    {
+      "id": "spark-floor",
+      "distancePx": 0,
+      "withinTolerance": true
+    }
+  ],
+  "beatWords": [
+    {
+      "id": "lights",
+      "offsetFrames": 0,
+      "withinTolerance": true
+    },
+    {
+      "id": "energy",
+      "offsetFrames": 0,
+      "withinTolerance": true
+    },
+    {
+      "id": "action",
+      "offsetFrames": 0,
+      "withinTolerance": true
+    }
+  ],
+  "findings": [],
+  "limitation": "Evaluates supplied measurements and review declarations only. The host must bind actual component/render evidence to this revision. checks-complete is not an artistic rating, provenance verification or user approval."
+}

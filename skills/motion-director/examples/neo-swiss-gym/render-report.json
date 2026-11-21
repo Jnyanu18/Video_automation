@@ -1,0 +1,38 @@
+{
+  "programs": [],
+  "stream_groups": [],
+  "streams": [
+    {
+      "codec_name": "h264",
+      "codec_type": "video",
+      "width": 1920,
+      "height": 1080,
+      "pix_fmt": "yuv420p",
+      "r_frame_rate": "60/1",
+      "nb_frames": "900"
+    },
+    {
+      "codec_name": "aac",
+      "codec_type": "audio",
+      "r_frame_rate": "0/0",
+      "nb_frames": "706"
+    }
+  ],
+  "format": {
+    "duration": "15.019000"
+  },
+  "audio_measurement": {
+    "input_i": "-15.99",
+    "input_tp": "-1.26",
+    "input_lra": "1.40",
+    "input_thresh": "-25.99",
+    "output_i": "-15.34",
+    "output_tp": "-1.50",
+    "output_lra": "0.70",
+    "output_thresh": "-25.34",
+    "normalization_type": "dynamic",
+    "target_offset": "0.34"
+  },
+  "beat_grid_max_error_frames": 0.5,
+  "sourceHash": "5a03f48bae3d3c7f3719f5d666b8063eeca81013b4e17cbc1ea9f0a515f6287c"
+}

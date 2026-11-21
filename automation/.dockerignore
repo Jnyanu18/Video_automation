@@ -1,0 +1,44 @@
+# Keep the build context small and keep secrets and local state out of the image.
+
+# Secrets and local accounts -- never in an image layer.
+.env
+.env.*
+**/.env
+**/.env.*
+server/storage/users.json
+deploy/.env
+
+# Local state: per-account work dirs, renders, uploads. The volume provides these.
+runtime/
+server/storage/
+editor/work/
+editor/renders/
+editor/.jobs-archive/
+
+# Dependencies and build output are produced inside the image.
+node_modules/
+**/node_modules/
+app/dist/
+web/dist/
+.expo/
+**/.expo/
+
+# Caches and junk
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.git/
+.gitignore
+*.log
+npm-debug.log*
+
+# Media does not belong in a build context.
+*.mp4
+*.mov
+*.mkv
+*.wav
+*.mp3
+# ...except the CC0 sfx library, which the engine needs and the build checks for.
+!editor/assets/sfx/*.wav

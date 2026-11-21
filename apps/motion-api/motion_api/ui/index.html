@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Motion Films</title>
+<style>
+  :root{
+    --bg:#0a0a0b; --panel:#131316; --panel-2:#1a1a1f; --line:#26262d;
+    --text:#f2f2f4; --muted:#8b8b96; --accent:#ff5a1f; --accent-dim:#ff5a1f22;
+    --good:#38d27a; --bad:#ff5468; --warn:#e8b339;
+    --radius:14px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--text);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent)}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 16px 80px}
+
+  header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .mark{width:34px;height:34px;border-radius:9px;background:var(--accent);
+    display:grid;place-items:center;flex:none}
+  .mark svg{width:19px;height:19px;display:block}
+  h1{font-size:21px;font-weight:650;margin:0;letter-spacing:-0.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px 46px}
+  @media (max-width:640px){ .sub{margin-left:0} }
+
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
+  @media (max-width:900px){ .grid{grid-template-columns:minmax(0,1fr)} }
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .card + .card{margin-top:16px}
+  .card h2{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--muted);margin:0 0 14px}
+
+  label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
+  textarea,input[type=text]{
+    width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;
+    color:var(--text);padding:12px 13px;font:inherit;resize:vertical;outline:none;
+  }
+  textarea:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+  textarea{min-height:132px;line-height:1.5}
+  .hint{color:var(--muted);font-size:12.5px;margin:7px 0 0}
+
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+  button{
+    background:var(--accent);color:#fff;border:0;border-radius:10px;
+    padding:11px 18px;font:inherit;font-weight:600;cursor:pointer;
+  }
+  button:hover:not(:disabled){filter:brightness(1.08)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+    padding:4px 10px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line)}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--muted)}
+  .badge.running{color:var(--warn)} .badge.running .dot{background:var(--warn)}
+  .badge.done{color:var(--good)}    .badge.done .dot{background:var(--good)}
+  .badge.failed{color:var(--bad)}   .badge.failed .dot{background:var(--bad)}
+  @media (prefers-reduced-motion:no-preference){
+    .badge.running .dot{animation:pulse 1.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  }
+
+  .jobhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brief-echo{color:var(--muted);font-size:13.5px;margin:10px 0 0;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  .meters{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+  .meter .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .meter .v{font-size:19px;font-weight:650;font-family:var(--mono);margin-top:2px}
+
+  .stills{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-top:4px}
+  .still{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#000;position:relative}
+  .still img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+  .still .t{position:absolute;left:6px;bottom:6px;background:#000a;backdrop-filter:blur(3px);
+    font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px}
+
+  video{width:100%;max-height:70vh;border-radius:10px;background:#000;display:block}
+
+  .checks{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
+  .checks li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px}
+  .checks .ic{flex:none;width:16px;height:16px;margin-top:2px}
+
+  .joblist{display:grid;gap:7px}
+  .joblist button{width:100%;text-align:left;background:var(--panel-2);color:var(--text);
+    border:1px solid transparent;font-weight:500;padding:10px 12px;border-radius:10px}
+  .joblist button:hover{border-color:var(--line)}
+  .joblist button[aria-current=true]{border-color:var(--accent);background:var(--accent-dim)}
+  .joblist .jb{font-size:13px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  .joblist .jm{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:3px}
+
+  .note{border-radius:10px;padding:12px 14px;font-size:13.5px;border:1px solid var(--line);
+    background:var(--panel-2);margin-top:14px}
+  .note.bad{border-color:#ff546844;background:#ff54680f;color:#ffc2c9}
+  .note code{font-family:var(--mono);font-size:12.5px;word-break:break-word}
+  .empty{color:var(--muted);font-size:13.5px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>
+      </svg>
+    </div>
+    <h1>Motion Films</h1>
+  </header>
+  <p class="sub">A brief goes in. Claude directs the film, renders frames, looks at them,
+    critiques its own work and iterates until it passes the rubric.</p>
+
+  <div class="grid">
+    <main>
+      <section class="card">
+        <h2>The brief</h2>
+        <label for="brief">What is the film for?</label>
+        <textarea id="brief" placeholder="A 20 second launch film for an AI video editor. Confident, fast, a little dry. The point: editing a reel by hand takes hours, this takes about thirty seconds. End on the product name and a single call to action."></textarea>
+        <p class="hint">Say what it is for, who it is for and the one thing it must land.
+          Tone and length help. The director decides the shots.</p>
+        <div class="row">
+          <button id="go">Direct the film</button>
+          <span id="gostate" class="empty" role="status" aria-live="polite"></span>
+        </div>
+        <div id="nokey" class="note bad" hidden>
+          <strong>No API key on this service.</strong> A brief would fail at the model call.
+          Stop the service, set <code id="keyvar">ANTHROPIC_API_KEY</code> in its environment, and start it again.
+        </div>
+        <div id="formerr" class="note bad" hidden></div>
+      </section>
+
+      <section class="card" id="jobcard" hidden aria-live="polite">
+        <div class="jobhead">
+          <h2 style="margin:0">The film</h2>
+          <span id="badge" class="badge"><span class="dot"></span><span id="badgetext">queued</span></span>
+        </div>
+        <p class="brief-echo" id="briefecho"></p>
+
+        <div class="meters">
+          <div class="meter"><div class="k">Rounds</div><div class="v" id="m-rounds">0</div></div>
+          <div class="meter"><div class="k">Frames seen</div><div class="v" id="m-stills">0</div></div>
+          <div class="meter"><div class="k">Elapsed</div><div class="v" id="m-elapsed">0:00</div></div>
+        </div>
+
+        <div id="stopnote" class="note" hidden></div>
+        <div id="errnote" class="note bad" hidden></div>
+      </section>
+
+      <section class="card" id="filmcard" hidden>
+        <h2>The finished film</h2>
+        <video id="film" controls playsinline preload="metadata"></video>
+        <div class="row">
+          <a id="dl" class="badge" download>Download mp4</a>
+        </div>
+        <div id="score"></div>
+      </section>
+
+      <section class="card" id="stillcard" hidden>
+        <h2>What the director looked at</h2>
+        <div class="stills" id="stills"></div>
+      </section>
+    </main>
+
+    <aside>
+      <section class="card">
+        <h2>Recent films</h2>
+        <div class="joblist" id="joblist"><p class="empty">Nothing yet.</p></div>
+      </section>
+      <section class="card">
+        <h2>Service</h2>
+        <p class="empty" id="health">checking…</p>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var current = null, timer = null, startedAt = 0;
+
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function clock(ms){
+    var s = Math.max(0, Math.floor(ms/1000));
+    return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0");
+  }
+  function api(path, opts){
+    return fetch(path, opts).then(function(r){
+      if(!r.ok) return r.text().then(function(t){ throw new Error(t || (r.status + " " + r.statusText)); });
+      return r.json();
+    });
+  }
+
+  // ---- health
+  api("/health").then(function(h){
+    $("health").innerHTML = "motion-api up · " + h.jobs + " job" + (h.jobs === 1 ? "" : "s") + " on disk" +
+      (h.configured === false ? " · no API key" : "") +
+      (h.model ? '<br><span style="font-family:var(--mono);font-size:12px">' + esc(h.model) + "</span>" : "");
+    if(h.configured === false){
+      $("keyvar").textContent = h.provider === "gemini" ? "GEMINI_API_KEY" : "ANTHROPIC_API_KEY";
+      $("nokey").hidden = false;
+      $("go").disabled = true;
+    }
+  }).catch(function(){
+    $("health").textContent = "motion-api is not reachable";
+  });
+
+  // ---- submit
+  $("go").addEventListener("click", function(){
+    var brief = $("brief").value.trim();
+    $("formerr").hidden = true;
+    if(brief.length < 12){
+      $("formerr").hidden = false;
+      $("formerr").textContent = "Give the director a little more to work with — a sentence or two at least.";
+      return;
+    }
+    $("go").disabled = true;
+    $("gostate").textContent = "sending…";
+    api("/motion/jobs", {
+      method:"POST",
+      headers:{"content-type":"application/json"},
+      body: JSON.stringify({ brief: brief })
+    }).then(function(j){
+      $("gostate").textContent = "";
+      $("go").disabled = false;
+      watch(j.id);
+      loadJobs();
+    }).catch(function(e){
+      $("go").disabled = false;
+      $("gostate").textContent = "";
+      $("formerr").hidden = false;
+      $("formerr").innerHTML = "Could not start the film. <code>" + esc(e.message) + "</code>";
+    });
+  });
+
+  // ---- watch one job
+  function watch(id){
+    current = id;
+    startedAt = Date.now();
+    $("jobcard").hidden = false;
+    $("filmcard").hidden = true;
+    $("stillcard").hidden = true;
+    $("stills").innerHTML = "";
+    tick();
+    if(timer) clearInterval(timer);
+    timer = setInterval(tick, 2500);
+  }
+
+  function tick(){
+    if(!current) return;
+    api("/motion/jobs/" + current).then(render).catch(function(){});
+  }
+
+  function render(j){
+    $("badgetext").textContent = j.status;
+    $("badge").className = "badge " + j.status;
+    $("briefecho").textContent = j.brief;
+    $("m-rounds").textContent = j.rounds || 0;
+    $("m-stills").textContent = (j.stills || []).length;
+
+    var end = (j.status === "done" || j.status === "failed")
+      ? (j.updated * 1000) : Date.now();
+    $("m-elapsed").textContent = clock(end - (j.created * 1000));
+
+    $("stopnote").hidden = !j.stopped;
+    if(j.stopped) $("stopnote").textContent = "The director stopped: " + j.stopped;
+
+    var errs = j.errors || [];
+    $("errnote").hidden = errs.length === 0;
+    if(errs.length){
+      $("errnote").innerHTML = "<strong>" + errs.length + " problem" +
+        (errs.length===1?"":"s") + "</strong><br><code>" + esc(errs.join("\n")) + "</code>";
+    }
+
+    loadStills(j);
+
+    if(j.status === "done" && j.final_path){
+      var src = "/motion/jobs/" + j.id + "/film";
+      if($("film").getAttribute("src") !== src){
+        $("film").setAttribute("src", src);
+        $("dl").setAttribute("href", src);
+      }
+      $("filmcard").hidden = false;
+      renderScore(j.scorecard);
+    }
+    if(j.status === "done" || j.status === "failed"){
+      if(timer){ clearInterval(timer); timer = null; }
+      loadJobs();
+    }
+  }
+
+  function renderScore(card){
+    if(!card){ $("score").innerHTML = ""; return; }
+    var fails = card.failures || [];
+    var rows = [
+      ["Duration", card.duration != null ? card.duration.toFixed(2) + "s" : "—"],
+      ["Frame rate", card.fps != null ? card.fps + " fps" : "—"],
+      ["Loudness", card.lufs != null ? card.lufs.toFixed(1) + " LUFS" : "—"],
+      ["Peak", card.peak != null ? card.peak.toFixed(1) + " dB" : "—"]
+    ];
+    var html = '<div class="meters">';
+    rows.forEach(function(r){
+      html += '<div class="meter"><div class="k">' + esc(r[0]) + '</div><div class="v">' + esc(r[1]) + '</div></div>';
+    });
+    html += "</div>";
+
+    var ok = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#38d27a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    var no = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ff5468" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+    html += '<ul class="checks">';
+    if(card.passes && !fails.length){
+      html += "<li>" + ok + "<span>Passes the rubric.</span></li>";
+    } else {
+      fails.forEach(function(f){ html += "<li>" + no + "<span>" + esc(f) + "</span></li>"; });
+      if(!fails.length) html += "<li>" + no + "<span>Did not pass the rubric.</span></li>";
+    }
+    html += "</ul>";
+    $("score").innerHTML = html;
+  }
+
+  function loadStills(j){
+    if(!(j.stills || []).length) return;
+    api("/motion/jobs/" + j.id + "/stills").then(function(d){
+      var list = d.stills || [];
+      if(!list.length) return;
+      $("stillcard").hidden = false;
+      if($("stills").childElementCount === list.length) return;
+      $("stills").innerHTML = list.map(function(s){
+        return '<figure class="still" style="margin:0">' +
+          '<img src="' + esc(s.url) + '" alt="Frame at ' + s.t.toFixed(2) + ' seconds" loading="lazy">' +
+          '<figcaption class="t">' + s.t.toFixed(2) + 's</figcaption></figure>';
+      }).join("");
+    }).catch(function(){});
+  }
+
+  // ---- recent jobs
+  function loadJobs(){
+    api("/motion/jobs").then(function(d){
+      var jobs = d.jobs || [];
+      if(!jobs.length){ $("joblist").innerHTML = '<p class="empty">Nothing yet.</p>'; return; }
+      $("joblist").innerHTML = "";
+      jobs.slice(0,12).forEach(function(j){
+        var b = document.createElement("button");
+        b.setAttribute("aria-current", String(j.id === current));
+        b.innerHTML = '<div class="jb">' + esc(j.brief) + "</div>" +
+          '<div class="jm">' + esc(j.status) + " · " + esc(j.id) + "</div>";
+        b.addEventListener("click", function(){ watch(j.id); loadJobs(); });
+        $("joblist").appendChild(b);
+      });
+    }).catch(function(){});
+  }
+  loadJobs();
+})();
+</script>
+</body>
+</html>

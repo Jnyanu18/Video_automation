@@ -1,0 +1,21 @@
+{
+  "id": "mj_179ddababa96",
+  "brief": "one",
+  "status": "done",
+  "created": 1795081836.8812447,
+  "updated": 1795081836.885375,
+  "rounds": 3,
+  "stills": [],
+  "final_path": "out/film.mp4",
+  "scorecard": {
+    "duration": 15.0,
+    "fps": 60,
+    "lufs": -14.1,
+    "peak": -2.0,
+    "passes": true,
+    "failures": []
+  },
+  "errors": [],
+  "stopped": "end_turn",
+  "dir": "J:\\ai editor\\apps\\motion-api\\.jobs\\mj_179ddababa96"
+}

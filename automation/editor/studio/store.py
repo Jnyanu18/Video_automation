@@ -45,15 +45,27 @@ class Store:
                 self.data[c] = raw[c]
         if isinstance(raw.get("events"), list):
             self.data["events"] = raw["events"][-MAX_EVENTS:]
+        self._recover_interrupted()
+
+    def _recover_interrupted(self) -> None:
+        """Fail every record that was still in flight when the process last died.
+
+        Background work runs in daemon threads, so a crash or a deploy kills it silently and
+        nothing ever touches the record again. Left alone, the client watches a progress bar
+        that will never move. Only in-flight states are rewritten, so this is idempotent and
+        finished work is never disturbed.
+
+        This runs on load rather than when each subsystem starts, so the sweep happens even
+        if the scheduler or a worker never comes up.
+        """
         for c in self.data["carousels"].values():
             if c.get("status") in ("writing", "rendering"):
                 c["status"] = "failed"
                 c["error"] = "The editor service restarted while this carousel was being made. Make it again."
-        for c in self.data.get("longform_jobs", {}).values():
-            if c.get("status") in ("running", "queued"):
-                c["status"] = "failed"
-                c["error"] = "The editor service restarted while this index job was running."
-        # jobs that were running when the process died can never finish: surface that instead of spinning forever
+        for j in self.data["longform_jobs"].values():
+            if j.get("status") in ("running", "queued"):
+                j["status"] = "failed"
+                j["error"] = "The editor service restarted while this index job was running."
         for sb in self.data["storyboards"].values():
             if sb.get("status") == "processing":
                 sb["status"] = "failed"
@@ -62,6 +74,16 @@ class Store:
             if job and job.get("status") == "running":
                 job["status"] = "failed"
                 job["error"] = "The editor service restarted during the render."
+        # Publishing is the one case that must not be retried automatically: the platform call
+        # may have gone through moments before the crash, so a silent retry could post to a
+        # client's account twice. It is marked outcome_unknown, which makes retry() refuse until
+        # an operator checks the account and uses retry_confirmed().
+        for p in self.data["publishing"].values():
+            if p.get("status") == "PUBLISHING":
+                p["status"] = "FAILED"
+                p["outcome_unknown"] = True
+                p["error"] = {"code": "OUTCOME_UNKNOWN", "retryable": False,
+                              "message": "the service restarted while publishing; check the account before retrying"}
 
     def save(self) -> None:
         with self.lock:

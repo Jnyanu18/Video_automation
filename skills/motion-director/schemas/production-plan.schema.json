@@ -1,0 +1,355 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 1
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+    },
+    "projectRevision": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "fps": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "kinetic-editorial",
+        "continuous-product",
+        "hybrid"
+      ]
+    },
+    "ending": {
+      "type": "object",
+      "properties": {
+        "sceneId": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+        },
+        "goal": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1200
+        },
+        "settledFromLocalFrame": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "holdFrames": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "sceneId",
+        "goal",
+        "settledFromLocalFrame",
+        "holdFrames"
+      ],
+      "additionalProperties": false
+    },
+    "shots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sceneId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "focalElement": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "entry": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "hold": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "exit": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          },
+          "camera": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "locked",
+                  "continuous",
+                  "intentional-cut"
+                ]
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              }
+            },
+            "required": [
+              "mode",
+              "path"
+            ],
+            "additionalProperties": false
+          },
+          "outgoing": {
+            "type": "object",
+            "properties": {
+              "toSceneId": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "hard-cut",
+                  "match",
+                  "action",
+                  "occlusion",
+                  "scale-bridge",
+                  "morph"
+                ]
+              },
+              "anchor": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              },
+              "becomes": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              }
+            },
+            "required": [
+              "toSceneId",
+              "mode",
+              "anchor",
+              "becomes"
+            ],
+            "additionalProperties": false
+          },
+          "assetUses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "assetId": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+                },
+                "maxDisplayWidthPx": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "maxDisplayHeightPx": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "fit": {
+                  "type": "string",
+                  "enum": [
+                    "contain",
+                    "cover"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1200
+                }
+              },
+              "required": [
+                "assetId",
+                "maxDisplayWidthPx",
+                "maxDisplayHeightPx",
+                "fit",
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 30
+          }
+        },
+        "required": [
+          "sceneId",
+          "purpose",
+          "focalElement",
+          "entry",
+          "hold",
+          "exit",
+          "camera",
+          "assetUses"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "sceneId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "localFrame": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "contact",
+              "arrival",
+              "settle",
+              "cut",
+              "accent"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1200
+          }
+        },
+        "required": [
+          "id",
+          "sceneId",
+          "localFrame",
+          "kind",
+          "description"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 300
+    },
+    "audioCues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "eventId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "assetId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "offsetFrames": {
+            "type": "integer"
+          },
+          "alignment": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "onset",
+                  "perceptual-peak",
+                  "riser-end"
+                ]
+              },
+              "sourceFrame": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              }
+            },
+            "required": [
+              "kind",
+              "sourceFrame",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "durationInFrames": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "gain": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "fadeInFrames": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fadeOutFrames": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "sfx",
+              "music"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "eventId",
+          "assetId",
+          "offsetFrames",
+          "alignment",
+          "durationInFrames",
+          "gain",
+          "fadeInFrames",
+          "fadeOutFrames",
+          "role"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 150
+    }
+  },
+  "required": [
+    "version",
+    "projectId",
+    "projectRevision",
+    "fps",
+    "direction",
+    "ending",
+    "shots",
+    "events",
+    "audioCues"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -37,14 +37,21 @@ def collect_tools() -> dict:
 
 def _anthropic_client():
     """Claude as the editor's brain. Needs ANTHROPIC_API_KEY (an API key from console.anthropic.com; a Claude chat or
-    Claude Code subscription is a different thing and does not work here). Model: EDITOR_LLM_MODEL, default claude-sonnet-5-5."""
+    Claude Code subscription is a different thing and does not work here).
+
+    Reaching this at all requires EDITOR_LLM=anthropic: _make_client() checks EDITOR_LLM first, so with
+    EDITOR_LLM=gemini the key below is never looked at.
+
+    The model is chosen by agent.loop.MODEL (claude-opus-5-5, or EDITOR_AGENT_MODEL), not here - the loop
+    is called without a model= argument, so the attribute set below is advisory only.
+    """
     key = os.environ.get("ANTHROPIC_API_KEY")
     if not key:
         return None
     try:
         import anthropic
         client = anthropic.Anthropic(api_key=key)
-        client.model = os.environ.get("EDITOR_LLM_MODEL") or "claude-sonnet-5-5"
+        client.model = os.environ.get("EDITOR_LLM_MODEL") or os.environ.get("EDITOR_AGENT_MODEL") or "claude-opus-5-5"
         return client
     except Exception as e:
         log.warning("anthropic client unavailable: %s", e)
