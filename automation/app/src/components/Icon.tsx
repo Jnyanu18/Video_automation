@@ -81,6 +81,15 @@ function render(name: IconName, p: any) {
     case 'arrow-left': return <><Line {...p} x1="19" y1="12" x2="5" y2="12" /><Polyline {...p} points="12 19 5 12 12 19" /><Polyline {...p} points="12 5 5 12 12 19" /></>;
     case 'arrow-right': return <><Line {...p} x1="5" y1="12" x2="19" y2="12" /><Polyline {...p} points="12 5 19 12 12 19" /></>;
     case 'alert-triangle': return <><Path {...p} d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><Line {...p} x1="12" y1="9" x2="12" y2="13" /><Line {...p} x1="12" y1="17" x2="12.01" y2="17" /></>;
+    case 'lock': return <><Rect {...p} x="5" y="11" width="14" height="10" rx="2" /><Path {...p} d="M8 11V7a4 4 0 0 1 8 0v4" /></>;
+    case 'scissors':
+    case 'cut': return <><Circle {...p} cx="6" cy="6" r="3" /><Circle {...p} cx="6" cy="18" r="3" /><Line {...p} x1="20" y1="4" x2="8.12" y2="15.88" /><Line {...p} x1="14.47" y1="14.48" x2="20" y2="20" /><Line {...p} x1="8.12" y1="8.12" x2="12" y2="12" /></>;
+    case 'maximize': return <><Polyline {...p} points="15 3 21 3 21 9" /><Polyline {...p} points="9 21 3 21 3 15" /><Polyline {...p} points="21 15 21 21 15 21" /><Polyline {...p} points="3 9 3 3 9 3" /></>;
+    case 'minus': return <Line {...p} x1="5" y1="12" x2="19" y2="12" />;
+    case 'zoom-in': return <><Circle {...p} cx="11" cy="11" r="7" /><Line {...p} x1="21" y1="21" x2="16.65" y2="16.65" /><Line {...p} x1="11" y1="8" x2="11" y2="14" /><Line {...p} x1="8" y1="11" x2="14" y2="11" /></>;
+    case 'zoom-out': return <><Circle {...p} cx="11" cy="11" r="7" /><Line {...p} x1="21" y1="21" x2="16.65" y2="16.65" /><Line {...p} x1="8" y1="11" x2="14" y2="11" /></>;
+    case 'video': return <><Polygon {...p} points="23 7 16 12 23 17 23 7" /><Rect {...p} x="1" y="5" width="15" height="14" rx="2" /></>;
+    case 'subtitles': return <><Rect {...p} x="2" y="4" width="20" height="16" rx="2" /><Line {...p} x1="6" y1="15" x2="18" y2="15" /><Line {...p} x1="6" y1="11" x2="14" y2="11" /></>;
     default: return <Circle {...p} cx="12" cy="12" r="10" />;
   }
 }
