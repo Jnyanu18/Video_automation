@@ -110,17 +110,10 @@ export default function TimelineEditor() {
       locked: false,
       visible: true,
       segments: [
-<<<<<<< HEAD
         { id: 'c1', label: '"Never build fe..."', start: 0.0, end: 6.0, type: 'caption' },
         { id: 'c2', label: '"6 months in dark m..."', start: 6.0, end: 14.0, type: 'caption' },
         { id: 'c3', label: '"Before coding, a..."', start: 14.0, end: 23.0, type: 'caption' },
         { id: 'c4', label: '"Send this to yo..."', start: 23.0, end: 29.4, type: 'caption' },
-=======
-        { id: 'c1', label: '"Never build features nobody asked for"', start: 0.0, end: 3.0, dur: '3.0s' },
-        { id: 'c2', label: '"6 months in dark mode building for zero users"', start: 3.5, end: 11.5, dur: '8.0s' },
-        { id: 'c3', label: '"Before coding, ask them to prepay today"', start: 12.5, end: 22.0, dur: '9.5s' },
-        { id: 'c4', label: '"Send this to your cofounder before sprint"', start: 23.5, end: 29.0, dur: '5.5s' },
->>>>>>> origin/main
       ],
     },
     {

@@ -8,11 +8,7 @@ export type IconName =
   | 'sliders' | 'bell' | 'volume' | 'copy' | 'eye' | 'trash' | 'zap' | 'filter' | 'check-circle'
   | 'folder' | 'calendar' | 'database' | 'book' | 'users' | 'gift' | 'lightbulb' | 'chevron-left' | 'chevron-right' | 'chevron-down' | 'chevron-up'
   | 'smartphone' | 'square' | 'monitor' | 'type' | 'arrow-left' | 'arrow-right' | 'alert-triangle'
-<<<<<<< HEAD
   | 'lock' | 'scissors' | 'cut' | 'maximize' | 'minus' | 'zoom-in' | 'zoom-out' | 'video' | 'subtitles' | 'crosshair';
-=======
-  | 'lock' | 'scissors' | 'cut' | 'maximize' | 'minus' | 'zoom-in' | 'zoom-out' | 'video' | 'subtitles';
->>>>>>> origin/main
 
 /** Stroke icons on a 24px grid (Feather-style), drawn with react-native-svg so they render identically on web and native. */
 export function Icon({ name, size = 20, color = '#000', strokeWidth = 2 }: { name: IconName; size?: number; color?: string; strokeWidth?: number }) {
@@ -94,10 +90,7 @@ function render(name: IconName, p: any) {
     case 'zoom-out': return <><Circle {...p} cx="11" cy="11" r="7" /><Line {...p} x1="21" y1="21" x2="16.65" y2="16.65" /><Line {...p} x1="8" y1="11" x2="14" y2="11" /></>;
     case 'video': return <><Polygon {...p} points="23 7 16 12 23 17 23 7" /><Rect {...p} x="1" y="5" width="15" height="14" rx="2" /></>;
     case 'subtitles': return <><Rect {...p} x="2" y="4" width="20" height="16" rx="2" /><Line {...p} x1="6" y1="15" x2="18" y2="15" /><Line {...p} x1="6" y1="11" x2="14" y2="11" /></>;
-<<<<<<< HEAD
     case 'crosshair': return <><Circle {...p} cx="12" cy="12" r="7" /><Line {...p} x1="12" y1="1" x2="12" y2="5" /><Line {...p} x1="12" y1="19" x2="12" y2="23" /><Line {...p} x1="1" y1="12" x2="5" y2="12" /><Line {...p} x1="19" y1="12" x2="23" y2="12" /></>;
-=======
->>>>>>> origin/main
     default: return <Circle {...p} cx="12" cy="12" r="10" />;
   }
 }

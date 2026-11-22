@@ -1,0 +1,25 @@
+[
+ {
+  "scene": "sleepai",
+  "at": "google just",
+  "bg": "#0b1026",
+  "section": "Google's AI that sleeps: 37's style, a world per chapter, the line-art brain; forgetting, day, night, dreams, the test",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "ai-sleep",
+   "parts": {
+    "sleep": "to sleep", "woke": "woke up",
+    "b2": "heres the problem", "new": "something new", "old": "old stuff",
+    "b3": "so google", "fast": "a fast",
+    "b3b": "at night", "moving": "moving the", "touching": "without touching",
+    "b4": "then it dreams", "invents": "it invents", "mixes": "mixes parts", "best": "the best",
+    "b5": "they taught", "kalamang": "then kalamang", "usual": "usual methods", "barely": "barely forgot",
+    "b6": "its a research", "follow": "follow me"
+   }
+  }
+ }
+]

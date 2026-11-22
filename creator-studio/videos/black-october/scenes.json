@@ -1,0 +1,13 @@
+[
+  {"scene": "october", "at": "black october", "bg": "#f3f1ec", "section": "one take: calendar, PHP and Node, Microsoft and Cisco, the four hacks, AI?, trusted", "mark": [],
+   "poses": [{"on": "black october", "pose": "point-left"}, {"on": "one day", "pose": "wow"}, {"on": "php", "pose": "point-left"}, {"on": "already using", "pose": "shock"},
+     {"on": "microsoft", "pose": "point-left"}, {"on": "cisco's", "pose": "facepalm"}, {"on": "that was just", "pose": "shrug"}, {"on": "four big", "pose": "shock"},
+     {"on": "binance lost", "pose": "point-left"}, {"on": "polymarket", "pose": "think"}, {"on": "hackers posted", "pose": "shock"}, {"on": "poisoned", "pose": "facepalm"},
+     {"on": "everyone's asking", "pose": "think"}, {"on": "nobody", "pose": "shrug"}, {"on": "came through", "pose": "point-left"}, {"on": "check yours", "pose": "wink"}],
+   "props": {"look": "dev", "ava": "side", "stageScale": 1.0, "stageLift": 60, "slug": "black-october",
+     "parts": {"black": "isn't", "left": "one day", "php": "php", "using": "already using", "node": "node.js",
+       "ms": "microsoft", "thousand": "thousand", "cisco": "cisco's",
+       "warm": "that was just", "four": "four big", "binance": "binance lost", "laptop": "laptop", "poly": "polymarket", "provider": "provider",
+       "dhs": "hackers posted", "login": "login", "claude": "poisoned", "installs": "installs",
+       "ai": "everyone's asking", "nobody": "nobody", "trusted": "came through", "check": "check yours"}}}
+]

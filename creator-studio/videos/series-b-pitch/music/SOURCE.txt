@@ -1,0 +1,1 @@
+Source: ElevenLabs Music API, made 2026-10-23 on ELEVENLABS_API_KEY_2 (paid plan, commercial use allowed under the Eleven Music terms). Prompt in prompt.txt.

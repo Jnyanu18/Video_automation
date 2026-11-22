@@ -1,0 +1,125 @@
+[
+ {
+  "scene": "secrank",
+  "at": "5 security",
+  "bg": "#0d0e12",
+  "section": "one take with Ava: a mystery card, five colour cards counting down 5 to 1 each with its own small scene, the comment",
+  "mark": [
+   "security"
+  ],
+  "poses": [
+   {
+    "on": "security repos",
+    "pose": "present"
+   },
+   {
+    "on": "has over",
+    "pose": "wow"
+   },
+   {
+    "on": "number 5",
+    "pose": "point-left"
+   },
+   {
+    "on": "trail of",
+    "pose": "think"
+   },
+   {
+    "on": "scans skills",
+    "pose": "shock"
+   },
+   {
+    "on": "a library",
+    "pose": "wow"
+   },
+   {
+    "on": "number one",
+    "pose": "cheer"
+   },
+   {
+    "on": "independently",
+    "pose": "wink"
+   },
+   {
+    "on": "comment security",
+    "pose": "wave"
+   }
+  ],
+  "props": {
+   "stageScale": 1.0,
+   "stageLift": 70,
+   "slug": "security-top-10",
+   "ranks": [
+    {
+     "n": 5,
+     "name": "Claude Code Security Review",
+     "repo": "anthropics/claude-code-security-review",
+     "stars": 6695,
+     "desc": "A GitHub Action: Claude reviews every code change for security vulnerabilities",
+     "shot": "claude-code-security-review"
+    },
+    {
+     "n": 4,
+     "name": "Trail of Bits Skills",
+     "repo": "trailofbits/skills",
+     "stars": 7974,
+     "desc": "Skills for security research, vulnerability detection and audit workflows",
+     "shot": "trailofbits-skills"
+    },
+    {
+     "n": 3,
+     "name": "SkillSpector",
+     "repo": "NVIDIA/SkillSpector",
+     "stars": 24090,
+     "desc": "A security scanner for AI agent skills",
+     "shot": "skillspector"
+    },
+    {
+     "n": 2,
+     "name": "817 Cybersecurity Skills",
+     "repo": "mukul975/Anthropic-Cybersecurity-Skills",
+     "stars": 35491,
+     "desc": "Structured skills mapped to MITRE ATT&CK, NIST CSF 2.0 and more",
+     "shot": "cybersecurity-skills"
+    },
+    {
+     "n": 1,
+     "name": "Security Audit",
+     "repo": "cloudflare/security-audit-skill",
+     "stars": 57735,
+     "desc": "A skill for multi-phase security audits with independently verified findings",
+     "shot": "security-audit-skill"
+    }
+   ],
+   "parts": {
+    "hook": "has over",
+    "r5": "number 5",
+    "vuln": "vulnerabilities",
+    "r4": "4",
+    "res4": "security research",
+    "aud4": "and audit",
+    "wf4": "workflows",
+    "r3": "3",
+    "scan3": "scans skills",
+    "mal3": "malicious",
+    "inst3": "before you",
+    "r2": "2",
+    "n817": "817",
+    "mitre": "mapped to",
+    "nist": "nist",
+    "r1": "number one",
+    "p1": "runs",
+    "ind1": "independently",
+    "ver1": "verified",
+    "cta": "comment security",
+    "kw": "security and",
+    "send": "send you",
+    "s5": "it checks",
+    "s4": "their security",
+    "s3": "it scans",
+    "s2": "a library",
+    "s1": "it runs"
+   }
+  }
+ }
+]

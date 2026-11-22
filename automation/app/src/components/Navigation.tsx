@@ -26,6 +26,7 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
     items: [
       { href: '/', label: 'Overview', icon: 'grid' },
       { href: '/studio', label: 'AI Studio', icon: 'camera' },
+      { href: '/creator-studio', label: 'Creator Studio', icon: 'film' },
       { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
       { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
       { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
@@ -51,7 +52,7 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
 ];
 
 export const DEVELOP_NAV_ITEMS: NavItem[] = [
-  { href: '/vstudio', label: 'Vishnu Studio', icon: 'film' },
+  { href: '/creator-studio', label: 'Creator Studio', icon: 'film' },
   { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
   { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
   { href: '/versions', label: 'Multi-Version Studio', icon: 'copy' },

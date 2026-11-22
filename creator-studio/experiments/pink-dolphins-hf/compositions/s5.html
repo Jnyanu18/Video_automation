@@ -1,0 +1,20 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #s5-stage { position: absolute; inset: 0; }
+    #s5-stage .layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    #s5-stage .dol { position: absolute; left: -400px; top: -160px; overflow: visible; }
+    
+  </style>
+  <div id="root" data-composition-id="s5" data-width="1080" data-height="1920">
+    <div id="s5-stage" class="clip" data-start="0" data-duration="7.12" data-layout-allow-overlap data-layout-allow-overflow>
+      <svg class='layer' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><rect width='1080' height='1920' fill='#1d2f3a'/></svg><svg id='s5-a' class='dol' viewBox='-400 -160 720 320' width='720' height='320' style=''><defs><linearGradient id="s5-d-g" gradientUnits="userSpaceOnUse" x1="0" y1="-86" x2="0" y2="76"><stop id="s5-d-gt" offset="0" stop-color="#df5f8b"/><stop id="s5-d-gb" offset="1" stop-color="#ffc3d4"/></linearGradient></defs><g id="s5-d"><g id="s5-d-fl"><path d="M -278 0 C -318 -48, -348 -70, -378 -76 C -362 -36, -348 -12, -334 0 C -348 12, -362 36, -378 76 C -348 70, -318 48, -278 0 Z" fill="url(#s5-d-g)"/></g><path d="M -30 -77 C -70 -104, -118 -100, -150 -62 Z" fill="url(#s5-d-g)"/><path d="M 300 10 C 262 2, 205 -4, 172 -14 C 152 -70, 92 -86, 40 -80 C -40 -75, -150 -52, -240 -16 C -260 -9, -275 -6, -287 -5 L -287 5 C -262 18, -150 58, -40 70 C 60 76, 140 52, 180 26 C 220 22, 268 22, 300 14 Z" fill="url(#s5-d-g)"/><ellipse cx="108" cy="-54" rx="56" ry="17" fill="#fff" opacity="0.16"/><path d="M 60 46 C 40 110, -10 142, -48 138 C -32 100, -4 70, 18 52 Z" fill="url(#s5-d-g)"/><circle cx="150" cy="-18" r="6" fill="#1a1013"/><path d="M 298 13 C 260 16, 225 18, 190 20" stroke="#2a1b22" stroke-opacity="0.35" stroke-width="3" fill="none"/></g></svg><svg class='layer' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><path id='s5-arc' d='M 900 900 A 380 380 0 0 0 520 520' stroke='#ff8fb3' stroke-width='8' fill='none' pathLength='1' stroke-dasharray='1 1' stroke-dashoffset='1' stroke-linecap='butt'/></svg>
+      <div id='s5-t' style='position:absolute;top:240px;width:100%;text-align:center;font-family: "Playfair Display", serif; font-weight: 700; color: #fff4e6;font-size:92px'>its neck bones aren't fused</div><div id='s5-n' style='position:absolute;top:1300px;width:100%;text-align:center;font-family: "Playfair Display", serif; font-weight: 700; color: #fff4e6;font-size:220px;color:#ff8fb3'>90°</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.set("#s5-a", {x: 470, y: 1000, scale: 1.7, transformOrigin: "400px 160px"}, 0);tl.fromTo("#s5-t", {opacity: 0, filter: "blur(10px)", scale: 1.06}, {opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.35, ease: "expo.out"}, 0.3);tl.to("#s5-t", {opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in"}, 2.6);tl.to("#s5-a", {rotation: -35, transformOrigin: "520px 160px", duration: 1.6, ease: "power3.inOut"}, 2.8);tl.to("#s5-arc", {attr: {"stroke-dashoffset": 0}, duration: 1.6, ease: "power3.inOut"}, 2.8);tl.fromTo("#s5-n", {opacity: 0, filter: "blur(10px)", scale: 1.06}, {opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.35, ease: "expo.out"}, 4.2);tl.fromTo("#s5-d-fl", {rotation: -12, svgOrigin: "-280 0"}, {rotation: 12, svgOrigin: "-280 0", duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 11}, 0);
+    window.__timelines["s5"] = tl;
+  </script>
+</template>

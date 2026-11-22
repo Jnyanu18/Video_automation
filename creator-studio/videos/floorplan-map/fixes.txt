@@ -1,0 +1,1 @@
+﻿Display fixes in words.json (2026-11-05): Floor + Plan. -> Floorplan. (one word), Plod -> Claude, comment, -> Comment, map, -> MAP. LISTEN to how the voice says Claude and Floorplan.

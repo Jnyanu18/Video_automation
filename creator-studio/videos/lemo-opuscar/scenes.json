@@ -1,0 +1,176 @@
+[
+ {
+  "scene": "lemo",
+  "at": "how do you",
+  "bg": "#0d0e12",
+  "section": "one take with Ava: the locked tool, the repo page scrolled, the stars, the wall of 66 styles, three styles full width, the install, comment",
+  "mark": [
+   "repo"
+  ],
+  "poses": [
+   {
+    "on": "how do you",
+    "pose": "present"
+   },
+   {
+    "on": "without paying",
+    "pose": "think"
+   },
+   {
+    "on": "someone put",
+    "pose": "wow"
+   },
+   {
+    "on": "called",
+    "pose": "point-left"
+   },
+   {
+    "on": "mit licensed",
+    "pose": "present"
+   },
+   {
+    "on": "picked up",
+    "pose": "wow"
+   },
+   {
+    "on": "66 film",
+    "pose": "cheer"
+   },
+   {
+    "on": "no video model",
+    "pose": "shock"
+   },
+   {
+    "on": "pick a",
+    "pose": "point-left"
+   },
+   {
+    "on": "tell it your",
+    "pose": "think"
+   },
+   {
+    "on": "directs the rest",
+    "pose": "cheer"
+   },
+   {
+    "on": "install it",
+    "pose": "present"
+   },
+   {
+    "on": "tuned for",
+    "pose": "wink"
+   },
+   {
+    "on": "comment repo",
+    "pose": "wave"
+   }
+  ],
+  "props": {
+   "stageScale": 1.0,
+   "stageLift": 70,
+   "slug": "lemo-opuscar",
+   "styles": [
+    "archive-lighttable",
+    "art-deco",
+    "ascii-crt",
+    "backrooms",
+    "blueprint",
+    "brick-toy",
+    "briefing-board",
+    "caption-news",
+    "cel-anime-80s",
+    "chalkboard",
+    "circuit-board",
+    "city-symphony",
+    "countdown",
+    "crayon-book",
+    "dark-keynote",
+    "data-physical",
+    "dataviz",
+    "desktop-flythrough",
+    "engraving",
+    "game-show",
+    "glass-product",
+    "halftone-dossier",
+    "hd-2d",
+    "hologram-hud",
+    "impasto",
+    "ink-wash",
+    "iso-infographic",
+    "isometric-picture-book",
+    "kino-montage",
+    "lidar-survey",
+    "living-screencast",
+    "lowpoly-island",
+    "memphis-diorama",
+    "microgame",
+    "microscope",
+    "midcentury-toon",
+    "news-package",
+    "newsreel",
+    "one-line",
+    "paper-lantern",
+    "paper-popup",
+    "papercut-red",
+    "pictogram-motion",
+    "pixel-rpg",
+    "printed-long-take",
+    "risograph",
+    "rubber-hose",
+    "satellite-briefing",
+    "scifi-toon",
+    "shadow-puppet",
+    "silent-film",
+    "silkscreen-poster",
+    "spy-titles",
+    "stained-glass",
+    "swiss-motion",
+    "teardown",
+    "telestrator",
+    "tilt-shift",
+    "transit-map",
+    "ukiyoe",
+    "urban-sketch",
+    "visual-investigation",
+    "watercolor",
+    "white-model",
+    "whiteboard",
+    "woodcut"
+   ],
+   "heroes": [
+    "hero-crayon",
+    "hero-watercolor",
+    "hero-ink"
+   ],
+   "heroNames": [
+    "Crayon Picture Book",
+    "Watercolor Brush",
+    "Chinese Ink Wash"
+   ],
+   "parts": {
+    "gh": "put the answer",
+    "free": "free",
+    "called": "called",
+    "mit": "mit licensed",
+    "stars": "picked up",
+    "weeks": "five weeks",
+    "c66": "66 film",
+    "drew": "claude drew",
+    "code": "writing code",
+    "novideo": "no video model",
+    "crayon": "crayon picture",
+    "water": "watercolor",
+    "ink": "ink wash",
+    "story": "your story",
+    "directs": "directs the rest",
+    "install": "install it",
+    "two": "two commands",
+    "tuned": "tuned for",
+    "comment": "comment repo",
+    "kw": "repo and",
+    "send": "send you",
+    "pay": "without paying"
+   }
+  }
+ }
+]

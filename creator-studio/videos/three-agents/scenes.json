@@ -1,0 +1,24 @@
+[
+ {
+  "scene": "agents",
+  "at": "three new",
+  "bg": "#f4f2ee",
+  "section": "keynote comparison in our white theme: a colour world per product",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "three-agents",
+   "parts": {
+    "diff": "completely different",
+    "b2": "openais dots", "inside": "lives inside", "own": "gets its own", "keeps": "keeps working", "away": "youre away",
+    "b3": "metas muse", "life": "personal life", "books": "books your", "forms": "fills out", "shop": "does your",
+    "b4": "and xais", "team": "whole team", "give": "you give", "job": "a job", "sales": "sales", "marketing": "marketing", "pings": "only pings", "approval": "approval",
+    "b5": "so dots", "rd": "dots for", "rm": "muse for", "rg": "grokbot for",
+    "b6": "comment agent", "comparison": "full comparison"
+   }
+  }
+ }
+]

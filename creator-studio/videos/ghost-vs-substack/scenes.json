@@ -1,0 +1,22 @@
+[
+ {
+  "scene": "ghost",
+  "at": "substack takes",
+  "bg": "#f4f2ee",
+  "section": "Ghost vs Substack's cut: Substack orange against Ghost dark, Ghost's world, your money in green",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "ghost-vs-substack",
+   "parts": {
+    "ten": "10", "ghost": "ghost takes", "zero": "zero",
+    "b2": "it does the", "stars": "55000 stars", "host": "host it", "blog": "fast blog", "newsletters": "email newsletters", "memberships": "paid memberships", "cent": "a cent",
+    "b3": "making 10000", "back": "back in", "every": "every month",
+    "b4": "comment ghost", "link": "the link"
+   }
+  }
+ }
+]

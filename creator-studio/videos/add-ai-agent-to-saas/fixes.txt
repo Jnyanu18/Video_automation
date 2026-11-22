@@ -1,0 +1,7 @@
+# Confirmed 2026-10-20
+ask verb => AskVerb
+# Confirmed 2026-10-22 (spelling only, from the transcript)
+Aboutos => about us
+verb .md => verb.md
+mcp => MCP
+verb => Verb @38-40

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "01-reach",
+    "start": 0.0,
+    "end": 6.164,
+    "words": "your ai agent",
+    "desc": ""
+  },
+  {
+    "id": "02-reach",
+    "start": 6.164,
+    "end": 14.283,
+    "words": "reddit,",
+    "desc": ""
+  },
+  {
+    "id": "03-reach",
+    "start": 14.283,
+    "end": 22.016,
+    "words": "there's a",
+    "desc": ""
+  },
+  {
+    "id": "04-reach",
+    "start": 22.016,
+    "end": 30.014,
+    "words": "it's called",
+    "desc": ""
+  },
+  {
+    "id": "05-reach",
+    "start": 30.014,
+    "end": 36.228,
+    "words": "just give",
+    "desc": ""
+  },
+  {
+    "id": "06-reach",
+    "start": 36.228,
+    "end": 43.34,
+    "words": "now the two",
+    "desc": ""
+  },
+  {
+    "id": "07-reach",
+    "start": 43.34,
+    "end": 50.464,
+    "words": "two: it logs",
+    "desc": ""
+  },
+  {
+    "id": "08-end",
+    "start": 50.464,
+    "end": 53.914,
+    "words": "comment",
+    "desc": ""
+  }
+]

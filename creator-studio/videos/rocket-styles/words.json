@@ -1,0 +1,152 @@
+[
+  {
+    "w": "Ten",
+    "start": 0.0,
+    "end": 0.2
+  },
+  {
+    "w": "animation",
+    "start": 0.2,
+    "end": 0.64
+  },
+  {
+    "w": "styles",
+    "start": 0.64,
+    "end": 1.06
+  },
+  {
+    "w": "to",
+    "start": 1.06,
+    "end": 1.3
+  },
+  {
+    "w": "go",
+    "start": 1.3,
+    "end": 1.44
+  },
+  {
+    "w": "viral",
+    "start": 1.44,
+    "end": 1.76
+  },
+  {
+    "w": "with",
+    "start": 1.76,
+    "end": 2.02
+  },
+  {
+    "w": "Claude.",
+    "start": 2.02,
+    "end": 2.44
+  },
+  {
+    "w": "pixel",
+    "start": 2.764,
+    "end": 3.004
+  },
+  {
+    "w": "art,",
+    "start": 3.004,
+    "end": 3.284
+  },
+  {
+    "w": "chalkboard,",
+    "start": 3.444,
+    "end": 3.904
+  },
+  {
+    "w": "blueprint,",
+    "start": 4.184,
+    "end": 4.464
+  },
+  {
+    "w": "comic",
+    "start": 4.804,
+    "end": 5.004
+  },
+  {
+    "w": "book,",
+    "start": 5.004,
+    "end": 5.304
+  },
+  {
+    "w": "paper",
+    "start": 5.544,
+    "end": 5.724
+  },
+  {
+    "w": "cut-out,",
+    "start": 5.724,
+    "end": 6.204
+  },
+  {
+    "w": "neon",
+    "start": 6.424,
+    "end": 6.704
+  },
+  {
+    "w": "glow,",
+    "start": 6.704,
+    "end": 7.124
+  },
+  {
+    "w": "ink",
+    "start": 7.444,
+    "end": 7.664
+  },
+  {
+    "w": "brush,",
+    "start": 7.664,
+    "end": 7.944
+  },
+  {
+    "w": "flat",
+    "start": 8.304,
+    "end": 8.604
+  },
+  {
+    "w": "vector,",
+    "start": 8.604,
+    "end": 9.004
+  },
+  {
+    "w": "retro",
+    "start": 9.304,
+    "end": 9.604
+  },
+  {
+    "w": "terminal,",
+    "start": 9.604,
+    "end": 10.104
+  },
+  {
+    "w": "risograph.",
+    "start": 10.444,
+    "end": 10.864
+  },
+  {
+    "w": "Comment",
+    "start": 11.279,
+    "end": 11.559
+  },
+  {
+    "w": "CLAUDE",
+    "start": 11.559,
+    "end": 12.379
+  },
+  {
+    "w": "for",
+    "start": 12.379,
+    "end": 12.579
+  },
+  {
+    "w": "the",
+    "start": 12.579,
+    "end": 12.699
+  },
+  {
+    "w": "skills.",
+    "start": 12.699,
+    "end": 12.939
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "01-amount",
+    "start": 0.0,
+    "end": 4.921,
+    "words": "your app idea",
+    "desc": ""
+  },
+  {
+    "id": "02-ruling",
+    "start": 4.921,
+    "end": 8.806,
+    "words": "applications are open",
+    "desc": ""
+  },
+  {
+    "id": "03-door",
+    "start": 8.806,
+    "end": 14.544,
+    "words": "here's what",
+    "desc": ""
+  },
+  {
+    "id": "04-checklist",
+    "start": 14.544,
+    "end": 18.276,
+    "words": "first,",
+    "desc": ""
+  },
+  {
+    "id": "05-chat",
+    "start": 18.276,
+    "end": 23.594,
+    "words": "second,",
+    "desc": ""
+  },
+  {
+    "id": "06-ruling",
+    "start": 23.594,
+    "end": 30.195,
+    "words": "third,",
+    "desc": ""
+  },
+  {
+    "id": "07-ruling",
+    "start": 30.195,
+    "end": 36.282,
+    "words": "fourth,",
+    "desc": ""
+  },
+  {
+    "id": "08-checklist",
+    "start": 36.282,
+    "end": 40.877,
+    "words": "fifth,",
+    "desc": ""
+  },
+  {
+    "id": "09-end",
+    "start": 40.877,
+    "end": 51.345,
+    "words": "finally,",
+    "desc": ""
+  }
+]

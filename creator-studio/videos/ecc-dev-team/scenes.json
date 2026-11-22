@@ -1,0 +1,43 @@
+[
+ {
+  "scene": "ecc",
+  "at": "one",
+  "bg": "#160f33",
+  "section": "ECC as a retro video game: a new look, nothing from 34 to 43",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "ecc-dev-team",
+   "parts": {
+    "team": "dev team",
+    "free": "gave it",
+    "s2": "its called",
+    "everything": "everything claude",
+    "almost": "almost",
+    "stars": "stars on",
+    "s3": "inside",
+    "a71": "71 agents",
+    "s314": "314 skills",
+    "c98": "98 commands",
+    "s4": "a planner",
+    "planner": "a planner",
+    "architect": "an architect",
+    "reviewer": "code reviewer",
+    "security": "security checker",
+    "all": "all working",
+    "s5": "its builder",
+    "won": "won an",
+    "s6": "one command",
+    "whole": "the whole",
+    "s7": "people are",
+    "courses": "courses",
+    "free2": "github for",
+    "s8": "comment github",
+    "turned": "turned"
+   }
+  }
+ }
+]

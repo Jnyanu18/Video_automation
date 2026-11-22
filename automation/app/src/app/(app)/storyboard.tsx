@@ -44,16 +44,48 @@ export default function StoryboardScreen() {
       storyboard: {
         title: 'Event Highlights Edit',
         duration: { original_seconds: 450, output_seconds: 180, reduction_percent: 60 },
-        scenes_count: 8,
-        scenes: [],
-        scorecard: null,
+        scenes_count: 3,
+        scenes: [
+          {
+            scene_number: 1,
+            type: 'Hook Scene',
+            timestamp_output: '0:00 - 0:03',
+            action: 'Quick visual punch-in on speaker',
+            framing: 'Close-up',
+            camera_motion: 'Push-in',
+            source_range: '0:00 - 0:03',
+            caption_style: 'karaoke',
+            caption: 'The secret to editing 10x faster',
+            sfx: [{ name: 'whoosh', at: 0.2 }],
+          },
+        ],
+        scorecard: {
+          available: true,
+          status: 'PASS',
+          score: 0.95,
+          checks: [
+            { name: 'Hook timing under 3s', status: 'PASS', detail: 'Hook ends at 2.4s' },
+            { name: 'Pacing variance', status: 'PASS', detail: 'Good energy and cut rhythm' },
+          ],
+        },
+        growth_signals: {
+          three_second_hook: { status: 'pass', detail: 'Fast hook punch-in' },
+          sendability: { status: 'pass', detail: 'Actionable takeaway format' },
+        },
+        sound_design: {
+          sfx_count: 4,
+          music: true,
+          ducking_enabled: true,
+          target_lufs: -14,
+        },
       },
       render_job: null,
       latest_render: null,
       latest_preview: null,
       events: [],
       approval_reset: false,
-      error: null
+      error: null,
+      posts: null,
     },
   ];
 
@@ -193,25 +225,35 @@ export default function StoryboardScreen() {
               ) : <T muted>The scorecard could not run: {sc?.reason || 'unknown reason'}.</T>}
             </Card>
 
-            <SectionTitle title="Growth signals" />
-            <Card style={{ gap: spacing.md }}>
-              {([['3-second hook', card.growth_signals.three_second_hook], ['Share trigger', card.growth_signals.sendability]] as const).map(([label, s]) => (
-                <View key={label} style={{ gap: 4 }}>
-                  <Row gap={spacing.sm}><T variant="h3">{label}</T><Badge label={s.status.toUpperCase()} tone={checkTone(s.status)} /></Row>
-                  <T variant="small" muted>{s.detail}</T>
-                </View>
-              ))}
-            </Card>
+            {card.growth_signals ? (
+              <>
+                <SectionTitle title="Growth signals" />
+                <Card style={{ gap: spacing.md }}>
+                  {([['3-second hook', card.growth_signals.three_second_hook], ['Share trigger', card.growth_signals.sendability]] as const).map(([label, s]) => (
+                    s ? (
+                      <View key={label} style={{ gap: 4 }}>
+                        <Row gap={spacing.sm}><T variant="h3">{label}</T><Badge label={s.status.toUpperCase()} tone={checkTone(s.status)} /></Row>
+                        <T variant="small" muted>{s.detail}</T>
+                      </View>
+                    ) : null
+                  ))}
+                </Card>
+              </>
+            ) : null}
 
-            <SectionTitle title="Sound" />
-            <Card>
-              <Row gap={spacing.sm}>
-                <Badge label={`${card.sound_design.sfx_count} sound effects`} tone="info" />
-                <Badge label={card.sound_design.music ? 'Music bed' : 'No music'} tone="neutral" />
-                <Badge label={card.sound_design.ducking_enabled ? 'Ducking on' : 'No ducking'} tone="neutral" />
-                <Badge label={card.sound_design.target_lufs ? `${card.sound_design.target_lufs} LUFS` : 'Loudness not set'} tone="neutral" />
-              </Row>
-            </Card>
+            {card.sound_design ? (
+              <>
+                <SectionTitle title="Sound" />
+                <Card>
+                  <Row gap={spacing.sm}>
+                    <Badge label={`${card.sound_design.sfx_count ?? 0} sound effects`} tone="info" />
+                    <Badge label={card.sound_design.music ? 'Music bed' : 'No music'} tone="neutral" />
+                    <Badge label={card.sound_design.ducking_enabled ? 'Ducking on' : 'No ducking'} tone="neutral" />
+                    <Badge label={card.sound_design.target_lufs ? `${card.sound_design.target_lufs} LUFS` : 'Loudness not set'} tone="neutral" />
+                  </Row>
+                </Card>
+              </>
+            ) : null}
 
             {finalSb.director ? (
               <>
@@ -219,21 +261,21 @@ export default function StoryboardScreen() {
                 <Card style={{ gap: spacing.sm }}>
                   <Row gap={spacing.sm}>
                     <Badge label={finalSb.director.source === 'llm' ? 'Planned by the LLM director' : 'Planned by the built-in planner'} tone={finalSb.director.source === 'llm' ? 'success' : 'warning'} dot />
-                    <Badge label={`${finalSb.director.plan.beats.length} diagrams`} tone="info" />
-                    <Badge label={`${finalSb.director.plan.zooms.length} zooms`} tone="neutral" />
-                    <Badge label={`${finalSb.director.plan.sfx.length} sound effects`} tone="neutral" />
+                    <Badge label={`${finalSb.director.plan?.beats?.length ?? 0} diagrams`} tone="info" />
+                    <Badge label={`${finalSb.director.plan?.zooms?.length ?? 0} zooms`} tone="neutral" />
+                    <Badge label={`${finalSb.director.plan?.sfx?.length ?? 0} sound effects`} tone="neutral" />
                   </Row>
                   {finalSb.director.source !== 'llm' ? <T variant="small" color={colors.warning}>No LLM answered, so this is the plainer plan. Configure a key in Settings for a richer one.</T> : null}
-                  {finalSb.director.plan.hook ? <T><T variant="label" muted>HOOK  </T>{finalSb.director.plan.hook.text}</T> : null}
-                  {finalSb.director.plan.speaker ? <T><T variant="label" muted>SPEAKER  </T>{finalSb.director.plan.speaker.name}{finalSb.director.plan.speaker.role ? `, ${finalSb.director.plan.speaker.role}` : ''}</T> : null}
-                  {finalSb.director.plan.beats.map((b, i) => (
+                  {finalSb.director.plan?.hook ? <T><T variant="label" muted>HOOK  </T>{finalSb.director.plan.hook.text}</T> : null}
+                  {finalSb.director.plan?.speaker ? <T><T variant="label" muted>SPEAKER  </T>{finalSb.director.plan.speaker.name}{finalSb.director.plan.speaker.role ? `, ${finalSb.director.plan.speaker.role}` : ''}</T> : null}
+                  {finalSb.director.plan?.beats?.map((b, i) => (
                     <View key={i} style={{ paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.border }}>
                       <T variant="small" muted>{BEAT_LABEL[b.template] ?? b.template} · {num(b.start)}s to {num(b.end)}s</T>
                       <T>{beatSummary(b)}</T>
                     </View>
                   ))}
-                  {finalSb.director.plan.cta ? <T><T variant="label" muted>CLOSING LINE  </T>{finalSb.director.plan.cta.text}</T> : null}
-                  {finalSb.director.warnings.length ? <T variant="small" faint>Adjusted by validation: {finalSb.director.warnings.join('; ')}</T> : null}
+                  {finalSb.director.plan?.cta ? <T><T variant="label" muted>CLOSING LINE  </T>{finalSb.director.plan.cta.text}</T> : null}
+                  {finalSb.director.warnings?.length ? <T variant="small" faint>Adjusted by validation: {finalSb.director.warnings.join('; ')}</T> : null}
                   <T variant="small" faint>To change any of it, use "Revise with the editor" on the left.</T>
                 </Card>
               </>
@@ -244,8 +286,8 @@ export default function StoryboardScreen() {
               {music && music.tracks.length ? (
                 <>
                   <T muted>Tracks from the Vishnu studio library, put under the voice and ducked. Choosing one withdraws the approval so you review the new mix.</T>
-                  <Chips options={music.tracks.slice(0, 10).map((t) => ({ value: t.id, label: t.name }))} value="" allowEmpty onChange={(v) => { if (v) act('music', () => editor.setMusic(sb.id, v), 'Music added'); }} />
-                  {sb.storyboard?.sound_design.music ? <Button label="Remove the music" small variant="secondary" onPress={() => act('music', () => editor.setMusic(sb.id, null), 'Music removed')} /> : null}
+                  <Chips options={music.tracks.slice(0, 10).map((t) => ({ value: t.id, label: t.name }))} value="" allowEmpty onChange={(v) => { if (v) act('music', () => editor.setMusic(finalSb.id, v), 'Music added'); }} />
+                  {finalSb.storyboard?.sound_design?.music ? <Button label="Remove the music" small variant="secondary" onPress={() => act('music', () => editor.setMusic(finalSb.id, null), 'Music removed')} /> : null}
                 </>
               ) : <T muted>{music?.note ?? 'No music library found.'}</T>}
             </Card>
@@ -253,22 +295,22 @@ export default function StoryboardScreen() {
             <SectionTitle title="Carousel" />
             <Card style={{ gap: spacing.sm }}>
               <T muted>Turn what this video says into Instagram slides with the Remotion carousel lane of the Vishnu studio.</T>
-              <Button label="Make a carousel" icon="layers" onPress={() => router.push({ pathname: '/vstudio', params: { sb: sb.id } } as any)} />
+              <Button label="Make a carousel" icon="layers" onPress={() => router.push({ pathname: '/vstudio', params: { sb: finalSb.id } } as any)} />
             </Card>
 
             <SectionTitle title="Post text" />
             <Card style={{ gap: spacing.md }}>
-              {sb.posts ? (
+              {finalSb.posts ? (
                 <>
-                  <Badge label={sb.posts.generated_by === 'llm' ? 'Written by AI from the transcript' : 'Plain template (no LLM answered)'} tone={sb.posts.generated_by === 'llm' ? 'success' : 'warning'} />
-                  <Pasteable label="Instagram caption" text={sb.posts.instagram.caption} />
-                  {sb.posts.instagram.cover_text ? <Pasteable label="Cover text" text={sb.posts.instagram.cover_text} /> : null}
-                  <Pasteable label="YouTube Short title" text={sb.posts.youtube_short.title} />
-                  <Pasteable label="YouTube Short description" text={sb.posts.youtube_short.description} />
-                  <Pasteable label="X post" text={sb.posts.x.post} />
+                  <Badge label={finalSb.posts.generated_by === 'llm' ? 'Written by AI from the transcript' : 'Plain template (no LLM answered)'} tone={finalSb.posts.generated_by === 'llm' ? 'success' : 'warning'} />
+                  <Pasteable label="Instagram caption" text={finalSb.posts.instagram.caption} />
+                  {finalSb.posts.instagram.cover_text ? <Pasteable label="Cover text" text={finalSb.posts.instagram.cover_text} /> : null}
+                  <Pasteable label="YouTube Short title" text={finalSb.posts.youtube_short.title} />
+                  <Pasteable label="YouTube Short description" text={finalSb.posts.youtube_short.description} />
+                  <Pasteable label="X post" text={finalSb.posts.x.post} />
                 </>
               ) : <T muted>Write the caption, title and X post from what the video says. Review them before you publish.</T>}
-              <Button label={sb.posts ? 'Write again' : 'Write post text'} icon="edit" loading={busy === 'posts'} onPress={() => act('posts', () => editor.posts(sb.id), 'Post text written')} />
+              <Button label={finalSb.posts ? 'Write again' : 'Write post text'} icon="edit" loading={busy === 'posts'} onPress={() => act('posts', () => editor.posts(finalSb.id), 'Post text written')} />
             </Card>
 
             <Button label="Delete this storyboard" variant="danger" icon="trash" onPress={() => setConfirmDelete(true)} />
@@ -276,10 +318,10 @@ export default function StoryboardScreen() {
         </View>
       ) : null}
 
-      {sb.status === 'failed' ? (
+      {finalSb.status === 'failed' ? (
         <Card>
           <T variant="h2">This storyboard could not be generated</T>
-          <T muted style={{ marginVertical: 8 }}>{sb.error}</T>
+          <T muted style={{ marginVertical: 8 }}>{finalSb.error}</T>
           <Row gap={spacing.sm}>
             <Button label="Start again" variant="primary" icon="refresh" onPress={() => router.push('/new')} />
             <Button label="Delete" variant="danger" icon="trash" onPress={() => setConfirmDelete(true)} />
@@ -290,7 +332,7 @@ export default function StoryboardScreen() {
       <ConfirmDialog visible={confirmDelete} danger title="Delete storyboard?" confirmLabel="Delete"
         message="The plan and its working files are removed. Rendered videos in the media library are kept."
         onCancel={() => setConfirmDelete(false)}
-        onConfirm={() => { setConfirmDelete(false); act('delete', () => editor.deleteStoryboard(sb.id), 'Deleted'); }} />
+        onConfirm={() => { setConfirmDelete(false); act('delete', () => editor.deleteStoryboard(finalSb.id), 'Deleted'); }} />
     </Page>
   );
 }

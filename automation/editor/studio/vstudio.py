@@ -57,12 +57,14 @@ ENTRY_NEW = 'entryPoint: path.join(root, "remotion", "src", process.env.STUDIO_E
 
 
 def find_studio(start: Path) -> Optional[Path]:
-    env = os.environ.get("VISHNU_STUDIO_DIR")
+    env = os.environ.get("CREATOR_STUDIO_DIR") or os.environ.get("VISHNU_STUDIO_DIR")
     if env and Path(env).is_dir():
         return Path(env).resolve()
     for p in [start, *start.parents]:
-        if (p / "vishnu-studio" / "lanes").is_dir():
-            return (p / "vishnu-studio").resolve()
+        for candidate_name in ("creator-studio", "vishnu-studio"):
+            candidate = p / candidate_name
+            if (candidate / "lanes").is_dir():
+                return candidate.resolve()
     return None
 
 

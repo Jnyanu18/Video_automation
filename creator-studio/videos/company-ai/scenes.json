@@ -1,0 +1,26 @@
+[
+ {
+  "scene": "aistack",
+  "at": "every company",
+  "bg": "#f4f2ee",
+  "section": "One stack that grows a slab per fix, LAYER n/7 pinned, the chat under it; the model slab is pulled and it falls",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "company-ai",
+   "parts": {
+    "same": "same way", "l1": "day one", "logo": "company logo", "who": "who are you", "chatgpt": "im chatgpt",
+    "l2": "give it a", "name": "a name", "persona": "personality", "leave": "then someone asks", "thirty": "says 30", "madeup": "made that up",
+    "l3": "hook it up", "docs": "hr docs", "real": "answers are real", "apply": "apply for",
+    "l4": "plug in", "slack": "slack", "jira": "jira", "hr": "hr system", "agent": "its an agent", "intern": "an intern", "tells": "tells them",
+    "l5": "so it can only", "allowed": "allowed to see", "ignore": "ignore your", "works": "works too",
+    "l6": "add guardrails", "morning": "employees say", "bill": "the bill", "l7": "easy questions",
+    "months": "six months", "accurate": "accurate", "safe": "safe", "cheap2": "and cheap",
+    "swaps": "swaps the", "skips": "skips the", "asks2": "and someone asks", "again": "policy 30", "cta": "comment agent"
+   }
+  }
+ }
+]

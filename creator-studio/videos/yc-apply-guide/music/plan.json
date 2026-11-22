@@ -1,0 +1,100 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "confident upbeat light electronic",
+  "plucky synth",
+  "soft claps",
+  "warm bass",
+  "112 bpm",
+  "sparse, leaves room for a voice"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody in the vocal range",
+  "aggressive EDM"
+ ],
+ "sections": [
+  {
+   "section_name": "01-amount",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4921,
+   "lines": []
+  },
+  {
+   "section_name": "02-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3884,
+   "lines": []
+  },
+  {
+   "section_name": "03-door",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5738,
+   "lines": []
+  },
+  {
+   "section_name": "04-checklist",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3731,
+   "lines": []
+  },
+  {
+   "section_name": "05-chat",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5318,
+   "lines": []
+  },
+  {
+   "section_name": "06-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 6600,
+   "lines": []
+  },
+  {
+   "section_name": "07-receipt",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 6086,
+   "lines": []
+  },
+  {
+   "section_name": "08-checklist",
+   "positive_local_styles": [
+    "builds a little"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4595,
+   "lines": []
+  },
+  {
+   "section_name": "09-end",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 10467,
+   "lines": []
+  }
+ ]
+}

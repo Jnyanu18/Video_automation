@@ -1,0 +1,4 @@
+# Confirmed by Vishnu 2026-10-19: what he said, where Whisper heard something else.
+site => side
+askwork => AskVerb
+of => apps @1-2

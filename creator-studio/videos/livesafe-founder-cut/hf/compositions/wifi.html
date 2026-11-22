@@ -1,0 +1,77 @@
+<template>
+  <style>
+#root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #fff; }
+.card { position: absolute; background: rgba(15,16,22,.80); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  border-radius: 24px; border: 1px solid rgba(255,255,255,.10); box-shadow: 0 30px 70px -24px rgba(0,0,0,.7);
+  padding: 30px 36px 32px; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 24px; letter-spacing: .14em; text-transform: uppercase;
+  color: #FF8AD8; display: flex; align-items: center; gap: 12px; }
+.dot { width: 11px; height: 11px; border-radius: 6px; background: #E03FB4; box-shadow: 0 0 14px #E03FB4; }
+.title { font-family: Poppins, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.12; letter-spacing: -.02em; margin-top: 14px; }
+.sub { font-size: 28px; line-height: 1.35; color: rgba(255,255,255,.72); margin-top: 12px; }
+.big { font-family: Poppins, sans-serif; font-weight: 700; font-size: 128px; line-height: 1; letter-spacing: -.04em; margin-top: 10px; }
+.big small { font-size: 64px; color: #FF8AD8; margin-left: 6px; }
+.accent { color: #FF8AD8; } .good { color: #3DDC84; } .bad { color: #FF6B6B; }
+.rows { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+.row { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 500; }
+.mark { width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800; flex: none; }
+.mark.ok { background: #3DDC84; color: #08130c; } .mark.no { background: #FF6B6B; color: #1a0707; }
+.mark.mid { background: #FFB547; color: #1d1203; } .mark.idle { background: rgba(255,255,255,.12); }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.chip { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  padding: 10px 22px; font-size: 28px; font-weight: 600; }
+.steps { display: flex; gap: 14px; margin-top: 22px; }
+.step { flex: 1; background: rgba(255,255,255,.07); border-radius: 18px; padding: 18px 20px; }
+.step b { display: block; font-family: Poppins, sans-serif; font-size: 40px; color: #FF8AD8; }
+.step span { font-size: 28px; font-weight: 600; line-height: 1.2; }
+.bar { height: 18px; border-radius: 9px; background: rgba(255,255,255,.12); margin-top: 18px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; border-radius: 9px; background: linear-gradient(90deg, #E03FB4, #ff9ad9); transform-origin: left center; }
+.quote { font-family: Poppins, sans-serif; font-weight: 600; font-size: 52px; line-height: 1.12; letter-spacing: -.02em; }
+.quote .w { display: inline-block; margin-right: .26em; }
+.who { font-size: 26px; color: rgba(255,255,255,.6); margin-top: 16px; font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; }
+.tag { position: absolute; left: 192px; top: 108px; display: flex; align-items: center; gap: 14px; background: rgba(15,16,22,.72);
+  backdrop-filter: blur(16px); border-radius: 999px; padding: 12px 24px 12px 16px; border: 1px solid rgba(255,255,255,.10); }
+.tag .n { font-family: 'JetBrains Mono', monospace; font-size: 24px; background: #A3127F; border-radius: 999px; padding: 4px 12px; font-weight: 700; }
+.tag .l { font-family: Poppins, sans-serif; font-weight: 600; font-size: 28px; }
+.tag .pips { display: flex; gap: 6px; margin-left: 6px; }
+.tag .pips i { width: 22px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.22); }
+.tag .pips i.on { background: #E03FB4; }
+</style>
+  <div data-hf-id="hf-1eww" id="root" data-composition-id="wifi" data-width="1920" data-height="1080" data-layout-allow-overlap>
+    <div data-hf-id="hf-3m0c" id="wifi-tag" class="clip" data-start="0" data-duration="143.26" data-track-index="0"><div data-hf-id="hf-7bia" id="wifi-tag-c" class="tag"><span data-hf-id="hf-ipm5" class="n">04</span><span data-hf-id="hf-r1si" class="l">Your Wi-Fi</span><span data-hf-id="hf-3qgn" class="pips"><i data-hf-id="hf-l5u7" class="on"></i><i data-hf-id="hf-j2zz" class="on"></i><i data-hf-id="hf-iooy" class="on"></i><i data-hf-id="hf-iadx" class="on"></i><i data-hf-id="hf-gd9w" class=""></i></span></div></div>
+    <div data-hf-id="hf-woj5" id="wifi-bands" class="clip" data-start="3.97" data-duration="48.57" data-track-index="2"><div data-hf-id="hf-t0o4" id="wifi-bands-c" class="card" style="left:192px;top:280px;width:640px"><div data-hf-id="hf-6kol" class="eyebrow"><span data-hf-id="hf-9gry" class="dot"></span>Three Wi-Fi bands</div><div data-hf-id="hf-hnc7" class="rows"><div data-hf-id="hf-urvf" id="wifi-r1" class="row"><span data-hf-id="hf-skgx" id="wifi-m1" class="mark ok">✓</span>Band 1 · 2.4 GHz<span data-hf-id="hf-nqoi" id="wifi-v1" class="good" style="margin-left:auto">enough</span></div><div data-hf-id="hf-co8q" id="wifi-r2" class="row"><span data-hf-id="hf-qlwi" id="wifi-m2" class="mark mid">!</span>Band 2 · 5 GHz<span data-hf-id="hf-7k8y" id="wifi-v2" style="margin-left:auto;color:#FFB547">overkill</span></div><div data-hf-id="hf-4xxd" id="wifi-r3" class="row"><span data-hf-id="hf-m3ha" id="wifi-m3" class="mark no">✕</span>Band 3 · 6 GHz<span data-hf-id="hf-i6nu" id="wifi-v3" class="bad" style="margin-left:auto">not needed</span></div></div><div data-hf-id="hf-6rn1" id="wifi-70" class="title" style="margin-top:22px">Disable band 3: <span data-hf-id="hf-ozzl" class="good">70% less</span></div></div></div>
+    <div data-hf-id="hf-scpx" id="wifi-sweet" class="clip" data-start="69.32" data-duration="34.72" data-track-index="3"><div data-hf-id="hf-wjd0" id="wifi-sweet-c" class="card" style="left:192px;top:280px;width:640px"><div data-hf-id="hf-pq8r" class="eyebrow"><span data-hf-id="hf-zcc2" class="dot"></span>Find the sweet spot</div><div data-hf-id="hf-y39j" class="rows"><div data-hf-id="hf-x5zr" class="row"><span data-hf-id="hf-1gy6" class="mark no">✕</span>Too close: the router radiates</div><div data-hf-id="hf-njiy" class="row"><span data-hf-id="hf-j4sy" class="mark no">✕</span>Too far: your phone works harder</div><div data-hf-id="hf-u5nn" id="wifi-s3" class="row"><span data-hf-id="hf-ohix" class="mark ok">✓</span>1 wall + 15 to 30 ft (band 1)</div><div data-hf-id="hf-u0c6" id="wifi-s4" class="row"><span data-hf-id="hf-nkp9" class="mark ok">✓</span>6 to 9 ft for bands 2 and 3</div></div></div></div>
+    <div data-hf-id="hf-xk3t" id="wifi-night" class="clip" data-start="105.54" data-duration="21.6" data-track-index="1"><div data-hf-id="hf-6hwh" id="wifi-night-c" class="card" style="left:192px;top:320px;width:600px"><div data-hf-id="hf-4k2k" class="eyebrow"><span data-hf-id="hf-zqn3" class="dot"></span>Sleep, blood pressure, thyroid</div><div data-hf-id="hf-1bdt" id="wifi-n2" class="title">Switch the router off <span data-hf-id="hf-1o88" class="accent">at night</span></div><div data-hf-id="hf-ooo4" id="wifi-n3" class="chips"><span data-hf-id="hf-y3j0" class="chip">Improvement in 5 to 10 days</span></div></div></div>
+    <div data-hf-id="hf-xle4" id="wifi-micro" class="clip" data-start="127.7" data-duration="15.34" data-track-index="2"><div data-hf-id="hf-xkkl" id="wifi-micro-c" class="card" style="left:192px;top:320px;width:620px"><div data-hf-id="hf-jie5" class="eyebrow"><span data-hf-id="hf-04y4" class="dot"></span>Microwave ovens</div><div data-hf-id="hf-7yxp" class="title">Only risky when you stand close while it runs</div><div data-hf-id="hf-woyq" id="wifi-m2b" class="chips"><span data-hf-id="hf-pdch" class="chip">Go to the next room</span><span data-hf-id="hf-v8m0" class="chip">Come back at the beep</span></div></div></div>
+  </div>
+  <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#wifi-tag-c",{opacity:0,y:-20},{opacity:1,y:0,duration:0.5,ease:"expo.out"},0.2);
+      tl.fromTo("#wifi-bands-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},3.97);
+      tl.to("#wifi-bands-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},52.18);
+      tl.fromTo("#wifi-r1",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},5.93);
+      tl.fromTo("#wifi-r2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},7.71);
+      tl.fromTo("#wifi-r3",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},9.29);
+      tl.fromTo("#wifi-m1",{opacity:0.15,scale:0.6},{opacity:1,scale:1,duration:0.45,ease:"back.out(2)"},22.39);
+      tl.fromTo("#wifi-v1",{opacity:0},{opacity:1,duration:0.3},22.39);
+      tl.fromTo("#wifi-m2",{opacity:0.15,scale:0.6},{opacity:1,scale:1,duration:0.45,ease:"back.out(2)"},29.69);
+      tl.fromTo("#wifi-v2",{opacity:0},{opacity:1,duration:0.3},29.69);
+      tl.fromTo("#wifi-m3",{opacity:0.15,scale:0.6},{opacity:1,scale:1,duration:0.45,ease:"back.out(2)"},37.37);
+      tl.fromTo("#wifi-v3",{opacity:0},{opacity:1,duration:0.3},37.37);
+      tl.fromTo("#wifi-70",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},44.83);
+      tl.fromTo("#wifi-sweet-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},69.32);
+      tl.to("#wifi-sweet-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},103.68);
+      tl.fromTo("#wifi-s3",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},85.9);
+      tl.fromTo("#wifi-s4",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},99.6);
+      tl.fromTo("#wifi-night-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},105.54);
+      tl.to("#wifi-night-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},126.78);
+      tl.fromTo("#wifi-n2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},115.81);
+      tl.fromTo("#wifi-n3",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},120.69);
+      tl.fromTo("#wifi-micro-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},127.7);
+      tl.to("#wifi-micro-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},142.68);
+      tl.fromTo("#wifi-m2b",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},134.42);
+      tl.to("#wifi-tag-c",{opacity:0,y:-12,duration:0.3,ease:"power2.in"},142.86);
+      window.__timelines["wifi"] = tl;
+  </script>
+</template>

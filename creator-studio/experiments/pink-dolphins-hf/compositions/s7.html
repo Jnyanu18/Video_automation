@@ -1,0 +1,20 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #s7-stage { position: absolute; inset: 0; }
+    #s7-stage .layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    #s7-stage .dol { position: absolute; left: -400px; top: -160px; overflow: visible; }
+    
+  </style>
+  <div id="root" data-composition-id="s7" data-width="1080" data-height="1920">
+    <div id="s7-stage" class="clip" data-start="0" data-duration="9.64" data-layout-allow-overlap data-layout-allow-overflow>
+      <svg class='layer' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><rect id='s7-sky' width='1080' height='1100' fill='#0d1030'/><circle id='s7-moon' cx='540' cy='420' r='130' fill='#f4efe0'/><path d='M0 1100 L0 1020 C200 980 400 1040 600 1000 C800 960 950 1020 1080 990 L1080 1100 Z' fill='#05060f'/><g id='s7-m' opacity='0'><circle cx='560' cy='800' r='34' fill='#0a0a14'/><path d='M 520 840 L 600 840 L 610 1010 L 580 1010 L 575 1100 L 545 1100 L 540 1010 L 510 1010 Z' fill='#0a0a14'/></g><rect id='s7-w' y='1100' width='1080' height='820' fill='#22284d'/><rect id='s7-silver' y='1100' width='1080' height='820' fill='#c9d3e6' opacity='0'/><ellipse id='s7-rip' cx='560' cy='1220' rx='40' ry='10' fill='none' stroke='#ffe3ec' stroke-width='4' opacity='0'/></svg>
+      <div id='s7-t' style='position:absolute;top:1400px;width:100%;text-align:center;font-family: "Playfair Display", serif; font-weight: 700; color: #fff4e6;font-size:80px;line-height:1.15'>people on the river<br>tell a story</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s7-moon", {y: 600}, {y: 0, duration: 2.6, ease: "power2.out"}, 0);tl.to("#s7-silver", {opacity: 0.45, duration: 2.0, ease: "power2.inOut"}, 0.6);tl.fromTo("#s7-t", {opacity: 0, filter: "blur(10px)", scale: 1.06}, {opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.35, ease: "expo.out"}, 0.4);tl.to("#s7-t", {opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in"}, 2.66);tl.to("#s7-m", {opacity: 1, duration: 0.8, ease: "power2.out"}, 3.26);tl.to("#s7-m", {opacity: 0, duration: 0.6, ease: "power2.in"}, 7.14);tl.to("#s7-sky", {attr: {fill: "#f2a37a"}, duration: 1.0, ease: "power2.inOut"}, 7.34);tl.to("#s7-moon", {opacity: 0, duration: 0.8}, 7.34);tl.to("#s7-w", {attr: {fill: "#7a5a6e"}, duration: 1.0, ease: "power2.inOut"}, 7.34);tl.to("#s7-silver", {opacity: 0, duration: 0.8}, 7.34);tl.fromTo("#s7-rip", {opacity: 1, attr: {rx: 30, ry: 8}}, {opacity: 0, attr: {rx: 300, ry: 60}, duration: 2.0, ease: "power1.out", immediateRender: false}, 7.9399999999999995);
+    window.__timelines["s7"] = tl;
+  </script>
+</template>

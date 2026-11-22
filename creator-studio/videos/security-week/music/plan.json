@@ -1,0 +1,105 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "dark minimal electronic",
+  "suspense",
+  "cyber security thriller",
+  "sparse, leaves room for a voice",
+  "110 bpm"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody",
+  "happy",
+  "upbeat pop"
+ ],
+ "sections": [
+  {
+   "section_name": "Hook",
+   "positive_local_styles": [
+    "quiet tension",
+    "single low pulse",
+    "soft ticking"
+   ],
+   "negative_local_styles": [
+    "drums"
+   ],
+   "duration_ms": 4700,
+   "lines": []
+  },
+  {
+   "section_name": "Node",
+   "positive_local_styles": [
+    "ticking hi-hats enter",
+    "building pulse",
+    "subtle glitches"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 8000,
+   "lines": []
+  },
+  {
+   "section_name": "PHP",
+   "positive_local_styles": [
+    "big impact hit at the start",
+    "heavy sub bass",
+    "driving drums",
+    "alarm-like synth stabs"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 12300,
+   "lines": []
+  },
+  {
+   "section_name": "eMudhra",
+   "positive_local_styles": [
+    "darker",
+    "glitchy textures",
+    "detuned synth",
+    "steady tense beat"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 11200,
+   "lines": []
+  },
+  {
+   "section_name": "Railway",
+   "positive_local_styles": [
+    "peak intensity",
+    "urgent pulsing bass",
+    "fast hi-hats",
+    "rising riser at the end"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 12500,
+   "lines": []
+  },
+  {
+   "section_name": "Restart",
+   "positive_local_styles": [
+    "sudden drop",
+    "almost silence",
+    "soft heartbeat pulse",
+    "slow build back"
+   ],
+   "negative_local_styles": [
+    "drums",
+    "bass"
+   ],
+   "duration_ms": 7300,
+   "lines": []
+  },
+  {
+   "section_name": "End",
+   "positive_local_styles": [
+    "full beat returns",
+    "resolving",
+    "one clean final hit then silence"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 7000,
+   "lines": []
+  }
+ ]
+}
