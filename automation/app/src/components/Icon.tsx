@@ -7,7 +7,8 @@ export type IconName =
   | 'inbox' | 'server' | 'grid' | 'camera' | 'layers' | 'cpu' | 'tv' | 'music' | 'share' | 'bar-chart'
   | 'sliders' | 'bell' | 'volume' | 'copy' | 'eye' | 'trash' | 'zap' | 'filter' | 'check-circle'
   | 'folder' | 'calendar' | 'database' | 'book' | 'users' | 'gift' | 'lightbulb' | 'chevron-left' | 'chevron-right' | 'chevron-down' | 'chevron-up'
-  | 'smartphone' | 'square' | 'monitor' | 'type' | 'arrow-left' | 'arrow-right' | 'alert-triangle';
+  | 'smartphone' | 'square' | 'monitor' | 'type' | 'arrow-left' | 'arrow-right' | 'alert-triangle'
+  | 'lock' | 'scissors' | 'cut' | 'maximize' | 'minus' | 'zoom-in' | 'zoom-out' | 'video' | 'subtitles';
 
 /** Stroke icons on a 24px grid (Feather-style), drawn with react-native-svg so they render identically on web and native. */
 export function Icon({ name, size = 20, color = '#000', strokeWidth = 2 }: { name: IconName; size?: number; color?: string; strokeWidth?: number }) {
