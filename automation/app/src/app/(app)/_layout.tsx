@@ -1,53 +1,21 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Slot } from 'expo-router';
-import { LeftRail, TopHeader } from '../../components/Navigation';
+import { BottomNav, Sidebar } from '../../components/Navigation';
+import { useWide } from '../../components/useWide';
 import { useTheme } from '../../theme';
 
-/**
- * Choppity-Style Global Shell:
- * - Fixed Left Icon Rail (≈60px, expandable)
- * - Top Header Bar (Full width, segmented control for core modes)
- * - Main Content Area
- */
+/** Responsive shell: sidebar on desktop widths, bottom tab bar on phones. */
 export default function AppLayout() {
+  const wide = useWide();
   const { colors } = useTheme();
-
   return (
-    <View style={[styles.shellContainer, { backgroundColor: colors.bg }]}>
-      {/* Left Icon Rail */}
-      <LeftRail />
-
-      {/* Main Right Area */}
-      <View style={styles.mainRightColumn}>
-        {/* Top Header */}
-        <TopHeader />
-
-        {/* Page Content Slot */}
-        <View style={styles.contentViewport}>
-          <Slot />
-        </View>
+    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: colors.bg }}>
+      {wide ? <Sidebar /> : null}
+      <View style={{ flex: 1 }}>
+        <Slot />
+        {!wide ? <BottomNav /> : null}
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  shellContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    height: '100%',
-    width: '100%',
-    overflow: 'hidden',
-  },
-  mainRightColumn: {
-    flex: 1,
-    flexDirection: 'column',
-    height: '100%',
-    overflow: 'hidden',
-  },
-  contentViewport: {
-    flex: 1,
-    width: '100%',
-  },
-});
