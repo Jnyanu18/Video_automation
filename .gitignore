@@ -34,3 +34,8 @@ Thumbs.db
 apps/motion-api/.jobs/
 packages/motion-kit/out/
 packages/motion-kit/.bundle/
+
+# local-only
+automation/editor/services/api/.data/
+final_push.log
+push_output.txt
