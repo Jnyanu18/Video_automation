@@ -1,0 +1,15 @@
+{
+ "positive_global_styles": ["instrumental", "tense modern electronic", "plucky synth and soft pulse", "sparse, leaves room for a voice", "118 bpm"],
+ "negative_global_styles": ["vocals", "singing", "lead melody in the vocal range", "horror", "aggressive EDM"],
+ "sections": [
+  {"section_name": "Hook: five thousand dollars per chat", "positive_local_styles": ["sharp hit on the downbeat", "ticking clock pulse"], "negative_local_styles": [], "duration_ms": 6310, "lines": []},
+  {"section_name": "Air Canada's chatbot", "positive_local_styles": ["light curious plucks", "a little playful"], "negative_local_styles": ["heavy drums"], "duration_ms": 4130, "lines": []},
+  {"section_name": "The tribunal ruling", "positive_local_styles": ["low tension swell", "a single gavel-like hit at the end"], "negative_local_styles": [], "duration_ms": 4550, "lines": []},
+  {"section_name": "California wiretap suits", "positive_local_styles": ["darker", "steady low pulse", "muted plucks"], "negative_local_styles": [], "duration_ms": 9890, "lines": []},
+  {"section_name": "FTC and DoNotPay", "positive_local_styles": ["tension builds", "light kick on the beat"], "negative_local_styles": [], "duration_ms": 7600, "lines": []},
+  {"section_name": "EU AI Act", "positive_local_styles": ["biggest build", "rising arpeggio", "peak at the end"], "negative_local_styles": [], "duration_ms": 12040, "lines": []},
+  {"section_name": "You signed", "positive_local_styles": ["almost silent", "one low note held"], "negative_local_styles": ["drums"], "duration_ms": 3030, "lines": []},
+  {"section_name": "The four fixes", "positive_local_styles": ["release", "brighter, confident groove", "major key"], "negative_local_styles": [], "duration_ms": 10820, "lines": []},
+  {"section_name": "The ask", "positive_local_styles": ["small final lift", "clean ending"], "negative_local_styles": [], "duration_ms": 4950, "lines": []}
+ ]
+}

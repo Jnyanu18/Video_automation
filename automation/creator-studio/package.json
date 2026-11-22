@@ -1,0 +1,33 @@
+{
+  "name": "vishnu-studio",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio remotion/src/index.ts --public-dir=videos"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.8.2",
+    "@remotion/bundler": "4.0.443",
+    "@remotion/cli": "4.0.443",
+    "@remotion/google-fonts": "4.0.443",
+    "@remotion/media": "4.0.443",
+    "@remotion/renderer": "4.0.443",
+    "@remotion/three": "4.0.443",
+    "@remotion/transitions": "4.0.443",
+    "@types/three": "^0.187.0",
+    "gsap": "^3.15.1",
+    "lucide-react": "^1.73.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "remotion": "4.0.443",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "typescript": "^5.6.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

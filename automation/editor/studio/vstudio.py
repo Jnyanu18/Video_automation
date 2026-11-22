@@ -60,11 +60,17 @@ def find_studio(start: Path) -> Optional[Path]:
     env = os.environ.get("CREATOR_STUDIO_DIR") or os.environ.get("VISHNU_STUDIO_DIR")
     if env and Path(env).is_dir():
         return Path(env).resolve()
+    for container_path in (Path("/app/creator-studio"), Path("/app/vishnu-studio")):
+        if (container_path / "lanes").is_dir():
+            return container_path.resolve()
     for p in [start, *start.parents]:
         for candidate_name in ("creator-studio", "vishnu-studio"):
             candidate = p / candidate_name
             if (candidate / "lanes").is_dir():
                 return candidate.resolve()
+            sub_candidate = p / "automation" / candidate_name
+            if (sub_candidate / "lanes").is_dir():
+                return sub_candidate.resolve()
     return None
 
 
@@ -96,8 +102,9 @@ class VStudio:
         def item(id_, label, ok, detail, fix=""):
             return {"id": id_, "label": label, "ok": bool(ok), "detail": detail, "fix": fix if not ok else ""}
         items: List[dict] = []
-        items.append(item("folder", "Studio folder", self.present, str(self.root) if self.present else "vishnu-studio/ not found",
-                          "Put the folder next to automation/ or set VISHNU_STUDIO_DIR"))
+        folder_detail = str(self.root) if self.present else "creator-studio/ not found"
+        folder_fix = "Put the creator-studio folder next to automation/ or set CREATOR_STUDIO_DIR"
+        items.append(item("folder", "Studio folder", self.present, folder_detail, folder_fix))
         node, pnpm = shutil.which("node"), shutil.which("pnpm")
         items.append(item("node", "Node.js", node, node or "not found", "Install Node 18+"))
         items.append(item("pnpm", "pnpm", pnpm, pnpm or "not found", "npm install -g pnpm"))
@@ -110,8 +117,11 @@ class VStudio:
         edge = importlib.util.find_spec("edge_tts") is not None
         voice_detail = ("ElevenLabs key set" if eleven else "no ElevenLabs key: narration would use the free stand-in voice, and the studio marks such videos 'Do not publish'") if (eleven or edge) else "no ElevenLabs key and edge-tts is not installed"
         items.append(item("voice", "Narration voice (animated lane only)", eleven or edge, voice_detail, "Set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID, or pip install edge-tts") if not eleven else item("voice", "Narration voice (animated lane only)", True, voice_detail))
-        whisper = importlib.util.find_spec("whisper") is not None
-        items.append(item("whisper", "Whisper word timing (animated lane only)", whisper, "installed" if whisper else "openai-whisper is not installed", "pip install openai-whisper (large: needs torch)"))
+        has_fw = importlib.util.find_spec("faster_whisper") is not None
+        has_w = importlib.util.find_spec("whisper") is not None
+        whisper = has_w or has_fw
+        whisper_detail = "installed (faster-whisper)" if has_fw else ("installed" if has_w else "neither faster-whisper nor openai-whisper is installed")
+        items.append(item("whisper", "Whisper word timing (animated lane only)", whisper, whisper_detail, "pip install faster-whisper"))
         by = {i["id"]: i["ok"] for i in items}
         carousel_ready = all(by.get(k) for k in ("folder", "node", "remotion", "py_pil"))
         return {"present": self.present, "items": items, "carousel_ready": carousel_ready,

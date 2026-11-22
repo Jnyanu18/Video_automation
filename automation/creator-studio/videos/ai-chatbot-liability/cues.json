@@ -1,0 +1,65 @@
+[
+  {
+    "id": "01-amount",
+    "start": 0.0,
+    "end": 6.311,
+    "words": "every chat",
+    "desc": ""
+  },
+  {
+    "id": "02-chat",
+    "start": 6.311,
+    "end": 10.436,
+    "words": "air canada's",
+    "desc": ""
+  },
+  {
+    "id": "03-ruling",
+    "start": 10.436,
+    "end": 14.987,
+    "words": "a tribunal",
+    "desc": ""
+  },
+  {
+    "id": "04-chat",
+    "start": 14.987,
+    "end": 24.877,
+    "words": "in california",
+    "desc": ""
+  },
+  {
+    "id": "05-ruling",
+    "start": 24.877,
+    "end": 32.48,
+    "words": "the ftc",
+    "desc": ""
+  },
+  {
+    "id": "06-ruling",
+    "start": 32.48,
+    "end": 44.515,
+    "words": "and since august",
+    "desc": ""
+  },
+  {
+    "id": "07-chat",
+    "start": 44.515,
+    "end": 47.548,
+    "words": "every reply",
+    "desc": ""
+  },
+  {
+    "id": "08-checklist",
+    "start": 47.548,
+    "end": 58.37,
+    "words": "so make it",
+    "desc": ""
+  },
+  {
+    "id": "09-end",
+    "start": 58.37,
+    "end": 63.32,
+    "words": "dm me",
+    "desc": ""
+  }
+]

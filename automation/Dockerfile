@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=node_src /usr/local/bin/node /usr/local/bin/node
 COPY --from=node_src /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
- && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+ && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+ && npm install -g pnpm
 
 WORKDIR /app
 
@@ -45,6 +46,10 @@ COPY lib ./lib
 COPY adapters ./adapters
 COPY web/dist ./web/dist
 COPY editor /app/editor
+COPY creator-studio /app/creator-studio
+WORKDIR /app/creator-studio
+RUN pnpm install --no-frozen-lockfile || true
+WORKDIR /app
 COPY n8n/*.json /app/n8n/
 
 COPY deploy/huggingface/start.sh /app/start.sh
@@ -58,6 +63,8 @@ USER user
 
 ENV PORT=10000 \
     HOST=0.0.0.0 \
+    CREATOR_STUDIO_DIR=/app/creator-studio \
+    VISHNU_STUDIO_DIR=/app/creator-studio \
     HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH
 

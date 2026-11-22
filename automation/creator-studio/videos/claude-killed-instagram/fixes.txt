@@ -1,0 +1,1 @@
+﻿Display fixes in words.json (2026-11-06): M -> em, accounts -> account's, comment -> Comment. 13 and 26 kept as digits. LISTEN to the [dramatic], [excited] and [laughs softly] cues.

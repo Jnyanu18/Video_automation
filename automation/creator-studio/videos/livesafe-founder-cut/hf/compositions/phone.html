@@ -1,0 +1,83 @@
+<template>
+  <style>
+#root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #fff; }
+.card { position: absolute; background: rgba(15,16,22,.80); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  border-radius: 24px; border: 1px solid rgba(255,255,255,.10); box-shadow: 0 30px 70px -24px rgba(0,0,0,.7);
+  padding: 30px 36px 32px; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 24px; letter-spacing: .14em; text-transform: uppercase;
+  color: #FF8AD8; display: flex; align-items: center; gap: 12px; }
+.dot { width: 11px; height: 11px; border-radius: 6px; background: #E03FB4; box-shadow: 0 0 14px #E03FB4; }
+.title { font-family: Poppins, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.12; letter-spacing: -.02em; margin-top: 14px; }
+.sub { font-size: 28px; line-height: 1.35; color: rgba(255,255,255,.72); margin-top: 12px; }
+.big { font-family: Poppins, sans-serif; font-weight: 700; font-size: 128px; line-height: 1; letter-spacing: -.04em; margin-top: 10px; }
+.big small { font-size: 64px; color: #FF8AD8; margin-left: 6px; }
+.accent { color: #FF8AD8; } .good { color: #3DDC84; } .bad { color: #FF6B6B; }
+.rows { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+.row { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 500; }
+.mark { width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800; flex: none; }
+.mark.ok { background: #3DDC84; color: #08130c; } .mark.no { background: #FF6B6B; color: #1a0707; }
+.mark.mid { background: #FFB547; color: #1d1203; } .mark.idle { background: rgba(255,255,255,.12); }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.chip { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  padding: 10px 22px; font-size: 28px; font-weight: 600; }
+.steps { display: flex; gap: 14px; margin-top: 22px; }
+.step { flex: 1; background: rgba(255,255,255,.07); border-radius: 18px; padding: 18px 20px; }
+.step b { display: block; font-family: Poppins, sans-serif; font-size: 40px; color: #FF8AD8; }
+.step span { font-size: 28px; font-weight: 600; line-height: 1.2; }
+.bar { height: 18px; border-radius: 9px; background: rgba(255,255,255,.12); margin-top: 18px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; border-radius: 9px; background: linear-gradient(90deg, #E03FB4, #ff9ad9); transform-origin: left center; }
+.quote { font-family: Poppins, sans-serif; font-weight: 600; font-size: 52px; line-height: 1.12; letter-spacing: -.02em; }
+.quote .w { display: inline-block; margin-right: .26em; }
+.who { font-size: 26px; color: rgba(255,255,255,.6); margin-top: 16px; font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; }
+.tag { position: absolute; left: 192px; top: 108px; display: flex; align-items: center; gap: 14px; background: rgba(15,16,22,.72);
+  backdrop-filter: blur(16px); border-radius: 999px; padding: 12px 24px 12px 16px; border: 1px solid rgba(255,255,255,.10); }
+.tag .n { font-family: 'JetBrains Mono', monospace; font-size: 24px; background: #A3127F; border-radius: 999px; padding: 4px 12px; font-weight: 700; }
+.tag .l { font-family: Poppins, sans-serif; font-weight: 600; font-size: 28px; }
+.tag .pips { display: flex; gap: 6px; margin-left: 6px; }
+.tag .pips i { width: 22px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.22); }
+.tag .pips i.on { background: #E03FB4; }
+</style>
+  <div data-hf-id="hf-x37l" id="root" data-composition-id="phone" data-width="1920" data-height="1080" data-layout-allow-overlap>
+    <div data-hf-id="hf-xrwn" id="phone-tag" class="clip" data-start="0" data-duration="138.37" data-track-index="0"><div data-hf-id="hf-3m01" id="phone-tag-c" class="tag"><span data-hf-id="hf-lhrc" class="n">03</span><span data-hf-id="hf-dj6s" class="l">Your phone</span><span data-hf-id="hf-3qgn" class="pips"><i data-hf-id="hf-l5u7" class="on"></i><i data-hf-id="hf-j2zz" class="on"></i><i data-hf-id="hf-iooy" class="on"></i><i data-hf-id="hf-gd9w" class=""></i><i data-hf-id="hf-x6bw" class=""></i></span></div></div>
+    <div data-hf-id="hf-n61d" id="phone-mindful" class="clip" data-start="9.91" data-duration="5.9" data-track-index="2"><div data-hf-id="hf-rqoj" id="phone-mindful-c" class="card" style="left:192px;top:320px;width:620px"><div data-hf-id="hf-6mu6" class="eyebrow"><span data-hf-id="hf-9gry" class="dot"></span>Not doom and gloom</div><div data-hf-id="hf-hxss" class="quote"><span data-hf-id="hf-jfca" id="phone-mind-q-w0" class="w">Use</span> <span data-hf-id="hf-8x4s" id="phone-mind-q-w1" class="w">technology,</span> <span data-hf-id="hf-5btv" id="phone-mind-q-w2" class="w">mindfully.</span></div></div></div>
+    <div data-hf-id="hf-owi5" id="phone-dist" class="clip" data-start="17.58" data-duration="25.1" data-track-index="3"><div data-hf-id="hf-dlbt" id="phone-dist-c" class="card" style="left:192px;top:280px;width:620px"><div data-hf-id="hf-zw2j" class="eyebrow"><span data-hf-id="hf-zcc2" class="dot"></span>Measured with meters</div><div data-hf-id="hf-4rfz" class="title">Phone <span data-hf-id="hf-t8zq" class="accent">18 inches</span> from your body</div><div data-hf-id="hf-72gg" id="phone-d2" class="big" style="font-size:110px"><span data-hf-id="hf-73d8" id="phone-dn">1</span><small data-hf-id="hf-thvp">x less</small></div><div data-hf-id="hf-jeq7" class="sub">radiation absorbed than with it on you</div></div></div>
+    <div data-hf-id="hf-5n3c" id="phone-pocket" class="clip" data-start="57.31" data-duration="14.58" data-track-index="1"><div data-hf-id="hf-8x6n" id="phone-pocket-c" class="card" style="left:192px;top:320px;width:520px"><div data-hf-id="hf-28r1" class="eyebrow"><span data-hf-id="hf-zqn3" class="dot"></span>Where you carry it</div><div data-hf-id="hf-hnc7" class="rows"><div data-hf-id="hf-out7" class="row"><span data-hf-id="hf-1gy6" class="mark no">✕</span>Front pocket</div><div data-hf-id="hf-9s40" id="phone-p2" class="row"><span data-hf-id="hf-ohix" class="mark ok">✓</span>Back pocket</div></div></div></div>
+    <div data-hf-id="hf-e7d8" id="phone-data" class="clip" data-start="87.63" data-duration="16.88" data-track-index="2"><div data-hf-id="hf-ifqk" id="phone-data-c" class="card" style="left:192px;top:300px;width:620px"><div data-hf-id="hf-vtoi" class="eyebrow"><span data-hf-id="hf-04y4" class="dot"></span>Carrying it?</div><div data-hf-id="hf-tyzd" class="title">Switch off mobile data</div><div data-hf-id="hf-2l6i" class="sub">Keep calls on. Turn data on to check messages.</div><div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-26ar" id="phone-databar"></i></div><div data-hf-id="hf-zcn2" id="phone-data2" class="title good" style="font-size:40px">40 to 50% less exposure</div></div></div>
+    <div data-hf-id="hf-ypnt" id="phone-kids" class="clip" data-start="104.82" data-duration="16.59" data-track-index="3"><div data-hf-id="hf-3yuw" id="phone-kids-c" class="card" style="left:192px;top:700px;width:900px"><div data-hf-id="hf-yua1" class="eyebrow"><span data-hf-id="hf-0j95" class="dot"></span>A phone for a child under five?</div><div data-hf-id="hf-70xd" class="steps"><div data-hf-id="hf-ufv1" id="phone-k1" class="step"><b data-hf-id="hf-t4n0">1</b><span data-hf-id="hf-3zks">Download the game</span></div><div data-hf-id="hf-ydz2" id="phone-k2" class="step"><b data-hf-id="hf-rxpx">2</b><span data-hf-id="hf-pjyu">Airplane mode</span></div><div data-hf-id="hf-4jov" id="phone-k3" class="step"><b data-hf-id="hf-sc0y">3</b><span data-hf-id="hf-vhue">Then hand it over</span></div></div></div></div>
+    <div data-hf-id="hf-2nm9" id="phone-recap" class="clip" data-start="122.11" data-duration="15.7" data-track-index="1"><div data-hf-id="hf-h0g2" id="phone-recap-c" class="card" style="left:192px;top:280px;width:600px"><div data-hf-id="hf-r8mz" class="eyebrow"><span data-hf-id="hf-0xk6" class="dot"></span>Your phone, in short</div><div data-hf-id="hf-y39j" class="rows"><div data-hf-id="hf-wlmc" id="phone-r1" class="row"><span data-hf-id="hf-nkp9" class="mark ok">✓</span>18 inches from your body</div><div data-hf-id="hf-mv4g" id="phone-r2" class="row"><span data-hf-id="hf-ormc" class="mark ok">✓</span>Back pocket, not front</div><div data-hf-id="hf-gt1w" id="phone-r3" class="row"><span data-hf-id="hf-odbb" class="mark ok">✓</span>Data off while carrying it</div><div data-hf-id="hf-5xjq" id="phone-r4" class="row"><span data-hf-id="hf-pk8e" class="mark ok">✓</span>Airplane mode for kids</div></div></div></div>
+  </div>
+  <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#phone-tag-c",{opacity:0,y:-20},{opacity:1,y:0,duration:0.5,ease:"expo.out"},0.2);
+      tl.fromTo("#phone-mind-q-w0",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},10.06);
+      tl.fromTo("#phone-mind-q-w1",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},10.13);
+      tl.fromTo("#phone-mind-q-w2",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},10.2);
+      tl.fromTo("#phone-mindful-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},9.91);
+      tl.to("#phone-mindful-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},15.45);
+      tl.fromTo("#phone-dist-c",{opacity:0,scale:0.86,filter:"blur(8px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.55,ease:"back.out(1.5)"},17.58);
+      tl.to("#phone-dist-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},42.32);
+      tl.fromTo("#phone-d2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},34.78);
+      (function(){const o={v:1};const el=document.querySelector("#phone-dn");tl.to(o,{v:100,duration:1.4,ease:"power2.out",onUpdate:function(){el.textContent=Math.round(o.v);}},34.98);})();
+      tl.fromTo("#phone-pocket-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},57.31);
+      tl.to("#phone-pocket-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},71.53);
+      tl.fromTo("#phone-p2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},65.89);
+      tl.fromTo("#phone-data-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},87.63);
+      tl.to("#phone-data-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},104.15);
+      tl.fromTo("#phone-databar",{scaleX:1},{scaleX:0.55,duration:1.2,ease:"power3.inOut"},99.29);
+      tl.fromTo("#phone-data2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},98.99);
+      tl.fromTo("#phone-kids-c",{opacity:0,clipPath:"inset(0% 100% 0% 0% round 24px)"},{opacity:1,clipPath:"inset(0% 0% 0% 0% round 24px)",duration:0.7,ease:"power3.out"},104.82);
+      tl.to("#phone-kids-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},121.05);
+      tl.fromTo("#phone-k1",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},110.82);
+      tl.fromTo("#phone-k2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},112.9);
+      tl.fromTo("#phone-k3",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},115.66);
+      tl.fromTo("#phone-recap-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},122.11);
+      tl.to("#phone-recap-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},137.45);
+      tl.fromTo("#phone-r1",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},122.71);
+      tl.fromTo("#phone-r2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},123.21);
+      tl.fromTo("#phone-r3",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},123.71);
+      tl.fromTo("#phone-r4",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},124.21);
+      tl.to("#phone-tag-c",{opacity:0,y:-12,duration:0.3,ease:"power2.in"},137.97);
+      window.__timelines["phone"] = tl;
+  </script>
+</template>

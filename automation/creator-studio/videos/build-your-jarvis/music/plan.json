@@ -1,0 +1,127 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "sparse, leaves room for a voice",
+  "confident upbeat light electronic",
+  "plucky synth",
+  "soft claps",
+  "warm bass",
+  "112 bpm (three takes)"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody in the vocal range",
+  "aggressive EDM"
+ ],
+ "sections": [
+  {
+   "section_name": "01-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4655,
+   "lines": []
+  },
+  {
+   "section_name": "02-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4245,
+   "lines": []
+  },
+  {
+   "section_name": "03-terminal",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5528,
+   "lines": []
+  },
+  {
+   "section_name": "04-checklist",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5501,
+   "lines": []
+  },
+  {
+   "section_name": "05-chat",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4830,
+   "lines": []
+  },
+  {
+   "section_name": "06-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4734,
+   "lines": []
+  },
+  {
+   "section_name": "07-checklist",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 6251,
+   "lines": []
+  },
+  {
+   "section_name": "08-checklist",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3311,
+   "lines": []
+  },
+  {
+   "section_name": "09-chat",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3032,
+   "lines": []
+  },
+  {
+   "section_name": "10-ruling",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3242,
+   "lines": []
+  },
+  {
+   "section_name": "11-ruling",
+   "positive_local_styles": [
+    "builds a little"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 8606,
+   "lines": []
+  },
+  {
+   "section_name": "12-end",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3950,
+   "lines": []
+  }
+ ]
+}

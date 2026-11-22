@@ -1,0 +1,24 @@
+[
+ {
+  "scene": "repos",
+  "at": "these",
+  "bg": "#0d1117",
+  "section": "Three GitHub repos: a world per repo in its own colours; the hired loop pinned until the payoff",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "three-repos",
+   "parts": {
+    "stars0": "187000 stars", "last": "the last",
+    "b2": "number 1", "stars1": "50000 stars", "stops": "it stops", "deals": "it deals", "builds": "builds the", "checks": "then checks", "screams": "screams",
+    "b3": "number 2", "stars2": "66000 stars", "turns": "it turns", "finds": "one agent", "fresh": "a fresh", "own": "cloudflares own",
+    "b4": "number 3", "stars3": "70000 stars", "jobs": "finds jobs", "ranks": "ranks them", "writes": "and writes", "never": "it never",
+    "b5": "creator got", "apps": "69 applications", "interviews": "20 interviews", "job": "a job as",
+    "b6": "comment links"
+   }
+  }
+ }
+]

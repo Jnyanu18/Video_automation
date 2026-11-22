@@ -1,0 +1,49 @@
+[
+ {
+  "scene": "tprange",
+  "at": "this ai",
+  "bg": "#14151a",
+  "section": "one chart that grows: sixteen futures, the replayed past, the keyword",
+  "mark": [
+   "kronos",
+   "tradepilot"
+  ],
+  "poses": [
+   {
+    "on": "this ai",
+    "pose": "present"
+   },
+   {
+    "on": "then it replays",
+    "pose": "think"
+   },
+   {
+    "on": "so you know",
+    "pose": "point-up"
+   },
+   {
+    "on": "comment tradepilot",
+    "pose": "wave"
+   }
+  ],
+  "props": {
+   "look": "dev",
+   "ava": "side",
+   "stageScale": 1.0,
+   "stageLift": 60,
+   "slug": "tradepilot-forecast-range",
+   "parts": {
+    "hook": "this ai",
+    "kronos": "called kronos",
+    "sixteen": "to simulate",
+    "futures": "futures for",
+    "checks": "replays the",
+    "shows": "shows how",
+    "outcome": "likely outcome",
+    "comment": "comment tradepilot",
+    "kw": "tradepilot",
+    "send": "for the link"
+   }
+  }
+ }
+]

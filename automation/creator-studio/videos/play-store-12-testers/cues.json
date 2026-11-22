@@ -1,0 +1,93 @@
+[
+  {
+    "id": "hook",
+    "start": 0.0,
+    "end": 7.34,
+    "words": "google won't let you publish",
+    "desc": "Twelve phones light up one by one in a 3x4 grid as \"twelve\" is said; a 14-day ring fills on \"fourteen days\". Words: \"12 PEOPLE\", \"14 DAYS\"."
+  },
+  {
+    "id": "cred",
+    "start": 7.34,
+    "end": 9.8,
+    "words": "i've published two apps",
+    "desc": "Two app tiles land, \"Vakya\" and \"GT-FIVE\", each with a green \"Live\" tick."
+  },
+  {
+    "id": "nobody",
+    "start": 9.8,
+    "end": 12.6,
+    "words": "this is the rule nobody warns you about",
+    "desc": "A stamp: \"NOBODY WARNS YOU\"."
+  },
+  {
+    "id": "personal",
+    "start": 12.6,
+    "end": 17.9,
+    "words": "if you made a personal developer account",
+    "desc": "An account card: \"Personal account\", \"Created after 13 Nov 2023\" lights up."
+  },
+  {
+    "id": "closed",
+    "start": 17.9,
+    "end": 20.66,
+    "words": "you have to run a closed test first",
+    "desc": "The four testing tracks stack: Internal, Closed, Open, Production. Closed lights green."
+  },
+  {
+    "id": "internal",
+    "start": 20.66,
+    "end": 24.24,
+    "words": "not internal testing",
+    "desc": "Internal gets struck through in red: \"Doesn't count\"."
+  },
+  {
+    "id": "testers",
+    "start": 24.24,
+    "end": 31.32,
+    "words": "twelve testers have to opt in",
+    "desc": "A dashboard card: tester avatars fill 0 to 12, then a day bar fills 0 to 14."
+  },
+  {
+    "id": "dashboard",
+    "start": 31.32,
+    "end": 34.94,
+    "words": "you can watch the count",
+    "desc": "The dashboard full screen: \"12 / 12 testers\", \"Day 14 of 14\", a green tick."
+  },
+  {
+    "id": "apply",
+    "start": 34.94,
+    "end": 42.48,
+    "words": "only then can you apply for production",
+    "desc": "An \"Apply for production\" button gets pressed; a review clock reads \"up to 7 days\"."
+  },
+  {
+    "id": "how",
+    "start": 42.48,
+    "end": 44.82,
+    "words": "so how do you get through it",
+    "desc": "A big \"HOW?\"."
+  },
+  {
+    "id": "lineup",
+    "start": 44.82,
+    "end": 49.74,
+    "words": "line up your twelve testers",
+    "desc": "A timeline: \"Testers ready\" sits before \"Build done\", with an arrow."
+  },
+  {
+    "id": "org",
+    "start": 49.74,
+    "end": 55.44,
+    "words": "or register as an organisation",
+    "desc": "An \"Organisation + D-U-N-S\" badge; an arrow jumps over the 14-day block: \"Rule doesn't apply\"."
+  },
+  {
+    "id": "cta",
+    "start": 55.44,
+    "end": 60.38,
+    "words": "save this for launch day",
+    "desc": "Save and Follow icons: \"SAVE\", \"FOLLOW\"."
+  }
+]

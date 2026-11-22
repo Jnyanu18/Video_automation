@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=node_src /usr/local/bin/node /usr/local/bin/node
 COPY --from=node_src /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
- && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+ && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+ && npm install -g pnpm
 
 WORKDIR /app
 
@@ -53,6 +54,10 @@ COPY automation/lib ./lib
 COPY automation/adapters ./adapters
 COPY automation/web/dist ./web/dist
 COPY automation/editor /app/editor
+COPY automation/creator-studio /app/creator-studio
+WORKDIR /app/creator-studio
+RUN pnpm install --no-frozen-lockfile || true
+WORKDIR /app
 COPY automation/n8n/*.json /app/n8n/
 
 # Copy startup script
@@ -68,6 +73,8 @@ USER user
 
 ENV PORT=10000 \
     HOST=0.0.0.0 \
+    CREATOR_STUDIO_DIR=/app/creator-studio \
+    VISHNU_STUDIO_DIR=/app/creator-studio \
     HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH
 

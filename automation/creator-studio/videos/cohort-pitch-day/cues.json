@@ -1,0 +1,74 @@
+[
+ {
+  "id": "walkin",
+  "start": 0.0,
+  "end": 5.42,
+  "words": "On Saturday I walked into a room full of founders with one thing. A six minute pitch."
+ },
+ {
+  "id": "noslides",
+  "start": 5.42,
+  "end": 6.48,
+  "words": "No slides."
+ },
+ {
+  "id": "pitch",
+  "start": 6.48,
+  "end": 14.1,
+  "words": "I pitched AskVerb to a founder who has already raised a Series B. I was given ten minutes. We talked for fifteen."
+ },
+ {
+  "id": "liked",
+  "start": 14.1,
+  "end": 15.58,
+  "words": "He liked it."
+ },
+ {
+  "id": "letter",
+  "start": 15.58,
+  "end": 25.4,
+  "words": "And I made the next round. Leap by Masai's Founders' Cohort. It starts in Goa and ends in Bengaluru, pitching to investors."
+ },
+ {
+  "id": "cantgo",
+  "start": 25.4,
+  "end": 27.04,
+  "words": "But I can't go."
+ },
+ {
+  "id": "money",
+  "start": 27.04,
+  "end": 32.14,
+  "words": "I don't have the money for it right now. Still, I left with something better than a seat."
+ },
+ {
+  "id": "advice",
+  "start": 32.14,
+  "end": 33.34,
+  "words": "His advice."
+ },
+ {
+  "id": "niche_how",
+  "start": 33.34,
+  "end": 42.7,
+  "words": "Don't build for every SaaS yet. Start where the workflow is so complex that only a few people know how it works, and nothing is written down."
+ },
+ {
+  "id": "niche",
+  "start": 42.7,
+  "end": 44.36,
+  "words": "That's my first niche."
+ },
+ {
+  "id": "met",
+  "start": 44.36,
+  "end": 53.98,
+  "words": "I heard from VCs and founders, met people building all kinds of things, and that same day, four people signed up. My second best day so far."
+ },
+ {
+  "id": "end",
+  "start": 53.98,
+  "end": 56.26,
+  "words": "Day 26. Still going."
+ }
+]

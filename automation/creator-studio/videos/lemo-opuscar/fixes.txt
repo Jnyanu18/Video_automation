@@ -1,0 +1,1 @@
+words.json: "LEMO -Opascar," -> "Lemo-Opuscar,", "Plog" -> "Claude", "11 ,000" -> "11,000", "5 .5." -> "5.5." (the transcript's mishearing and split tokens, not the voice) (2026-11-03)
