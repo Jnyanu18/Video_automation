@@ -380,20 +380,25 @@ def _ensure_demo_storyboard(store: Store, work_dir: Path) -> dict:
     try:
         sample_file = work_dir / "sample_event.mp4"
         if not sample_file.is_file() or sample_file.stat().st_size == 0:
-            cmd = [
-                "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x6C4CF0:s=1080x1920:d=10",
-                "-f", "lavfi", "-i", "sine=frequency=440:duration=10",
-                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest",
-                str(sample_file)
-            ]
-            try:
-                subprocess.run(cmd, capture_output=True, timeout=15)
-            except Exception as ffmpeg_err:
-                log.warning("ffmpeg sample video creation warning: %s", ffmpeg_err)
+            bundled = ROOT / "assets" / "sample_event.mp4"
+            if bundled.is_file() and bundled.stat().st_size > 0:
+                shutil.copy2(bundled, sample_file)
+            else:
                 try:
-                    sample_file.write_bytes(b"\x00" * 1024)
-                except Exception:
-                    pass
+                    cmd = [
+                        "ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x6C4CF0:s=360x640:d=2",
+                        "-f", "lavfi", "-i", "sine=frequency=440:duration=2",
+                        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "35", "-pix_fmt", "yuv420p",
+                        "-c:a", "aac", "-b:a", "32k", "-shortest",
+                        str(sample_file)
+                    ]
+                    subprocess.run(cmd, capture_output=True, timeout=10)
+                except Exception as ffmpeg_err:
+                    log.warning("ffmpeg sample video creation warning: %s", ffmpeg_err)
+                    try:
+                        sample_file.write_bytes(b"\x00" * 1024)
+                    except Exception:
+                        pass
 
         sb_work = work_dir / "sb1"
         sb_work.mkdir(parents=True, exist_ok=True)

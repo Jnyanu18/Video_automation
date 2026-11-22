@@ -6,6 +6,12 @@ echo "=== Starting GrowthOS AI Video Studio on Hugging Face Spaces ==="
 # Set directories
 mkdir -p /tmp/storage /tmp/users /tmp/models
 
+# Memory limits for 512MB RAM cloud tiers
+export NODE_OPTIONS="--max-old-space-size=128"
+export MALLOC_ARENA_MAX=2
+export PYTHONMALLOC=malloc
+export PYTHONDONTWRITEBYTECODE=1
+
 # 1. Start Python FastAPI backend in the background on port 8793
 export EDITOR_HOST=127.0.0.1
 export EDITOR_PORT=8793
