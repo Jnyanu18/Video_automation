@@ -4,7 +4,12 @@
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
-const { Runner } = require('../test/n8n-sim.cjs');
+let Runner;
+try {
+  Runner = require('./n8n-sim.cjs').Runner;
+} catch {
+  Runner = require('../test/n8n-sim.cjs').Runner;
+}
 const { TOKENS } = require('./mock-server.cjs');
 
 const N8N_DIR = path.join(__dirname, '..', 'n8n');
