@@ -134,6 +134,24 @@ export default function StyleDNAScreen() {
                   <T variant="small" muted>LUT curve</T>
                 </View>
               </View>
+
+              {/* Action Buttons */}
+              <View style={styles.cardActions}>
+                <Button
+                  label="Use this Style in New Reel"
+                  variant="primary"
+                  icon="sparkles"
+                  small
+                  onPress={() => router.push(`/new?style=${encodeURIComponent(st.style_id || st.name)}`)}
+                />
+                <Button
+                  label="Tune Style in Studio"
+                  variant="secondary"
+                  icon="sliders"
+                  small
+                  onPress={() => router.push(`/studio?style=${encodeURIComponent(st.style_id || st.name)}`)}
+                />
+              </View>
             </Card>
           ))}
         </View>
@@ -188,5 +206,14 @@ const styles = StyleSheet.create({
   metricItem: {
     flex: 1,
     minWidth: 160,
+  },
+  cardActions: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    marginTop: spacing.lg,
+    paddingTop: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: '#252930',
+    flexWrap: 'wrap',
   },
 });

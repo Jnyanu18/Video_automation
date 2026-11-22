@@ -7,7 +7,9 @@ import {
 } from '../../../components/ui';
 import { ProgressSteps, timeAgo } from '../../../components/ReelParts';
 import { VideoPlayer } from '../../../components/VideoPlayer';
+import { Icon } from '../../../components/Icon';
 import { absoluteUrl, ApiError, errorLabel, errorText, get, post } from '../../../api/client';
+import { editor } from '../../../api/editor';
 import type { ActionState, ReelDetail } from '../../../api/types';
 import { useQuery } from '../../../state/useQuery';
 import { useToast } from '../../../state/toast';
@@ -35,10 +37,67 @@ export default function ReelScreen() {
   const [busy, setBusy] = useState<ActionKey | null>(null);
   const [confirm, setConfirm] = useState<null | 'publish' | 'reject'>(null);
 
+  // Seamlessly redirect if id starts with 'sb'
+  useEffect(() => {
+    if (id && id.startsWith('sb')) {
+      router.replace({ pathname: '/storyboard', params: { sb: id } });
+    }
+  }, [id, router]);
+
   // Live refreshes are paused while the user has unsaved edits so we never clobber typing.
   const { data: reel, error, loading, refreshing, refresh, retry, reload, setData } = useQuery<ReelDetail>(
-    async () => (await get(`/api/reels/${encodeURIComponent(id)}`)).reel, [id], { paused: dirty },
+    async () => {
+      if (id?.startsWith('sb')) {
+        router.replace({ pathname: '/storyboard', params: { sb: id } });
+        return {} as ReelDetail;
+      }
+      try {
+        const res = await get(`/api/reels/${encodeURIComponent(id)}`);
+        return res.reel;
+      } catch (e: any) {
+        const is404 = (e instanceof ApiError && (e.status === 404 || e.code === 'NOT_FOUND')) ||
+          e?.status === 404 || e?.code === 'NOT_FOUND' || (typeof e?.message === 'string' && /404|not found/i.test(e.message));
+        const isNetwork = (e instanceof ApiError && e.code === 'NETWORK') ||
+          e?.code === 'NETWORK' || (typeof e?.message === 'string' && /network|cannot reach/i.test(e.message));
+
+        if (is404 || isNetwork) {
+          try {
+            const sbData = await editor.storyboard(id);
+            if (sbData?.id) {
+              router.replace({ pathname: '/storyboard', params: { sb: id } });
+              return {} as ReelDetail;
+            }
+          } catch {
+            if (is404) {
+              router.replace({ pathname: '/storyboard', params: { sb: id } });
+              return {} as ReelDetail;
+            }
+          }
+        }
+        throw e;
+      }
+    },
+    [id],
+    { paused: dirty },
   );
+
+  // If fetching returns 404 / NOT_FOUND / network error, check storyboard fallback or redirect
+  useEffect(() => {
+    if (!id || id.startsWith('sb')) return;
+    if (error && /404|not found|network|cannot reach/i.test(error)) {
+      editor.storyboard(id)
+        .then((sb) => {
+          if (sb?.id) {
+            router.replace({ pathname: '/storyboard', params: { sb: id } });
+          }
+        })
+        .catch(() => {
+          if (/404|not found/i.test(error)) {
+            router.replace({ pathname: '/storyboard', params: { sb: id } });
+          }
+        });
+    }
+  }, [id, error, router]);
 
   // Hydrate the form from the server whenever a fresh copy arrives and nothing is being edited.
   useEffect(() => {
@@ -88,10 +147,72 @@ export default function ReelScreen() {
       onRefresh={refresh} refreshing={refreshing}
       actions={reel ? <StatusBadge status={reel.status} /> : undefined}>
       {loading && !reel ? <View style={{ gap: spacing.md }}><Skeleton height={80} /><Skeleton height={220} /><Skeleton height={160} /></View> : null}
-      {error && !reel ? <ErrorState message={error} onRetry={retry} /> : null}
+      {error && !reel ? (
+        <View style={{ gap: spacing.md }}>
+          <Banner tone="info">
+            <View style={{ gap: spacing.sm }}>
+              <T variant="h3">Open in Unified Video Engine?</T>
+              <T variant="small">
+                This reel could not be found in the database. If this is a storyboard or new video cut, open it directly in the editor:
+              </T>
+              <View style={{ flexDirection: 'row', gap: spacing.sm, marginTop: spacing.xs, flexWrap: 'wrap' }}>
+                <Button
+                  label="Open Storyboard"
+                  icon="sparkles"
+                  variant="primary"
+                  small
+                  onPress={() => router.replace({ pathname: '/storyboard', params: { sb: id } })}
+                />
+                <Button
+                  label="Multi-track Timeline"
+                  icon="film"
+                  variant="secondary"
+                  small
+                  onPress={() => router.replace({ pathname: '/timeline', params: { sb: id } })}
+                />
+              </View>
+            </View>
+          </Banner>
+          <ErrorState message={error} onRetry={retry} />
+        </View>
+      ) : null}
 
       {reel ? (
         <>
+          {/* Prominent banner guiding users into the unified editing engine */}
+          <Card style={[styles.unifiedCard, { borderColor: colors.primary, backgroundColor: colors.surfaceAlt }]}>
+            <View style={styles.unifiedInner}>
+              <View style={[styles.unifiedIconWrap, { backgroundColor: colors.primarySoft }]}>
+                <Icon name="sparkles" size={20} color={colors.primary} />
+              </View>
+              <View style={{ flex: 1, gap: 2 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                  <T variant="h3">Unified Video Editing Engine</T>
+                  <Badge label="Native Studio" tone="info" />
+                </View>
+                <T variant="small" muted>
+                  Review AI storyboard cues, re-cut scenes, or edit timings on the multi-track timeline.
+                </T>
+              </View>
+              <View style={styles.unifiedActions}>
+                <Button
+                  label="Open Storyboard"
+                  icon="sparkles"
+                  variant="primary"
+                  small
+                  onPress={() => router.push({ pathname: '/storyboard', params: { sb: id } })}
+                />
+                <Button
+                  label="Multi-track Timeline"
+                  icon="film"
+                  variant="secondary"
+                  small
+                  onPress={() => router.push({ pathname: '/timeline', params: { sb: id } })}
+                />
+              </View>
+            </View>
+          </Card>
+
           <View style={styles.metaRow}>
             {reel.busy ? <Badge label="Working…" tone="info" /> : null}
             {reel.stuck ? <Badge label="Stuck" tone="warning" /> : null}
@@ -155,6 +276,12 @@ export default function ReelScreen() {
                             Linking.openURL(videoUri);
                           }
                         }}
+                      />
+                      <Button
+                        label="Open in Storyboard"
+                        icon="sparkles"
+                        small
+                        onPress={() => router.push({ pathname: '/storyboard', params: { sb: id } })}
                       />
                     </View>
                   </View>
@@ -227,4 +354,8 @@ const styles = StyleSheet.create({
   rowEnd: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: spacing.md },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   quote: { padding: spacing.md, borderRadius: 10 },
+  unifiedCard: { padding: spacing.md, borderWidth: 1.5, borderRadius: 12, marginBottom: spacing.xs },
+  unifiedInner: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, flexWrap: 'wrap' },
+  unifiedIconWrap: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
+  unifiedActions: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexWrap: 'wrap' },
 });

@@ -30,77 +30,17 @@ export default function StoryboardScreen() {
     try { await fn(); await reload(); if (done) toast(done); } catch (e) { setErr(errorText(e)); } finally { setBusy(null); }
   }
 
-  // Demo data for storyboards
-  const demoStoryboards = [
-    {
-      id: 'sb1',
-      stage: 'ready',
-      approved: true,
-      approved_at: Date.now() - 86400000,
-      status: 'ready',
-      style: 'Modern',
-      series: null,
-      agent_reply: null,
-      storyboard: {
-        title: 'Event Highlights Edit',
-        duration: { original_seconds: 450, output_seconds: 180, reduction_percent: 60 },
-        scenes_count: 3,
-        scenes: [
-          {
-            scene_number: 1,
-            type: 'Hook Scene',
-            timestamp_output: '0:00 - 0:03',
-            action: 'Quick visual punch-in on speaker',
-            framing: 'Close-up',
-            camera_motion: 'Push-in',
-            source_range: '0:00 - 0:03',
-            caption_style: 'karaoke',
-            caption: 'The secret to editing 10x faster',
-            sfx: [{ name: 'whoosh', at: 0.2 }],
-          },
-        ],
-        scorecard: {
-          available: true,
-          status: 'PASS',
-          score: 0.95,
-          checks: [
-            { name: 'Hook timing under 3s', status: 'PASS', detail: 'Hook ends at 2.4s' },
-            { name: 'Pacing variance', status: 'PASS', detail: 'Good energy and cut rhythm' },
-          ],
-        },
-        growth_signals: {
-          three_second_hook: { status: 'pass', detail: 'Fast hook punch-in' },
-          sendability: { status: 'pass', detail: 'Actionable takeaway format' },
-        },
-        sound_design: {
-          sfx_count: 4,
-          music: true,
-          ducking_enabled: true,
-          target_lufs: -14,
-        },
-      },
-      render_job: null,
-      latest_render: null,
-      latest_preview: null,
-      events: [],
-      approval_reset: false,
-      error: null,
-      posts: null,
-    },
-  ];
-
   if (loading) return <Page title="Storyboard" subtitle="Review, approve and render"><Skeleton height={120} /><Skeleton height={240} /></Page>;
   if (error && !list) return <Page title="Storyboard"><ErrorState message={error} onRetry={reload} /></Page>;
 
-  const finalList = list && list.length > 0 ? list : demoStoryboards;
-  const finalSb = sb || (finalList.length > 0 ? finalList[0] : null);
+  const finalSb = sb || (list && list.length > 0 ? list[0] : null);
 
-  if (!finalList?.length || !finalSb) {
+  if (!list?.length || !finalSb) {
     return (
       <Page title="Storyboard" subtitle="Review, approve and render">
         <EmptyState icon="layers" title="No storyboards yet"
           message="Upload raw footage and let the editor draft a cut. You review it here before anything is rendered."
-          action={<Button label="Start a new edit" variant="primary" icon="plus" onPress={() => router.push('/new')} />} />
+          action={<Button label="Create a new reel" variant="primary" icon="plus" onPress={() => router.push('/new')} />} />
       </Page>
     );
   }
@@ -115,7 +55,7 @@ export default function StoryboardScreen() {
   return (
     <Page title="Storyboard" subtitle="Review the cut, approve it, then render">
       <Chips
-        options={finalList.slice(0, 10).map((s: any) => ({ value: s.id, label: `${(s.storyboard?.title || s.id).slice(0, 28)} · ${STAGE_LABEL[s.stage] ?? s.stage}` }))}
+        options={list.slice(0, 10).map((s: any) => ({ value: s.id, label: `${(s.storyboard?.title || s.id).slice(0, 28)} · ${STAGE_LABEL[s.stage] ?? s.stage}` }))}
         value={finalSb.id} onChange={(v) => v && select(v)} />
 
       <Card>
@@ -204,10 +144,19 @@ export default function StoryboardScreen() {
                       <Button label="Schedule & publish" variant="primary" icon="send" onPress={() => router.push({ pathname: '/publishing', params: { sb: finalSb.id } })} />
                       <Button label="Send to approval pipeline" icon="upload" loading={busy === 'pipeline'}
                         onPress={() => act('pipeline', async () => {
-                          const r = await post('/api/reels/upload', {
-                            uploadId: finalSb.latest_render!.render_id, caption: (card.scenes[card.scenes.length - 1]?.caption || card.title).slice(0, 200) || card.title,
-                          });
-                          router.push({ pathname: '/reels/[id]', params: { id: r.recordId } });
+                          try {
+                            const r = await post<{ recordId: string }>('/api/reels/upload', {
+                              uploadId: finalSb.latest_render!.render_id, caption: (card.scenes[card.scenes.length - 1]?.caption || card.title).slice(0, 200) || card.title,
+                            });
+                            if (r && r.recordId) {
+                              router.push({ pathname: '/reels/[id]', params: { id: r.recordId } });
+                              return;
+                            }
+                            router.push({ pathname: '/publishing', params: { sb: finalSb.id } });
+                          } catch (_e) {
+                            toast('Approval pipeline unavailable, directing to native publishing');
+                            router.push({ pathname: '/publishing', params: { sb: finalSb.id } });
+                          }
                         })} />
                     </Row>
                   ) : null}

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   StyleSheet,
   View,
   ScrollView,
   Pressable,
   Platform,
-  Dimensions,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Icon, IconName } from '../../components/Icon';
-import { T, Input } from '../../components/ui';
+import { T, Input, Button, EmptyState, Chips } from '../../components/ui';
 import { useToast } from '../../state/toast';
+import { useStoryboards } from '../../state/useStoryboards';
+import { editor, Storyboard, Scene } from '../../api/editor';
+import { errorText } from '../../api/client';
 import { radius, spacing, useTheme } from '../../theme';
 
 interface TrackSegment {
@@ -37,171 +39,90 @@ interface Track {
   segments: TrackSegment[];
 }
 
-const TOTAL_TIMELINE_SEC = 29.4; // matches 00:00:29:12 @ 30fps
+function parseTimeToSeconds(timeStr: string): number {
+  if (!timeStr) return 0;
+  const parts = timeStr.trim().split(':').map((p) => parseFloat(p));
+  if (parts.some((p) => isNaN(p))) return 0;
+  if (parts.length === 3) {
+    return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  } else if (parts.length === 2) {
+    return parts[0] * 60 + parts[1];
+  } else if (parts.length === 1) {
+    return parts[0];
+  }
+  return 0;
+}
+
+function parseOutputTimestamp(rangeStr?: string, fallbackStart = 0, fallbackDuration = 3): { start: number; end: number } {
+  if (rangeStr && rangeStr.includes('-')) {
+    const [rawStart, rawEnd] = rangeStr.split('-').map((s) => s.trim());
+    const start = parseTimeToSeconds(rawStart);
+    const end = parseTimeToSeconds(rawEnd);
+    if (end > start) {
+      return { start, end };
+    }
+  }
+  return { start: fallbackStart, end: fallbackStart + fallbackDuration };
+}
 
 export default function TimelineEditor() {
   const router = useRouter();
   const toast = useToast();
   const { colors } = useTheme();
 
-  // Toolbar & State
+  // Read ?sb=<id>
+  const params = useLocalSearchParams<{ sb?: string }>();
+  const { list, current: sb, select, reload, loading } = useStoryboards();
+
+  // Toolbar & Inspector state
   const [version, setVersion] = useState(1);
   const [fps, setFps] = useState(30);
   const [zoomLevel, setZoomLevel] = useState(140);
   const [canUndo, setCanUndo] = useState(true);
   const [canRedo, setCanRedo] = useState(false);
-  const [currentTime, setCurrentTime] = useState(8.5); // 00:00:08:15
+  const [currentTime, setCurrentTime] = useState(0);
   const [showInspector, setShowInspector] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [rendering, setRendering] = useState<'preview' | 'final' | null>(null);
 
-  // Tracks data structured from the reference
-  const [tracks, setTracks] = useState<Track[]>([
-    {
-      id: 'track-video',
-      title: 'Video Cut',
-      icon: 'video',
-      cueCount: 4,
-      locked: false,
-      visible: true,
-      segments: [
-        {
-          id: 'v1',
-          label: 'Scene 1 · Hook',
-          subLabel: '0:00 - 0:06',
-          start: 0.0,
-          end: 6.0,
-          type: 'video',
-          customData: { speed: 100, volume: 100, transition: 'Cut' },
-        },
-        {
-          id: 'v2',
-          label: 'Scene 2 · Problem State...',
-          subLabel: '0:06 - 0:14',
-          start: 6.0,
-          end: 14.0,
-          type: 'video',
-          customData: { speed: 100, volume: 80, transition: 'Cross Dissolve' },
-        },
-        {
-          id: 'v3',
-          label: 'Scene 3 · Proof / Solution',
-          subLabel: '0:14 - 0:23',
-          start: 14.0,
-          end: 23.0,
-          type: 'video',
-          customData: { speed: 100, volume: 85, transition: 'Zoom Wipe' },
-        },
-        {
-          id: 'v4',
-          label: 'Scene 4 · Call To A...',
-          subLabel: '0:23 - 0:29',
-          start: 23.0,
-          end: 29.4,
-          type: 'video',
-          customData: { speed: 100, volume: 90, transition: 'Fade to Black' },
-        },
-      ],
-    },
-    {
-      id: 'track-captions',
-      title: 'Karaoke Capt...',
-      icon: 'subtitles',
-      cueCount: 4,
-      locked: false,
-      visible: true,
-      segments: [
-        { id: 'c1', label: '"Never build fe..."', start: 0.0, end: 6.0, type: 'caption' },
-        { id: 'c2', label: '"6 months in dark m..."', start: 6.0, end: 14.0, type: 'caption' },
-        { id: 'c3', label: '"Before coding, a..."', start: 14.0, end: 23.0, type: 'caption' },
-        { id: 'c4', label: '"Send this to yo..."', start: 23.0, end: 29.4, type: 'caption' },
-      ],
-    },
-    {
-      id: 'track-zooms',
-      title: 'Punch-In Mo...',
-      icon: 'zap',
-      cueCount: 2,
-      locked: false,
-      visible: true,
-      segments: [
-        { id: 'z1', label: 'Punch-In 1.15×', subLabel: '0:00 - 0:06', start: 0.0, end: 6.0, type: 'zoom' },
-        { id: 'z2', label: 'Dynamic Cut Zo...', subLabel: '0:14 - 0:20', start: 14.0, end: 20.0, type: 'zoom' },
-      ],
-    },
-    {
-      id: 'track-sfx',
-      title: 'Sound Desig...',
-      icon: 'volume',
-      cueCount: 3,
-      locked: false,
-      visible: true,
-      segments: [
-        { id: 's1', label: 'whoosh...', start: 0.0, end: 2.8, type: 'sfx' },
-        { id: 's2', label: 'riser_te... sub...', start: 20.5, end: 25.5, type: 'sfx' },
-      ],
-    },
-  ]);
-
-  // Selected Clip for Inspector
-  const [selectedClipId, setSelectedClipId] = useState<string>('v2');
-  const [clipName, setClipName] = useState('Scene 2: Problem Statement');
-  const [clipStart, setClipStart] = useState('00:06:00');
-  const [clipEnd, setClipEnd] = useState('00:14:00');
-  const [transition, setTransition] = useState('Cross Dissolve');
+  // Inspector clip values
+  const [selectedClipId, setSelectedClipId] = useState<string>('');
+  const [clipName, setClipName] = useState('');
+  const [clipStart, setClipStart] = useState('00:00:00');
+  const [clipEnd, setClipEnd] = useState('00:03:00');
+  const [transition, setTransition] = useState('Cut');
   const [playbackSpeed, setPlaybackSpeed] = useState(100);
-  const [clipVolume, setClipVolume] = useState(80);
+  const [clipVolume, setClipVolume] = useState(100);
 
   // Transitions list
-  const transitionsList = ['Cross Dissolve', 'Cut', 'Zoom Wipe', 'Dip to Black', 'Glitch Cut'];
+  const transitionsList = ['Cut', 'Cross Dissolve', 'Zoom Wipe', 'Dip to Black', 'Glitch Cut'];
 
-  const handleSelectSegment = (seg: TrackSegment) => {
-    setSelectedClipId(seg.id);
-    setShowInspector(true);
-    if (seg.id === 'v1') {
-      setClipName('Scene 1: Hook');
-      setClipStart('00:00:00');
-      setClipEnd('00:06:00');
-      setPlaybackSpeed(100);
-      setClipVolume(100);
-      setTransition('Cut');
-    } else if (seg.id === 'v2') {
-      setClipName('Scene 2: Problem Statement');
-      setClipStart('00:06:00');
-      setClipEnd('00:14:00');
-      setPlaybackSpeed(100);
-      setClipVolume(80);
-      setTransition('Cross Dissolve');
-    } else if (seg.id === 'v3') {
-      setClipName('Scene 3: Proof / Solution');
-      setClipStart('00:14:00');
-      setClipEnd('00:23:00');
-      setPlaybackSpeed(100);
-      setClipVolume(85);
-      setTransition('Zoom Wipe');
-    } else if (seg.id === 'v4') {
-      setClipName('Scene 4: Call To Action');
-      setClipStart('00:23:00');
-      setClipEnd('00:29:12');
-      setPlaybackSpeed(100);
-      setClipVolume(90);
-      setTransition('Dip to Black');
-    } else {
-      setClipName(seg.label);
-      setClipStart(`00:0${Math.floor(seg.start)}:00`);
-      setClipEnd(`00:${Math.floor(seg.end) < 10 ? '0' : ''}${Math.floor(seg.end)}:00`);
-    }
-  };
+  // Track lock and visibility states
+  const [trackMeta, setTrackMeta] = useState<Record<string, { visible: boolean; locked: boolean }>>({
+    'track-video': { visible: true, locked: false },
+    'track-captions': { visible: true, locked: false },
+    'track-zooms': { visible: true, locked: false },
+    'track-sfx': { visible: true, locked: false },
+  });
 
   const toggleTrackVisibility = (trackId: string) => {
-    setTracks((prev) =>
-      prev.map((t) => (t.id === trackId ? { ...t, visible: !t.visible } : t))
-    );
+    setTrackMeta((prev) => ({
+      ...prev,
+      [trackId]: {
+        visible: prev[trackId] ? !prev[trackId].visible : false,
+        locked: prev[trackId]?.locked ?? false,
+      },
+    }));
   };
 
   const toggleTrackLock = (trackId: string) => {
-    setTracks((prev) =>
-      prev.map((t) => (t.id === trackId ? { ...t, locked: !t.locked } : t))
-    );
+    setTrackMeta((prev) => ({
+      ...prev,
+      [trackId]: {
+        visible: prev[trackId]?.visible ?? true,
+        locked: prev[trackId] ? !prev[trackId].locked : true,
+      },
+    }));
   };
 
   // Convert current seconds to timecode format
@@ -212,7 +133,255 @@ export default function TimelineEditor() {
     return `00:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
   };
 
-  const playheadPercent = (currentTime / TOTAL_TIMELINE_SEC) * 100;
+  // Calculate TOTAL_TIMELINE_SEC dynamically from sb.storyboard.duration.output_seconds or sum of scene durations
+  const totalTimelineSec = useMemo(() => {
+    if (sb?.storyboard?.duration?.output_seconds && sb.storyboard.duration.output_seconds > 0) {
+      return sb.storyboard.duration.output_seconds;
+    }
+    const scenes = sb?.storyboard?.scenes ?? [];
+    if (scenes.length > 0) {
+      let maxEnd = 0;
+      let sumDur = 0;
+      scenes.forEach((sc, i) => {
+        const { end } = parseOutputTimestamp(sc.timestamp_output, sumDur, sc.duration || 3);
+        if (end > maxEnd) maxEnd = end;
+        sumDur += sc.duration || (end > sumDur ? end - sumDur : 3);
+      });
+      if (maxEnd > 0) return maxEnd;
+      if (sumDur > 0) return sumDur;
+    }
+    return 30;
+  }, [sb]);
+
+  // Parse storyboard into multi-track data
+  const tracks: Track[] = useMemo(() => {
+    const scenes: Scene[] = sb?.storyboard?.scenes ?? [];
+
+    // Track 1: Video Cut
+    const videoSegments: TrackSegment[] = scenes.map((sc, i) => {
+      const { start, end } = parseOutputTimestamp(sc.timestamp_output, i * 3, sc.duration || 3);
+      const sub = [sc.framing, sc.camera_motion].filter(Boolean).join(' · ');
+      return {
+        id: `v-${sc.scene_number || i + 1}`,
+        label: `Scene ${sc.scene_number || i + 1} · ${sc.type || 'Cut'}`,
+        subLabel: sub || `${sc.framing} · ${sc.camera_motion}`,
+        start,
+        end,
+        type: 'video',
+        customData: { speed: 100, volume: 100, transition: 'Cut' },
+      };
+    });
+
+    // Track 2: Karaoke Captions
+    const captionSegments: TrackSegment[] = scenes
+      .filter((sc) => sc.caption && sc.caption.trim().length > 0)
+      .map((sc, i) => {
+        const { start, end } = parseOutputTimestamp(sc.timestamp_output, i * 3, sc.duration || 3);
+        return {
+          id: `c-${sc.scene_number || i + 1}`,
+          label: `"${sc.caption}"`,
+          start,
+          end,
+          type: 'caption',
+        };
+      });
+
+    // Track 3: Punch-In Motion (zooms)
+    const zoomSegments: TrackSegment[] = [];
+    if (sb?.director?.plan?.zooms?.length) {
+      sb.director.plan.zooms.forEach((z, i) => {
+        zoomSegments.push({
+          id: `z-${i + 1}`,
+          label: 'Punch-In 1.15×',
+          subLabel: `${z.start.toFixed(1)}s - ${z.end.toFixed(1)}s`,
+          start: z.start,
+          end: z.end,
+          type: 'zoom',
+        });
+      });
+    } else {
+      scenes.forEach((sc, i) => {
+        const motion = (sc.camera_motion || '').toLowerCase();
+        const action = (sc.action || '').toLowerCase();
+        if (
+          motion.includes('punch') ||
+          motion.includes('push') ||
+          motion.includes('zoom') ||
+          action.includes('punch-in')
+        ) {
+          const { start, end } = parseOutputTimestamp(sc.timestamp_output, i * 3, sc.duration || 3);
+          zoomSegments.push({
+            id: `z-${sc.scene_number || i + 1}`,
+            label: sc.camera_motion || 'Punch-In 1.15×',
+            subLabel: `${start.toFixed(1)}s - ${end.toFixed(1)}s`,
+            start,
+            end,
+            type: 'zoom',
+          });
+        }
+      });
+    }
+
+    // Track 4: Sound Design & SFX
+    const sfxSegments: TrackSegment[] = [];
+    scenes.forEach((sc, i) => {
+      const { start: sceneStart } = parseOutputTimestamp(sc.timestamp_output, i * 3, sc.duration || 3);
+      if (Array.isArray(sc.sfx)) {
+        sc.sfx.forEach((item, sfxIdx) => {
+          const atOffset = item.at ?? 0;
+          const sfxStart = sceneStart + atOffset;
+          const sfxEnd = sfxStart + 0.8;
+          sfxSegments.push({
+            id: `sfx-${sc.scene_number || i + 1}-${sfxIdx}`,
+            label: `♫ ${item.name}`,
+            start: sfxStart,
+            end: sfxEnd,
+            type: 'sfx',
+          });
+        });
+      }
+    });
+
+    return [
+      {
+        id: 'track-video',
+        title: 'Video Cut',
+        icon: 'video',
+        cueCount: videoSegments.length,
+        locked: trackMeta['track-video']?.locked ?? false,
+        visible: trackMeta['track-video']?.visible ?? true,
+        segments: videoSegments,
+      },
+      {
+        id: 'track-captions',
+        title: 'Karaoke Capt...',
+        icon: 'subtitles',
+        cueCount: captionSegments.length,
+        locked: trackMeta['track-captions']?.locked ?? false,
+        visible: trackMeta['track-captions']?.visible ?? true,
+        segments: captionSegments,
+      },
+      {
+        id: 'track-zooms',
+        title: 'Punch-In Mo...',
+        icon: 'zap',
+        cueCount: zoomSegments.length,
+        locked: trackMeta['track-zooms']?.locked ?? false,
+        visible: trackMeta['track-zooms']?.visible ?? true,
+        segments: zoomSegments,
+      },
+      {
+        id: 'track-sfx',
+        title: 'Sound Desig...',
+        icon: 'volume',
+        cueCount: sfxSegments.length,
+        locked: trackMeta['track-sfx']?.locked ?? false,
+        visible: trackMeta['track-sfx']?.visible ?? true,
+        segments: sfxSegments,
+      },
+    ];
+  }, [sb, trackMeta]);
+
+  // Sync selected clip with first segment when storyboard changes
+  useEffect(() => {
+    if (tracks[0]?.segments?.length) {
+      const first = tracks[0].segments[0];
+      setSelectedClipId(first.id);
+      setClipName(first.label);
+      setClipStart(formatTimecode(first.start));
+      setClipEnd(formatTimecode(first.end));
+    }
+  }, [sb?.id]);
+
+  // Handle selecting a segment in the timeline
+  const handleSelectSegment = (seg: TrackSegment) => {
+    setSelectedClipId(seg.id);
+    setShowInspector(true);
+    setClipName(seg.label);
+    setClipStart(formatTimecode(seg.start));
+    setClipEnd(formatTimecode(seg.end));
+    setPlaybackSpeed(seg.customData?.speed ?? 100);
+    setClipVolume(seg.customData?.volume ?? (seg.type === 'sfx' ? 90 : 100));
+    setTransition(seg.customData?.transition ?? 'Cut');
+  };
+
+  // Render trigger handler
+  const handleRender = async (quality: 'preview' | 'final') => {
+    if (!sb?.id) return;
+    setRendering(quality);
+    try {
+      await editor.render(sb.id, quality);
+      toast(`${quality === 'preview' ? 'Preview' : 'Final'} render started!`);
+      await reload();
+    } catch (e) {
+      toast(`Render failed: ${errorText(e)}`);
+    } finally {
+      setRendering(null);
+    }
+  };
+
+  // Dynamic ruler marks based on total duration
+  const rulerTicks = useMemo(() => {
+    const count = 6;
+    const step = totalTimelineSec / count;
+    const ticks: string[] = [];
+    for (let i = 0; i <= count; i++) {
+      const sec = i * step;
+      const mins = Math.floor(sec / 60);
+      const secs = Math.floor(sec % 60);
+      ticks.push(`${mins}:${secs.toString().padStart(2, '0')}`);
+    }
+    return ticks;
+  }, [totalTimelineSec]);
+
+  // Empty or Loading State
+  if (loading || !sb || !sb.storyboard || !sb.storyboard.scenes || sb.storyboard.scenes.length === 0) {
+    return (
+      <View style={localStyles.screenContainer}>
+        <View style={localStyles.mainContentArea}>
+          {list && list.length > 0 && (
+            <View style={localStyles.switcherRow}>
+              <View style={localStyles.switcherLabelWrap}>
+                <Icon name="film" size={14} color="#6B7280" />
+                <T style={localStyles.switcherLabel}>Storyboards:</T>
+              </View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={localStyles.switcherChipsContainer}
+              >
+                <Chips
+                  options={list.map((s) => ({
+                    value: s.id,
+                    label: s.storyboard?.title || `Storyboard ${s.id.slice(0, 6)}`,
+                  }))}
+                  value={sb?.id ?? ''}
+                  onChange={(id) => {
+                    if (id) select(id);
+                  }}
+                />
+              </ScrollView>
+            </View>
+          )}
+          <EmptyState
+            icon="film"
+            title="No storyboard loaded"
+            message="No storyboard loaded. Create a storyboard in Auto-Edit or select one to view its timeline."
+            action={
+              <Button
+                label="Create Storyboard"
+                icon="plus"
+                variant="primary"
+                onPress={() => router.push('/new')}
+              />
+            }
+          />
+        </View>
+      </View>
+    );
+  }
+
+  const scenes = sb.storyboard.scenes;
 
   return (
     <View style={localStyles.screenContainer}>
@@ -223,27 +392,73 @@ export default function TimelineEditor() {
           contentContainerStyle={localStyles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Top Header Row */}
+          {/* Top Header Row with Action Buttons */}
           <View style={localStyles.headerRow}>
-            <View style={{ gap: 2 }}>
+            <View style={{ gap: 2, flex: 1 }}>
               <T style={localStyles.pageTitle}>Timeline Editor</T>
               <T style={localStyles.pageSubtitle}>
-                Multi-track non-linear editor with frame-accurate precision
+                {sb.storyboard.title} · {scenes.length} scenes · {totalTimelineSec.toFixed(1)}s
               </T>
             </View>
 
-            <Pressable
-              style={({ pressed }: any) => [
-                localStyles.newReelBtn,
-                pressed && { opacity: 0.9 },
-                Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-              ]}
-              onPress={() => router.push('/new')}
-            >
-              <Icon name="plus" size={16} color="#FFFFFF" />
-              <T style={localStyles.newReelBtnText}>New Reel</T>
-            </Pressable>
+            <View style={localStyles.headerActions}>
+              {/* Open Storyboard Cards link */}
+              <Pressable
+                style={({ pressed }: any) => [
+                  localStyles.cardsLinkBtn,
+                  pressed && { opacity: 0.8 },
+                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                ]}
+                onPress={() => router.push(`/storyboard?sb=${sb.id}`)}
+              >
+                <Icon name="layers" size={15} color="#4B5563" />
+                <T style={localStyles.cardsLinkText}>Open Storyboard Cards</T>
+              </Pressable>
+
+              {/* New Reel CTA */}
+              <Pressable
+                style={({ pressed }: any) => [
+                  localStyles.newReelBtn,
+                  pressed && { opacity: 0.9 },
+                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                ]}
+                onPress={() => router.push('/new')}
+              >
+                <Icon name="plus" size={16} color="#FFFFFF" />
+                <T style={localStyles.newReelBtnText}>New Reel</T>
+              </Pressable>
+            </View>
           </View>
+
+          {/* Storyboard Switcher Chips */}
+          {list && list.length > 0 && (
+            <View style={localStyles.switcherRow}>
+              <View style={localStyles.switcherLabelWrap}>
+                <Icon name="film" size={14} color="#6B7280" />
+                <T style={localStyles.switcherLabel}>Storyboards:</T>
+              </View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={localStyles.switcherChipsContainer}
+              >
+                <Chips
+                  options={list.map((s) => {
+                    const title = s.storyboard?.title || `Storyboard ${s.id.slice(0, 6)}`;
+                    const approvedMark = s.approved ? ' ✓' : '';
+                    return {
+                      value: s.id,
+                      label: `${title}${approvedMark}`,
+                    };
+                  })}
+                  value={sb.id}
+                  onChange={(id) => {
+                    if (id) select(id);
+                  }}
+                />
+              </ScrollView>
+            </View>
+          )}
 
           {/* Subheader / Status Bar */}
           <View style={localStyles.subHeaderBar}>
@@ -272,13 +487,48 @@ export default function TimelineEditor() {
                 <T style={localStyles.pillDropdownText}>{`${fps} fps`}</T>
                 <Icon name="chevron-down" size={14} color="#6B7280" />
               </Pressable>
+
+              {/* Approval status pill */}
+              <View style={localStyles.approvalBadge}>
+                <Icon
+                  name={sb.approved ? 'check-circle' : 'alert'}
+                  size={13}
+                  color={sb.approved ? '#10B981' : '#F59E0B'}
+                />
+                <T
+                  style={[
+                    localStyles.approvalText,
+                    { color: sb.approved ? '#065F46' : '#92400E' },
+                  ]}
+                >
+                  {sb.approved ? 'Approved' : 'Unapproved'}
+                </T>
+              </View>
             </View>
 
             {/* Right Status Indicator */}
             <View style={localStyles.subHeaderRight}>
-              <View style={localStyles.statusLiveDot} />
-              <T style={localStyles.statusLiveText}>All services active</T>
-              <T style={localStyles.statusMutedText}>Autosaved just now</T>
+              <View
+                style={[
+                  localStyles.statusLiveDot,
+                  sb.render_job?.status === 'running' && { backgroundColor: '#3B82F6' },
+                ]}
+              />
+              <T style={localStyles.statusLiveText}>
+                {sb.render_job?.status === 'running'
+                  ? 'Render running…'
+                  : sb.status === 'processing'
+                  ? 'Processing storyboard…'
+                  : 'Storyboard ready'}
+              </T>
+              <T style={localStyles.statusMutedText}>
+                {sb.updated_at
+                  ? `Updated ${new Date(sb.updated_at * 1000).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}`
+                  : 'Autosaved'}
+              </T>
             </View>
           </View>
 
@@ -348,33 +598,46 @@ export default function TimelineEditor() {
             <View style={localStyles.timecodeContainer}>
               <T style={localStyles.timecodeCurrent}>{formatTimecode(currentTime)}</T>
               <T style={localStyles.timecodeDivider}>/</T>
-              <T style={localStyles.timecodeTotal}>00:00:29:12</T>
+              <T style={localStyles.timecodeTotal}>{formatTimecode(totalTimelineSec)}</T>
             </View>
 
             {/* Right Action Buttons */}
             <View style={localStyles.transportRightGroup}>
+              {/* Preview Render Button */}
               <Pressable
                 style={({ pressed }: any) => [
-                  localStyles.cutSilencesBtn,
+                  localStyles.previewRenderBtn,
+                  rendering === 'preview' && { opacity: 0.6 },
                   pressed && { backgroundColor: '#F3F4F6' },
-                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                  Platform.OS === 'web' && ({ cursor: rendering ? 'not-allowed' : 'pointer' } as any),
                 ]}
-                onPress={() => toast('Cut 4 silent pauses (-2.3s trimmed)')}
+                disabled={!!rendering}
+                onPress={() => handleRender('preview')}
               >
-                <Icon name="scissors" size={14} color="#4B5563" />
-                <T style={localStyles.cutSilencesText}>Cut{'\n'}Silences</T>
+                <Icon name="play" size={14} color="#4B5563" />
+                <T style={localStyles.previewRenderText}>
+                  {rendering === 'preview' ? 'Rendering…' : 'Preview Render'}
+                </T>
               </Pressable>
 
+              {/* Final Render Button (enabled if sb.approved) */}
               <Pressable
                 style={({ pressed }: any) => [
-                  localStyles.renderCutBtn,
-                  pressed && { opacity: 0.9 },
-                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                  localStyles.finalRenderBtn,
+                  !sb.approved && localStyles.btnDisabled,
+                  rendering === 'final' && { opacity: 0.6 },
+                  pressed && sb.approved && { opacity: 0.9 },
+                  Platform.OS === 'web' && ({ cursor: !sb.approved || rendering ? 'not-allowed' : 'pointer' } as any),
                 ]}
-                onPress={() => router.push('/studio')}
+                disabled={!sb.approved || !!rendering}
+                onPress={() => handleRender('final')}
+                // @ts-ignore
+                title={!sb.approved ? 'Requires approval in Storyboard cards' : undefined}
               >
-                <Icon name="camera" size={16} color="#FFFFFF" />
-                <T style={localStyles.renderCutText}>Render{'\n'}Cut</T>
+                <Icon name="check" size={15} color="#FFFFFF" />
+                <T style={localStyles.finalRenderText}>
+                  {rendering === 'final' ? 'Rendering…' : 'Final Render'}
+                </T>
               </Pressable>
             </View>
           </View>
@@ -395,10 +658,10 @@ export default function TimelineEditor() {
                   // @ts-ignore
                   const width = e.currentTarget?.offsetWidth || 600;
                   const ratio = Math.max(0, Math.min(1, locationX / width));
-                  setCurrentTime(parseFloat((ratio * TOTAL_TIMELINE_SEC).toFixed(2)));
+                  setCurrentTime(parseFloat((ratio * totalTimelineSec).toFixed(2)));
                 }}
               >
-                {['0:00', '0:05', '0:10', '0:15', '0:20', '0:25', '0:30'].map((timeStr, idx) => (
+                {rulerTicks.map((timeStr, idx) => (
                   <View key={idx} style={localStyles.rulerTick}>
                     <T style={localStyles.rulerTickText}>{timeStr}</T>
                   </View>
@@ -413,7 +676,11 @@ export default function TimelineEditor() {
                 pointerEvents="none"
                 style={[
                   localStyles.playheadVerticalLine,
-                  { left: `calc(130px + (100% - 130px) * ${currentTime / TOTAL_TIMELINE_SEC})` as any },
+                  {
+                    left: `calc(130px + (100% - 130px) * ${
+                      totalTimelineSec > 0 ? Math.min(1, Math.max(0, currentTime / totalTimelineSec)) : 0
+                    })` as any,
+                  },
                 ]}
               >
                 {/* Playhead Needle Head */}
@@ -428,48 +695,62 @@ export default function TimelineEditor() {
                   </View>
                   <View style={{ flex: 1 }}>
                     <T style={localStyles.trackNameText}>Video Cut</T>
-                    <T style={localStyles.cueCountText}>4 cues</T>
+                    <T style={localStyles.cueCountText}>{tracks[0].cueCount} cues</T>
                   </View>
                   <View style={localStyles.trackActions}>
                     <Pressable onPress={() => toggleTrackVisibility('track-video')}>
-                      <Icon name="eye" size={13} color="#64748B" />
+                      <Icon
+                        name="eye"
+                        size={13}
+                        color={tracks[0].visible ? '#818CF8' : '#475569'}
+                      />
                     </Pressable>
                     <Pressable onPress={() => toggleTrackLock('track-video')}>
-                      <Icon name="lock" size={13} color="#64748B" />
+                      <Icon
+                        name="lock"
+                        size={13}
+                        color={tracks[0].locked ? '#F59E0B' : '#64748B'}
+                      />
                     </Pressable>
                   </View>
                 </View>
 
                 {/* Video Segments Lane */}
                 <View style={localStyles.trackLane}>
-                  {tracks[0].segments.map((seg) => {
-                    const leftPct = (seg.start / TOTAL_TIMELINE_SEC) * 100;
-                    const widthPct = ((seg.end - seg.start) / TOTAL_TIMELINE_SEC) * 100;
-                    const isSelected = selectedClipId === seg.id;
+                  {tracks[0].visible &&
+                    tracks[0].segments.map((seg) => {
+                      const leftPct = totalTimelineSec > 0 ? (seg.start / totalTimelineSec) * 100 : 0;
+                      const widthPct =
+                        totalTimelineSec > 0
+                          ? Math.max(1, ((seg.end - seg.start) / totalTimelineSec) * 100)
+                          : 10;
+                      const isSelected = selectedClipId === seg.id;
 
-                    return (
-                      <Pressable
-                        key={seg.id}
-                        onPress={() => handleSelectSegment(seg)}
-                        style={[
-                          localStyles.videoBlock,
-                          {
-                            left: `${leftPct}%`,
-                            width: `${widthPct}%`,
-                          },
-                          isSelected && localStyles.selectedBlockHighlight,
-                          Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                        ]}
-                      >
-                        <T style={localStyles.blockTitleText} numberOfLines={1}>
-                          {seg.label}
-                        </T>
-                        <T style={localStyles.blockSubText} numberOfLines={1}>
-                          {seg.subLabel}
-                        </T>
-                      </Pressable>
-                    );
-                  })}
+                      return (
+                        <Pressable
+                          key={seg.id}
+                          onPress={() => handleSelectSegment(seg)}
+                          style={[
+                            localStyles.videoBlock,
+                            {
+                              left: `${leftPct}%`,
+                              width: `${widthPct}%`,
+                            },
+                            isSelected && localStyles.selectedBlockHighlight,
+                            Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                          ]}
+                        >
+                          <T style={localStyles.blockTitleText} numberOfLines={1}>
+                            {seg.label}
+                          </T>
+                          {seg.subLabel ? (
+                            <T style={localStyles.blockSubText} numberOfLines={1}>
+                              {seg.subLabel}
+                            </T>
+                          ) : null}
+                        </Pressable>
+                      );
+                    })}
                 </View>
               </View>
 
@@ -481,45 +762,57 @@ export default function TimelineEditor() {
                   </View>
                   <View style={{ flex: 1 }}>
                     <T style={localStyles.trackNameText}>Karaoke Capt...</T>
-                    <T style={localStyles.cueCountText}>4 cues</T>
+                    <T style={localStyles.cueCountText}>{tracks[1].cueCount} cues</T>
                   </View>
                   <View style={localStyles.trackActions}>
                     <Pressable onPress={() => toggleTrackVisibility('track-captions')}>
-                      <Icon name="eye" size={13} color="#64748B" />
+                      <Icon
+                        name="eye"
+                        size={13}
+                        color={tracks[1].visible ? '#A78BFA' : '#475569'}
+                      />
                     </Pressable>
                     <Pressable onPress={() => toggleTrackLock('track-captions')}>
-                      <Icon name="lock" size={13} color="#64748B" />
+                      <Icon
+                        name="lock"
+                        size={13}
+                        color={tracks[1].locked ? '#F59E0B' : '#64748B'}
+                      />
                     </Pressable>
                   </View>
                 </View>
 
                 {/* Caption Segments Lane */}
                 <View style={localStyles.trackLane}>
-                  {tracks[1].segments.map((seg) => {
-                    const leftPct = (seg.start / TOTAL_TIMELINE_SEC) * 100;
-                    const widthPct = ((seg.end - seg.start) / TOTAL_TIMELINE_SEC) * 100;
-                    const isSelected = selectedClipId === seg.id;
+                  {tracks[1].visible &&
+                    tracks[1].segments.map((seg) => {
+                      const leftPct = totalTimelineSec > 0 ? (seg.start / totalTimelineSec) * 100 : 0;
+                      const widthPct =
+                        totalTimelineSec > 0
+                          ? Math.max(1, ((seg.end - seg.start) / totalTimelineSec) * 100)
+                          : 10;
+                      const isSelected = selectedClipId === seg.id;
 
-                    return (
-                      <Pressable
-                        key={seg.id}
-                        onPress={() => handleSelectSegment(seg)}
-                        style={[
-                          localStyles.captionBlock,
-                          {
-                            left: `${leftPct}%`,
-                            width: `${widthPct}%`,
-                          },
-                          isSelected && localStyles.selectedBlockHighlight,
-                          Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                        ]}
-                      >
-                        <T style={localStyles.captionText} numberOfLines={1}>
-                          {seg.label}
-                        </T>
-                      </Pressable>
-                    );
-                  })}
+                      return (
+                        <Pressable
+                          key={seg.id}
+                          onPress={() => handleSelectSegment(seg)}
+                          style={[
+                            localStyles.captionBlock,
+                            {
+                              left: `${leftPct}%`,
+                              width: `${widthPct}%`,
+                            },
+                            isSelected && localStyles.selectedBlockHighlight,
+                            Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                          ]}
+                        >
+                          <T style={localStyles.captionText} numberOfLines={1}>
+                            {seg.label}
+                          </T>
+                        </Pressable>
+                      );
+                    })}
                 </View>
               </View>
 
@@ -531,48 +824,62 @@ export default function TimelineEditor() {
                   </View>
                   <View style={{ flex: 1 }}>
                     <T style={localStyles.trackNameText}>Punch-In Mo...</T>
-                    <T style={localStyles.cueCountText}>2 cues</T>
+                    <T style={localStyles.cueCountText}>{tracks[2].cueCount} cues</T>
                   </View>
                   <View style={localStyles.trackActions}>
                     <Pressable onPress={() => toggleTrackVisibility('track-zooms')}>
-                      <Icon name="eye" size={13} color="#64748B" />
+                      <Icon
+                        name="eye"
+                        size={13}
+                        color={tracks[2].visible ? '#FBBF24' : '#475569'}
+                      />
                     </Pressable>
                     <Pressable onPress={() => toggleTrackLock('track-zooms')}>
-                      <Icon name="lock" size={13} color="#64748B" />
+                      <Icon
+                        name="lock"
+                        size={13}
+                        color={tracks[2].locked ? '#F59E0B' : '#64748B'}
+                      />
                     </Pressable>
                   </View>
                 </View>
 
                 {/* Zoom Segments Lane */}
                 <View style={localStyles.trackLane}>
-                  {tracks[2].segments.map((seg) => {
-                    const leftPct = (seg.start / TOTAL_TIMELINE_SEC) * 100;
-                    const widthPct = ((seg.end - seg.start) / TOTAL_TIMELINE_SEC) * 100;
-                    const isSelected = selectedClipId === seg.id;
+                  {tracks[2].visible &&
+                    tracks[2].segments.map((seg) => {
+                      const leftPct = totalTimelineSec > 0 ? (seg.start / totalTimelineSec) * 100 : 0;
+                      const widthPct =
+                        totalTimelineSec > 0
+                          ? Math.max(1, ((seg.end - seg.start) / totalTimelineSec) * 100)
+                          : 10;
+                      const isSelected = selectedClipId === seg.id;
 
-                    return (
-                      <Pressable
-                        key={seg.id}
-                        onPress={() => handleSelectSegment(seg)}
-                        style={[
-                          localStyles.zoomBlock,
-                          {
-                            left: `${leftPct}%`,
-                            width: `${widthPct}%`,
-                          },
-                          isSelected && localStyles.selectedBlockHighlight,
-                          Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                        ]}
-                      >
-                        <T style={localStyles.zoomTitleText} numberOfLines={1}>
-                          {seg.label}
-                        </T>
-                        <T style={localStyles.zoomSubText} numberOfLines={1}>
-                          {seg.subLabel}
-                        </T>
-                      </Pressable>
-                    );
-                  })}
+                      return (
+                        <Pressable
+                          key={seg.id}
+                          onPress={() => handleSelectSegment(seg)}
+                          style={[
+                            localStyles.zoomBlock,
+                            {
+                              left: `${leftPct}%`,
+                              width: `${widthPct}%`,
+                            },
+                            isSelected && localStyles.selectedBlockHighlight,
+                            Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                          ]}
+                        >
+                          <T style={localStyles.zoomTitleText} numberOfLines={1}>
+                            {seg.label}
+                          </T>
+                          {seg.subLabel ? (
+                            <T style={localStyles.zoomSubText} numberOfLines={1}>
+                              {seg.subLabel}
+                            </T>
+                          ) : null}
+                        </Pressable>
+                      );
+                    })}
                 </View>
               </View>
 
@@ -584,54 +891,66 @@ export default function TimelineEditor() {
                   </View>
                   <View style={{ flex: 1 }}>
                     <T style={localStyles.trackNameText}>Sound Desig...</T>
-                    <T style={localStyles.cueCountText}>3 cues</T>
+                    <T style={localStyles.cueCountText}>{tracks[3].cueCount} cues</T>
                   </View>
                   <View style={localStyles.trackActions}>
                     <Pressable onPress={() => toggleTrackVisibility('track-sfx')}>
-                      <Icon name="eye" size={13} color="#64748B" />
+                      <Icon
+                        name="eye"
+                        size={13}
+                        color={tracks[3].visible ? '#34D399' : '#475569'}
+                      />
                     </Pressable>
                     <Pressable onPress={() => toggleTrackLock('track-sfx')}>
-                      <Icon name="lock" size={13} color="#64748B" />
+                      <Icon
+                        name="lock"
+                        size={13}
+                        color={tracks[3].locked ? '#F59E0B' : '#64748B'}
+                      />
                     </Pressable>
                   </View>
                 </View>
 
                 {/* SFX Segments Lane */}
                 <View style={localStyles.trackLane}>
-                  {tracks[3].segments.map((seg) => {
-                    const leftPct = (seg.start / TOTAL_TIMELINE_SEC) * 100;
-                    const widthPct = ((seg.end - seg.start) / TOTAL_TIMELINE_SEC) * 100;
-                    const isSelected = selectedClipId === seg.id;
+                  {tracks[3].visible &&
+                    tracks[3].segments.map((seg) => {
+                      const leftPct = totalTimelineSec > 0 ? (seg.start / totalTimelineSec) * 100 : 0;
+                      const widthPct =
+                        totalTimelineSec > 0
+                          ? Math.max(1, ((seg.end - seg.start) / totalTimelineSec) * 100)
+                          : 8;
+                      const isSelected = selectedClipId === seg.id;
 
-                    return (
-                      <Pressable
-                        key={seg.id}
-                        onPress={() => handleSelectSegment(seg)}
-                        style={[
-                          localStyles.sfxBlock,
-                          {
-                            left: `${leftPct}%`,
-                            width: `${widthPct}%`,
-                          },
-                          isSelected && localStyles.selectedBlockHighlight,
-                          Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                        ]}
-                      >
-                        {/* Audio Waveform visualization */}
-                        <View style={localStyles.audioWaveGraphic}>
-                          <View style={[localStyles.audioBar, { height: 8 }]} />
-                          <View style={[localStyles.audioBar, { height: 16 }]} />
-                          <View style={[localStyles.audioBar, { height: 12 }]} />
-                          <View style={[localStyles.audioBar, { height: 20 }]} />
-                          <View style={[localStyles.audioBar, { height: 10 }]} />
-                          <View style={[localStyles.audioBar, { height: 6 }]} />
-                        </View>
-                        <T style={localStyles.sfxTitleText} numberOfLines={1}>
-                          {seg.label}
-                        </T>
-                      </Pressable>
-                    );
-                  })}
+                      return (
+                        <Pressable
+                          key={seg.id}
+                          onPress={() => handleSelectSegment(seg)}
+                          style={[
+                            localStyles.sfxBlock,
+                            {
+                              left: `${leftPct}%`,
+                              width: `${widthPct}%`,
+                            },
+                            isSelected && localStyles.selectedBlockHighlight,
+                            Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                          ]}
+                        >
+                          {/* Audio Waveform visualization */}
+                          <View style={localStyles.audioWaveGraphic}>
+                            <View style={[localStyles.audioBar, { height: 8 }]} />
+                            <View style={[localStyles.audioBar, { height: 16 }]} />
+                            <View style={[localStyles.audioBar, { height: 12 }]} />
+                            <View style={[localStyles.audioBar, { height: 20 }]} />
+                            <View style={[localStyles.audioBar, { height: 10 }]} />
+                            <View style={[localStyles.audioBar, { height: 6 }]} />
+                          </View>
+                          <T style={localStyles.sfxTitleText} numberOfLines={1}>
+                            {seg.label}
+                          </T>
+                        </Pressable>
+                      );
+                    })}
                 </View>
               </View>
             </View>
@@ -643,15 +962,24 @@ export default function TimelineEditor() {
               </View>
 
               <View style={localStyles.minimapRail}>
-                <View style={[localStyles.minimapChunk, { flex: 6, backgroundColor: '#3B436B' }]} />
-                <View style={[localStyles.minimapChunk, { flex: 8, backgroundColor: '#4F46E5' }]} />
-                <View style={[localStyles.minimapChunk, { flex: 9, backgroundColor: '#3B436B' }]} />
-                <View style={[localStyles.minimapChunk, { flex: 6.4, backgroundColor: '#312E81' }]} />
+                {scenes.map((sc, idx) => {
+                  const dur = sc.duration || 3;
+                  const bgColors = ['#3B436B', '#4F46E5', '#3B436B', '#312E81', '#4338CA', '#2563EB'];
+                  return (
+                    <View
+                      key={`minimap-${sc.scene_number || idx}`}
+                      style={[
+                        localStyles.minimapChunk,
+                        { flex: Math.max(1, dur), backgroundColor: bgColors[idx % bgColors.length] },
+                      ]}
+                    />
+                  );
+                })}
                 {/* Active viewport slider window */}
                 <View style={localStyles.minimapViewportIndicator} />
               </View>
 
-              <T style={localStyles.minimapTotalText}>00:29.4 total</T>
+              <T style={localStyles.minimapTotalText}>{formatTimecode(totalTimelineSec)} total</T>
             </View>
           </View>
         </ScrollView>
@@ -690,7 +1018,9 @@ export default function TimelineEditor() {
                 <Icon name={isPlaying ? 'refresh' : 'play'} size={24} color="#FFFFFF" />
               </Pressable>
               <View style={localStyles.playerSceneBadge}>
-                <T style={localStyles.playerSceneBadgeText}>Scene 2</T>
+                <T style={localStyles.playerSceneBadgeText} numberOfLines={1}>
+                  {clipName || 'Scene Preview'}
+                </T>
               </View>
             </View>
 
@@ -839,6 +1169,13 @@ const localStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    gap: spacing.md,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
   },
   pageTitle: {
     fontSize: 26,
@@ -851,13 +1188,29 @@ const localStyles = StyleSheet.create({
     color: '#6B7280',
     marginTop: 2,
   },
+  cardsLinkBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+    borderRadius: radius.md,
+  },
+  cardsLinkText: {
+    color: '#374151',
+    fontWeight: '700',
+    fontSize: 13,
+  },
   newReelBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
     backgroundColor: '#6C4CF0',
-    paddingVertical: 10,
-    paddingHorizontal: 18,
+    paddingVertical: 9,
+    paddingHorizontal: 16,
     borderRadius: radius.md,
     shadowColor: '#6C4CF0',
     shadowOffset: { width: 0, height: 2 },
@@ -868,7 +1221,36 @@ const localStyles = StyleSheet.create({
   newReelBtnText: {
     color: '#FFFFFF',
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: 13,
+  },
+
+  /* Storyboard Switcher Bar */
+  switcherRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  switcherLabelWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginRight: 4,
+  },
+  switcherLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#4B5563',
+  },
+  switcherChipsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
   },
 
   /* Subheader Controls */
@@ -903,6 +1285,21 @@ const localStyles = StyleSheet.create({
     fontWeight: '600',
     color: '#374151',
   },
+  approvalBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: radius.pill,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  approvalText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
   subHeaderRight: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -931,6 +1328,7 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 6,
     gap: spacing.md,
+    flexWrap: 'wrap',
   },
   transportLeftGroup: {
     flexDirection: 'row',
@@ -1018,48 +1416,54 @@ const localStyles = StyleSheet.create({
     fontFamily: Platform.select({ web: "'DM Mono', monospace", default: 'Courier' }),
   },
 
-  /* Right Action Buttons */
+  /* Right Action Buttons in Transport Bar */
   transportRightGroup: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
   },
-  cutSilencesBtn: {
+  previewRenderBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    paddingVertical: 6,
+    paddingVertical: 7,
     paddingHorizontal: 14,
     borderRadius: radius.md,
   },
-  cutSilencesText: {
+  previewRenderText: {
     fontSize: 12,
     fontWeight: '700',
     color: '#374151',
-    lineHeight: 14,
   },
-  renderCutBtn: {
+  finalRenderBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    backgroundColor: '#6C4CF0',
-    paddingVertical: 6,
+    gap: 6,
+    backgroundColor: '#10B981',
+    borderWidth: 1,
+    borderColor: '#059669',
+    paddingVertical: 7,
     paddingHorizontal: 16,
     borderRadius: radius.md,
-    shadowColor: '#6C4CF0',
+    shadowColor: '#10B981',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 5,
     elevation: 3,
   },
-  renderCutText: {
+  finalRenderText: {
     fontSize: 12,
     fontWeight: '700',
     color: '#FFFFFF',
-    lineHeight: 14,
+  },
+  btnDisabled: {
+    opacity: 0.45,
+    backgroundColor: '#9CA3AF',
+    borderColor: '#9CA3AF',
+    shadowOpacity: 0,
   },
 
   /* Dark Timeline Canvas Card */
@@ -1389,6 +1793,7 @@ const localStyles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 10,
+    right: 10,
   },
   playerSceneBadgeText: {
     fontSize: 11,

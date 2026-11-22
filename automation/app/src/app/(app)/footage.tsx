@@ -103,20 +103,27 @@ export default function FootageIntelligence() {
                     <T variant="mono" color={colors.primary}>{r.start}s - {r.end}s ({r.duration}s)</T>
                   </View>
                   <T variant="h3" style={{ marginTop: spacing.xs }}>{r.snippet}</T>
-                  <View style={{ flexDirection: 'row', gap: spacing.sm, marginTop: spacing.md }}>
+                  <View style={{ flexDirection: 'row', gap: spacing.sm, marginTop: spacing.md, flexWrap: 'wrap' }}>
                     <Button
-                      label="Use in AI Studio"
+                      label="Create Reel from this Clip"
                       variant="primary"
-                      icon="camera"
+                      icon="sparkles"
                       small
-                      onPress={() => router.push('/studio')}
+                      onPress={() => router.push(`/new?footage=${encodeURIComponent(r.scene_id)}&note=${encodeURIComponent(r.snippet)}`)}
                     />
                     <Button
-                      label="Inspect in Storyboard"
+                      label="Use in Active Storyboard"
                       variant="secondary"
                       icon="layers"
                       small
                       onPress={() => router.push('/storyboard')}
+                    />
+                    <Button
+                      label="Use in AI Studio"
+                      variant="ghost"
+                      icon="camera"
+                      small
+                      onPress={() => router.push('/studio')}
                     />
                   </View>
                 </Card>
@@ -143,6 +150,22 @@ export default function FootageIntelligence() {
                   {s.tags.map((t) => (
                     <Pill key={t} label={t} />
                   ))}
+                </View>
+                <View style={{ gap: spacing.xs, marginTop: spacing.md }}>
+                  <Button
+                    label="Create Reel from this Clip"
+                    variant="primary"
+                    icon="sparkles"
+                    small
+                    onPress={() => router.push(`/new?footage=${encodeURIComponent(s.id)}&note=${encodeURIComponent(s.text)}`)}
+                  />
+                  <Button
+                    label="Use in Active Storyboard"
+                    variant="secondary"
+                    icon="layers"
+                    small
+                    onPress={() => router.push('/storyboard')}
+                  />
                 </View>
               </Card>
             ))}
@@ -191,8 +214,9 @@ const styles = StyleSheet.create({
   },
   sceneCard: {
     flex: 1,
-    minWidth: 260,
-    maxWidth: 340,
+    minWidth: 280,
+    maxWidth: 360,
     padding: spacing.md,
+    justifyContent: 'space-between',
   },
 });

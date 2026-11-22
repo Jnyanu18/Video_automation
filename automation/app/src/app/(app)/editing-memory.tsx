@@ -79,6 +79,16 @@ export default function EditingMemoryScreen() {
                 <T variant="caption" color={colors.primary} style={{ fontWeight: '700' }}>DIRECTOR ACTION</T>
                 <T variant="body" style={{ marginTop: 2 }}>{rec.action}</T>
               </View>
+
+              <View style={{ marginTop: spacing.md, flexDirection: 'row', gap: spacing.sm }}>
+                <Button
+                  label="Apply Rule to New Edit"
+                  variant="primary"
+                  icon="sparkles"
+                  small
+                  onPress={() => router.push(`/new?prompt=${encodeURIComponent(rec.action)}`)}
+                />
+              </View>
             </Card>
           ))}
         </View>
@@ -92,7 +102,8 @@ export default function EditingMemoryScreen() {
               <T variant="caption" style={{ flex: 1, fontWeight: '700' }}>HOOK TYPE</T>
               <T variant="caption" style={{ flex: 1, fontWeight: '700' }}>COMPLETION</T>
               <T variant="caption" style={{ flex: 1, fontWeight: '700' }}>DM SENDS / 1K</T>
-              <T variant="caption" style={{ width: 100, fontWeight: '700' }}>TOTAL REACH</T>
+              <T variant="caption" style={{ width: 90, fontWeight: '700' }}>REACH</T>
+              <T variant="caption" style={{ width: 170, fontWeight: '700', textAlign: 'right' }}>ACTION</T>
             </View>
 
             {records.map((r: any) => (
@@ -110,8 +121,17 @@ export default function EditingMemoryScreen() {
                 <View style={{ flex: 1 }}>
                   <T variant="body" color={colors.success} style={{ fontWeight: '700' }}>{r.sends_per_1k_reach}</T>
                 </View>
-                <View style={{ width: 100 }}>
+                <View style={{ width: 90 }}>
                   <T variant="mono">{r.reach.toLocaleString()}</T>
+                </View>
+                <View style={{ width: 170, alignItems: 'flex-end' }}>
+                  <Button
+                    label="Remix with this Style"
+                    variant="secondary"
+                    icon="sparkles"
+                    small
+                    onPress={() => router.push(`/new?style=${encodeURIComponent(r.style_id)}`)}
+                  />
                 </View>
               </View>
             ))}

@@ -33,6 +33,7 @@ export default function NewReel() {
   const [url, setUrl] = useState('');
   const [avatarId, setAvatarId] = useState('');
   const [voiceId, setVoiceId] = useState('');
+  const [urlFallbackAvailable, setUrlFallbackAvailable] = useState(false);
 
   // upload & editor mode video picker
   const [picked, setPicked] = useState<{ name: string; type: string; uri: string; blob?: Blob } | null>(null);
@@ -45,7 +46,7 @@ export default function NewReel() {
   const [tags, setTags] = useState('');
 
   // AI Video Editor mode fields
-  const params = useLocalSearchParams<{ style?: string }>();
+  const params = useLocalSearchParams<{ style?: string; footage?: string; note?: string; prompt?: string }>();
   const [editorStyle, setEditorStyle] = useState(params.style || 'viral_hook_fast_pace');
   const [editorPrompt, setEditorPrompt] = useState('Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add karaoke captions.');
   const [seriesMode, setSeriesMode] = useState(false);
@@ -69,7 +70,12 @@ export default function NewReel() {
     editor.styles().then((r: any) => setStyleList([...Object.values(r.presets), ...Object.values(r.custom)].map((p: any) => ({ value: p.name, label: p.name.replace(/_/g, ' ') })))).catch(() => undefined);
     editor.footage().then((r) => setFootage(r.files)).catch(() => undefined);
   }, [mode]);
-  useEffect(() => { if (params.style) { setEditorStyle(params.style); setMode('editor'); } }, [params.style]);
+  useEffect(() => {
+    if (params.style) { setEditorStyle(params.style); setMode('editor'); }
+    if (params.prompt) { setEditorPrompt(params.prompt); setDirector('manual'); setMode('editor'); }
+    if (params.note) { setNote(params.note); setMode('editor'); }
+    if (params.footage) { setFootagePath(params.footage); setMode('editor'); }
+  }, [params.style, params.prompt, params.note, params.footage]);
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -87,10 +93,31 @@ export default function NewReel() {
 
   async function submitUrl() {
     if (!/^https?:\/\//i.test(url.trim())) return setError('Paste a full link that starts with https://');
-    setBusy(true); setError(null);
+    setBusy(true); setError(null); setUrlFallbackAvailable(false);
     try {
       done(await post('/api/reels', { url: url.trim(), ...shared(), ...(avatarId ? { avatarId } : {}), ...(voiceId ? { voiceId } : {}) }));
-    } catch (e) { setError(errorText(e)); } finally { setBusy(false); }
+    } catch (e) {
+      setError(errorText(e));
+      setUrlFallbackAvailable(true);
+    } finally { setBusy(false); }
+  }
+
+  async function autoEditUrlFallback() {
+    if (!url.trim()) return;
+    setBusy(true); setError(null);
+    try {
+      const res = await editor.createStoryboard({
+        url: url.trim(),
+        prompt: notes.trim() || 'Remake reel from link',
+        style: editorStyle,
+      });
+      toast('The editor is drafting your storyboard.');
+      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function chooseFile() {
@@ -130,17 +157,21 @@ export default function NewReel() {
   async function submitUpload() {
     const targetUploadId = staged?.uploadId;
     if (!targetUploadId) return setError('Choose a video first.');
-    const targetCaption = caption.trim() || 'Original reel';
+    const promptText = caption.trim() || 'Original reel cut';
     setBusy(true); setError(null);
     try {
-      done(await post('/api/reels/upload', {
+      const res = await editor.createStoryboard({
         uploadId: targetUploadId,
-        caption: targetCaption,
-        ...(overlay.trim() ? { overlay: overlay.trim() } : {}),
-        hashtags: tagsOf(tags),
-        ...shared(),
-      }));
-    } catch (e) { setError(errorText(e)); } finally { setBusy(false); }
+        prompt: promptText,
+        style: editorStyle,
+      });
+      toast('Storyboard created from uploaded video.');
+      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      setBusy(false);
+    }
   }
 
   const uploading = progress !== null;
@@ -150,21 +181,33 @@ export default function NewReel() {
       {/* Mode switcher tabs */}
       <View style={[styles.seg, { backgroundColor: colors.surfaceAlt }]}>
         {([
-          { key: 'editor', label: 'Auto-edit', icon: 'sparkles' },
-          { key: 'upload', label: 'Upload ready video', icon: 'upload' },
-          { key: 'url', label: 'AI avatar remake', icon: 'link' },
-        ] as const).map((m) => (
-          <Pressable
-            key={m.key}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: mode === m.key }}
-            onPress={() => { setMode(m.key); setError(null); }}
-            style={[styles.segItem, mode === m.key && { backgroundColor: colors.surface }]}
-          >
-            <Icon name={m.icon as any} size={15} color={mode === m.key ? colors.primary : colors.textMuted} />
-            <T variant="label" color={mode === m.key ? colors.primary : colors.textMuted}>{m.label}</T>
-          </Pressable>
-        ))}
+          { key: 'editor', label: 'Auto-edit', icon: 'sparkles', isPrimary: true },
+          { key: 'upload', label: 'Upload ready video', icon: 'upload', isPrimary: false },
+          { key: 'url', label: 'AI avatar remake', icon: 'link', isPrimary: false },
+        ] as const).map((m) => {
+          const isSelected = mode === m.key;
+          return (
+            <Pressable
+              key={m.key}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: isSelected }}
+              onPress={() => { setMode(m.key); setError(null); setUrlFallbackAvailable(false); }}
+              style={[
+                styles.segItem,
+                isSelected && { backgroundColor: colors.surface },
+                m.isPrimary && !isSelected && { borderColor: colors.primary + '33', borderWidth: 1 },
+              ]}
+            >
+              <Icon name={m.icon as any} size={15} color={isSelected ? colors.primary : colors.textMuted} />
+              <T variant="label" color={isSelected ? colors.primary : colors.textMuted}>{m.label}</T>
+              {m.isPrimary ? (
+                <View style={{ backgroundColor: isSelected ? colors.primarySoft : 'transparent', paddingHorizontal: 5, paddingVertical: 1, borderRadius: 6 }}>
+                  <T variant="small" style={{ fontSize: 10, fontWeight: '700' }} color={colors.primary}>AI</T>
+                </View>
+              ) : null}
+            </Pressable>
+          );
+        })}
       </View>
 
       <Card style={{ gap: spacing.lg }}>
@@ -172,7 +215,7 @@ export default function NewReel() {
         {mode === 'url' ? (
           <>
             <Field label="Instagram reel link">
-              <Input value={url} onChangeText={setUrl} placeholder="https://www.instagram.com/reel/…" autoCapitalize="none" autoCorrect={false} keyboardType="url" />
+              <Input value={url} onChangeText={(v) => { setUrl(v); setError(null); setUrlFallbackAvailable(false); }} placeholder="https://www.instagram.com/reel/…" autoCapitalize="none" autoCorrect={false} keyboardType="url" />
             </Field>
 
             <Field label="Niche">
@@ -193,7 +236,27 @@ export default function NewReel() {
                 options={(options?.voices ?? []).map((v) => ({ value: v.id, label: v.name || v.id, sub: v.language }))} />
             </Field>
 
-            {error ? <Banner tone="danger">{error}</Banner> : null}
+            {urlFallbackAvailable ? (
+              <Banner tone="warning">
+                <View style={{ gap: spacing.sm }}>
+                  <T variant="body" style={{ fontWeight: '600' }}>
+                    Avatar remake pipeline unavailable or unconfigured
+                  </T>
+                  <T variant="small">
+                    {error ? `Reason: ${error}. ` : ''}The legacy n8n pipeline could not be reached. You can auto-edit this URL directly with the native AI Video Editor engine instead:
+                  </T>
+                  <Button
+                    label="Auto-edit this URL directly"
+                    variant="primary"
+                    icon="sparkles"
+                    loading={busy}
+                    onPress={autoEditUrlFallback}
+                  />
+                </View>
+              </Banner>
+            ) : error ? (
+              <Banner tone="danger">{error}</Banner>
+            ) : null}
             <Button label="Submit reel" variant="primary" icon="send" full loading={busy} onPress={submitUrl} />
           </>
         ) : null}
@@ -266,6 +329,10 @@ export default function NewReel() {
         {/* MODE 3: Upload ready video */}
         {mode === 'upload' ? (
           <>
+            <Banner tone="info">
+              Upload your video directly into the unified video editing engine. It creates a storyboard ready for cut editing, captions, and rendering without requiring Airtable.
+            </Banner>
+
             <Field label="Video file" hint="MP4 or MOV.">
               <Pressable accessibilityRole="button" onPress={uploading ? undefined : chooseFile}
                 style={({ hovered }: any) => [styles.drop, { borderColor: staged ? colors.success : hovered ? colors.primary : colors.border, backgroundColor: colors.surfaceAlt }]}>
@@ -280,7 +347,14 @@ export default function NewReel() {
               {uploading ? <View style={[styles.bar, { backgroundColor: colors.border }]}><View style={[styles.barFill, { width: `${progress}%`, backgroundColor: colors.primary }]} /></View> : null}
             </Field>
 
-            <Field label="Caption"><Input value={caption} onChangeText={setCaption} multiline placeholder="Write the caption for this reel" /></Field>
+            <Field label="Caption / Editing instructions" hint="Guidance for the video storyboard cut.">
+              <Input value={caption} onChangeText={setCaption} multiline placeholder="e.g. Cut dead air, hook in first 3s" />
+            </Field>
+
+            <Field label="Editing style" hint="Sets pacing, pause length, and caption styling.">
+              <Chips options={styleList.length ? styleList : [{ value: editorStyle, label: editorStyle.replace(/_/g, ' ') }]} value={editorStyle} onChange={(v) => v && setEditorStyle(v)} />
+            </Field>
+
             <Field label="On-screen overlay" hint="Optional text shown on the video."><Input value={overlay} onChangeText={setOverlay} /></Field>
             <Field label="Hashtags"><Input value={tags} onChangeText={setTags} placeholder="#fitness #tips" autoCapitalize="none" /></Field>
 
@@ -292,7 +366,7 @@ export default function NewReel() {
             </Field>
 
             {error ? <Banner tone="danger">{error}</Banner> : null}
-            <Button label="Submit for approval" variant="primary" icon="send" full loading={busy}
+            <Button label="Create storyboard" variant="primary" icon="sparkles" full loading={busy}
               disabled={!staged || uploading} onPress={submitUpload} />
           </>
         ) : null}
