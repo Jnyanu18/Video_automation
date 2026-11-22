@@ -10,6 +10,7 @@ const { createMock } = require('../mock/mock-server.cjs');
 const { createSimN8n } = require('../mock/sim-n8n-server.cjs');
 const { loadConfig } = require('./config.cjs');
 const { createApp } = require('./app.cjs');
+const { createUsers } = require('./users.cjs');
 
 const PASSWORD = process.env.DASHBOARD_PASSWORD || process.env.DEV_PASSWORD || 'dev-password';
 const PORT = process.env.PORT || '10000';
@@ -24,20 +25,30 @@ async function main() {
   fs.mkdirSync(uploadDir, { recursive: true });
   fs.mkdirSync(usersDir, { recursive: true });
 
-  // Ensure users.json exists
-  let usersFile = process.env.USERS_FILE;
-  if (!usersFile || !fs.existsSync(usersFile)) {
-    const defaultUsers = path.join(__dirname, 'storage', 'users.json');
-    const targetUsers = path.join(uploadDir, 'users.json');
-    if (!fs.existsSync(targetUsers) && fs.existsSync(defaultUsers)) {
-      try {
-        fs.copyFileSync(defaultUsers, targetUsers);
-        console.log(`[cloud-stack] Seeded users from ${defaultUsers} -> ${targetUsers}`);
-      } catch (err) {
-        console.warn('[cloud-stack] Could not copy default users.json:', err.message);
-      }
+  // Ensure users.json exists and is seeded with verified active accounts
+  const usersFile = process.env.USERS_FILE || path.join(uploadDir, 'users.json');
+  const seedFile = path.join(__dirname, 'seed-users.json');
+  if (!fs.existsSync(usersFile) && fs.existsSync(seedFile)) {
+    try {
+      fs.copyFileSync(seedFile, usersFile);
+      console.log('[cloud-stack] Initialized users from seed-users.json');
+    } catch (_) {}
+  }
+  const userMgr = createUsers({ usersFile, uploadDir });
+  
+  if (userMgr.count() === 0) {
+    console.log('[cloud-stack] No users found in users.json — seeding default accounts...');
+    try {
+      userMgr.create('jnyan8784@gmail.com', 'dev-password', 'Jnyan');
+      userMgr.create('demo@example.com', 'dev-password', 'Demo User');
+      console.log('[cloud-stack] Successfully seeded jnyan8784@gmail.com & demo@example.com (password: dev-password)');
+    } catch (err) {
+      console.error('[cloud-stack] Error seeding users:', err.message);
     }
-    usersFile = fs.existsSync(targetUsers) ? targetUsers : defaultUsers;
+  } else {
+    // Ensure the passwords for standard accounts match dev-password
+    try { userMgr.setPassword('jnyan8784@gmail.com', 'dev-password'); } catch (_) {}
+    try { userMgr.setPassword('demo@example.com', 'dev-password'); } catch (_) {}
   }
 
   // 1. Start mock provider server on loopback
