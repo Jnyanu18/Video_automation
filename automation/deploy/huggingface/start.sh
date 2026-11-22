@@ -30,16 +30,16 @@ for i in {1..40}; do
 done
 
 # 2. Start Node Dashboard Server (adapts to Render or Hugging Face PORT)
-echo "Starting Dashboard Gateway on port ${PORT:-7860}..."
+echo "Starting Dashboard Gateway on port ${PORT:-10000}..."
 cd /app
 export HOST=0.0.0.0
-export PORT="${PORT:-7860}"
+export PORT="${PORT:-10000}"
 export WEB_DIR=/app/web/dist
 export UPLOAD_DIR=/tmp/storage
 export EDITOR_URL=http://127.0.0.1:8793
 export EDITOR_USERS_DIR=/tmp/users
 export EDITOR_UPLOADS_DIR=/tmp/storage
 export TRUST_PROXY="true"
-export COOKIE_SECURE="${COOKIE_SECURE:-true}"
+export COOKIE_SECURE="${COOKIE_SECURE:-false}"
 
-exec node server/app.cjs
+exec node server/cloud-stack.cjs

@@ -47,6 +47,7 @@ RUN python -c "from faster_whisper import WhisperModel; WhisperModel('base', com
 # Copy application files
 COPY automation/package.json ./
 COPY automation/server ./server
+COPY automation/mock ./mock
 COPY automation/lib ./lib
 COPY automation/adapters ./adapters
 COPY automation/web/dist ./web/dist
