@@ -26,7 +26,7 @@ import httpx
 
 PROVIDERS = {
     "gemini": {"base_url": "https://generativelanguage.googleapis.com/v1beta/openai", "key_env": "GEMINI_API_KEY",
-               "model": "gemini-3.5-flash-lite", "vision": True},
+               "model": "gemini-2.5-flash", "vision": True},
     "openrouter": {"base_url": "https://openrouter.ai/api/v1", "key_env": "OPENROUTER_API_KEY",
                    "model": "meta-llama/llama-3.3-70b-instruct:free"},
     "ollama": {"base_url": "http://localhost:11434/v1", "key_env": None, "model": "qwen2.5:7b"},
@@ -230,6 +230,8 @@ def make_client_from_env(env=None) -> Optional[OpenAICompatClient]:
     load_dotenv()
     e = env if env is not None else os.environ
     name = (e.get("EDITOR_LLM") or "").lower()
+    if not name and e.get("GEMINI_API_KEY"):
+        name = "gemini"
     if not name:
         return None
     cfg = PROVIDERS.get(name) or ({"base_url": e.get("EDITOR_LLM_BASE_URL", ""), "key_env": "EDITOR_LLM_API_KEY", "model": ""}
