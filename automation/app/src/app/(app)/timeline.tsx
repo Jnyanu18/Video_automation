@@ -14,6 +14,7 @@ import { useStoryboards } from '../../state/useStoryboards';
 import { editor, Storyboard, Scene } from '../../api/editor';
 import { errorText } from '../../api/client';
 import { radius, spacing, useTheme } from '../../theme';
+import { StudioTabs } from '../../components/StudioTabs';
 
 interface TrackSegment {
   id: string;
@@ -392,73 +393,17 @@ export default function TimelineEditor() {
           contentContainerStyle={localStyles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Top Header Row with Action Buttons */}
-          <View style={localStyles.headerRow}>
-            <View style={{ gap: 2, flex: 1 }}>
-              <T style={localStyles.pageTitle}>Timeline Editor</T>
-              <T style={localStyles.pageSubtitle}>
-                {sb.storyboard.title} · {scenes.length} scenes · {totalTimelineSec.toFixed(1)}s
-              </T>
-            </View>
-
-            <View style={localStyles.headerActions}>
-              {/* Open Storyboard Cards link */}
-              <Pressable
-                style={({ pressed }: any) => [
-                  localStyles.cardsLinkBtn,
-                  pressed && { opacity: 0.8 },
-                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                ]}
-                onPress={() => router.push(`/storyboard?sb=${sb.id}`)}
-              >
-                <Icon name="layers" size={15} color="#4B5563" />
-                <T style={localStyles.cardsLinkText}>Open Storyboard Cards</T>
-              </Pressable>
-
-              {/* New Reel CTA */}
-              <Pressable
-                style={({ pressed }: any) => [
-                  localStyles.newReelBtn,
-                  pressed && { opacity: 0.9 },
-                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                ]}
-                onPress={() => router.push('/new')}
-              >
-                <Icon name="plus" size={16} color="#FFFFFF" />
-                <T style={localStyles.newReelBtnText}>New Reel</T>
-              </Pressable>
-            </View>
-          </View>
-
-          {/* Storyboard Switcher Chips */}
-          {list && list.length > 0 && (
-            <View style={localStyles.switcherRow}>
-              <View style={localStyles.switcherLabelWrap}>
-                <Icon name="film" size={14} color="#6B7280" />
-                <T style={localStyles.switcherLabel}>Storyboards:</T>
-              </View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={localStyles.switcherChipsContainer}
-              >
-                <Chips
-                  options={list.map((s) => {
-                    const title = s.storyboard?.title || `Storyboard ${s.id.slice(0, 6)}`;
-                    const approvedMark = s.approved ? ' ✓' : '';
-                    return {
-                      value: s.id,
-                      label: `${title}${approvedMark}`,
-                    };
-                  })}
-                  value={sb.id}
-                  onChange={(id) => {
-                    if (id) select(id);
-                  }}
-                />
-              </ScrollView>
-            </View>
-          )}
+          {/* Unified Creative Suite Navigation Bar */}
+          <StudioTabs
+            activeTab="timeline"
+            sbId={sb.id}
+            title={sb.storyboard?.title}
+            stage={sb.stage}
+            approved={sb.approved}
+            rendering={rendering !== null}
+            onPreviewRender={() => handleRender('preview')}
+            onFinalRender={sb.approved ? () => handleRender('final') : undefined}
+          />
 
           {/* Subheader / Status Bar */}
           <View style={localStyles.subHeaderBar}>

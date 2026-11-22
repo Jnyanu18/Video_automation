@@ -12,6 +12,7 @@ import { Field } from '../../components/ui';
 import { useStoryboards } from '../../state/useStoryboards';
 import { useToast } from '../../state/toast';
 import { radius, spacing, useTheme } from '../../theme';
+import { StudioTabs } from '../../components/StudioTabs';
 
 type Mode = 'revise' | 'ask';
 interface Msg { role: 'user' | 'assistant' | 'system'; content: string }
@@ -83,13 +84,22 @@ export default function AIStudio() {
   const custom = styles_ ? Object.values(styles_.custom) as any[] : [];
 
   return (
-    <Page title="AI Studio" subtitle="Watch the cut, direct changes, and ask for ideas">
+    <Page title="Video Editor" subtitle="Watch the cut, direct changes with AI, and fine-tune scenes">
       {!list?.length || !sb ? (
         <EmptyState icon="camera" title="No edit open" message="Start an edit from raw footage. The studio opens it here so you can watch it and direct changes."
           action={<Button label="Start a new edit" variant="primary" icon="plus" onPress={() => router.push('/new')} />} />
       ) : (
         <>
-          <Chips options={list.slice(0, 8).map((s) => ({ value: s.id, label: (s.storyboard?.title || s.id).slice(0, 32) }))} value={sb.id} onChange={(v) => v && select(v)} />
+          <StudioTabs
+            activeTab="copilot"
+            sbId={sb.id}
+            title={titleOf(sb)}
+            stage={sb.stage}
+            approved={sb.approved}
+            rendering={sb.render_job?.status === 'running' || sb.render_job?.status === 'queued'}
+            onPreviewRender={() => editor.render(sb.id, 'preview').then(reload).catch((e) => setErr(errorText(e)))}
+            onFinalRender={sb.approved ? () => editor.render(sb.id, 'final').then(reload).catch((e) => setErr(errorText(e))) : undefined}
+          />
           <View style={[styles.cols, wide && { flexDirection: 'row' }]}>
             <View style={{ flex: 1, gap: spacing.md, minWidth: 280 }}>
               <Card>

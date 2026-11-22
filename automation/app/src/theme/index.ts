@@ -45,23 +45,23 @@ const dark = {
 
 // Light theme - Choppity-style clean SaaS layout with confident purple accent
 const light = {
-  bg: '#F8F9FA',
+  bg: '#F8FAFC',
   sidebar: '#FFFFFF',
   surface: '#FFFFFF',
-  surfaceAlt: '#F4F5F7',
-  border: '#E5E7EB',
-  borderLight: '#F3F4F6',
-  text: '#111827',
-  textMuted: '#6B7280',
-  textFaint: '#9CA3AF',
+  surfaceAlt: '#F1F5F9',
+  border: '#E2E8F0',
+  borderLight: '#F8FAFC',
+  text: '#0F172A',
+  textMuted: '#64748B',
+  textFaint: '#94A3B8',
   primary: '#6C4CF0',
   primaryPressed: '#5838D6',
-  primarySoft: 'rgba(108, 76, 240, 0.12)',
+  primarySoft: 'rgba(108, 76, 240, 0.08)',
   onPrimary: '#FFFFFF',
   brandPeach: '#FF5A1F',
   brandPeachSoft: '#FFF5F0',
   success: '#10B981',
-  successSoft: '#F0FDF4',
+  successSoft: '#ECFDF5',
   warning: '#F59E0B',
   warningSoft: '#FFFBEB',
   danger: '#EF4444',
@@ -109,13 +109,18 @@ export function useTheme(): { colors: Colors; isDark: boolean } {
 
 export const shadow = (c: Colors, level: 1 | 2 = 1) =>
   Platform.select({
-    web: { boxShadow: level === 1 ? `0 1px 3px rgba(0,0,0,0.4)` : `0 8px 24px rgba(0,0,0,0.6)` } as any,
+    web: {
+      boxShadow:
+        level === 1
+          ? '0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03)'
+          : '0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
+    } as any,
     default: {
-      shadowColor: '#000000',
-      shadowOpacity: level === 1 ? 0.3 : 0.6,
+      shadowColor: '#0F172A',
+      shadowOpacity: level === 1 ? 0.05 : 0.12,
       shadowRadius: level === 1 ? 3 : 12,
       shadowOffset: { width: 0, height: level === 1 ? 1 : 4 },
-      elevation: level === 1 ? 2 : 8,
+      elevation: level === 1 ? 1 : 4,
     },
   });
 

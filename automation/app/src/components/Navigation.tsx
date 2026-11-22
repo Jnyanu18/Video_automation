@@ -22,31 +22,29 @@ export interface NavSection {
 
 export const BASE_NAV_SECTIONS: NavSection[] = [
   {
-    title: 'WORKSPACE',
+    title: 'STUDIO',
     items: [
       { href: '/', label: 'Overview', icon: 'grid' },
-      { href: '/studio', label: 'AI Studio', icon: 'camera' },
+      { href: '/storyboard', label: 'Video Editor', icon: 'layers' },
       { href: '/creator-studio', label: 'Creator Studio', icon: 'film' },
-      { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
       { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
-      { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
     ],
   },
   {
-    title: 'OPERATIONS',
+    title: 'ASSETS & INTEL',
     items: [
-      { href: '/series', label: 'Series Engine', icon: 'tv', badge: 'Coming soon' },
-      { href: '/media', label: 'Media Library', icon: 'music' },
-      { href: '/publishing', label: 'Publishing', icon: 'send' },
-      { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
+      { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
+      { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
       { href: '/editing-memory', label: 'Editing Memory', icon: 'clock' },
+      { href: '/media', label: 'Media Library', icon: 'music' },
     ],
   },
   {
-    title: 'SYSTEM',
+    title: 'DISTRIBUTION',
     items: [
+      { href: '/publishing', label: 'Publishing Calendar', icon: 'send' },
+      { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
       { href: '/settings', label: 'Settings', icon: 'settings' },
-      { href: '/integrations', label: 'Integrations', icon: 'server' },
     ],
   },
 ];
@@ -215,7 +213,7 @@ export function TopNav({ title, subtitle, breadcrumb }: { title?: string; subtit
         {/* Quick Action Button */}
         <Pressable
           accessibilityRole="button"
-          onPress={() => router.navigate('/studio' as any)}
+          onPress={() => router.navigate('/new' as any)}
           style={({ pressed, hovered }: any) => [
             styles.quickBtn,
             { backgroundColor: hovered ? colors.primaryPressed : colors.primary },

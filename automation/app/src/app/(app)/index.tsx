@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Page, Row } from '../../components/Page';
 import { Badge, Banner, Button, Card, EmptyState, ErrorState, SectionTitle, Skeleton, T } from '../../components/ui';
+import { Icon } from '../../components/Icon';
 import { Stat } from '../../components/studio';
 import { errorText } from '../../api/client';
 import { editor, when } from '../../api/editor';
@@ -94,6 +95,65 @@ export default function CommandCenter() {
           ) : null}
         </>
       )}
+
+      <SectionTitle title="Production Hub" />
+      <Row style={{ alignItems: 'stretch' }}>
+        <Card
+          pad={true}
+          onPress={() => router.push('/new')}
+          style={{ flexGrow: 1, flexBasis: 220, borderColor: colors.primary + '33', gap: 6 }}
+        >
+          <Row gap={8}>
+            <View style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="sparkles" size={17} color={colors.primary} />
+            </View>
+            <T variant="h3" style={{ fontWeight: '700' }}>Create New Reel</T>
+          </Row>
+          <T variant="small" muted>Auto-edit raw footage or remake an Instagram link with AI Director.</T>
+        </Card>
+
+        <Card
+          pad={true}
+          onPress={() => router.push('/storyboard')}
+          style={{ flexGrow: 1, flexBasis: 220, gap: 6 }}
+        >
+          <Row gap={8}>
+            <View style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="layers" size={17} color={colors.text} />
+            </View>
+            <T variant="h3" style={{ fontWeight: '700' }}>Active Storyboards</T>
+          </Row>
+          <T variant="small" muted>Review scene cuts, karaoke captions, hook signals, and sound design.</T>
+        </Card>
+
+        <Card
+          pad={true}
+          onPress={() => router.push('/timeline')}
+          style={{ flexGrow: 1, flexBasis: 220, gap: 6 }}
+        >
+          <Row gap={8}>
+            <View style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="sliders" size={17} color={colors.text} />
+            </View>
+            <T variant="h3" style={{ fontWeight: '700' }}>Timeline Editor</T>
+          </Row>
+          <T variant="small" muted>Fine-tune cuts, sound effects, and zoom punches down to the frame.</T>
+        </Card>
+
+        <Card
+          pad={true}
+          onPress={() => router.push('/creator-studio' as any)}
+          style={{ flexGrow: 1, flexBasis: 220, gap: 6 }}
+        >
+          <Row gap={8}>
+            <View style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="film" size={17} color={colors.text} />
+            </View>
+            <T variant="h3" style={{ fontWeight: '700' }}>Creator Studio</T>
+          </Row>
+          <T variant="small" muted>Generate 5-slide Remotion carousels and production library sign-offs.</T>
+        </Card>
+      </Row>
 
       <View style={styles.cols}>
         <View style={{ flex: 1, minWidth: 300, gap: spacing.md }}>

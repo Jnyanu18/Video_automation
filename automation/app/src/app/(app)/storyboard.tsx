@@ -11,6 +11,7 @@ import { editor, num, pct, when } from '../../api/editor';
 import { useStoryboards } from '../../state/useStoryboards';
 import { useToast } from '../../state/toast';
 import { spacing, useTheme } from '../../theme';
+import { StudioTabs } from '../../components/StudioTabs';
 
 export default function StoryboardScreen() {
   const router = useRouter();
@@ -53,10 +54,17 @@ export default function StoryboardScreen() {
   const blockedByScorecard = sc?.status === 'FAIL';
 
   return (
-    <Page title="Storyboard" subtitle="Review the cut, approve it, then render">
-      <Chips
-        options={list.slice(0, 10).map((s: any) => ({ value: s.id, label: `${(s.storyboard?.title || s.id).slice(0, 28)} · ${STAGE_LABEL[s.stage] ?? s.stage}` }))}
-        value={finalSb.id} onChange={(v) => v && select(v)} />
+    <Page title="Video Editor" subtitle="Review the cut, fine-tune scenes, and render">
+      <StudioTabs
+        activeTab="storyboard"
+        sbId={finalSb.id}
+        title={titleOf(finalSb)}
+        stage={finalSb.stage}
+        approved={finalSb.approved}
+        rendering={rendering}
+        onPreviewRender={() => act('preview', () => editor.render(finalSb.id, 'preview'), 'Preview render started')}
+        onFinalRender={finalSb.approved ? () => act('final', () => editor.render(finalSb.id, 'final'), 'Final render started') : undefined}
+      />
 
       <Card>
         <Row style={{ justifyContent: 'space-between' }}>
