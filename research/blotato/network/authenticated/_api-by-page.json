@@ -1,0 +1,221 @@
+[
+ [
+  "GET geometry:/api/surveys/",
+  [
+   "/overview",
+   "/calendar",
+   "/analytics",
+   "/posts",
+   "/logs",
+   "/videos",
+   "/videos/new",
+   "/inbox",
+   "/dm-automations",
+   "/accounts",
+   "/settings/profile",
+   "/settings/brand",
+   "/settings/api",
+   "/settings/billing",
+   "/remix",
+   "/agent"
+  ]
+ ],
+ [
+  "GET backend:/v2/posts",
+  [
+   "/overview",
+   "/overview",
+   "/calendar",
+   "/analytics",
+   "/posts",
+   "/inbox"
+  ]
+ ],
+ [
+  "GET backend:/v2/dm-automations",
+  [
+   "/overview",
+   "/analytics",
+   "/dm-automations"
+  ]
+ ],
+ [
+  "GET backend:/v2/analytics/platforms",
+  [
+   "/overview",
+   "/analytics"
+  ]
+ ],
+ [
+  "GET backend:/v2/accounts",
+  [
+   "/overview",
+   "/calendar",
+   "/logs",
+   "/inbox",
+   "/dm-automations",
+   "/accounts"
+  ]
+ ],
+ [
+  "POST geometry:/i/v0/e/",
+  [
+   "/overview",
+   "/calendar",
+   "/calendar",
+   "/analytics",
+   "/analytics",
+   "/analytics",
+   "/posts",
+   "/posts",
+   "/logs",
+   "/logs",
+   "/videos",
+   "/videos/new",
+   "/inbox",
+   "/inbox",
+   "/dm-automations",
+   "/dm-automations",
+   "/dm-automations",
+   "/dm-automations",
+   "/accounts",
+   "/settings/profile",
+   "/settings/brand",
+   "/settings/api",
+   "/settings/billing",
+   "/agent"
+  ]
+ ],
+ [
+  "POST geometry:/s/",
+  [
+   "/overview",
+   "/overview",
+   "/analytics",
+   "/analytics",
+   "/posts",
+   "/logs",
+   "/logs",
+   "/logs",
+   "/videos",
+   "/videos/new",
+   "/inbox",
+   "/inbox",
+   "/inbox",
+   "/dm-automations",
+   "/dm-automations",
+   "/accounts",
+   "/accounts",
+   "/settings/profile",
+   "/settings/profile",
+   "/settings/profile",
+   "/settings/brand",
+   "/settings/brand",
+   "/settings/api",
+   "/settings/api",
+   "/settings/billing",
+   "/settings/billing",
+   "/agent",
+   "/agent",
+   "/agent"
+  ]
+ ],
+ [
+  "GET backend:/v2/schedule/slots",
+  [
+   "/calendar"
+  ]
+ ],
+ [
+  "GET backend:/v2/analytics/summary",
+  [
+   "/analytics",
+   "/analytics"
+  ]
+ ],
+ [
+  "GET backend:/v2/api-requests/stats",
+  [
+   "/analytics",
+   "/logs"
+  ]
+ ],
+ [
+  "GET backend:/v2/analytics",
+  [
+   "/analytics"
+  ]
+ ],
+ [
+  "GET backend:/v2/api-requests",
+  [
+   "/logs"
+  ]
+ ],
+ [
+  "GET backend:/v2/automation-accounts",
+  [
+   "/logs"
+  ]
+ ],
+ [
+  "GET backend:/v2/videos-v2",
+  [
+   "/videos"
+  ]
+ ],
+ [
+  "GET https://database.blotato.io/storage/v1/object/public/video_template_previews/<uuid>_preview.mp4",
+  [
+   "/videos",
+   "/videos/new"
+  ]
+ ],
+ [
+  "GET https://database.blotato.io/storage/v1/object/public/video_template_previews/pov_preview.mp4",
+  [
+   "/videos",
+   "/videos/new"
+  ]
+ ],
+ [
+  "GET https://database.blotato.io/storage/v1/object/public/video_template_previews/slides_preview.mp4",
+  [
+   "/videos",
+   "/videos/new"
+  ]
+ ],
+ [
+  "GET https://database.blotato.io/storage/v1/object/public/video_template_previews/script-scenes_preview.mp4",
+  [
+   "/videos",
+   "/videos/new"
+  ]
+ ],
+ [
+  "GET backend:/v2/users/me/usage",
+  [
+   "/dm-automations"
+  ]
+ ],
+ [
+  "GET backend:/v2/users/me",
+  [
+   "/accounts",
+   "/settings/api"
+  ]
+ ],
+ [
+  "GET backend:/v2/me/preferences",
+  [
+   "/settings/profile"
+  ]
+ ],
+ [
+  "GET backend:/v2/brands",
+  [
+   "/settings/brand",
+   "/agent"
+  ]
+ ]
+]

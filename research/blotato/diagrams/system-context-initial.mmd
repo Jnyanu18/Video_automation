@@ -1,0 +1,14 @@
+flowchart TB
+  B["Browser: my.blotato.com\nNext.js App Router (Vercel)\nReact + Mantine + Slate + Jotai"]
+  B -->|"fetch /v2/* credentials:include (cookie session)"| BE["backend.blotato.com"]
+  B <-->|"WebSocket /events (23 S->C, 9 C->S typed events)"| BE
+  B -->|"PostHog events + session replay"| GEO["geometry.blotato.com (PostHog reverse proxy)"]
+  B -->|"media"| CDN["database.blotato.io (media/CDN)"]
+  B -->|"checkout"| STRIPE["Stripe Checkout"]
+  B -->|"ads/attribution"| ADS["Google Tag/Ads, Meta Pixel, Tolt"]
+  EXT["External clients: REST (blotato-api-key), n8n node, Make modules"] -->|"/v2/* public subset (46 ops)"| BE
+  AI["AI clients (Claude, ChatGPT, Codex, ...)"] -->|"Streamable HTTP, OAuth or API key"| MCP["mcp.blotato.com/mcp (35 tools)"]
+  MCP --> BE
+  BE --> SOC["Social platform APIs: X, LinkedIn, FB, IG, TikTok, YouTube, Threads, Bluesky, Pinterest"]
+  BE --> WH["User webhooks (DM automations, webhook publish target)"]
+  BE --> N8N["User n8n instance (automation-accounts baseUrl+apiKey) - INFERRED"]

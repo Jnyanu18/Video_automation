@@ -1,0 +1,280 @@
+{
+ "requested": "/prompts",
+ "url": "https://my.blotato.com/prompts",
+ "title": "Blotato",
+ "headings": [
+  "My Prompts"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Inspiration",
+   "h": "/inspiration"
+  },
+  {
+   "t": "Prompts",
+   "h": "/prompts"
+  },
+  {
+   "t": "Viral AI Coach",
+   "h": "/labs/viral-coach"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "How do I customize prompts for my voice?",
+   "h": "https://help.blotato.com/tips-and-tricks/make-output-sound-like-you"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools",
+  "New Prompt",
+  "Title",
+  "Description",
+  "Content",
+  "Type",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate",
+  "Duplicate"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "Search by any field",
+   "aria": ""
+  }
+ ],
+ "tables": 2,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nInspiration\nPrompts\nViral AI Coach\nSettings\nMy Prompts\nNew Prompt\nHow do I customize prompts for my voice?\n\nTitle\n\n\t\n\nDescription\n\n\t\n\nContent\n\n\t\n\nType\n\n\t\n\n3 Limiting Beliefs\n\t\nCreated by Blotato\n\t\n# CONTEXT Infer the topic from the sources provided. # WRITING STYLE Here’s how you always write: <writing_style> - Your writing style is spartan and informative. - Use clear, simple language. - Employ short, impactful sentences. - Incorporate bullet points for easy readability. - Use frequent line breaks to separate ideas. - Use active voice; avoid passive voice. - Focus on practical, actionable insights. - Use specific examples and personal experiences to illustrate points. - Incorporate data or statistics to support claims when possible. - Ask thought-provoking questions to encourage reader reflection. - Use \"\"you\"\" and \"\"your\"\" to directly address the reader. - Avoid metaphors and clichés. - Avoid generalizations. - Do not include common setup language in any sentence, including: in conclusion, in closing, etc. - Do not output warnings or notes—just the output requested. - Do not use hashtags. - Do not use semicolons. - Do not use emojis. - Do not use asterisks. - Do not use adjectives and adverbs. - Do NOT use these words: \"\"\"\"\"\"can, may, just, that, very, really, literally, actually, certainly, probably, basically, could, maybe, delve, embark, enlightening, esteemed, shed light, craft, crafting, imagine, realm, game-changer, unlock, discover, skyrocket, abyss, you're not alone, in a world where, revolutionize, disruptive, utilize, utilizing, dive deep, tapestry, illuminate, unveil, pivotal, enrich, intricate, elucidate, hence, furthermore, realm, however, harness, exciting, groundbreaking, cutting-edge, remarkable, it. remains to be seen, glimpse into, navigating, landscape, stark, testament, in summary, in conclusion, moreover, boost, bustling, opened up, powerful, inquiries, ever-evolving\"\"\"\"\"\" </writing_style> # PLANNING Your goal is to write a viral social media post based on the provided sources. 1. Analyze the provided sources thoroughly. 2. Study the <example1> and <example2> posts below carefully. You will be asked to replicate their: - Overall structure. - Tone and voice. - Formatting (including line breaks and spacing). - Length (aim for a similarly detailed post). - Absence of emojis. - Use of special characters (if any). - Emotional resonance. <example1> # 3 Limiting Beliefs Preventing You From Finally Becoming a Successful Entrepreneur Many people believe that entrepreneurship is a path only meant for those with everything figured out—those with resources, expertise, and a perfect plan. This mindset leads many to either never start or quit early. The truth is, waiting for the “right moment” or for everything to be “perfect” is foolish. Instead, entrepreneurs should embrace action, learning, and growth along the way. Success comes from moving past these limiting beliefs. Here are 3 common limiting beliefs holding you back: Limiting Belief 1: \"The market is too saturated.\" Many believe that entering a saturated market is pointless because it feels like there’s no room for new players. But is this really true? Consider these scenarios: - “There are already too many businesses in this field.” - “The big companies are too established to compete with.” - “I’ll never stand out.” This belief is not based on a concrete, measurable reality. Instead, it assumes that demand in a market is static and that new entrants can’t innovate. Here’s what you can do: Identify your unique strengths and value proposition. Even in a crowded market, there’s always space for something new. Think about how you can differentiate yourself by offering a better product, service, or customer experience. Take the example of small coffee shops competing against corporate giants like Starbucks. They thrive beca",
+ "api": [
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793775746836&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793775747323&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793775749357&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793775750419&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793775753444&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793775758628&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-Cdi6J8rv7Aq7c1tzhVmo2DmKo0AF0opHYjRg9jmojN719gACF57faGlSG_Mte-IGcuitybCF0dhwhzwecJLcCxUvgsVJHMh8MJH6?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "30-02-prompts.png"
+}
