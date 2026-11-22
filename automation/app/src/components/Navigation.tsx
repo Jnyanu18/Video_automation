@@ -34,12 +34,11 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
   {
     title: 'OPERATIONS',
     items: [
-      { href: '/series', label: 'Series Engine', icon: 'tv' },
+      { href: '/series', label: 'Series Engine', icon: 'tv', badge: 'Coming soon' },
       { href: '/media', label: 'Media Library', icon: 'music' },
       { href: '/publishing', label: 'Publishing', icon: 'send' },
       { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
       { href: '/editing-memory', label: 'Editing Memory', icon: 'clock' },
-      { href: '/automation', label: 'Automation', icon: 'zap' },
     ],
   },
   {
@@ -148,10 +147,10 @@ export function Sidebar() {
                   >
                     {n.label}
                   </Text>
-                  {on ? (
-                    <View style={{ width: 5, height: 5, borderRadius: 3, backgroundColor: colors.primary }} />
-                  ) : n.badge ? (
+                  {n.badge ? (
                     <Badge label={n.badge} tone="info" />
+                  ) : on ? (
+                    <View style={{ width: 5, height: 5, borderRadius: 3, backgroundColor: colors.primary }} />
                   ) : null}
                 </Pressable>
               );

@@ -51,6 +51,17 @@ export default function SeriesEngine() {
 
   return (
     <Page title="Series Engine" subtitle="Plan an episodic arc where each reel ends on a loop the next one closes">
+      <Row style={{ alignItems: 'center', justifyContent: 'space-between', marginBottom: spacing.xs }}>
+        <Row gap={spacing.sm} style={{ alignItems: 'center' }}>
+          <Badge label="COMING SOON" tone="info" dot />
+          <T variant="small" muted>Episodic open-loop stitching is in active preview</T>
+        </Row>
+      </Row>
+
+      <Banner tone="info">
+        ✨ Series Engine is coming soon! You can explore the episodic planning workspace below while automated multi-episode cliffhanger rendering is being finalized.
+      </Banner>
+
       <Card>
         <SectionTitle title="Plan a new series" />
         <View style={{ gap: spacing.md }}>
