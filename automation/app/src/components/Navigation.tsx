@@ -83,10 +83,10 @@ export function ChoppityIconRail() {
 
   const primaryRailItems: NavItem[] = [
     { href: '/', label: 'Projects', icon: 'folder' },
-    { href: '/styles', label: 'Templates', icon: 'sparkles' },
+    { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
+    { href: '/timeline', label: 'Timeline', icon: 'sliders' },
     { href: '/publishing', label: 'Calendar', icon: 'calendar' },
     { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
-    { href: '/publishing', label: 'Social Share', icon: 'share' },
     { href: '/footage', label: 'Storage', icon: 'database' },
   ];
 
@@ -240,8 +240,6 @@ export function ChoppityHeader() {
     { label: 'Auto-Clipper', href: '/' },
     { label: 'Storyboard', href: '/storyboard' },
     { label: 'Timeline', href: '/timeline' },
-    { label: 'Creator Studio', href: '/creator-studio' },
-    { label: 'Brand Kit', href: '/styles' },
   ];
 
   return (
