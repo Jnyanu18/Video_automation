@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -6,60 +6,234 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import * as DocumentPicker from 'expo-document-picker';
 import { Icon } from '../../components/Icon';
-import { Badge, Button, Card, T } from '../../components/ui';
+import { Badge, Banner, Button, Card, Field, Input, Picker, T } from '../../components/ui';
 import { TemplateWizard } from '../../components/TemplateWizard';
 import { ProjectHistory } from '../../components/ProjectHistory';
 import { useStoryboards } from '../../state/useStoryboards';
 import { useToast } from '../../state/toast';
+import { useWide } from '../../components/useWide';
 import { editor } from '../../api/editor';
+import { errorText, get, uploadVideo } from '../../api/client';
+import type { UploadInfo } from '../../api/types';
 import { MAX_CONTENT_WIDTH, font, radius, shadow, spacing, useTheme } from '../../theme';
+
+const GOAL_OPTIONS = [
+  { value: 'Viral retention & engagement', label: 'Viral retention & engagement' },
+  { value: 'Educational explainer', label: 'Educational explainer' },
+  { value: 'Direct response & sales', label: 'Direct response & sales' },
+  { value: 'Brand storytelling', label: 'Brand storytelling' },
+  { value: 'Product launch showcase', label: 'Product launch showcase' },
+];
+
+const AUDIENCE_OPTIONS = [
+  { value: 'Social audience / Gen Z', label: 'Social audience / Gen Z' },
+  { value: 'Founders & executives', label: 'Founders & executives' },
+  { value: 'Developers & builders', label: 'Developers & builders' },
+  { value: 'Creatives & designers', label: 'Creatives & designers' },
+  { value: 'Everyone', label: 'Everyone' },
+];
+
+const FORMAT_OPTIONS = [
+  { value: 'Vertical Reels / Shorts (9:16)', label: 'Vertical Reels / Shorts (9:16)' },
+  { value: 'Horizontal YouTube (16:9)', label: 'Horizontal YouTube (16:9)' },
+  { value: 'Square Feed (1:1)', label: 'Square Feed (1:1)' },
+];
+
+const DURATION_OPTIONS = [
+  { value: '30 seconds', label: '30 seconds' },
+  { value: '45 seconds', label: '45 seconds' },
+  { value: '60 seconds', label: '60 seconds' },
+  { value: 'Full condensed cut', label: 'Full condensed cut' },
+];
+
+const FEELING_OPTIONS = [
+  { value: 'High-energy & punchy', label: 'High-energy & punchy' },
+  { value: 'Cinematic & authentic', label: 'Cinematic & authentic' },
+  { value: 'Clean & professional', label: 'Clean & professional' },
+  { value: 'Fast-paced & witty', label: 'Fast-paced & witty' },
+  { value: 'Dramatic & impactful', label: 'Dramatic & impactful' },
+];
+
+const RHYTHM_OPTIONS = [
+  { value: 'Fast cuts & pattern interrupts', label: 'Fast cuts & pattern interrupts' },
+  { value: 'Steady rhythm with punch-ins', label: 'Steady rhythm with punch-ins' },
+  { value: 'Slow build, heavy payoff', label: 'Slow build, heavy payoff' },
+  { value: 'Beat-synced flow', label: 'Beat-synced flow' },
+];
 
 export default function ChoppityHomeScreen() {
   const router = useRouter();
   const toast = useToast();
   const { colors } = useTheme();
-  const { list: storyboards, loading, reload } = useStoryboards();
-
-  // Pick a video card state
-  const [pickCardExpanded, setPickCardExpanded] = useState(true);
-  const [activeTab, setActiveTab] = useState<'new' | 'existing'>('new');
-  const [linkInput, setLinkInput] = useState('');
-  const [instructions, setInstructions] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const wide = useWide();
+  const { list: storyboards, reload } = useStoryboards();
 
   // Template wizard modal state
   const [wizardOpen, setWizardOpen] = useState(false);
 
-  const handleGenerateClips = async () => {
-    if (!linkInput.trim()) {
-      toast('Please paste a video link');
+  // 1. Film Title & Vision
+  const [filmTitle, setFilmTitle] = useState('');
+  const [prompt, setPrompt] = useState(
+    'Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add dynamic karaoke captions.'
+  );
+
+  // 2. Raw Footage State
+  const [picked, setPicked] = useState<{ name: string; type: string; uri: string; blob?: Blob } | null>(null);
+  const [progress, setProgress] = useState<number | null>(null);
+  const [staged, setStaged] = useState<UploadInfo | null>(null);
+  const [footage, setFootage] = useState<{ path: string; name: string; size_mb: number }[]>([]);
+  const [footagePath, setFootagePath] = useState('');
+
+  // 3. Reference Video State (The dedicated reference video box)
+  const [referenceUrl, setReferenceUrl] = useState('');
+
+  // 4. Selector Grid States
+  const [goal, setGoal] = useState('Viral retention & engagement');
+  const [audience, setAudience] = useState('Social audience / Gen Z');
+  const [format, setFormat] = useState('Vertical Reels / Shorts (9:16)');
+  const [duration, setDuration] = useState('30 seconds');
+  const [feeling, setFeeling] = useState('High-energy & punchy');
+  const [rhythm, setRhythm] = useState('Fast cuts & pattern interrupts');
+
+  // 5. Editing Style Preset
+  const [editorStyle, setEditorStyle] = useState('viral_hook_fast_pace');
+  const [styleList, setStyleList] = useState<{ value: string; label: string }[]>([]);
+
+  // State & Loading
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    get('/api/editor/settings')
+      .then((r: any) => {
+        if (r?.settings?.default_style) setEditorStyle(r.settings.default_style);
+        if (r?.settings?.default_prompt) setPrompt(r.settings.default_prompt);
+      })
+      .catch(() => undefined);
+
+    editor
+      .styles()
+      .then((r: any) => {
+        const presets = [...Object.values(r.presets || {}), ...Object.values(r.custom || {})];
+        setStyleList(presets.map((p: any) => ({ value: p.name, label: p.name.replace(/_/g, ' ') })));
+      })
+      .catch(() => undefined);
+
+    editor
+      .footage()
+      .then((r) => setFootage(r.files || []))
+      .catch(() => undefined);
+  }, []);
+
+  // File Picker
+  async function chooseFile() {
+    setError(null);
+    const res = await DocumentPicker.getDocumentAsync({
+      type: ['video/mp4', 'video/quicktime'],
+      copyToCacheDirectory: true,
+    });
+    if (res.canceled || !res.assets?.[0]) return;
+    const a = res.assets[0];
+    const f = {
+      name: a.name,
+      type: a.mimeType || 'video/mp4',
+      uri: a.uri,
+      blob: Platform.OS === 'web' ? (a.file as Blob | undefined) : undefined,
+    };
+    setPicked(f);
+    setStaged(null);
+    setFootagePath('');
+    setProgress(0);
+    try {
+      const up = await uploadVideo(f, setProgress);
+      setStaged(up);
+    } catch (e) {
+      setPicked(null);
+      setError(errorText(e));
+    } finally {
+      setProgress(null);
+    }
+  }
+
+  function clearSelectedFootage() {
+    setPicked(null);
+    setStaged(null);
+    setFootagePath('');
+  }
+
+  // Generate Storyboard / Shape Creative Direction
+  async function submitCreativeDirection() {
+    setError(null);
+    const refLink = referenceUrl.trim();
+    if (!staged && !footagePath && !refLink) {
+      setError('Please add at least one raw clip or paste a reference video link to start editing.');
       return;
     }
-    setSubmitting(true);
-    try {
-      const res = await editor.autoEdit({
-        url: linkInput.trim(),
-        prompt: instructions.trim() || undefined,
-        style: 'viral_hook_fast_pace',
-      });
-      toast('Video imported! Generating short clips...');
-      setLinkInput('');
-      setInstructions('');
-      await reload();
-      if (res?.storyboard_id) {
-        router.push(`/storyboard?sb=${res.storyboard_id}` as any);
-      }
-    } catch (e: any) {
-      toast(e?.message || 'Failed to process video');
-    } finally {
-      setSubmitting(false);
+
+    if (refLink && !/^https?:\/\//i.test(refLink)) {
+      setError('Reference video URL must start with https://');
+      return;
     }
-  };
+
+    setBusy(true);
+    try {
+      const directionSummary = [
+        filmTitle.trim() ? `Title: ${filmTitle.trim()}` : '',
+        `Goal: ${goal}`,
+        `Audience: ${audience}`,
+        `Format: ${format}`,
+        `Duration: ${duration}`,
+        `Feeling: ${feeling}`,
+        `Rhythm: ${rhythm}`,
+        refLink ? `Reference Video Pacing Guide: ${refLink}` : '',
+      ]
+        .filter(Boolean)
+        .join(' | ');
+
+      const combinedPrompt = `${prompt.trim()}\n\n[Direction: ${directionSummary}]`;
+
+      let res: { storyboard_id: string };
+
+      if (staged) {
+        res = await editor.autoEdit({
+          video_path: undefined,
+          url: undefined,
+          uploadId: staged.uploadId,
+          style: editorStyle,
+          instruction: combinedPrompt,
+        } as any);
+      } else if (footagePath) {
+        res = await editor.autoEdit({
+          video_path: footagePath,
+          style: editorStyle,
+          instruction: combinedPrompt,
+        });
+      } else {
+        res = await editor.autoEdit({
+          url: refLink,
+          style: editorStyle,
+          instruction: combinedPrompt,
+        });
+      }
+
+      toast('The creative director is drafting your storyboard cut.');
+      await reload();
+      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const uploading = progress !== null;
+  const activeFootageName = staged?.fileName || picked?.name || (footagePath ? footagePath.split(/[\\/]/).pop() : '');
+  const posterTitle = filmTitle.trim() ? filmTitle.trim().toUpperCase() : 'MAKE IT MATTER.';
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
@@ -68,246 +242,377 @@ export default function ChoppityHomeScreen() {
         contentContainerStyle={[styles.scrollContent, { maxWidth: MAX_CONTENT_WIDTH }]}
       >
         {/* =========================================================================
-            1. PRIMARY WORKFLOW SCREEN: "Pick a video" Card
+            1. PRIMARY WORKFLOW SCREEN: AI VIDEO EDITING STUDIO
            ========================================================================= */}
-        <View style={[styles.intakeCard, { backgroundColor: colors.surface, borderColor: colors.border }, shadow(colors)]}>
-          {/* Card Header with Collapse/Expand Toggle */}
-          <Pressable
-            onPress={() => setPickCardExpanded(!pickCardExpanded)}
-            style={styles.cardHeaderRow}
-            accessibilityRole="button"
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-              <View style={[styles.intakeIconBadge, { backgroundColor: 'rgba(108, 76, 240, 0.1)' }]}>
-                <Icon name="video" size={18} color={colors.primary} />
+        <View style={{ gap: spacing.md }}>
+          {/* Stepper Bar */}
+          <View style={[styles.stepperContainer, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+            <View style={[styles.stepItem, styles.stepItemActive]}>
+              <View style={[styles.stepBadge, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+                <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.onPrimary }}>01</Text>
               </View>
-              <T variant="h2" style={{ fontSize: 18, fontWeight: '700', color: colors.text }}>
-                Pick a video
-              </T>
+              <Text style={[styles.stepLabel, { color: colors.text }]}>Raw clips & brief</Text>
             </View>
-            <View style={styles.chevronBox}>
-              <Icon name={pickCardExpanded ? 'chevron-up' : 'chevron-down'} size={18} color={colors.textMuted} />
-            </View>
-          </Pressable>
 
-          {pickCardExpanded && (
-            <View style={{ marginTop: spacing.md, gap: spacing.md }}>
-              {/* Two-tab Segmented Control Inside Card */}
-              <View style={[styles.tabSegmentGroup, { backgroundColor: '#F1F5F9', borderColor: colors.border }]}>
-                <Pressable
-                  onPress={() => setActiveTab('new')}
-                  style={[
-                    styles.tabSegmentBtn,
-                    activeTab === 'new' && styles.tabSegmentBtnActive,
-                    activeTab === 'new' && Platform.OS === 'web' && ({
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                    } as any),
-                  ]}
-                >
-                  <Text
-                    style={{
-                      fontFamily: activeTab === 'new' ? font.bold : font.medium,
-                      fontSize: 13,
-                      color: activeTab === 'new' ? colors.text : colors.textMuted,
-                    }}
-                  >
-                    New video
-                  </Text>
-                </Pressable>
+            <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
 
-                <Pressable
-                  onPress={() => setActiveTab('existing')}
-                  style={[
-                    styles.tabSegmentBtn,
-                    activeTab === 'existing' && styles.tabSegmentBtnActive,
-                    activeTab === 'existing' && Platform.OS === 'web' && ({
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                    } as any),
-                  ]}
-                >
-                  <Text
-                    style={{
-                      fontFamily: activeTab === 'existing' ? font.bold : font.medium,
-                      fontSize: 13,
-                      color: activeTab === 'existing' ? colors.text : colors.textMuted,
-                    }}
-                  >
-                    Existing video
-                  </Text>
-                </Pressable>
+            <Pressable
+              accessibilityRole="tab"
+              onPress={() => router.push('/storyboard' as any)}
+              style={[styles.stepItem, { opacity: 0.6 }]}
+            >
+              <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>02</Text>
               </View>
+              <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Creative direction</Text>
+            </Pressable>
 
-              {/* Tab 1: New Video Intake */}
-              {activeTab === 'new' ? (
-                <View style={{ gap: spacing.md }}>
-                  {/* a) Labeled text input "Paste a link" + "+" button */}
-                  <View style={{ gap: 6 }}>
-                    <T variant="label" style={{ fontWeight: '600', color: colors.text }}>
-                      Paste a link
+            <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
+
+            <Pressable
+              accessibilityRole="tab"
+              onPress={() => router.push('/timeline' as any)}
+              style={[styles.stepItem, { opacity: 0.6 }]}
+            >
+              <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>03</Text>
+              </View>
+              <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Review your film</Text>
+            </Pressable>
+          </View>
+
+          {/* Global Error Banner */}
+          {error ? <Banner tone="danger">{error}</Banner> : null}
+
+          {/* Split 2-Column Workflow */}
+          <View style={[styles.splitGrid, wide && styles.splitGridWide]}>
+            {/* Left Column: Form Controls */}
+            <View style={styles.formCol}>
+              <Card style={{ gap: spacing.lg }}>
+                <View style={styles.headerLine}>
+                  <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
+                    STEP 01 — RAW CLIPS & BRIEF
+                  </T>
+                  <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                    <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>ABOUT 2 MIN</Text>
+                  </View>
+                </View>
+
+                <View style={{ gap: 4 }}>
+                  <T variant="h1" style={{ fontSize: 24, letterSpacing: -0.5 }}>
+                    What are we cutting?
+                  </T>
+                  <T muted style={{ fontSize: 13.5 }}>
+                    Add your raw footage clips and an optional reference video to shape the pacing.
+                  </T>
+                </View>
+
+                {/* 1. Raw Clips Section */}
+                <View style={styles.boxSection}>
+                  <View style={styles.boxHeader}>
+                    <Icon name="film" size={16} color={colors.primary} />
+                    <T variant="label" style={{ fontWeight: '700', letterSpacing: 0.5 }}>
+                      1. RAW FOOTAGE CLIPS
                     </T>
-                    <View style={styles.linkInputRow}>
-                      <View style={[styles.linkInputWrapper, { borderColor: colors.border, backgroundColor: '#FFFFFF' }]}>
-                        <Icon name="link" size={16} color={colors.textMuted} />
-                        <TextInput
-                          value={linkInput}
-                          onChangeText={setLinkInput}
-                          placeholder="YouTube, Vimeo or Google Drive link"
-                          placeholderTextColor={colors.textFaint}
-                          style={[styles.textInput, { color: colors.text }]}
-                        />
+                  </View>
+
+                  {activeFootageName ? (
+                    <View
+                      style={[
+                        styles.selectedClipCard,
+                        { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
+                      ]}
+                    >
+                      <View style={[styles.clipIconBadge, { backgroundColor: colors.primarySoft }]}>
+                        <Icon name="check" size={16} color={colors.primary} />
                       </View>
-                      <Pressable
-                        onPress={() => router.push('/new')}
-                        style={({ pressed, hovered }: any) => [
-                          styles.squarePlusBtn,
-                          { borderColor: colors.border, backgroundColor: hovered ? colors.surfaceAlt : '#FFFFFF' },
-                          pressed && { opacity: 0.8 },
-                        ]}
-                      >
-                        <Icon name="plus" size={17} color={colors.text} />
-                      </Pressable>
-                    </View>
-                  </View>
-
-                  {/* b) "or" divider */}
-                  <View style={styles.orDividerRow}>
-                    <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
-                    <Text style={{ fontFamily: font.medium, fontSize: 12, color: colors.textFaint, paddingHorizontal: 12 }}>
-                      or
-                    </Text>
-                    <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
-                  </View>
-
-                  {/* c) Large dashed-border drop-zone */}
-                  <Pressable
-                    onPress={() => router.push('/new')}
-                    style={({ pressed, hovered }: any) => [
-                      styles.dropZone,
-                      {
-                        borderColor: hovered ? colors.primary : '#CBD5E1',
-                        backgroundColor: hovered ? 'rgba(108, 76, 240, 0.02)' : '#F8FAFC',
-                      },
-                      pressed && { opacity: 0.9 },
-                      Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                    ]}
-                  >
-                    <View style={[styles.cloudBadge, { backgroundColor: 'rgba(108, 76, 240, 0.1)' }]}>
-                      <Icon name="upload" size={24} color={colors.primary} />
-                    </View>
-                    <View style={{ alignItems: 'center', gap: 2 }}>
-                      <Text style={{ fontFamily: font.bold, fontSize: 14, color: colors.text }}>
-                        Upload a video
-                      </Text>
-                      <Text style={{ fontFamily: font.regular, fontSize: 12, color: colors.textMuted }}>
-                        Choose a file in the New Reel form
-                      </Text>
-                    </View>
-                    <Text style={{ fontFamily: font.regular, fontSize: 11, color: colors.textFaint }}>
-                      Open the upload form
-                    </Text>
-                  </Pressable>
-
-                  {/* d) Optional textarea: "Add custom instructions" */}
-                  <View style={{ gap: 6 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        <Icon name="lightbulb" size={15} color="#F59E0B" />
-                        <T variant="label" style={{ fontWeight: '600', color: colors.text }}>
-                          Add custom instructions
+                      <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
+                        <Text style={[styles.clipNameText, { color: colors.text }]} numberOfLines={1}>
+                          {activeFootageName}
+                        </Text>
+                        <T variant="caption" muted>
+                          {staged
+                            ? `${(staged.sizeBytes / 1048576).toFixed(1)} MB · Ready for edit`
+                            : 'Selected from local footage'}
                         </T>
                       </View>
-                      <Badge label="Optional" tone="neutral" />
-                    </View>
-                    <TextInput
-                      value={instructions}
-                      onChangeText={setInstructions}
-                      placeholder="e.g. Find all the punchy moments where I explain how the AI agent works and punch in on key hook phrases..."
-                      placeholderTextColor={colors.textFaint}
-                      multiline
-                      numberOfLines={3}
-                      style={[
-                        styles.textareaInput,
-                        { borderColor: colors.border, backgroundColor: '#FFFFFF', color: colors.text },
-                      ]}
-                    />
-                  </View>
-
-                  {/* e) Primary CTA Button */}
-                  <Pressable
-                    disabled={submitting}
-                    onPress={handleGenerateClips}
-                    style={({ pressed, hovered }: any) => [
-                      styles.primaryGenerateBtn,
-                      { backgroundColor: hovered ? colors.primaryPressed : colors.primary },
-                      pressed && { opacity: 0.9 },
-                      submitting && { opacity: 0.7 },
-                      Platform.OS === 'web' && ({
-                        cursor: submitting ? 'not-allowed' : 'pointer',
-                        boxShadow: '0 4px 14px rgba(108, 76, 240, 0.35)',
-                      } as any),
-                    ]}
-                  >
-                    {submitting ? (
-                      <ActivityIndicator size="small" color="#FFFFFF" />
-                    ) : (
-                      <>
-                        <Icon name="sparkles" size={18} color="#FFFFFF" />
-                        <Text style={{ fontFamily: font.bold, fontSize: 15, color: '#FFFFFF' }}>
-                          Generate short clips
-                        </Text>
-                      </>
-                    )}
-                  </Pressable>
-                </View>
-              ) : (
-                /* Tab 2: Existing Video Picker */
-                <View style={{ gap: spacing.sm, paddingVertical: spacing.sm }}>
-                  <T variant="small" muted>
-                    Select an existing footage asset from your library to generate a new variation:
-                  </T>
-                  {storyboards && storyboards.length > 0 ? (
-                    <View style={{ gap: 8 }}>
-                      {storyboards.slice(0, 4).map((sb) => (
-                        <Pressable
-                          key={sb.id}
-                          onPress={() => router.push(`/storyboard?sb=${sb.id}` as any)}
-                          style={({ pressed, hovered }: any) => [
-                            styles.existingItemRow,
-                            { borderColor: colors.border, backgroundColor: hovered ? colors.surfaceAlt : '#FFFFFF' },
-                            pressed && { opacity: 0.8 },
-                          ]}
-                        >
-                          <View style={styles.existingThumbnail}>
-                            <Icon name="film" size={16} color={colors.primary} />
-                          </View>
-                          <View style={{ flex: 1, gap: 2 }}>
-                            <Text style={{ fontFamily: font.semibold, fontSize: 13, color: colors.text }} numberOfLines={1}>
-                              {sb.storyboard?.title || sb.video_path || `Project ${sb.id.slice(0, 8)}`}
-                            </Text>
-                            <Text style={{ fontFamily: font.regular, fontSize: 11, color: colors.textMuted }}>
-                              {sb.storyboard?.duration?.output_seconds ? `${Math.round(sb.storyboard.duration.output_seconds)}s • ` : ''}
-                              {sb.style} • {sb.status.toUpperCase()}
-                            </Text>
-                          </View>
-                          <Badge label="Open" tone="info" />
-                        </Pressable>
-                      ))}
+                      <Button label="Remove" small variant="ghost" icon="x" onPress={clearSelectedFootage} />
                     </View>
                   ) : (
-                    <Text style={{ fontFamily: font.regular, fontSize: 13, color: colors.textMuted, paddingVertical: 12 }}>
-                      No existing videos found in your workspace library yet.
-                    </Text>
+                    <View style={{ gap: spacing.sm }}>
+                      <Pressable
+                        onPress={chooseFile}
+                        style={({ hovered }: any) => [
+                          styles.uploadDropZone,
+                          {
+                            backgroundColor: colors.surfaceAlt,
+                            borderColor: hovered ? colors.primary : colors.border,
+                          },
+                        ]}
+                      >
+                        <Icon name="upload" size={24} color={colors.primary} />
+                        <View style={{ alignItems: 'center', gap: 2 }}>
+                          <Text style={{ fontFamily: font.semibold, fontSize: 14, color: colors.text }}>
+                            {uploading ? `Uploading... ${progress || 0}%` : 'Upload raw clips from computer'}
+                          </Text>
+                          <T variant="caption" muted>
+                            Accepts MP4, MOV. Video stays on your machine.
+                          </T>
+                        </View>
+                      </Pressable>
+
+                      {footage.length > 0 ? (
+                        <View style={{ marginTop: 2 }}>
+                          <T variant="caption" faint style={{ marginBottom: 4 }}>
+                            OR CHOOSE FROM EXISTING RAW-FOOTAGE FOLDER:
+                          </T>
+                          <Picker
+                            value={footagePath}
+                            placeholder="Pick a file in raw-footage folder"
+                            onChange={(v) => {
+                              setFootagePath(v);
+                              setPicked(null);
+                              setStaged(null);
+                            }}
+                            options={footage.map((f) => ({
+                              value: f.path,
+                              label: f.name,
+                              sub: `${f.size_mb} MB`,
+                            }))}
+                          />
+                        </View>
+                      ) : null}
+                    </View>
                   )}
                 </View>
-              )}
+
+                {/* 2. Reference Video Box */}
+                <View style={styles.boxSection}>
+                  <View style={styles.boxHeader}>
+                    <Icon name="link" size={16} color={colors.primary} />
+                    <T variant="label" style={{ fontWeight: '700', letterSpacing: 0.5 }}>
+                      2. REFERENCE VIDEO (OPTIONAL)
+                    </T>
+                  </View>
+
+                  <Input
+                    value={referenceUrl}
+                    onChangeText={setReferenceUrl}
+                    placeholder="https://www.instagram.com/reel/... or TikTok / YouTube Short"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                  <T variant="caption" muted style={{ marginTop: 2 }}>
+                    Paste a viral reel or video. The AI director matches its cut frequency, hook pacing, and visual transitions.
+                  </T>
+                </View>
+
+                {/* 3. Film Name */}
+                <Field label="GIVE YOUR FILM A NAME" hint="Working title for this reel">
+                  <Input value={filmTitle} onChangeText={setFilmTitle} placeholder="Viral Hook Master Cut" />
+                </Field>
+
+                {/* 4. Describe Editing Vision */}
+                <Field
+                  label="DESCRIBE YOUR EDITING VISION"
+                  hint="Specify cuts, pacing, on-screen text, karaoke captions, or specific moments to emphasize."
+                >
+                  <Input
+                    value={prompt}
+                    onChangeText={setPrompt}
+                    multiline
+                    style={{ minHeight: 90, lineHeight: 22 }}
+                    placeholder="Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add karaoke captions."
+                  />
+                </Field>
+
+                {/* 5. 2x3 Configuration Grid */}
+                <View style={styles.selectorsGrid}>
+                  <View style={styles.selectorItem}>
+                    <T variant="label" muted style={styles.selectorLabel}>
+                      WHAT IS THE GOAL?
+                    </T>
+                    <Picker value={goal} placeholder="Choose goal" options={GOAL_OPTIONS} onChange={setGoal} />
+                  </View>
+
+                  <View style={styles.selectorItem}>
+                    <T variant="label" muted style={styles.selectorLabel}>
+                      WHO IS IT FOR?
+                    </T>
+                    <Picker value={audience} placeholder="Choose audience" options={AUDIENCE_OPTIONS} onChange={setAudience} />
+                  </View>
+
+                  <View style={styles.selectorItem}>
+                    <T variant="label" muted style={styles.selectorLabel}>
+                      WHERE WILL IT BE WATCHED?
+                    </T>
+                    <Picker value={format} placeholder="Choose format" options={FORMAT_OPTIONS} onChange={setFormat} />
+                  </View>
+
+                  <View style={styles.selectorItem}>
+                    <T variant="label" muted style={styles.selectorLabel}>
+                      HOW LONG?
+                    </T>
+                    <Picker value={duration} placeholder="Choose length" options={DURATION_OPTIONS} onChange={setDuration} />
+                  </View>
+
+                  <View style={styles.selectorItem}>
+                    <T variant="label" muted style={styles.selectorLabel}>
+                      CHOOSE A FEELING
+                    </T>
+                    <Picker value={feeling} placeholder="Choose feeling" options={FEELING_OPTIONS} onChange={setFeeling} />
+                  </View>
+
+                  <View style={styles.selectorItem}>
+                    <T variant="label" muted style={styles.selectorLabel}>
+                      STORY RHYTHM
+                    </T>
+                    <Picker value={rhythm} placeholder="Choose rhythm" options={RHYTHM_OPTIONS} onChange={setRhythm} />
+                  </View>
+                </View>
+
+                {/* Editing Style Preset */}
+                {styleList.length > 0 ? (
+                  <Field label="EDITING STYLE PRESET" hint="Visual presets with pre-configured pacing and caption typography">
+                    <Picker
+                      value={editorStyle}
+                      placeholder="Select editing style"
+                      options={styleList}
+                      onChange={setEditorStyle}
+                    />
+                  </Field>
+                ) : null}
+
+                {/* Form Footer */}
+                <View style={styles.formFooter}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <Icon name="sparkles" size={14} color={colors.primary} />
+                    <T variant="caption" faint>
+                      The editor cuts and reframes automatically. You approve before final render.
+                    </T>
+                  </View>
+
+                  <Button
+                    label="Shape my creative direction"
+                    variant="primary"
+                    icon="sparkles"
+                    loading={busy}
+                    onPress={submitCreativeDirection}
+                  />
+                </View>
+              </Card>
             </View>
-          )}
+
+            {/* Right Column: Aesthetic Glimpse of the Process */}
+            <View style={styles.previewCol}>
+              <Card style={{ gap: spacing.lg, backgroundColor: colors.surface }}>
+                <View style={styles.headerLine}>
+                  <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
+                    A GLIMPSE OF THE PROCESS
+                  </T>
+                  <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                    <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>STUDIO</Text>
+                  </View>
+                </View>
+
+                <T variant="h2" style={{ fontSize: 16 }}>
+                  Raw footage, transformed with vision.
+                </T>
+
+                {/* Aesthetic Poster Card */}
+                <View
+                  style={[
+                    styles.posterCard,
+                    {
+                      backgroundColor: colors.surfaceAlt,
+                      borderColor: colors.border,
+                    },
+                  ]}
+                >
+                  <View style={styles.posterTopLine}>
+                    <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>MF / EDITORIAL STUDY</Text>
+                    <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>001</Text>
+                  </View>
+
+                  <View style={styles.posterCenter}>
+                    <Text style={[styles.posterSubheading, { color: colors.primary }]}>
+                      {feeling.toUpperCase()}
+                    </Text>
+                    <Text style={[styles.posterTitleText, { color: colors.text }]} numberOfLines={3}>
+                      {posterTitle}
+                    </Text>
+                    <View style={{ marginTop: 8, gap: 4 }}>
+                      <Text style={[styles.posterStatusPill, { color: activeFootageName ? colors.primary : colors.textMuted }]}>
+                        {activeFootageName ? `▶ CLIP: ${activeFootageName}` : '○ NO RAW CLIPS ATTACHED YET'}
+                      </Text>
+                      {referenceUrl.trim() ? (
+                        <Text style={[styles.posterStatusPill, { color: colors.primary }]}>
+                          ✦ REFERENCE GUIDED ACTIVE
+                        </Text>
+                      ) : null}
+                    </View>
+                  </View>
+
+                  <View style={[styles.posterBottomLine, { borderTopColor: colors.border }]}>
+                    <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>AI VIDEO STUDIO</Text>
+                    <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>YOUR FOOTAGE</Text>
+                    <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>01 23</Text>
+                  </View>
+                </View>
+
+                {/* Process Highlights */}
+                <View style={{ gap: spacing.md, marginTop: spacing.xs }}>
+                  <View style={styles.highlightRow}>
+                    <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
+                      <Icon name="sparkles" size={16} color={colors.primary} />
+                    </View>
+                    <View style={{ flex: 1, gap: 2 }}>
+                      <T variant="label" style={{ fontWeight: '700' }}>
+                        Multimodal Scene Indexing
+                      </T>
+                      <T variant="small" muted>
+                        Analyzes spoken speech, detected objects, and keyframe motion — no blind cuts.
+                      </T>
+                    </View>
+                  </View>
+
+                  <View style={styles.highlightRow}>
+                    <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
+                      <Icon name="link" size={16} color={colors.primary} />
+                    </View>
+                    <View style={{ flex: 1, gap: 2 }}>
+                      <T variant="label" style={{ fontWeight: '700' }}>
+                        Reference-Guided Pacing
+                      </T>
+                      <T variant="small" muted>
+                        Recreates viral cut timing and hook structure from your reference video.
+                      </T>
+                    </View>
+                  </View>
+
+                  <View style={styles.highlightRow}>
+                    <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
+                      <Icon name="clock" size={16} color={colors.primary} />
+                    </View>
+                    <View style={{ flex: 1, gap: 2 }}>
+                      <T variant="label" style={{ fontWeight: '700' }}>
+                        You Stay in Control
+                      </T>
+                      <T variant="small" muted>
+                        Review every scene and caption in the Storyboard before final rendering.
+                      </T>
+                    </View>
+                  </View>
+                </View>
+              </Card>
+            </View>
+          </View>
         </View>
 
         {/* =========================================================================
-            2. CREATIVE LIBRARY / PROJECT HISTORY (Matching Editorial Design Reference)
+            2. CREATIVE LIBRARY / PROJECT HISTORY & TUTORIALS (PRESERVED)
            ========================================================================= */}
-        <ProjectHistory onCreateFilm={() => setPickCardExpanded(true)} />
+        <ProjectHistory onCreateFilm={() => router.push('/new')} />
       </ScrollView>
 
       {/* Signature Template Wizard Modal */}
@@ -330,259 +635,209 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
   },
 
-  /* Primary Intake Card */
-  intakeCard: {
+  /* Stepper */
+  stepperContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
     borderRadius: radius.lg,
-    borderWidth: 1,
-    padding: spacing.xl,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginBottom: spacing.xs,
+    gap: 16,
   },
-  cardHeaderRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  intakeIconBadge: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chevronBox: {
-    width: 28,
-    height: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tabSegmentGroup: {
-    flexDirection: 'row',
-    borderRadius: radius.pill,
-    borderWidth: 1,
-    padding: 3,
-  },
-  tabSegmentBtn: {
-    flex: 1,
-    paddingVertical: 7,
-    borderRadius: radius.pill,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tabSegmentBtnActive: {
-    backgroundColor: '#FFFFFF',
-  },
-
-  /* Link Input Row */
-  linkInputRow: {
+  stepItem: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    cursor: 'pointer' as any,
   },
-  linkInputWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  stepItemActive: {},
+  stepBadge: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     borderWidth: 1,
-    borderRadius: radius.pill,
-    paddingHorizontal: 14,
-    height: 42,
-    gap: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  textInput: {
-    flex: 1,
-    fontFamily: font.regular,
+  stepLabel: {
+    fontFamily: font.semibold,
     fontSize: 13,
-    ...Platform.select({ web: { outlineStyle: 'none' } as any }),
   },
-  squarePlusBtn: {
-    width: 42,
-    height: 42,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  /* "or" divider */
-  orDividerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 4,
-  },
-  dividerLine: {
-    flex: 1,
+  stepConnector: {
+    width: 24,
     height: 1,
   },
 
-  /* Drop Zone */
-  dropZone: {
+  /* Split Layout */
+  splitGrid: {
+    gap: spacing.xl,
+  },
+  splitGridWide: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  formCol: {
+    flex: 1.25,
+    minWidth: 0,
+  },
+  previewCol: {
+    flex: 0.9,
+    minWidth: 320,
+  },
+
+  headerLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  eyebrowTag: {
+    fontFamily: font.mono,
+    fontWeight: '700',
+    letterSpacing: 1,
+    fontSize: 11,
+  },
+  pillBadge: {
+    borderWidth: 1,
+    borderRadius: radius.pill,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  pillBadgeText: {
+    fontFamily: font.mono,
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+
+  /* Box Sections for Raw Clips and Reference Video */
+  boxSection: {
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: radius.md,
+    padding: spacing.md,
+    gap: 8,
+  },
+  boxHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  uploadDropZone: {
     borderWidth: 1.5,
     borderStyle: 'dashed',
-    borderRadius: radius.lg,
-    paddingVertical: spacing.xl,
-    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
+    cursor: 'pointer' as any,
   },
-  cloudBadge: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  /* Textarea */
-  textareaInput: {
-    borderWidth: 1,
-    borderRadius: radius.md,
-    padding: 12,
-    fontSize: 13,
-    fontFamily: font.regular,
-    minHeight: 70,
-    textAlignVertical: 'top',
-    ...Platform.select({ web: { outlineStyle: 'none' } as any }),
-  },
-
-  /* Primary Button */
-  primaryGenerateBtn: {
+  selectedClipCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 13,
-    borderRadius: radius.pill,
-    marginTop: 4,
-  },
-
-  /* Existing items row */
-  existingItemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: radius.md,
-    padding: 10,
     gap: 12,
-  },
-  existingThumbnail: {
-    width: 36,
-    height: 36,
+    padding: 12,
     borderRadius: radius.sm,
-    backgroundColor: '#F1F5F9',
+    borderWidth: 1,
+  },
+  clipIconBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  clipNameText: {
+    fontFamily: font.semibold,
+    fontSize: 13.5,
   },
 
-  /* Projects Section */
-  templateConfigBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: radius.pill,
-    borderWidth: 1,
+  /* Selectors Grid */
+  selectorsGrid: {
+    gap: spacing.md,
   },
-  emptyProjectCard: {
-    borderWidth: 1,
-    borderRadius: radius.lg,
-    padding: spacing.xxl,
-    alignItems: 'center',
-    gap: 12,
-  },
-  emptyFolderCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  projectGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 14,
-  },
-  projectCard: {
-    flexBasis: '31%',
-    flexGrow: 1,
-    borderWidth: 1,
-    borderRadius: radius.md,
-    overflow: 'hidden',
-    minWidth: 200,
-  },
-  posterPreview: {
-    height: 110,
-    backgroundColor: '#0F172A',
-  },
-  posterInner: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-  },
-  posterBadgeOverlay: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-  },
-  projectCardDetails: {
-    padding: 12,
+  selectorItem: {
     gap: 4,
   },
+  selectorLabel: {
+    fontSize: 10.5,
+    fontFamily: font.mono,
+    letterSpacing: 0.8,
+  },
 
-  /* Supporting Content */
-  tutorialScroll: {
-    gap: 12,
-    paddingVertical: 4,
+  formFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: spacing.md,
+    paddingTop: spacing.xs,
   },
-  tutorialCard: {
-    width: 220,
-    borderWidth: 1,
+
+  /* Poster Card */
+  posterCard: {
     borderRadius: radius.md,
-    padding: 10,
+    borderWidth: 1,
+    padding: spacing.lg,
+    aspectRatio: 1 / 1.05,
+    justifyContent: 'space-between',
+    marginVertical: spacing.xs,
   },
-  tutorialThumb: {
-    height: 80,
+  posterTopLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  posterCenter: {
+    marginVertical: 'auto',
+    gap: 6,
+  },
+  posterSubheading: {
+    fontFamily: font.mono,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 1.2,
+  },
+  posterTitleText: {
+    fontFamily: font.bold,
+    fontSize: 32,
+    lineHeight: 34,
+    letterSpacing: -1,
+  },
+  posterStatusPill: {
+    fontFamily: font.mono,
+    fontSize: 9.5,
+    fontWeight: '700',
+    letterSpacing: 0.6,
+  },
+  posterBottomLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderTopWidth: 1,
+    paddingTop: 10,
+  },
+  posterMonoText: {
+    fontFamily: font.mono,
+    fontSize: 9,
+    fontWeight: '600',
+    letterSpacing: 0.8,
+  },
+
+  /* Highlights */
+  highlightRow: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'flex-start',
+  },
+  highlightIcon: {
+    width: 28,
+    height: 28,
     borderRadius: radius.sm,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
-  },
-  durationChip: {
-    position: 'absolute',
-    bottom: 6,
-    right: 6,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    borderRadius: 4,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-  },
-  communityGrid: {
-    flexDirection: 'row',
-    gap: 12,
-    flexWrap: 'wrap',
-  },
-  showcaseCard: {
-    flex: 1,
-    minWidth: 220,
-    borderWidth: 1,
-    borderRadius: radius.md,
-    overflow: 'hidden',
-  },
-  showcaseThumb: {
-    height: 90,
-    backgroundColor: '#1E293B',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-  },
-  showcaseTag: {
-    position: 'absolute',
-    top: 6,
-    left: 6,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
+    marginTop: 1,
   },
 });

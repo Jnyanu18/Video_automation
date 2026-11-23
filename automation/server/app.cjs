@@ -399,7 +399,8 @@ function createApp(cfg, deps) {
       const session = auth.read(parseCookies(req.headers.cookie)[auth.COOKIE], Date.now());
 
       // Serve demo videos from /media/filename.mp4
-      const demoMedia = /^\/media\/([a-zA-Z0-9._\-() ]+\.mp4)$/.exec(url.pathname);
+      const decodedPath = decodeURIComponent(url.pathname);
+      const demoMedia = /^\/media\/([a-zA-Z0-9._\-() ]+\.mp4)$/.exec(decodedPath);
       if (demoMedia && (req.method === 'GET' || req.method === 'HEAD')) {
         res.removeHeader('content-security-policy');
         const filename = demoMedia[1];

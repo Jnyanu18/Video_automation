@@ -3,30 +3,61 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { radius } from '../theme';
 
-/** Video preview. Uses a plain <video> on web and expo-video on iOS/Android. Reels are portrait, so the frame is 9:16. */
-export function VideoPlayer({ uri, poster }: { uri: string; poster?: string }) {
+interface VideoPlayerProps {
+  uri: string;
+  poster?: string;
+  isLandscape?: boolean;
+}
+
+/** Video preview player. Supports portrait 9:16 and landscape 16:9 with autoplay. */
+export function VideoPlayer({ uri, poster, isLandscape = false }: VideoPlayerProps) {
   if (Platform.OS === 'web') {
     return (
-      <View style={styles.frame}>
+      <View style={[styles.frame, isLandscape && styles.landscapeFrame]}>
         {React.createElement('video', {
-          src: uri, poster, controls: true, preload: 'metadata', playsInline: true,
-          style: { width: '100%', height: '100%', objectFit: 'contain', background: '#000' },
+          src: uri,
+          poster,
+          controls: true,
+          autoPlay: true,
+          preload: 'auto',
+          playsInline: true,
+          style: {
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            backgroundColor: '#000',
+            borderRadius: 8,
+          },
         })}
       </View>
     );
   }
-  return <NativeVideo uri={uri} />;
+  return <NativeVideo uri={uri} isLandscape={isLandscape} />;
 }
 
-function NativeVideo({ uri }: { uri: string }) {
-  const player = useVideoPlayer(uri);
+function NativeVideo({ uri, isLandscape }: { uri: string; isLandscape?: boolean }) {
+  const player = useVideoPlayer(uri, (p) => {
+    p.play();
+  });
   return (
-    <View style={styles.frame}>
+    <View style={[styles.frame, isLandscape && styles.landscapeFrame]}>
       <VideoView player={player} style={StyleSheet.absoluteFill} nativeControls contentFit="contain" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  frame: { width: '100%', maxWidth: 320, aspectRatio: 9 / 16, borderRadius: radius.md, overflow: 'hidden', backgroundColor: '#000', alignSelf: 'center' },
+  frame: {
+    width: '100%',
+    maxWidth: 340,
+    aspectRatio: 9 / 16,
+    borderRadius: radius.md,
+    overflow: 'hidden',
+    backgroundColor: '#000',
+    alignSelf: 'center',
+  },
+  landscapeFrame: {
+    maxWidth: 580,
+    aspectRatio: 16 / 9,
+  },
 });

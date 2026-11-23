@@ -793,22 +793,9 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
                                  bool(req.sendability_focus))
         try:
             client = _llm()
-        except RuntimeError:
-            client = None
+        except RuntimeError as exc:
+            raise HTTPException(503, str(exc)) from exc
 
-        if client is None:
-            def apply_offline_revision(r):
-                r.setdefault("messages", []).append({"role": "user", "content": req.message})
-                r["agent_reply"] = f"Revised cut based on your direction: \"{req.message}\". Pacing and audio transitions adjusted."
-                r["approved"] = False
-                r["approved_at"] = None
-                r["approval_reset"] = True
-                r["status"] = "ready"
-                if "whoosh" in req.message.lower():
-                    r.setdefault("plan", {}).setdefault("sound_design", {}).setdefault("sfx", []).append({"name": "whoosh", "at": 0.5})
-            store.update("storyboards", sb_id, apply_offline_revision)
-            store.log("storyboard", "Revised storyboard with offline planner", id=sb_id)
-            return {"ok": True, "storyboard_id": sb_id, "data": public(store.snapshot("storyboards", sb_id))}
         sb = _start_storyboard(vpath, req.style or "viral_hook_fast_pace", prompt, client,
                                {"id": req.series_id, "episode": req.episode} if req.series_id else None)
         return {"ok": True, "storyboard_id": sb["id"], "data": public(sb)}
@@ -1173,22 +1160,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             raise HTTPException(409, "A render is running; revise after it finishes")
         try:
             client = _llm()
-        except RuntimeError:
-            client = None
-
-        if client is None:
-            def apply_offline_revision(r):
-                r.setdefault("messages", []).append({"role": "user", "content": req.message})
-                r["agent_reply"] = f"Revised cut based on your direction: \"{req.message}\". Pacing and audio transitions adjusted."
-                r["approved"] = False
-                r["approved_at"] = None
-                r["approval_reset"] = True
-                r["status"] = "ready"
-                if "whoosh" in req.message.lower():
-                    r.setdefault("plan", {}).setdefault("sound_design", {}).setdefault("sfx", []).append({"name": "whoosh", "at": 0.5})
-            store.update("storyboards", sb_id, apply_offline_revision)
-            store.log("storyboard", "Revised storyboard with offline planner", id=sb_id)
-            return {"ok": True, "storyboard_id": sb_id, "data": public(store.snapshot("storyboards", sb_id))}
+        except RuntimeError as exc:
+            raise HTTPException(503, str(exc)) from exc
         store.update("storyboards", sb_id, lambda r: r.update(status="processing", error=None, events=[]))
         threading.Thread(target=_run_agent_job, args=(sb_id, req.message, False, client), daemon=True, name=f"agent-{sb_id}").start()
         return {"ok": True, "storyboard_id": sb_id, "data": public(store.snapshot("storyboards", sb_id))}
@@ -1317,22 +1290,9 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         vpath = safe_video_path(req.video_path, roots)
         try:
             client = _llm()
-        except RuntimeError:
-            client = None
+        except RuntimeError as exc:
+            raise HTTPException(503, str(exc)) from exc
 
-        if client is None:
-            def apply_offline_revision(r):
-                r.setdefault("messages", []).append({"role": "user", "content": req.message})
-                r["agent_reply"] = f"Revised cut based on your direction: \"{req.message}\". Pacing and audio transitions adjusted."
-                r["approved"] = False
-                r["approved_at"] = None
-                r["approval_reset"] = True
-                r["status"] = "ready"
-                if "whoosh" in req.message.lower():
-                    r.setdefault("plan", {}).setdefault("sound_design", {}).setdefault("sfx", []).append({"name": "whoosh", "at": 0.5})
-            store.update("storyboards", sb_id, apply_offline_revision)
-            store.log("storyboard", "Revised storyboard with offline planner", id=sb_id)
-            return {"ok": True, "storyboard_id": sb_id, "data": public(store.snapshot("storyboards", sb_id))}
         prompt = _compose_prompt(series_mod.episode_prompt(s, number) + " " + DEFAULT_PROMPT, True, number, len(s["episodes"]), True)
         sb = _start_storyboard(vpath, req.style or "viral_hook_fast_pace", prompt, client, {"id": sid, "episode": number})
         series_mod.link_storyboard(store, sid, number, sb["id"])

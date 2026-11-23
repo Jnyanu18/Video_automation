@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Icon } from './Icon';
-import { Badge, T } from './ui';
 import { VideoPlayer } from './VideoPlayer';
 import { editor } from '../api/editor';
 import { font, radius, spacing, useTheme } from '../theme';
@@ -19,19 +18,19 @@ export type FilmCategory = 'all' | 'motion_graphics' | 'hybrid' | 'ai_editing';
 
 export interface FilmProject {
   id: string;
-  number: string; // e.g. "01 / BRAND STORY"
-  graphicTitle: string; // e.g. "SIGNAL\n/ NOISE"
-  tagline: string; // e.g. "MAKE YOURSELF HEARD."
-  title: string; // e.g. "Signal / Noise"
+  number: string;
+  graphicTitle: string;
+  tagline: string;
+  title: string;
   category: 'motion_graphics' | 'hybrid' | 'ai_editing';
-  format: string; // e.g. "Brand teaser • Vertical"
+  format: string;
   status: 'SAVED' | 'IN REVIEW' | 'READY' | 'DRAFT';
-  videoUrl?: string;
-  duration?: string;
+  videoUrl: string;
+  duration: string;
   gradientStart: string;
   gradientEnd: string;
-  accentColor?: string;
-  storyboardId?: string;
+  accentColor: string;
+  isLandscape?: boolean;
 }
 
 interface ProjectHistoryProps {
@@ -164,7 +163,7 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
             No films here yet. Create a film to start your library.
           </Text>
         )}
-        {filteredFilms.map((film, index) => {
+        {filteredFilms.map((film) => {
           return (
             <View key={film.id} style={styles.cardWrapper}>
               {/* Cinematic Card Frame */}
@@ -187,9 +186,13 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                 {/* Top Kicker (e.g. 01 / BRAND STORY) */}
                 <View style={styles.cardTopRow}>
                   <Text style={styles.cardKickerText}>{film.number}</Text>
-                  {film.duration && (
-                    <Text style={styles.cardDurationText}>{film.duration}</Text>
-                  )}
+                  {/* Play badge in top right matching user screenshot */}
+                  <View style={styles.playTopBadge}>
+                    <Icon name="play" size={10} color="#FFFFFF" />
+                    {film.duration && (
+                      <Text style={styles.cardDurationText}>{film.duration}</Text>
+                    )}
+                  </View>
                 </View>
 
                 {/* Center Bold Editorial Headline */}
@@ -204,7 +207,7 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
 
                 {/* Hover Play Button Overlay */}
                 <View style={styles.cardPlayOverlay}>
-                  <View style={styles.playIconCircle}>
+                  <View style={[styles.playIconCircle, { borderColor: film.accentColor }]}>
                     <Icon name="play" size={16} color="#FFFFFF" />
                   </View>
                 </View>
@@ -236,12 +239,12 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
       </View>
 
       {/* =========================================================================
-          4. VIDEO PREVIEW PLAYER MODAL
+          4. VIDEO PREVIEW PLAYER MODAL (Plays the actual video!)
           ========================================================================= */}
       {selectedFilm && (
         <Modal visible={true} transparent animationType="fade">
           <View style={styles.modalBackdrop}>
-            <View style={styles.modalCard}>
+            <View style={[styles.modalCard, selectedFilm.isLandscape && { maxWidth: 660 }]}>
               {/* Modal Top Bar */}
               <View style={styles.modalHeader}>
                 <View style={{ flex: 1 }}>
@@ -258,18 +261,15 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                 </Pressable>
               </View>
 
-              {/* Video Player */}
-              <View style={styles.videoPlayerContainer}>
+              {/* Video Player (Plays actual video file!) */}
+              <View style={[styles.videoPlayerContainer, selectedFilm.isLandscape && { aspectRatio: 16 / 9, maxHeight: 380 }]}>
                 {selectedFilm.videoUrl ? (
-                  <VideoPlayer uri={selectedFilm.videoUrl} />
+                  <VideoPlayer uri={selectedFilm.videoUrl} isLandscape={selectedFilm.isLandscape} />
                 ) : (
                   <View style={styles.placeholderPlayer}>
                     <Icon name="film" size={48} color="#6C4CF0" />
                     <Text style={{ color: '#E2E8F0', marginTop: 12, fontWeight: '700' }}>
                       Ready to Render Video
-                    </Text>
-                    <Text style={{ color: '#94A3B8', fontSize: 12, marginTop: 4 }}>
-                      Open in Timeline Editor to preview frames
                     </Text>
                   </View>
                 )}
@@ -295,7 +295,7 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                     router.push('/storyboard');
                   }}
                 >
-                  <Icon name="layers" size={15} color="#374151" />
+                  <Icon name="layers" size={15} color="#0F172A" />
                   <Text style={styles.modalStoryboardBtnText}>Storyboard View</Text>
                 </Pressable>
               </View>
@@ -478,11 +478,22 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.65)',
     letterSpacing: 1.4,
   },
+  playTopBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+  },
   cardDurationText: {
     fontSize: 10,
-    fontWeight: '600',
+    fontWeight: '700',
     fontFamily: font.mono,
-    color: 'rgba(255, 255, 255, 0.45)',
+    color: 'rgba(255, 255, 255, 0.8)',
   },
   cardCenterTitleBox: {
     flex: 1,
@@ -512,16 +523,15 @@ const styles = StyleSheet.create({
   },
   cardPlayOverlay: {
     position: 'absolute',
-    top: 14,
+    bottom: 14,
     right: 14,
   },
   playIconCircle: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: 'rgba(0, 0, 0, 0.45)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -556,7 +566,7 @@ const styles = StyleSheet.create({
   /* 4. Modal */
   modalBackdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.82)',
     alignItems: 'center',
     justifyContent: 'center',
     padding: spacing.lg,
@@ -596,6 +606,9 @@ const styles = StyleSheet.create({
   },
   modalCloseBtn: {
     padding: 4,
+    ...Platform.select({
+      web: { cursor: 'pointer' },
+    }),
   },
   videoPlayerContainer: {
     width: '100%',
@@ -626,6 +639,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#6C4CF0',
     paddingVertical: 10,
     borderRadius: radius.sm,
+    ...Platform.select({
+      web: { cursor: 'pointer' },
+    }),
   },
   modalTimelineBtnText: {
     color: '#FFFFFF',
@@ -641,6 +657,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#E2E8F0',
     paddingVertical: 10,
     borderRadius: radius.sm,
+    ...Platform.select({
+      web: { cursor: 'pointer' },
+    }),
   },
   modalStoryboardBtnText: {
     color: '#0F172A',

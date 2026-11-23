@@ -3,7 +3,7 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Button, Card, SectionTitle, T, Badge, Pill } from '../../components/ui';
 import { Icon } from '../../components/Icon';
-import { get, post } from '../../api/client';
+import { get } from '../../api/client';
 import { spacing, radius, useTheme, MAX_CONTENT_WIDTH } from '../../theme';
 
 export default function RenderQAScreen() {
@@ -12,7 +12,6 @@ export default function RenderQAScreen() {
 
   const [qaReport, setQaReport] = useState<any>(null);
   const [inspecting, setInspecting] = useState(false);
-  const [repairing, setRepairing] = useState(false);
   const [aiReviewing, setAiReviewing] = useState(false);
 
   async function loadQA(withAiReview = false) {
@@ -24,7 +23,7 @@ export default function RenderQAScreen() {
         setQaReport(res.report);
       }
     } catch (err) {
-      console.warn('QA inspect fallback:', err);
+      console.warn('QA inspection failed:', err);
     } finally {
       setInspecting(false);
       setAiReviewing(false);
@@ -58,7 +57,7 @@ export default function RenderQAScreen() {
                 />
                 <Badge label={`QUALITY SCORE: ${Math.round(report.score * 100)}%`} tone="info" />
               </View>
-              <T variant="h2">{report.video_path.split('/').pop() || 'sample_reel.mp4'}</T>
+              <T variant="h2">{report.video_path?.split('/').pop() || 'Rendered video'}</T>
               <T variant="mono" muted style={{ marginTop: 4 }}>
                 {report.resolution} ({report.aspect_ratio}) · {report.duration}s · Codec: {report.visual_metrics?.video_codec || 'h264'}
               </T>

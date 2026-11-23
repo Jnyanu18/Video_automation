@@ -569,7 +569,7 @@ export function TemplateWizard({
                         Dead Air & Filler Word Removal
                       </T>
                       <T variant="small" muted>
-                        Eliminate 'um', 'uh', and silent pauses longer than 450ms automatically.
+                        Eliminate filler words and silent pauses longer than 450ms automatically.
                       </T>
                     </View>
                     <Switch
