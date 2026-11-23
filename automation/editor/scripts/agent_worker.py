@@ -72,7 +72,7 @@ def cmd_claim(a) -> None:
     rev = ab.read_job(a.job_id) or {}
     note = ("Your creative director is working on the change." if rev.get("revision")
             else "Your creative director is reading the brief and planning the film.")
-    j = ab.update_job(a.job_id, status="working", started_at=time.time(), note=note)
+    j = ab.update_job(a.job_id, status="working", started_at=time.time(), stage=1, note=note)
     keys = ("id", "kind", "format", "duration", "title", "prompt", "clips", "assets", "reference_url", "reference_video_id",
             "reference_video_path", "direction", "revision", "parent", "root")
     print(json.dumps({k: j.get(k) for k in keys if j.get(k) is not None}, indent=1, ensure_ascii=False))
@@ -82,7 +82,8 @@ def cmd_claim(a) -> None:
 
 
 def cmd_progress(a) -> None:
-    ab.update_job(a.job_id, note=a.text)
+    extra = {"stage": a.stage} if a.stage is not None else {}  # step on the website's production line
+    ab.update_job(a.job_id, note=a.text, **extra)
     print("ok")
 
 
@@ -124,7 +125,7 @@ def main() -> None:
     l = sub.add_parser("list"); l.add_argument("--all", action="store_true"); l.set_defaults(fn=cmd_list)
     s = sub.add_parser("show"); s.add_argument("job_id"); s.set_defaults(fn=cmd_show)
     c = sub.add_parser("claim"); c.add_argument("job_id"); c.set_defaults(fn=cmd_claim)
-    g = sub.add_parser("progress"); g.add_argument("job_id"); g.add_argument("text"); g.set_defaults(fn=cmd_progress)
+    g = sub.add_parser("progress"); g.add_argument("job_id"); g.add_argument("text"); g.add_argument("--stage", type=int, help="production step 1-5 shown on the website"); g.set_defaults(fn=cmd_progress)
     d = sub.add_parser("done"); d.add_argument("job_id"); d.add_argument("video"); d.add_argument("--note"); d.add_argument("--scenes", help="storyboard.json with the scene list"); d.set_defaults(fn=cmd_done)
     f = sub.add_parser("fail"); f.add_argument("job_id"); f.add_argument("reason"); f.set_defaults(fn=cmd_fail)
     a = p.parse_args()

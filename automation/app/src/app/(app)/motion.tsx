@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Screen } from '../../components/Screen';
 import { Icon } from '../../components/Icon';
-import { Badge, Banner, Button, Card, Field, Input, Picker, SectionTitle, T } from '../../components/ui';
-import { VideoPlayer } from '../../components/VideoPlayer';
+import { Banner, Button, Card, Field, Input, Picker, T } from '../../components/ui';
 import { useWide } from '../../components/useWide';
-import { absoluteUrl, errorText, post } from '../../api/client';
-import { editor, num, StoryboardCard, Storyboard } from '../../api/editor';
-import { DirectorJob, latestDirectorJob } from '../../components/DirectorJob';
+import { errorText, post } from '../../api/client';
+import { latestDirectorJob } from '../../components/DirectorJob';
+import { ProductionPanel } from '../../components/ProductionPanel';
 import { useToast } from '../../state/toast';
 import { font, radius, spacing, useTheme } from '../../theme';
 
@@ -66,14 +65,9 @@ export default function MotionGraphics() {
   const { colors } = useTheme();
   const wide = useWide();
 
-  // Active Stepper Step: 1 = Brief, 2 = Direction / Scenes, 3 = Review
-  const [activeStep, setActiveStep] = useState<1 | 2 | 3>(1);
-
   // Creative brief form states
-  const [title, setTitle] = useState('The power of a single moment');
-  const [prompt, setPrompt] = useState(
-    'Create a cinematic, human brand film about turning ambitious ideas into real-world momentum. Build anticipation, create a moment of silence, then deliver a powerful visual payoff.'
-  );
+  const [title, setTitle] = useState('');
+  const [prompt, setPrompt] = useState('');
   const [goal, setGoal] = useState('Build awareness');
   const [audience, setAudience] = useState('Everyone');
   const [format, setFormat] = useState('Vertical Reels / Shorts (9:16)');
@@ -87,60 +81,8 @@ export default function MotionGraphics() {
   const [url, setUrl] = useState('');
   const [tagline, setTagline] = useState('');
 
-  // Engine state
-  const [preview, setPreview] = useState<StoryboardCard | null>(null);
-  const [sb, setSb] = useState<Storyboard | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  const brief = () => {
-    // Construct rich synthesized prompt
-    const metaParts = [
-      `Goal: ${goal}`,
-      `Audience: ${audience}`,
-      `Format: ${format}`,
-      `Duration: ${duration}`,
-      `Feeling: ${feeling}`,
-      `Rhythm: ${rhythm}`,
-    ].join(' | ');
-
-    const combinedPrompt = `${prompt.trim()}\n\n[Direction: ${metaParts}]`;
-
-    return {
-      prompt: combinedPrompt,
-      ...(title.trim() ? { title: title.trim() } : {}),
-      ...(button.trim() ? { button: button.trim() } : {}),
-      ...(url.trim() ? { url: url.trim() } : {}),
-      ...(tagline.trim() ? { tagline: tagline.trim() } : {}),
-    };
-  };
-
-  const refresh = useCallback(async (id: string) => {
-    try {
-      const updated = await editor.storyboard(id);
-      setSb(updated);
-      if (updated.latest_render) {
-        setActiveStep(3);
-      }
-    } catch (e) {
-      setError(errorText(e));
-    }
-  }, []);
-
-  // Poll while reel is being created or rendered
-  const settling =
-    sb !== null &&
-    (sb.status === 'processing' ||
-      sb.render_job?.status === 'running' ||
-      sb.render_job?.status === 'queued');
-
-  useEffect(() => {
-    if (!sb || !settling) return undefined;
-    const t = setTimeout(() => {
-      refresh(sb.id);
-    }, 1500);
-    return () => clearTimeout(t);
-  }, [sb, settling, refresh]);
 
   async function act(name: string, fn: () => Promise<unknown>, done?: string) {
     setBusy(name);
@@ -155,17 +97,6 @@ export default function MotionGraphics() {
     }
   }
 
-  async function showScenes() {
-    if (prompt.trim().length < 3) {
-      return setError('Write your idea first. The first line becomes the hook on screen.');
-    }
-    await act('preview', async () => {
-      const res = await editor.motionPreview(brief());
-      setPreview(res.storyboard);
-      setActiveStep(2);
-    });
-  }
-
   // Every brief goes to the creative director (studio/agent_bridge.py) with each form field as its own value,
   // never glued into the prompt text.
   const [jobId, setJobId] = useState<string | null>(null);
@@ -173,9 +104,7 @@ export default function MotionGraphics() {
     latestDirectorJob('motion')
       .then((j) => {
         if (!j || j.status === 'cancelled') return;
-        setJobId(j.id); // reopen the latest film: in production -> step 2, finished -> step 3
-        if (j.status === 'queued' || j.status === 'working') setActiveStep(2);
-        else if (j.status === 'done') setActiveStep(3);
+        setJobId(j.id);
       })
       .catch(() => undefined);
   }, []);
@@ -195,9 +124,7 @@ export default function MotionGraphics() {
           duration: parseInt(duration, 10) || 30,
           direction: { goal, audience, feeling, rhythm, button: button.trim(), url: url.trim(), tagline: tagline.trim() },
         });
-        setSb(null);
         setJobId(r.job.id);
-        setActiveStep(2);
       },
       'Brief sent. Your film is in production.'
     );
@@ -205,545 +132,127 @@ export default function MotionGraphics() {
 
   function startOver() {
     setJobId(null);
-    setSb(null);
-    setPreview(null);
-    setActiveStep(1);
   }
 
-  const card = sb?.storyboard ?? preview;
-  const building = sb?.status === 'processing';
-  const rendering = sb?.render_job?.status === 'running' || sb?.render_job?.status === 'queued';
-  const ready = sb?.status === 'ready';
-  const video = sb?.latest_render ?? sb?.latest_preview;
-
-  // Dynamic poster slogan
-  const posterTitle = title.trim() ? title.trim().toUpperCase() : 'MAKE IT MATTER.';
-
   return (
-    <Screen title="Motion Films" subtitle="Creative direction and animated motion graphics for your brand.">
-      {/* ---------------- 3-Step Top Stepper ---------------- */}
+    <Screen title="Motion Films" subtitle="Create original motion graphics from a creative brief.">
       <View style={[styles.stepperContainer, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-        <Pressable
-          accessibilityRole="tab"
-          onPress={() => setActiveStep(1)}
-          style={[styles.stepItem, activeStep === 1 && styles.stepItemActive]}
-        >
-          <View
-            style={[
-              styles.stepBadge,
-              activeStep === 1
-                ? { backgroundColor: colors.primary, borderColor: colors.primary }
-                : { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
-            ]}
-          >
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: activeStep === 1 ? colors.onPrimary : colors.textMuted }}>
-              01
-            </Text>
+        <View style={[styles.stepItem, styles.stepItemActive]}>
+          <View style={[styles.stepBadge, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.onPrimary }}>01</Text>
           </View>
-          <Text style={[styles.stepLabel, { color: activeStep === 1 ? colors.text : colors.textMuted }]}>
-            Your brief
-          </Text>
-        </Pressable>
-
+          <Text style={[styles.stepLabel, { color: colors.text }]}>Your brief</Text>
+        </View>
         <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
-
-        <Pressable
-          accessibilityRole="tab"
-          onPress={() => {
-            if (card || sb || jobId) setActiveStep(2);
-          }}
-          style={[styles.stepItem, activeStep === 2 && styles.stepItemActive, !card && !sb && !jobId && { opacity: 0.5 }]}
-        >
-          <View
-            style={[
-              styles.stepBadge,
-              activeStep === 2
-                ? { backgroundColor: colors.primary, borderColor: colors.primary }
-                : { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
-            ]}
-          >
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: activeStep === 2 ? colors.onPrimary : colors.textMuted }}>
-              02
-            </Text>
+        <View style={[styles.stepItem, { opacity: 0.6 }]}>
+          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>02</Text>
           </View>
-          <Text style={[styles.stepLabel, { color: activeStep === 2 ? colors.text : colors.textMuted }]}>
-            Creative direction
-          </Text>
-        </Pressable>
-
+          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Creative direction</Text>
+        </View>
         <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
-
-        <Pressable
-          accessibilityRole="tab"
-          onPress={() => {
-            if (video || jobId) setActiveStep(3);
-          }}
-          style={[styles.stepItem, activeStep === 3 && styles.stepItemActive, !video && !jobId && { opacity: 0.5 }]}
-        >
-          <View
-            style={[
-              styles.stepBadge,
-              activeStep === 3
-                ? { backgroundColor: colors.primary, borderColor: colors.primary }
-                : { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
-            ]}
-          >
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: activeStep === 3 ? colors.onPrimary : colors.textMuted }}>
-              03
-            </Text>
+        <View style={[styles.stepItem, { opacity: 0.6 }]}>
+          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>03</Text>
           </View>
-          <Text style={[styles.stepLabel, { color: activeStep === 3 ? colors.text : colors.textMuted }]}>
-            Review your film
-          </Text>
-        </Pressable>
+          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Review your film</Text>
+        </View>
       </View>
 
-      {/* Global Error Banner */}
       {error ? <Banner tone="danger">{error}</Banner> : null}
-      {sb?.error ? <Banner tone="danger">{sb.error}</Banner> : null}
-
-      {/* ============================================================== */}
-      {/* STEP 1: YOUR BRIEF (SPLIT LAYOUT)                              */}
-      {/* ============================================================== */}
-      {activeStep === 1 ? (
-        <View style={[styles.splitGrid, wide && styles.splitGridWide]}>
-          {/* Left Column: The Configuration Form */}
-          <View style={styles.formCol}>
-            <Card style={{ gap: spacing.lg }}>
-              <View style={styles.headerLine}>
-                <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
-                  STEP 01 — THE STARTING POINT
-                </T>
-                <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-                  <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>ABOUT 2 MIN</Text>
-                </View>
+      <View style={[styles.splitGrid, wide && styles.splitGridWide]}>
+        <View style={styles.formCol}>
+          <Card style={{ gap: spacing.lg }}>
+            <View style={styles.headerLine}>
+              <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>STEP 01 — YOUR BRIEF</T>
+              <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>ABOUT 2 MIN</Text>
               </View>
+            </View>
 
-              <View style={{ gap: 4 }}>
-                <T variant="h1" style={{ fontSize: 24, letterSpacing: -0.5 }}>
-                  What are we making?
-                </T>
-                <T muted style={{ fontSize: 13.5 }}>
-                  A few details help your creative director understand the vision.
-                </T>
+            <View style={{ gap: 4 }}>
+              <T variant="h1" style={{ fontSize: 24, letterSpacing: -0.5 }}>What are we making?</T>
+              <T muted style={{ fontSize: 13.5 }}>Describe the motion film you want your creative director to make.</T>
+            </View>
+
+            <Field label="GIVE YOUR FILM A NAME" hint="The working title for your motion film">
+              <Input value={title} onChangeText={setTitle} placeholder="Give your film a name" />
+            </Field>
+            <Field label="DESCRIBE YOUR IDEA" hint="Describe the story, visual style, on-screen text and ending.">
+              <Input
+                value={prompt}
+                onChangeText={setPrompt}
+                multiline
+                style={{ minHeight: 110, lineHeight: 22 }}
+                placeholder="Describe the motion graphics film you want to create..."
+              />
+            </Field>
+
+            <View style={styles.selectorsGrid}>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>WHAT IS THE GOAL?</T>
+                <Picker value={goal} placeholder="Choose goal" options={GOAL_OPTIONS} onChange={setGoal} />
               </View>
-
-              <Field label="GIVE YOUR FILM A NAME" hint="The main hook or identity for the film">
-                <Input value={title} onChangeText={setTitle} placeholder="The power of a single moment" />
-              </Field>
-
-              <Field
-                label="DESCRIBE YOUR IDEA"
-                hint="Describe the concept, rhythm, emotional impact, and what needs to happen."
-              >
-                <Input
-                  value={prompt}
-                  onChangeText={setPrompt}
-                  multiline
-                  style={{ minHeight: 110, lineHeight: 22 }}
-                  placeholder="Create a cinematic, human brand film about turning ambitious ideas into real-world momentum..."
-                />
-              </Field>
-
-              {/* 2x3 Selector Grid */}
-              <View style={styles.selectorsGrid}>
-                <View style={styles.selectorItem}>
-                  <T variant="label" muted style={styles.selectorLabel}>
-                    WHAT IS THE GOAL?
-                  </T>
-                  <Picker value={goal} placeholder="Choose goal" options={GOAL_OPTIONS} onChange={setGoal} />
-                </View>
-
-                <View style={styles.selectorItem}>
-                  <T variant="label" muted style={styles.selectorLabel}>
-                    WHO IS IT FOR?
-                  </T>
-                  <Picker value={audience} placeholder="Choose audience" options={AUDIENCE_OPTIONS} onChange={setAudience} />
-                </View>
-
-                <View style={styles.selectorItem}>
-                  <T variant="label" muted style={styles.selectorLabel}>
-                    WHERE WILL IT BE WATCHED?
-                  </T>
-                  <Picker value={format} placeholder="Choose format" options={FORMAT_OPTIONS} onChange={setFormat} />
-                </View>
-
-                <View style={styles.selectorItem}>
-                  <T variant="label" muted style={styles.selectorLabel}>
-                    HOW LONG?
-                  </T>
-                  <Picker value={duration} placeholder="Choose length" options={DURATION_OPTIONS} onChange={setDuration} />
-                </View>
-
-                <View style={styles.selectorItem}>
-                  <T variant="label" muted style={styles.selectorLabel}>
-                    CHOOSE A FEELING
-                  </T>
-                  <Picker value={feeling} placeholder="Choose feeling" options={FEELING_OPTIONS} onChange={setFeeling} />
-                </View>
-
-                <View style={styles.selectorItem}>
-                  <T variant="label" muted style={styles.selectorLabel}>
-                    STORY RHYTHM
-                  </T>
-                  <Picker value={rhythm} placeholder="Choose rhythm" options={RHYTHM_OPTIONS} onChange={setRhythm} />
-                </View>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>WHO IS IT FOR?</T>
+                <Picker value={audience} placeholder="Choose audience" options={AUDIENCE_OPTIONS} onChange={setAudience} />
               </View>
-
-              {/* Optional CTA & Links toggle */}
-              <Pressable
-                onPress={() => setShowAdvanced(!showAdvanced)}
-                style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginVertical: 2 }}
-              >
-                <Icon name={showAdvanced ? 'chevron' : 'plus'} size={14} color={colors.primary} />
-                <T variant="small" color={colors.primary} style={{ fontWeight: '600' }}>
-                  {showAdvanced ? 'Hide CTA & Tagline details' : 'Add CTA button & Tagline (optional)'}
-                </T>
-              </Pressable>
-
-              {showAdvanced ? (
-                <View style={{ gap: spacing.md, paddingLeft: 4 }}>
-                  <Field label="Closing Tagline" hint="Big text on the closing card">
-                    <Input value={tagline} onChangeText={setTagline} placeholder="e.g. Automate your marketing" />
-                  </Field>
-                  <Field label="Button text & URL" hint="Shown on the CTA card">
-                    <Input value={button} onChangeText={setButton} placeholder="e.g. Book a free consultation" />
-                    <View style={{ height: spacing.xs }} />
-                    <Input
-                      value={url}
-                      onChangeText={setUrl}
-                      placeholder="e.g. yourcompany.com"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                  </Field>
-                </View>
-              ) : null}
-
-              {/* Form Actions */}
-              <View style={styles.formFooter}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <Icon name="sparkles" size={14} color={colors.primary} />
-                  <T variant="caption" faint>
-                    You can refine every choice later.
-                  </T>
-                </View>
-
-                <View style={{ flexDirection: 'row', gap: spacing.sm, flexWrap: 'wrap' }}>
-                  <Button
-                    label="Shape my creative direction"
-                    variant="primary"
-                    icon="sparkles"
-                    loading={busy === 'build'}
-                    onPress={build}
-                  />
-                </View>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>WHERE WILL IT BE WATCHED?</T>
+                <Picker value={format} placeholder="Choose format" options={FORMAT_OPTIONS} onChange={setFormat} />
               </View>
-            </Card>
-          </View>
-
-          {/* Right Column: Dynamic Process Poster & Highlights */}
-          <View style={styles.previewCol}>
-            <Card style={{ gap: spacing.lg, backgroundColor: colors.surface }}>
-              <View style={styles.headerLine}>
-                <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
-                  A GLIMPSE OF THE PROCESS
-                </T>
-                <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-                  <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>STUDIO</Text>
-                </View>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>HOW LONG?</T>
+                <Picker value={duration} placeholder="Choose length" options={DURATION_OPTIONS} onChange={setDuration} />
               </View>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>CHOOSE A FEELING</T>
+                <Picker value={feeling} placeholder="Choose feeling" options={FEELING_OPTIONS} onChange={setFeeling} />
+              </View>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>STORY RHYTHM</T>
+                <Picker value={rhythm} placeholder="Choose rhythm" options={RHYTHM_OPTIONS} onChange={setRhythm} />
+              </View>
+            </View>
 
-              <T variant="h2" style={{ fontSize: 16 }}>
-                Your idea, with a point of view.
+            <Pressable onPress={() => setShowAdvanced(!showAdvanced)} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Icon name={showAdvanced ? 'chevron' : 'plus'} size={14} color={colors.primary} />
+              <T variant="small" color={colors.primary} style={{ fontWeight: '600' }}>
+                {showAdvanced ? 'Hide CTA & tagline' : 'Add CTA & tagline (optional)'}
               </T>
-
-              {/* Aesthetic Poster Preview */}
-              <View
-                style={[
-                  styles.posterCard,
-                  {
-                    backgroundColor: colors.surfaceAlt,
-                    borderColor: colors.border,
-                  },
-                ]}
-              >
-                <View style={styles.posterTopLine}>
-                  <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>MF / CREATIVE STUDY</Text>
-                  <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>001</Text>
-                </View>
-
-                <View style={styles.posterCenter}>
-                  <Text style={[styles.posterSubheading, { color: colors.primary }]}>
-                    {feeling.toUpperCase()}
-                  </Text>
-                  <Text style={[styles.posterTitleText, { color: colors.text }]} numberOfLines={3}>
-                    {posterTitle}
-                  </Text>
-                </View>
-
-                <View style={[styles.posterBottomLine, { borderTopColor: colors.border }]}>
-                  <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>MOTION FILM STUDIO</Text>
-                  <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>YOUR STORY</Text>
-                  <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>01 23</Text>
-                </View>
+            </Pressable>
+            {showAdvanced ? (
+              <View style={{ gap: spacing.md }}>
+                <Field label="CLOSING TAGLINE" hint="The closing line shown on screen">
+                  <Input value={tagline} onChangeText={setTagline} placeholder="A short closing line" />
+                </Field>
+                <Field label="BUTTON TEXT & URL" hint="Optional call to action">
+                  <Input value={button} onChangeText={setButton} placeholder="Button text" />
+                  <View style={{ height: spacing.xs }} />
+                  <Input value={url} onChangeText={setUrl} placeholder="https://yourcompany.com" autoCapitalize="none" autoCorrect={false} />
+                </Field>
               </View>
+            ) : null}
 
-              {/* Feature Highlights */}
-              <View style={{ gap: spacing.md, marginTop: spacing.xs }}>
-                <View style={styles.highlightRow}>
-                  <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
-                    <Icon name="sparkles" size={16} color={colors.primary} />
-                  </View>
-                  <View style={{ flex: 1, gap: 2 }}>
-                    <T variant="label" style={{ fontWeight: '700' }}>
-                      Made around your idea
-                    </T>
-                    <T variant="small" muted>
-                      Your creative direction is built from your brief — not a generic template.
-                    </T>
-                  </View>
-                </View>
-
-                <View style={styles.highlightRow}>
-                  <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
-                    <Icon name="clock" size={16} color={colors.primary} />
-                  </View>
-                  <View style={{ flex: 1, gap: 2 }}>
-                    <T variant="label" style={{ fontWeight: '700' }}>
-                      You stay in control
-                    </T>
-                    <T variant="small" muted>
-                      Review the direction, inspect the scenes, and approve before rendering.
-                    </T>
-                  </View>
-                </View>
+            <View style={styles.formFooter}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <Icon name="sparkles" size={14} color={colors.primary} />
+                <T variant="caption" faint>Your director will build the film from this brief.</T>
               </View>
-            </Card>
-          </View>
-        </View>
-      ) : null}
-
-      {/* ============================================================== */}
-      {/* STEP 2: CREATIVE DIRECTION (SCENES & STORYBOARD APPROVAL)      */}
-      {/* ============================================================== */}
-      {activeStep !== 1 && jobId ? (
-        <DirectorJob
-          jobId={jobId}
-          onNew={startOver}
-          onStatus={(j) => { if (j.status === 'done' && activeStep !== 3) setActiveStep(3); }}
-        />
-      ) : null}
-
-      {activeStep === 2 && !jobId ? (
-        <View style={{ gap: spacing.lg }}>
-          <Card>
-            <View style={styles.head}>
-              <View style={{ flex: 1, minWidth: 240, gap: 6 }}>
-                <View style={styles.row}>
-                  <Badge label="Motion graphics" tone="info" />
-                  <Badge
-                    label={
-                      building
-                        ? 'Building scenes'
-                        : rendering
-                        ? 'Rendering'
-                        : sb?.status === 'failed'
-                        ? 'Failed'
-                        : sb?.approved
-                        ? 'Approved'
-                        : 'Awaiting approval'
-                    }
-                    tone={sb?.status === 'failed' ? 'danger' : sb?.approved ? 'success' : 'warning'}
-                    dot
-                  />
-                </View>
-                <T variant="h1">{card?.title || title || 'Motion reel'}</T>
-                {card ? (
-                  <T muted>
-                    {card.scenes_count} scenes · {num(card.duration.output_seconds)}s duration
-                  </T>
-                ) : null}
-                {sb?.agent_reply ? <T variant="small" muted>{sb.agent_reply}</T> : null}
-              </View>
-
-              <View style={styles.row}>
-                {video ? (
-                  <Button
-                    label="View finished film"
-                    icon="film"
-                    variant="primary"
-                    onPress={() => setActiveStep(3)}
-                  />
-                ) : null}
-
-                {sb?.approved ? (
-                  <Button
-                    label="Withdraw approval"
-                    icon="x"
-                    loading={busy === 'unapprove'}
-                    onPress={() =>
-                      act(
-                        'unapprove',
-                        async () => {
-                          if (sb) {
-                            await editor.unapprove(sb.id);
-                            await refresh(sb.id);
-                          }
-                        },
-                        'Approval withdrawn'
-                      )
-                    }
-                  />
-                ) : (
-                  <Button
-                    label="Approve reel"
-                    variant="primary"
-                    icon="check"
-                    loading={busy === 'approve'}
-                    disabled={!ready || !sb}
-                    hint="The reel is still being built"
-                    onPress={() =>
-                      act(
-                        'approve',
-                        async () => {
-                          if (sb) {
-                            await editor.approve(sb.id);
-                            await refresh(sb.id);
-                          }
-                        },
-                        'Approved. You can render it now.'
-                      )
-                    }
-                  />
-                )}
-
-                <Button
-                  label="Final render"
-                  variant={sb?.approved ? 'primary' : 'secondary'}
-                  icon="film"
-                  loading={busy === 'final'}
-                  disabled={!sb?.approved || !ready || rendering || !sb}
-                  hint="Approve the reel first"
-                  onPress={() =>
-                    act(
-                      'final',
-                      async () => {
-                        if (sb) {
-                          await editor.render(sb.id, 'final');
-                          await refresh(sb.id);
-                        }
-                      },
-                      'Final render started'
-                    )
-                  }
-                />
-
-                <Button
-                  label="Edit brief"
-                  icon="sliders"
-                  onPress={() => setActiveStep(1)}
-                />
-              </View>
+              <Button
+                label="Shape my creative direction"
+                variant="primary"
+                icon="sparkles"
+                loading={busy === 'build'}
+                onPress={build}
+              />
             </View>
           </Card>
-
-          {building ? (
-            <Banner tone="info">
-              Animating scenes with the HyperFrames engine. This takes a moment; the storyboard updates automatically.
-            </Banner>
-          ) : null}
-
-          {/* Generated Scenes List */}
-          {card ? (
-            <>
-              <SectionTitle title={`Storyboard Scenes (${card.scenes_count})`} />
-              {card.scenes.map((s) => (
-                <Card key={s.scene_number}>
-                  <View style={styles.head}>
-                    <T variant="h3">
-                      {s.scene_number}. {s.type}
-                    </T>
-                    <T variant="small" muted>
-                      {s.timestamp_output}
-                    </T>
-                  </View>
-                  <T style={{ marginTop: 6 }}>{s.action}</T>
-                  <View style={[styles.textBlock, { backgroundColor: colors.surfaceAlt }]}>
-                    <T variant="caption" faint style={{ letterSpacing: 0.5, fontWeight: '700' }}>
-                      ON SCREEN
-                    </T>
-                    <T style={{ marginTop: 2 }}>{s.caption}</T>
-                  </View>
-                </Card>
-              ))}
-
-              {card.scorecard?.checks?.length ? (
-                <Card>
-                  <T variant="label" style={{ marginBottom: 6 }}>
-                    Quality & Sendability Checks
-                  </T>
-                  {card.scorecard.checks.map((c) => (
-                    <T key={c.name} variant="small" muted style={{ marginTop: 4 }}>
-                      {c.status.toUpperCase()} · {c.detail}
-                    </T>
-                  ))}
-                </Card>
-              ) : null}
-            </>
-          ) : null}
         </View>
-      ) : null}
-
-      {/* ============================================================== */}
-      {/* STEP 3: REVIEW YOUR FILM (VIDEO PLAYER & SCORECARD)            */}
-      {/* ============================================================== */}
-      {activeStep === 3 && !jobId ? (
-        <View style={{ gap: spacing.lg }}>
-          <Card>
-            <View style={styles.head}>
-              <View style={{ gap: 4 }}>
-                <T variant="h1">{sb?.storyboard?.title || title || 'Finished Motion Reel'}</T>
-                <T muted>Render complete. Ready for export and publication.</T>
-              </View>
-              <View style={styles.row}>
-                <Button label="Back to scenes" icon="layers" onPress={() => setActiveStep(2)} />
-                <Button
-                  label="Create another film"
-                  variant="primary"
-                  icon="plus"
-                  onPress={() => {
-                    setSb(null);
-                    setPreview(null);
-                    setActiveStep(1);
-                  }}
-                />
-              </View>
-            </View>
-          </Card>
-
-          {video ? (
-            <Card>
-              <VideoPlayer uri={absoluteUrl(video.video_url) as string} />
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
-                <T variant="small" muted>
-                  {num(video.duration)}s · {video.resolution} · {video.backend}
-                </T>
-                <Badge label={video.quality === 'final' ? 'Final Quality' : 'Preview'} tone="success" />
-              </View>
-              {video.warnings?.length ? (
-                <View style={{ marginTop: 8 }}>
-                  <Banner tone="warning">
-                    {video.warnings.join(' ')}
-                  </Banner>
-                </View>
-              ) : null}
-            </Card>
-          ) : (
-            <Banner tone="info">No video rendered yet. Head to Step 02 to build and approve your reel.</Banner>
-          )}
+        <View style={styles.previewCol}>
+          <ProductionPanel kind="motion" jobId={jobId} onNew={startOver} />
         </View>
-      ) : null}
+      </View>
     </Screen>
   );
 }
@@ -828,10 +337,15 @@ const styles = StyleSheet.create({
 
   /* Selectors Grid */
   selectorsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: spacing.md,
   },
   selectorItem: {
     gap: 4,
+    flexGrow: 1,
+    flexBasis: 260,
+    minWidth: 0,
   },
   selectorLabel: {
     fontSize: 10.5,
