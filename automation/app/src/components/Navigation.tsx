@@ -29,7 +29,6 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
       { href: '/', label: 'Projects', icon: 'folder' },
       { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
       { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
-      { href: '/creator-studio', label: 'Creator Studio', icon: 'film' },
       { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
     ],
   },
@@ -37,7 +36,6 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
     title: 'ASSETS & INTEL',
     items: [
       { href: '/footage', label: 'Footage Intelligence', icon: 'database' },
-      { href: '/styles', label: 'Style DNA & Templates', icon: 'sparkles' },
       { href: '/editing-memory', label: 'Editing Memory', icon: 'clock' },
       { href: '/media', label: 'Media Library', icon: 'music' },
     ],
@@ -53,8 +51,6 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
 ];
 
 export const DEVELOP_NAV_ITEMS: NavItem[] = [
-  { href: '/creator-studio', label: 'Creator Studio', icon: 'film' },
-  { href: '/styles', label: 'Style DNA', icon: 'sparkles' },
   { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
   { href: '/versions', label: 'Multi-Version Studio', icon: 'copy' },
   { href: '/intelligence', label: 'Content Intelligence', icon: 'cpu' },
@@ -305,8 +301,29 @@ export function ChoppityHeader() {
         })}
       </View>
 
-      {/* Far Right: Status Pill & User Avatar */}
+      {/* Far Right: + New Reel Action, Status Pill & User Avatar */}
       <View style={styles.headerRightGroup}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Create new reel"
+          onPress={() => router.push('/')}
+          style={({ pressed, hovered }: any) => [
+            styles.headerNewReelBtn,
+            { backgroundColor: hovered ? colors.primaryPressed : colors.primary },
+            pressed && { opacity: 0.9 },
+            Platform.OS === 'web' && ({
+              cursor: 'pointer',
+              transition: 'all 140ms ease',
+              boxShadow: '0 2px 6px rgba(108, 76, 240, 0.28)',
+            } as any),
+          ]}
+        >
+          <Icon name="plus" size={14} color="#FFFFFF" strokeWidth={2.5} />
+          <Text style={{ fontFamily: font.bold, fontSize: 12, color: '#FFFFFF' }}>
+            New Reel
+          </Text>
+        </Pressable>
+
         <View style={[styles.statusPill, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
           <View style={[styles.statusDot, { backgroundColor: colors.success }]} />
           <Text style={{ fontFamily: font.mono, fontSize: 10, color: colors.textMuted, letterSpacing: 0.5 }}>
@@ -470,6 +487,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
+  },
+  headerNewReelBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 13,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
   },
   statusPill: {
     flexDirection: 'row',

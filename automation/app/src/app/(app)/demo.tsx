@@ -1,263 +1,367 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView, Image, Pressable } from 'react-native';
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { useRouter } from 'expo-router';
 import { Page, Row } from '../../components/Page';
-import { Button, Card, T, SectionTitle } from '../../components/ui';
-import { spacing, useTheme } from '../../theme';
+import { Badge, Button, Card, SectionTitle, T } from '../../components/ui';
+import { Icon } from '../../components/Icon';
+import { useStoryboards } from '../../state/useStoryboards';
+import { useToast } from '../../state/toast';
+import { font, radius, shadow, spacing, useTheme } from '../../theme';
 
-const DEMO_IMAGES = [
-  { id: 1, url: 'https://images.unsplash.com/photo-1611339555312-e607c90352fd?w=300&h=300&fit=crop', alt: 'Generated reel 1' },
-  { id: 2, url: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=300&h=300&fit=crop', alt: 'Generated reel 2' },
-  { id: 3, url: 'https://images.unsplash.com/photo-1617638924702-92f37fcb0f6e?w=300&h=300&fit=crop', alt: 'Generated reel 3' },
-  { id: 4, url: 'https://images.unsplash.com/photo-1633356360233-55a3a827b1a0?w=300&h=300&fit=crop', alt: 'Generated reel 4' },
-  { id: 5, url: 'https://images.unsplash.com/photo-1534169529454-37c5c5eb8872?w=300&h=300&fit=crop', alt: 'Generated reel 5' },
-  { id: 6, url: 'https://images.unsplash.com/photo-1626914418145-dae8d9bfaedd?w=300&h=300&fit=crop', alt: 'Generated reel 6' },
-];
+interface PastReel {
+  id: string;
+  title: string;
+  duration: string;
+  style: string;
+  aspect: string;
+  date: string;
+  views?: string;
+  thumbnail: string;
+  sbId?: string;
+}
 
-const DIRECTIONS = [
-  { id: 'brand-launch', label: 'Brand Launch', icon: '🚀', desc: 'Cinematic brand reveal' },
-  { id: 'event-summary', label: 'Event Summary', icon: '📸', desc: 'Highlight reel' },
-  { id: 'product-demo', label: 'Product Demo', icon: '🎯', desc: 'Feature showcase' },
-  { id: 'testimonial', label: 'Testimonial', icon: '💬', desc: 'Client feedback' },
-  { id: 'behind-scenes', label: 'Behind Scenes', icon: '🎬', desc: 'BTS storytelling' },
-];
-
-const WORKFLOWS = [
-  { id: 'motion', label: 'Motion Graphics', desc: 'Animated graphics & text' },
-  { id: 'video-edit', label: 'Video Editing', desc: 'Footage cutting & color' },
-  { id: 'both', label: 'Motion + Video', desc: 'Complete video production' },
+const DEFAULT_PAST_REELS: PastReel[] = [
+  {
+    id: '1',
+    title: 'Why Cursor AI is Taking Over Software Development',
+    duration: '42s',
+    style: 'Viral Hook Fast Pace',
+    aspect: '9:16',
+    date: 'Today, 10:14 AM',
+    views: '+18.4k',
+    thumbnail: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=600&h=1066&fit=crop',
+    sbId: 'sb1',
+  },
+  {
+    id: '2',
+    title: '3 Growth Loops That Scaled Our SaaS to $100k MRR',
+    duration: '56s',
+    style: 'Karaoke Highlights',
+    aspect: '9:16',
+    date: 'Yesterday, 4:30 PM',
+    views: '+24.1k',
+    thumbnail: 'https://images.unsplash.com/photo-1611339555312-e607c90352fd?w=600&h=1066&fit=crop',
+  },
+  {
+    id: '3',
+    title: 'How Autonomous AI Agents Build Production Apps',
+    duration: '38s',
+    style: 'Cyberpunk Glow',
+    aspect: '9:16',
+    date: 'Nov 20, 2:15 PM',
+    views: '+9.8k',
+    thumbnail: 'https://images.unsplash.com/photo-1617638924702-92f37fcb0f6e?w=600&h=1066&fit=crop',
+  },
+  {
+    id: '4',
+    title: 'Behind The Scenes: Video Automation Rendering Pipeline',
+    duration: '49s',
+    style: 'Cinematic Punch',
+    aspect: '9:16',
+    date: 'Nov 18, 6:00 PM',
+    views: '+12.3k',
+    thumbnail: 'https://images.unsplash.com/photo-1534169529454-37c5c5eb8872?w=600&h=1066&fit=crop',
+  },
 ];
 
 export default function ClientDemo() {
+  const router = useRouter();
+  const toast = useToast();
   const { colors } = useTheme();
-  const [selectedWorkflow, setSelectedWorkflow] = useState<string | null>(null);
-  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
-  const [uploadedFile, setUploadedFile] = useState<string | null>(null);
+  const { list: storyboards } = useStoryboards();
+  const [filter, setFilter] = useState<'all' | 'vertical' | 'motion'>('all');
 
   return (
-    <Page title="AI Video Studio" subtitle="Create professional reels in minutes">
-      <ScrollView contentContainerStyle={{ paddingBottom: spacing.xl }}>
-
-        {/* Generated Reels Gallery */}
-        <SectionTitle title="Recently Generated Reels" />
-        <View style={styles.gallery}>
-          {DEMO_IMAGES.map((img) => (
-            <Pressable key={img.id} style={[styles.galleryItem, { borderColor: colors.border }]}>
-              <Image source={{ uri: img.url }} style={styles.galleryImage} />
-              <View style={[styles.playButton, { backgroundColor: colors.primary }]}>
-                <T style={{ fontSize: 24 }}>▶</T>
-              </View>
-            </Pressable>
-          ))}
+    <Page>
+      {/* =========================================================================
+          TOP BAR: Title on Left, "+ AI Video Studio" CTA on Top Right
+         ========================================================================= */}
+      <View style={styles.topHeaderRow}>
+        <View style={{ flex: 1, gap: 4 }}>
+          <T variant="h1" style={{ fontSize: 24, fontWeight: '700' }}>
+            Past Work & Generated Reels
+          </T>
+          <T variant="small" muted>
+            Browse, preview, edit in timeline, and download your previous AI-generated social clips.
+          </T>
         </View>
 
-        {/* Timeline */}
-        <SectionTitle title="Production Timeline" />
-        <View style={[styles.timeline, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-          <TimelineStep label="Upload" icon="📤" completed active={!selectedWorkflow} colors={colors} />
-          <TimelineStep label="Configure" icon="⚙️" completed={!!selectedWorkflow} active={!!selectedWorkflow && !selectedDirection} colors={colors} />
-          <TimelineStep label="Generate" icon="✨" completed={!!selectedDirection} active={false} colors={colors} />
-          <TimelineStep label="Review" icon="👁️" completed={false} active={false} colors={colors} />
-        </View>
+        {/* Primary CTA in Top Right */}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Launch AI Video Studio"
+          onPress={() => router.push('/')}
+          style={({ pressed, hovered }: any) => [
+            styles.aiStudioTopBtn,
+            { backgroundColor: hovered ? colors.primaryPressed : colors.primary },
+            pressed && { opacity: 0.9 },
+            Platform.OS === 'web' && ({
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(108, 76, 240, 0.35)',
+            } as any),
+          ]}
+        >
+          <Icon name="sparkles" size={16} color="#FFFFFF" />
+          <Text style={{ fontFamily: font.bold, fontSize: 13, color: '#FFFFFF' }}>
+            + AI Video Studio
+          </Text>
+        </Pressable>
+      </View>
 
-        {/* Workflow Selection */}
-        <SectionTitle title="Choose Your Service" />
-        <View style={styles.workflowGrid}>
-          {WORKFLOWS.map((w) => (
-            <Pressable
-              key={w.id}
-              onPress={() => setSelectedWorkflow(w.id)}
-              style={[
-                styles.workflowCard,
-                { borderColor: selectedWorkflow === w.id ? colors.primary : colors.border, borderWidth: selectedWorkflow === w.id ? 2 : 1 },
-                { backgroundColor: selectedWorkflow === w.id ? colors.primarySoft : colors.surface },
-              ]}
+      {/* Filter Tabs */}
+      <View style={styles.filterRow}>
+        {[
+          { id: 'all', label: 'All Past Work' },
+          { id: 'vertical', label: '9:16 Reels & Shorts' },
+          { id: 'motion', label: 'Motion Graphics' },
+        ].map((tab) => (
+          <Pressable
+            key={tab.id}
+            onPress={() => setFilter(tab.id as any)}
+            style={[
+              styles.filterPill,
+              {
+                borderColor: filter === tab.id ? colors.primary : colors.border,
+                backgroundColor: filter === tab.id ? 'rgba(108, 76, 240, 0.08)' : colors.surface,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                fontFamily: filter === tab.id ? font.bold : font.medium,
+                fontSize: 12,
+                color: filter === tab.id ? colors.primary : colors.textMuted,
+              }}
             >
-              <T variant="h3" style={{ color: selectedWorkflow === w.id ? colors.primary : colors.text }}>
-                {w.label}
-              </T>
-              <T muted style={{ fontSize: 12 }}>{w.desc}</T>
-            </Pressable>
-          ))}
-        </View>
+              {tab.label}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
 
-        {selectedWorkflow && (
-          <>
-            {/* Direction Selection */}
-            <SectionTitle title="Choose Direction" />
-            <View style={styles.directionGrid}>
-              {DIRECTIONS.map((d) => (
+      {/* =========================================================================
+          PAST WORK GALLERY: Sleek 9:16 Vertical Video Cards
+         ========================================================================= */}
+      <View style={styles.reelsGrid}>
+        {DEFAULT_PAST_REELS.map((reel) => (
+          <View
+            key={reel.id}
+            style={[
+              styles.reelCard,
+              { backgroundColor: colors.surface, borderColor: colors.border },
+              shadow(colors),
+            ]}
+          >
+            {/* 9:16 Aspect Ratio Poster */}
+            <View style={styles.posterContainer}>
+              <Image source={{ uri: reel.thumbnail }} style={styles.posterImage} resizeMode="cover" />
+
+              {/* Gradient Dark Overlay */}
+              <View style={styles.posterOverlay}>
+                <View style={styles.badgeRow}>
+                  <View style={[styles.durationChip, { backgroundColor: 'rgba(0, 0, 0, 0.75)' }]}>
+                    <Text style={{ fontFamily: font.mono, fontSize: 10, color: '#FFFFFF' }}>
+                      {reel.duration}
+                    </Text>
+                  </View>
+                  {reel.views && (
+                    <View style={[styles.viewsChip, { backgroundColor: 'rgba(108, 76, 240, 0.85)' }]}>
+                      <Text style={{ fontFamily: font.bold, fontSize: 10, color: '#FFFFFF' }}>
+                        {reel.views}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+
+                {/* Centered Play Button */}
                 <Pressable
-                  key={d.id}
-                  onPress={() => setSelectedDirection(d.id)}
-                  style={[
-                    styles.directionCard,
-                    { borderColor: selectedDirection === d.id ? colors.primary : colors.border },
-                    { backgroundColor: selectedDirection === d.id ? colors.primarySoft : colors.surface },
+                  onPress={() => {
+                    if (reel.sbId) router.push(`/timeline?sb=${reel.sbId}` as any);
+                    else router.push('/storyboard');
+                  }}
+                  style={({ pressed, hovered }: any) => [
+                    styles.playBtnCircle,
+                    { backgroundColor: hovered ? colors.primaryPressed : colors.primary },
+                    pressed && { opacity: 0.9 },
+                    Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
                   ]}
                 >
-                  <T style={{ fontSize: 32 }}>{d.icon}</T>
-                  <T variant="label" style={{ color: selectedDirection === d.id ? colors.primary : colors.text }}>
-                    {d.label}
-                  </T>
-                  <T muted style={{ fontSize: 11 }}>{d.desc}</T>
+                  <Icon name="play" size={20} color="#FFFFFF" />
                 </Pressable>
-              ))}
-            </View>
 
-            {/* Upload Section */}
-            <SectionTitle title="Upload Content" />
-            <Card style={[styles.uploadCard, { borderColor: colors.border, borderWidth: 2, borderStyle: 'dashed' }]}>
-              <View style={styles.uploadContent}>
-                <T style={{ fontSize: 48 }}>📹</T>
-                <T variant="h3">Drop your video here</T>
-                <T muted>or tap to browse</T>
-                <T muted style={{ fontSize: 11, marginTop: spacing.sm }}>
-                  Supports MP4, MOV, WebM • Up to 1GB
-                </T>
-              </View>
-            </Card>
-
-            {/* Audio Upload */}
-            <Card style={[styles.audioCard, { backgroundColor: colors.surfaceAlt }]}>
-              <Row>
-                <T style={{ fontSize: 32 }}>🎵</T>
-                <View style={{ flex: 1, marginLeft: spacing.md }}>
-                  <T variant="label">Add Audio/Music</T>
-                  <T muted style={{ fontSize: 12 }}>Optional: Upload custom soundtrack or narration</T>
+                <View style={styles.aspectBadge}>
+                  <Badge label={reel.aspect} tone="neutral" />
                 </View>
-                <Button label="Browse" small variant="secondary" />
-              </Row>
-            </Card>
-
-            {/* Generate Button */}
-            <View style={{ marginTop: spacing.lg }}>
-              <Button
-                label="Generate Reel"
-                variant="primary"
-                onPress={() => alert('Starting generation...')}
-              />
+              </View>
             </View>
-          </>
-        )}
-      </ScrollView>
+
+            {/* Reel Details */}
+            <View style={styles.cardDetails}>
+              <Text style={{ fontFamily: font.bold, fontSize: 13, color: colors.text, lineHeight: 18 }} numberOfLines={2}>
+                {reel.title}
+              </Text>
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+                <Text style={{ fontFamily: font.medium, fontSize: 11, color: colors.primary }}>
+                  {reel.style}
+                </Text>
+                <Text style={{ fontFamily: font.regular, fontSize: 10, color: colors.textFaint }}>
+                  {reel.date}
+                </Text>
+              </View>
+
+              {/* Action Buttons Row */}
+              <View style={styles.cardActionsRow}>
+                <Pressable
+                  onPress={() => router.push(reel.sbId ? `/timeline?sb=${reel.sbId}` : '/timeline')}
+                  style={({ pressed, hovered }: any) => [
+                    styles.actionBtn,
+                    { borderColor: colors.border, backgroundColor: hovered ? colors.surfaceAlt : '#FFFFFF' },
+                    pressed && { opacity: 0.8 },
+                    Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                  ]}
+                >
+                  <Icon name="sliders" size={13} color={colors.text} />
+                  <Text style={{ fontFamily: font.semibold, fontSize: 11, color: colors.text }}>
+                    Timeline
+                  </Text>
+                </Pressable>
+
+                <Pressable
+                  onPress={() => toast('Exporting full quality master video...')}
+                  style={({ pressed, hovered }: any) => [
+                    styles.actionBtn,
+                    { borderColor: colors.border, backgroundColor: hovered ? colors.surfaceAlt : '#FFFFFF' },
+                    pressed && { opacity: 0.8 },
+                    Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
+                  ]}
+                >
+                  <Icon name="download" size={13} color={colors.text} />
+                  <Text style={{ fontFamily: font.semibold, fontSize: 11, color: colors.text }}>
+                    Export
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
     </Page>
   );
 }
 
-function TimelineStep({ label, icon, completed, active, colors }: any) {
-  return (
-    <View style={styles.timelineStepContainer}>
-      <View
-        style={[
-          styles.timelineCircle,
-          {
-            backgroundColor: completed ? colors.success : active ? colors.primary : colors.border,
-            borderColor: completed ? colors.success : active ? colors.primary : colors.textMuted,
-          },
-        ]}
-      >
-        <T style={{ fontSize: 16 }}>{icon}</T>
-      </View>
-      <T variant="label" style={{ marginTop: spacing.sm }}>
-        {label}
-      </T>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
-  gallery: {
+  topHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+    marginBottom: spacing.xs,
+  },
+  aiStudioTopBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: radius.pill,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginVertical: spacing.sm,
+  },
+  filterPill: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
+    borderWidth: 1,
+  },
+  reelsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.md,
-    marginBottom: spacing.xl,
+    gap: 16,
+    marginTop: spacing.sm,
   },
-  galleryItem: {
-    width: '48%',
-    aspectRatio: 1,
-    borderRadius: 12,
+  reelCard: {
+    flexBasis: '47%',
+    flexGrow: 1,
     borderWidth: 1,
+    borderRadius: radius.lg,
     overflow: 'hidden',
-    position: 'relative',
+    minWidth: 240,
+    maxWidth: 420,
   },
-  galleryImage: {
+  posterContainer: {
+    width: '100%',
+    aspectRatio: 9 / 12,
+    position: 'relative',
+    backgroundColor: '#0F172A',
+  },
+  posterImage: {
     width: '100%',
     height: '100%',
   },
-  playButton: {
-    position: 'absolute',
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: '50%',
-    left: '50%',
-    marginLeft: -24,
-    marginTop: -24,
+  posterOverlay: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    justifyContent: 'space-between',
+    padding: 12,
   },
-  timeline: {
+  badgeRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    padding: spacing.lg,
-    borderRadius: 12,
-    marginBottom: spacing.xl,
-    minHeight: 120,
-  },
-  timelineStepContainer: {
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  timelineCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+  durationChip: {
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 4,
+  },
+  viewsChip: {
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 4,
+  },
+  playBtnCircle: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
+    alignSelf: 'center',
   },
-  workflowGrid: {
+  aspectBadge: {
+    alignSelf: 'flex-start',
+  },
+  cardDetails: {
+    padding: 12,
+    gap: 4,
+  },
+  cardActionsRow: {
     flexDirection: 'row',
-    gap: spacing.md,
-    marginBottom: spacing.xl,
+    gap: 8,
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#F1F5F9',
   },
-  workflowCard: {
+  actionBtn: {
     flex: 1,
-    padding: spacing.md,
-    borderRadius: 12,
-    justifyContent: 'center',
-    minHeight: 100,
-  },
-  directionGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.md,
-    marginBottom: spacing.xl,
-  },
-  directionCard: {
-    width: '32%',
-    aspectRatio: 1.1,
-    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
     borderWidth: 1,
-    padding: spacing.sm,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  uploadCard: {
-    minHeight: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-    borderRadius: 12,
-  },
-  uploadContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
-  audioCard: {
-    padding: spacing.md,
-    borderRadius: 12,
-    marginBottom: spacing.lg,
   },
 });
