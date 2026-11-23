@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { TopNav } from '../../components/Navigation';
 import { Button, Card, SectionTitle, T, Badge, Pill } from '../../components/ui';
 import { Icon } from '../../components/Icon';
 import { get, post } from '../../api/client';
-import { spacing, radius, useTheme } from '../../theme';
+import { spacing, radius, useTheme, MAX_CONTENT_WIDTH } from '../../theme';
 
 export default function RenderQAScreen() {
   const router = useRouter();
@@ -61,7 +60,10 @@ export default function RenderQAScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <TopNav title="Render Quality Assurance (QA)" subtitle="Deep Machine Inspection of Rendered MP4 Video & Audio Artifacts" />
+      <View style={{ paddingHorizontal: spacing.xl, paddingTop: spacing.lg, gap: 4, maxWidth: MAX_CONTENT_WIDTH, width: '100%', alignSelf: 'center' }}>
+        <T variant="h1" style={{ fontSize: 22, fontWeight: '700' }}>Render Quality Assurance (QA)</T>
+        <T variant="small" muted>Deep Machine Inspection of Rendered MP4 Video & Audio Artifacts</T>
+      </View>
       <ScrollView contentContainerStyle={styles.container}>
         
         {/* QA Summary Banner */}

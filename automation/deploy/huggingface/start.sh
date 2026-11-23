@@ -15,6 +15,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # 1. Start Python FastAPI backend in the background on port 8793
 export EDITOR_HOST=127.0.0.1
 export EDITOR_PORT=8793
+export CREATOR_STUDIO_DIR=/app/creator-studio
 export EDITOR_SFX_DIR=/app/editor/assets/sfx
 export EDITOR_USERS_DIR=/tmp/users
 export EDITOR_UPLOADS_DIR=/tmp/storage

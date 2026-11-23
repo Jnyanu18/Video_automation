@@ -54,6 +54,7 @@ COPY lib ./lib
 COPY adapters ./adapters
 COPY web/dist ./web/dist
 COPY editor /app/editor
+COPY creator-studio /app/creator-studio
 COPY n8n/*.json /app/n8n/
 
 # Copy startup script

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { TopNav } from '../../components/Navigation';
 import { Button, Card, SectionTitle, T, Badge, Pill } from '../../components/ui';
 import { Icon } from '../../components/Icon';
 import { get } from '../../api/client';
-import { spacing, radius, useTheme } from '../../theme';
+import { spacing, radius, useTheme, MAX_CONTENT_WIDTH } from '../../theme';
 
 export default function EditingMemoryScreen() {
   const router = useRouter();
@@ -55,7 +54,10 @@ export default function EditingMemoryScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <TopNav title="Editing Memory & Learning" subtitle="Evidence-Grounded Editorial Recommendations from Real Historical Publishing Metrics" />
+      <View style={{ paddingHorizontal: spacing.xl, paddingTop: spacing.lg, gap: 4, maxWidth: MAX_CONTENT_WIDTH, width: '100%', alignSelf: 'center' }}>
+        <T variant="h1" style={{ fontSize: 22, fontWeight: '700' }}>Editing Memory & Learning</T>
+        <T variant="small" muted>Evidence-Grounded Editorial Recommendations from Real Historical Publishing Metrics</T>
+      </View>
       <ScrollView contentContainerStyle={styles.container}>
         
         {/* Memory Intelligence Recommendations */}

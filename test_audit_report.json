@@ -1,0 +1,114 @@
+[
+  {
+    "cat": "Auth",
+    "name": "Login & Session Establishment",
+    "status": "PASS",
+    "ms": 3993.7,
+    "detail": "User: Jnyan, CSRF token issued"
+  },
+  {
+    "cat": "Auth",
+    "name": "Session Verification (/api/auth/me)",
+    "status": "FAIL",
+    "ms": 0,
+    "detail": "HTTP Error 404: Not Found"
+  },
+  {
+    "cat": "Dashboard",
+    "name": "Overview Stats (/api/overview)",
+    "status": "FAIL",
+    "ms": 0,
+    "detail": "HTTP Error 404: Not Found"
+  },
+  {
+    "cat": "Dashboard",
+    "name": "Activity Stream (/api/activity)",
+    "status": "FAIL",
+    "ms": 0,
+    "detail": "HTTP Error 404: Not Found"
+  },
+  {
+    "cat": "Storyboard",
+    "name": "List Storyboards (/api/editor/storyboards)",
+    "status": "PASS",
+    "ms": 5500.5,
+    "detail": "1 storyboards found (active: sb1)"
+  },
+  {
+    "cat": "Storyboard",
+    "name": "Get Storyboard Detail",
+    "status": "PASS",
+    "ms": 2787.1,
+    "detail": "Title: Event Highlights Edit, Scenes: 3, Status: ready"
+  },
+  {
+    "cat": "Storyboard",
+    "name": "Objective Scorecard Check",
+    "status": "PASS",
+    "ms": 3401.0,
+    "detail": "Scorecard: None (0.8)"
+  },
+  {
+    "cat": "Storyboard",
+    "name": "Approval Toggle (Approve / Withdraw)",
+    "status": "PASS",
+    "ms": 2703.2,
+    "detail": "Unapprove -> False, Approve -> True toggled smoothly"
+  },
+  {
+    "cat": "Storyboard",
+    "name": "Gemini AI Storyboard Revision (/chat)",
+    "status": "PASS",
+    "ms": 2005.7,
+    "detail": "Revision accepted, status: processing"
+  },
+  {
+    "cat": "Storyboard",
+    "name": "Trigger Preview Render",
+    "status": "PASS",
+    "ms": 3024.7,
+    "detail": "Render job: status=running, quality=preview"
+  },
+  {
+    "cat": "Media Delivery",
+    "name": "Rendered MP4 Video Delivery",
+    "status": "PASS",
+    "ms": 7215.3,
+    "detail": "Streamed /render/2fcf52f5439c4f59a85e7217c7641c2a.mp4 (70320 bytes, video/mp4)"
+  },
+  {
+    "cat": "Publishing",
+    "name": "Publishing Calendar & Schedule",
+    "status": "FAIL",
+    "ms": 0,
+    "detail": "HTTP Error 404: Not Found"
+  },
+  {
+    "cat": "Publishing",
+    "name": "AI Multi-Platform Post Generator",
+    "status": "PASS",
+    "ms": 3058.9,
+    "detail": "Platforms generated: ['instagram', 'youtube_short', 'x', 'generated_by']"
+  },
+  {
+    "cat": "Series Engine",
+    "name": "Series Episodes List (/api/editor/series)",
+    "status": "PASS",
+    "ms": 2768.3,
+    "detail": "0 episodic series available"
+  },
+  {
+    "cat": "Analytics",
+    "name": "Performance Metrics & Insights",
+    "status": "PASS",
+    "ms": 4466.0,
+    "detail": "Analytics tracked for None storyboards"
+  },
+  {
+    "cat": "System Health",
+    "name": "Integrations & Service Health Check",
+    "status": "PASS",
+    "ms": 3360.5,
+    "detail": "Online (6/12): ['Dashboard & Client Server', 'AI Video Editor Engine (FastAPI)', 'LLM Director Copilot (gemini)', 'FFmpeg Native Video Renderer']"
+  }
+]

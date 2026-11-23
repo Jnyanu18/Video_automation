@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { TopNav } from '../../components/Navigation';
 import { Button, Card, SectionTitle, T, Badge, Pill } from '../../components/ui';
 import { get } from '../../api/client';
-import { spacing, radius, useTheme } from '../../theme';
+import { spacing, radius, useTheme, MAX_CONTENT_WIDTH } from '../../theme';
 
 export default function MultiVersionStudio() {
   const router = useRouter();
@@ -67,7 +66,10 @@ export default function MultiVersionStudio() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <TopNav title="Multi-Version Studio" subtitle="Parallel Editorial Variations Grounded in the Same Raw Footage" />
+      <View style={{ paddingHorizontal: spacing.xl, paddingTop: spacing.lg, gap: 4, maxWidth: MAX_CONTENT_WIDTH, width: '100%', alignSelf: 'center' }}>
+        <T variant="h1" style={{ fontSize: 22, fontWeight: '700' }}>Multi-Version Studio</T>
+        <T variant="small" muted>Parallel Editorial Variations Grounded in the Same Raw Footage</T>
+      </View>
       <ScrollView contentContainerStyle={styles.container}>
         
         <Card style={styles.bannerCard}>
