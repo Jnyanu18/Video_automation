@@ -1,14 +1,30 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { T } from './ui';
-import { MAX_CONTENT_WIDTH, spacing, useTheme } from '../theme';
+import { spacing, useTheme } from '../theme';
 
-/** Shared shell for studio screens: centered, readable content column (max 860px). */
-export function Page({ title, subtitle, children }: { title?: string; subtitle?: string; children: React.ReactNode }) {
+/** Shared shell for studio screens: full-width responsive layout fitting both left and right. */
+export function Page({
+  title,
+  subtitle,
+  children,
+  maxWidth,
+}: {
+  title?: string;
+  subtitle?: string;
+  children: React.ReactNode;
+  maxWidth?: number | string;
+}) {
   const { colors } = useTheme();
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.content,
+          maxWidth ? { maxWidth, alignSelf: 'center' } : null,
+        ]}
+      >
         {title ? (
           <View style={{ marginBottom: spacing.xs, gap: 2 }}>
             <T variant="h1" style={{ fontSize: 22, fontWeight: '700' }}>{title}</T>
@@ -26,8 +42,6 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     gap: spacing.lg,
     width: '100%',
-    maxWidth: MAX_CONTENT_WIDTH,
-    alignSelf: 'center',
     paddingBottom: spacing.xxl * 2,
   },
 });

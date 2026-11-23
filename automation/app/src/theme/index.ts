@@ -101,7 +101,7 @@ export const type = {
 } as const;
 
 export const BREAKPOINT_WIDE = 960;
-export const MAX_CONTENT_WIDTH = 860;
+export const MAX_CONTENT_WIDTH = 1440;
 
 export function useTheme(): { colors: Colors; isDark: boolean } {
   return { colors: light, isDark: false };

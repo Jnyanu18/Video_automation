@@ -55,9 +55,6 @@ COPY automation/adapters ./adapters
 COPY automation/web/dist ./web/dist
 COPY automation/editor /app/editor
 COPY automation/creator-studio /app/creator-studio
-WORKDIR /app/creator-studio
-RUN pnpm install --no-frozen-lockfile || true
-WORKDIR /app
 COPY automation/n8n/*.json /app/n8n/
 
 # Copy startup script
