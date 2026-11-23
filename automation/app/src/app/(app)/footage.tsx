@@ -10,37 +10,9 @@ export default function FootageIntelligence() {
   const router = useRouter();
   const { colors } = useTheme();
 
-  const [query, setQuery] = useState('features nobody asked for');
+  const [query, setQuery] = useState('');
   const [searching, setSearching] = useState(false);
-  const [searchResults, setSearchResults] = useState<any[]>([
-    {
-      scene_id: 'scene_01',
-      start: 0.0,
-      end: 3.2,
-      duration: 3.2,
-      match_type: 'speech',
-      snippet: '"Never build features nobody asked for..."',
-      confidence: 0.98,
-      keyframe_path: '/media/kf1.jpg',
-    },
-    {
-      scene_id: 'scene_03',
-      start: 14.0,
-      end: 22.0,
-      duration: 8.0,
-      match_type: 'visual',
-      snippet: '[Visual Tag: Pricing] "Our pricing model starts at 29 dollars per month..."',
-      confidence: 0.88,
-      keyframe_path: '/media/kf3.jpg',
-    },
-  ]);
-
-  const scenes = [
-    { id: 'sc_01', timestamp: '0.0s - 3.2s', framing: 'Close-Up / Talking Head', tags: ['hook', 'introduction'], text: 'Never build features nobody asked for.' },
-    { id: 'sc_02', timestamp: '3.2s - 14.0s', framing: 'Medium Action Shot', tags: ['product_demo'], text: 'Here is our product dashboard demo showing retention data.' },
-    { id: 'sc_03', timestamp: '14.0s - 22.0s', framing: 'Close-Up / Talking Head', tags: ['pricing', 'solution'], text: 'Our pricing model starts at 29 dollars per month.' },
-    { id: 'sc_04', timestamp: '22.0s - 29.4s', framing: 'Medium Action Shot', tags: ['cta'], text: 'Send this to your cofounder before sprint planning.' },
-  ];
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   async function handleSearch() {
     if (!query || searching) return;
@@ -134,46 +106,7 @@ export default function FootageIntelligence() {
           </View>
         )}
 
-        {/* Scene Index & Shot Classification Gallery */}
-        <View style={styles.section}>
-          <SectionTitle title="Indexed Scene Breakdown & Shot Classification" />
-          <View style={styles.sceneGrid}>
-            {scenes.map((s) => (
-              <Card key={s.id} style={styles.sceneCard}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Badge label={s.id.toUpperCase()} tone="neutral" />
-                  <T variant="mono" muted>{s.timestamp}</T>
-                </View>
-                <T variant="body" style={{ fontWeight: '600', marginTop: spacing.xs }}>{s.framing}</T>
-                <T variant="caption" muted style={{ fontStyle: 'italic', marginVertical: 4 }}>
-                  "{s.text}"
-                </T>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
-                  {s.tags.map((t) => (
-                    <Pill key={t} label={t} />
-                  ))}
-                </View>
-                <View style={{ gap: spacing.xs, marginTop: spacing.md }}>
-                  <Button
-                    label="Create Reel from this Clip"
-                    variant="primary"
-                    icon="sparkles"
-                    small
-                    onPress={() => router.push(`/new?footage=${encodeURIComponent(s.id)}&note=${encodeURIComponent(s.text)}`)}
-                  />
-                  <Button
-                    label="Use in Active Storyboard"
-                    variant="secondary"
-                    icon="layers"
-                    small
-                    onPress={() => router.push('/storyboard')}
-                  />
-                </View>
-              </Card>
-            ))}
-          </View>
-        </View>
-
+        {searchResults.length === 0 && <Card><T muted>No indexed footage matches yet. Index a real video to search its scenes.</T></Card>}
       </ScrollView>
     </View>
   );

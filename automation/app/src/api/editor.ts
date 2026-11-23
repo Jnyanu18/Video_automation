@@ -86,6 +86,7 @@ export const editor = {
   styles: () => get('/api/editor/styles'),
   footage: () => get<{ files: { path: string; name: string; size_mb: number }[] }>('/api/editor/footage'),
   media: () => get('/api/editor/media'),
+  creativeLibrary: () => get<{ ok: boolean; films: any[] }>('/api/editor/creative-library').then((r) => r.films),
 
   storyboards: () => get<{ storyboards: Storyboard[] }>('/api/editor/storyboards').then((r) => r.storyboards),
   storyboard: (id: string) => get<{ data: Storyboard }>(`/api/editor/storyboard/${id}`).then((r) => r.data),

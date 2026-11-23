@@ -14,51 +14,30 @@ export default function Analytics() {
   const [a, setA] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const demoAnalytics = {
-    production: { storyboards: 12, renders: 10, rendered_seconds: 2880, avg_score: 0.92, scorecard_pass_rate_pct: 85, hook_pass_rate_pct: 95, sendability_rate_pct: 100, dead_air_removed_seconds: 420, avg_reduction_pct: 18 },
-    engagement: { connected: true, posts_with_data: 8, totals: { views: 9240, sends: 180, saves: 342, watches: 7400 }, sends_per_1k_reach: 19.5, save_rate_pct: 37, avg_watch_seconds: 7.2, avg_completion_pct: 91, reason: '' },
-    by_style: [
-      { style: 'Modern', storyboards: 5, renders: 4, avg_score: 0.95, avg_reduction_pct: 20, avg_output_seconds: 180 },
-      { style: 'Cinematic', storyboards: 4, renders: 3, avg_score: 0.88, avg_reduction_pct: 15, avg_output_seconds: 240 },
-      { style: 'Fast Cuts', storyboards: 3, renders: 3, avg_score: 0.92, avg_reduction_pct: 22, avg_output_seconds: 120 },
-    ],
-    top_storyboards: [
-      { id: 'sb1', title: 'Event Highlights', style: 'Modern', output_seconds: 180, score: 0.95, rendered: true, published: true, metrics: { sends: 45 } },
-      { id: 'sb2', title: 'Product Launch', style: 'Cinematic', output_seconds: 240, score: 0.92, rendered: true, published: true, metrics: { sends: 32 } },
-      { id: 'sb3', title: 'Tutorial', style: 'Fast Cuts', output_seconds: 120, score: 0.88, rendered: true, published: false, metrics: null },
-    ],
-    recent_activity: [
-      { ts: Date.now() - 3600000, message: 'Final render completed for Event Highlights' },
-      { ts: Date.now() - 7200000, message: 'Storyboard approved: Product Launch' },
-      { ts: Date.now() - 10800000, message: 'Preview render started for Tutorial' },
-    ]
-  };
-
   const load = useCallback(async () => {
     try {
       const result = await editor.analytics();
-      setA(result || demoAnalytics);
+      setA(result);
       setError(null);
     } catch (e) {
-      setA(demoAnalytics);
-      setError(null);
+      setA(null);
+      setError(errorText(e));
     }
   }, []);
   useEffect(() => { load(); }, [load]);
 
   if (error && !a) return <Page title="Analytics"><ErrorState message={error} onRetry={load} /></Page>;
 
-  const finalA = a || demoAnalytics;
+  if (!a) return <Page title="Analytics"><Skeleton height={120} /><Skeleton height={200} /></Page>;
 
-  if (!finalA) return <Page title="Analytics"><Skeleton height={120} /><Skeleton height={200} /></Page>;
-
-  const p = finalA.production || { storyboards: 12, renders: 10, rendered_seconds: 2880, avg_score: 0.92, scorecard_pass_rate_pct: 85, hook_pass_rate_pct: 95, sendability_rate_pct: 100, dead_air_removed_seconds: 420, avg_reduction_pct: 18 };
-  const e = finalA.engagement || { connected: true, posts_with_data: 8, totals: { views: 9240, sends: 180, saves: 342, watches: 7400 }, sends_per_1k_reach: 19.5, save_rate_pct: 37, avg_watch_seconds: 7.2, avg_completion_pct: 91, reason: '' };
+  const finalA = a;
+  const p = finalA.production;
+  const e = finalA.engagement;
   const none = p.storyboards === 0;
 
   return (
     <Page title="Analytics" subtitle="Computed from your storyboards, renders and the results you record on published posts">
-      {none && !finalA ? (
+      {none ? (
         <EmptyState icon="bar-chart" title="No data yet" message="Analytics appear after your first storyboard. Engagement numbers appear once you record results on a published post."
           action={<Button label="Start a new edit" variant="primary" icon="plus" onPress={() => router.push('/new')} />} />
       ) : (

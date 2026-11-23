@@ -35,28 +35,8 @@ export default function RenderQAScreen() {
     loadQA();
   }, []);
 
-  const report = qaReport || {
-    video_path: 'runtime/renders/sample_reel.mp4',
-    duration: 29.4,
-    resolution: '1080x1920',
-    aspect_ratio: '9:16',
-    status: 'PASS',
-    score: 0.98,
-    critical_count: 0,
-    major_count: 0,
-    minor_count: 0,
-    defects: [],
-    audio_metrics: { integrated_lufs: -14.1, true_peak_db: -1.2 },
-    visual_metrics: { black_spans: 0, video_codec: 'h264' },
-  };
-
-  async function handleAutoRepair() {
-    setRepairing(true);
-    setTimeout(() => {
-      setRepairing(false);
-      loadQA();
-    }, 800);
-  }
+  const report = qaReport;
+  if (!report) return <View style={{ padding: spacing.xl }}><T variant="h2">No render to inspect yet</T><T muted>Render a real storyboard, then inspect its output here.</T><Button label="Recheck" onPress={() => loadQA()} /></View>;
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
@@ -99,22 +79,14 @@ export default function RenderQAScreen() {
                 loading={aiReviewing}
                 onPress={() => loadQA(true)}
               />
-              {report.critical_count > 0 || report.major_count > 0 ? (
-                <Button
-                  label={repairing ? 'Repairing...' : 'Automated Repair'}
-                  variant="primary"
-                  icon="zap"
-                  loading={repairing}
-                  onPress={handleAutoRepair}
-                />
-              ) : (
+              {report.critical_count === 0 && report.major_count === 0 ? (
                 <Button
                   label="Approve & Publish"
                   variant="primary"
                   icon="send"
                   onPress={() => router.push('/publishing')}
                 />
-              )}
+              ) : null}
             </View>
           </View>
 
@@ -230,7 +202,7 @@ export default function RenderQAScreen() {
             <Icon name="check-circle" size={40} color={colors.success} />
             <T variant="h3" style={{ marginTop: spacing.md }}>Zero Technical Defects Detected</T>
             <T variant="body" muted style={{ marginTop: 4, textAlign: 'center', maxWidth: 450 }}>
-              The rendered MP4 cleared all FFmpeg black-frame, freeze-frame, audio clipping, and loudness compliance gates with a 0.98/1.00 quality score.
+              The inspection found no technical defects in this render.
             </T>
           </Card>
         )}

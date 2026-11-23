@@ -4,31 +4,52 @@ import { useRouter } from 'expo-router';
 import { Icon, IconName } from './Icon';
 import { T, Badge, Button, Chips } from './ui';
 import { radius, spacing, useTheme } from '../theme';
-import { STAGE_LABEL, stageTone } from './studio';
+import { STAGE_LABEL, checkTone, stageTone } from './studio';
 import { useStoryboards } from '../state/useStoryboards';
+import { when } from '../api/editor';
 
 export type StudioTabKey = 'storyboard' | 'timeline' | 'copilot';
 
-interface StudioTabsProps {
+export interface StudioTabsProps {
   activeTab: StudioTabKey;
   sbId?: string;
   title?: string;
+  subtitle?: string;
   stage?: string;
   approved?: boolean;
+  approvedAt?: number | string | null;
+  scorecard?: { available?: boolean; status?: string; score?: number | null } | null;
+  seriesEpisode?: number | null;
   onPreviewRender?: () => void;
   onFinalRender?: () => void;
+  onApprove?: () => void;
+  onUnapprove?: () => void;
+  approveLoading?: boolean;
+  unapproveLoading?: boolean;
   rendering?: boolean;
+  canApprove?: boolean;
+  approvalBlockedHint?: string;
 }
 
 export function StudioTabs({
   activeTab,
   sbId,
   title,
+  subtitle,
   stage,
   approved,
+  approvedAt,
+  scorecard,
+  seriesEpisode,
   onPreviewRender,
   onFinalRender,
+  onApprove,
+  onUnapprove,
+  approveLoading = false,
+  unapproveLoading = false,
   rendering = false,
+  canApprove = true,
+  approvalBlockedHint,
 }: StudioTabsProps) {
   const router = useRouter();
   const { colors } = useTheme();
@@ -48,30 +69,72 @@ export function StudioTabs({
     });
   }
 
+  const hasScore = typeof scorecard?.score === 'number' && !isNaN(scorecard.score);
+
   return (
     <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      {/* Upper Row: Project Identity & Quick Switcher */}
+      {/* Upper Row: Unified Project Identity & Command Actions */}
       <View style={styles.topRow}>
         <View style={styles.projectInfo}>
           <View style={[styles.projectIconBadge, { backgroundColor: colors.primarySoft }]}>
-            <Icon name="layers" size={16} color={colors.primary} />
+            <Icon name="layers" size={18} color={colors.primary} />
           </View>
-          <View style={{ gap: 2 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
-              <T variant="label" muted style={{ textTransform: 'uppercase', letterSpacing: 0.8, fontSize: 10 }}>
+          <View style={{ gap: 4, flex: 1, minWidth: 220 }}>
+            {/* Status Pills Row */}
+            <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: spacing.xs }}>
+              <T variant="label" muted style={{ textTransform: 'uppercase', letterSpacing: 0.8, fontSize: 10, marginRight: 2 }}>
                 Active Project
               </T>
               {stage ? <Badge label={STAGE_LABEL[stage] ?? stage} tone={stageTone(stage)} dot /> : null}
-              {approved ? <Badge label="Approved" tone="success" dot /> : null}
+              {approved ? (
+                <Badge label={`Approved${approvedAt ? ' ' + when(typeof approvedAt === 'number' ? approvedAt : Number(approvedAt) || 0) : ''}`} tone="success" dot />
+              ) : null}
+              {scorecard?.available ? (
+                <Badge
+                  label={`Scorecard ${scorecard.status}${hasScore ? ' · ' + Math.round(scorecard.score! * 100) + '%' : ''}`}
+                  tone={checkTone(scorecard.status === 'PASS' ? 'pass' : scorecard.status === 'WARN' ? 'warn' : 'fail')}
+                />
+              ) : null}
+              {seriesEpisode ? <Badge label={`Ep. ${seriesEpisode}`} tone="info" /> : null}
             </View>
-            <T variant="h3" numberOfLines={1} style={{ fontWeight: '700' }}>
+
+            {/* Title & Duration Cut Meta */}
+            <T variant="h2" numberOfLines={1} style={{ fontWeight: '700', fontSize: 19, letterSpacing: -0.3 }}>
               {title || (sbId ? `Storyboard ${sbId}` : 'Project Editor')}
             </T>
+            {subtitle ? (
+              <T variant="small" muted numberOfLines={1} style={{ fontSize: 12 }}>
+                {subtitle}
+              </T>
+            ) : null}
           </View>
         </View>
 
         {/* Action Controls */}
         <View style={styles.actionsRow}>
+          {onApprove || onUnapprove ? (
+            approved ? (
+              <Button
+                label="Withdraw approval"
+                icon="x"
+                small
+                loading={unapproveLoading}
+                onPress={onUnapprove}
+              />
+            ) : (
+              <Button
+                label="Approve cut"
+                variant="primary"
+                icon="check"
+                small
+                disabled={!canApprove}
+                hint={approvalBlockedHint}
+                loading={approveLoading}
+                onPress={onApprove}
+              />
+            )
+          ) : null}
+
           {onPreviewRender ? (
             <Button
               label="Preview"
@@ -81,16 +144,20 @@ export function StudioTabs({
               onPress={onPreviewRender}
             />
           ) : null}
+
           {onFinalRender ? (
             <Button
               label="Final Render"
               variant={approved ? 'primary' : 'secondary'}
               icon="film"
               small
+              disabled={!approved || rendering}
+              hint={!approved ? 'Approve the cut first' : undefined}
               loading={rendering}
               onPress={onFinalRender}
             />
           ) : null}
+
           <Button
             label="+ New Reel"
             variant="ghost"

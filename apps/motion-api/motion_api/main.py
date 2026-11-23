@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import threading
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -84,6 +85,14 @@ def create_app(
             app.state.client = AnthropicClient()
         return app.state.client
 
+    UI_PATH = Path(__file__).parent / "ui" / "index.html"
+
+    @app.get("/")
+    def index():
+        if UI_PATH.is_file():
+            return FileResponse(UI_PATH, media_type="text/html")
+        return {"ok": True, "service": "motion-api"}
+
     @app.get("/health")
     def health() -> dict:
         return {"ok": True, "service": "motion-api", "jobs": len(app.state.store.list())}
@@ -115,6 +124,28 @@ def create_app(
         if job is None or not job.final_path:
             raise HTTPException(404, "no film for this job")
         return FileResponse(job.final_path, media_type="video/mp4")
+
+    @app.get("/motion/jobs/{job_id}/stills")
+    def get_stills(job_id: str) -> dict:
+        job = app.state.store.get(job_id)
+        if job is None:
+            raise HTTPException(404, "no such job")
+        items = []
+        for t in (job.stills or []):
+            fname = f"t{t:.2f}.jpg"
+            items.append({"t": t, "url": f"/motion/jobs/{job_id}/stills/{fname}"})
+        return {"stills": items}
+
+    @app.get("/motion/jobs/{job_id}/stills/{filename}")
+    def get_still_file(job_id: str, filename: str):
+        job = app.state.store.get(job_id)
+        if job is None:
+            raise HTTPException(404, "no such job")
+        safe_name = Path(filename).name
+        still_path = job.dir / "out" / "stills" / safe_name
+        if not still_path.is_file():
+            raise HTTPException(404, "no such still")
+        return FileResponse(still_path, media_type="image/jpeg")
 
     return app
 

@@ -36,15 +36,18 @@ export function ChecksList({ checks }: { checks: Check[] }) {
   const { colors } = useTheme();
   return (
     <View style={{ gap: spacing.sm }}>
-      {checks.map((c) => (
-        <View key={c.name} style={{ flexDirection: 'row', gap: spacing.md, alignItems: 'flex-start', paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: colors.border }}>
-          <View style={{ width: 70 }}><Badge label={c.status.toUpperCase()} tone={checkTone(c.status)} /></View>
-          <View style={{ flex: 1 }}>
-            <T variant="h3">{humanize(c.name)}{c.score !== null ? `  ·  ${Math.round(c.score * 100)}%` : ''}</T>
-            <T variant="small" muted>{c.detail}</T>
+      {checks.map((c) => {
+        const hasValidScore = c.score !== null && c.score !== undefined && typeof c.score === 'number' && !isNaN(c.score);
+        return (
+          <View key={c.name} style={{ flexDirection: 'row', gap: spacing.md, alignItems: 'flex-start', paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+            <View style={{ width: 70 }}><Badge label={c.status.toUpperCase()} tone={checkTone(c.status)} /></View>
+            <View style={{ flex: 1 }}>
+              <T variant="h3">{humanize(c.name)}{hasValidScore ? `  ·  ${Math.round(c.score! * 100)}%` : ''}</T>
+              <T variant="small" muted>{c.detail}</T>
+            </View>
           </View>
-        </View>
-      ))}
+        );
+      })}
     </View>
   );
 }

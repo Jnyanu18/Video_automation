@@ -59,19 +59,6 @@ class EditingMemoryStore:
     def __init__(self, storage_path: Optional[str] = None):
         self.storage_path = Path(storage_path) if storage_path else None
         self.records: List[PerformanceRecord] = []
-        self._seed_default_memory()
-
-    def _seed_default_memory(self):
-        """Initial baseline memory records for the creator."""
-        if self.records:
-            return
-        defaults = [
-            PerformanceRecord("rec_01", "m_01", "Stop Building Features Nobody Asked For", "viral_hook_fast_pace", 29.4, 6, "visual_punch_in", time.time() - 86400 * 5, 94200, 71500, 0.758, 3820, 1940, 480),
-            PerformanceRecord("rec_02", "m_02", "Why Fast Multiplication is Pure Mental Math", "educational_masterclass", 42.0, 8, "question", time.time() - 86400 * 8, 62100, 46000, 0.742, 2480, 3100, 310),
-            PerformanceRecord("rec_03", "m_03", "The Cold Email That Converted at 14%", "viral_hook_fast_pace", 24.2, 5, "bold_statement", time.time() - 86400 * 12, 28200, 21800, 0.710, 980, 840, 140),
-            PerformanceRecord("rec_04", "m_04", "Founder Office Hours: Q&A Intro", "yc_presentation", 55.0, 4, "delayed_intro", time.time() - 86400 * 18, 14200, 8900, 0.440, 190, 210, 35),
-        ]
-        self.records.extend(defaults)
 
     def add_record(self, record: PerformanceRecord) -> None:
         self.records.append(record)
@@ -109,11 +96,7 @@ class EditingMemoryStore:
     def generate_recommendations(self) -> List[Dict[str, Any]]:
         """Compute statistical comparisons and generate evidence-grounded editorial recommendations."""
         if len(self.records) < 2:
-            return [{
-                "title": "Insufficient Data",
-                "recommendation": "Publish at least 3 reels to begin generating evidence-grounded editorial recommendations.",
-                "confidence": 0.5,
-            }]
+            return []
 
         recommendations = []
 

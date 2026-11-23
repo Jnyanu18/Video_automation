@@ -19,50 +19,13 @@ export default function MultiVersionStudio() {
           setVersions(res.versions);
         }
       } catch (err) {
-        console.warn('Versions fallback:', err);
+        console.warn('Could not load versions:', err);
       }
     }
     loadVersions();
   }, []);
 
-  const versionList = versions.length > 0 ? versions : [
-    {
-      version_id: 'ver_retention_a',
-      cut_type: 'retention',
-      title: 'Version A: 3-Second Viral Hook',
-      description: 'High-velocity algorithmic retention cut with aggressive pause cuts and punch-in zooms.',
-      target_duration: 24.0,
-      style_id: 'viral_hook_fast_pace',
-      plan_summary: { keep_count: 4, zooms_count: 2, sfx_count: 3, target_lufs: -14.0 },
-    },
-    {
-      version_id: 'ver_educational_b',
-      cut_type: 'educational',
-      title: 'Version B: Structured Masterclass',
-      description: 'Conversational educational tempo with lower-third titles and balanced visual pacing.',
-      target_duration: 45.0,
-      style_id: 'educational_masterclass',
-      plan_summary: { keep_count: 3, zooms_count: 1, sfx_count: 1, target_lufs: -15.0 },
-    },
-    {
-      version_id: 'ver_cinematic_c',
-      cut_type: 'cinematic',
-      title: 'Version C: High-Energy Cinematic',
-      description: 'Music-driven cut with frequent dynamic transitions, high contrast, and impact SFX.',
-      target_duration: 20.0,
-      style_id: 'cinematic_event',
-      plan_summary: { keep_count: 5, zooms_count: 3, sfx_count: 4, target_lufs: -13.5 },
-    },
-    {
-      version_id: 'ver_founder_d',
-      cut_type: 'founder',
-      title: 'Version D: Authentic Founder Demo',
-      description: 'Unfiltered founder pitch with product screen emphasis and zero flashy distractions.',
-      target_duration: 35.0,
-      style_id: 'yc_presentation',
-      plan_summary: { keep_count: 2, zooms_count: 0, sfx_count: 0, target_lufs: -14.0 },
-    },
-  ];
+  const versionList = versions;
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
@@ -79,7 +42,8 @@ export default function MultiVersionStudio() {
           </T>
         </Card>
 
-        <SectionTitle title="Generated Editorial Variations (4 Independent Cuts)" />
+        <SectionTitle title={`Generated Editorial Variations (${versionList.length})`} />
+        {versionList.length === 0 && <Card><T muted>No versions generated yet. Create a reel to start.</T></Card>}
 
         <View style={styles.versionGrid}>
           {versionList.map((ver) => (

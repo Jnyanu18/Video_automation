@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router';
 import { Icon } from '../../components/Icon';
 import { Badge, Button, Card, T } from '../../components/ui';
 import { TemplateWizard } from '../../components/TemplateWizard';
+import { ProjectHistory } from '../../components/ProjectHistory';
 import { useStoryboards } from '../../state/useStoryboards';
 import { useToast } from '../../state/toast';
 import { editor } from '../../api/editor';
@@ -36,7 +37,7 @@ export default function ChoppityHomeScreen() {
 
   const handleGenerateClips = async () => {
     if (!linkInput.trim()) {
-      toast('Please paste a video link or drop a video file');
+      toast('Please paste a video link');
       return;
     }
     setSubmitting(true);
@@ -156,7 +157,7 @@ export default function ChoppityHomeScreen() {
                         />
                       </View>
                       <Pressable
-                        onPress={() => toast('Multiple links feature: Pro tier queueing ready!')}
+                        onPress={() => router.push('/new')}
                         style={({ pressed, hovered }: any) => [
                           styles.squarePlusBtn,
                           { borderColor: colors.border, backgroundColor: hovered ? colors.surfaceAlt : '#FFFFFF' },
@@ -179,7 +180,7 @@ export default function ChoppityHomeScreen() {
 
                   {/* c) Large dashed-border drop-zone */}
                   <Pressable
-                    onPress={() => toast('Drag & Drop / File Browser: Ready for local upload')}
+                    onPress={() => router.push('/new')}
                     style={({ pressed, hovered }: any) => [
                       styles.dropZone,
                       {
@@ -195,14 +196,14 @@ export default function ChoppityHomeScreen() {
                     </View>
                     <View style={{ alignItems: 'center', gap: 2 }}>
                       <Text style={{ fontFamily: font.bold, fontSize: 14, color: colors.text }}>
-                        Drop a video here
+                        Upload a video
                       </Text>
                       <Text style={{ fontFamily: font.regular, fontSize: 12, color: colors.textMuted }}>
-                        or <Text style={{ color: colors.primary, fontFamily: font.semibold }}>browse files</Text> on your computer
+                        Choose a file in the New Reel form
                       </Text>
                     </View>
                     <Text style={{ fontFamily: font.regular, fontSize: 11, color: colors.textFaint }}>
-                      MP4, MOV, MKV up to 4GB • High bitrate supported
+                      Open the upload form
                     </Text>
                   </Pressable>
 
@@ -304,222 +305,9 @@ export default function ChoppityHomeScreen() {
         </View>
 
         {/* =========================================================================
-            2. "My projects" Section
+            2. CREATIVE LIBRARY / PROJECT HISTORY (Matching Editorial Design Reference)
            ========================================================================= */}
-        <View style={{ gap: spacing.md, marginTop: spacing.md }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <T variant="h2" style={{ fontSize: 18, fontWeight: '700' }}>
-                My projects
-              </T>
-              {storyboards && storyboards.length > 0 && (
-                <Badge label={`${storyboards.length}`} tone="neutral" />
-              )}
-            </View>
-            <Pressable
-              onPress={() => setWizardOpen(true)}
-              style={({ pressed }: any) => [
-                styles.templateConfigBtn,
-                { borderColor: colors.border },
-                pressed && { opacity: 0.8 },
-              ]}
-            >
-              <Icon name="sliders" size={14} color={colors.text} />
-              <Text style={{ fontFamily: font.semibold, fontSize: 12, color: colors.text }}>
-                Video Template
-              </Text>
-            </Pressable>
-          </View>
-
-          {/* Empty State vs Projects Grid */}
-          {loading ? (
-            <View style={{ padding: spacing.xxl, alignItems: 'center' }}>
-              <ActivityIndicator size="large" color={colors.primary} />
-            </View>
-          ) : !storyboards || storyboards.length === 0 ? (
-            <View style={[styles.emptyProjectCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-              <View style={[styles.emptyFolderCircle, { backgroundColor: '#F1F5F9' }]}>
-                <Icon name="folder" size={28} color={colors.textMuted} />
-              </View>
-              <T variant="h3" style={{ fontSize: 15, fontWeight: '600', color: colors.text }}>
-                No projects yet
-              </T>
-              <T variant="small" muted style={{ textAlign: 'center', maxWidth: 360 }}>
-                Upload or paste a video link above to generate viral short clips with speaker reframing and karaoke captions.
-              </T>
-              <Button
-                label="Upload a video"
-                variant="primary"
-                icon="upload"
-                onPress={() => setPickCardExpanded(true)}
-              />
-            </View>
-          ) : (
-            <View style={styles.projectGrid}>
-              {storyboards.map((project) => {
-                const title = project.storyboard?.title || project.video_path?.split('/').pop() || `Clip Project ${project.id.slice(0, 6)}`;
-                const duration = project.storyboard?.duration?.output_seconds ? `${Math.round(project.storyboard.duration.output_seconds)}s` : 'Short';
-                const scenesCount = project.storyboard?.scenes_count || project.storyboard?.scenes?.length || 0;
-
-                return (
-                  <Pressable
-                    key={project.id}
-                    onPress={() => router.push(`/storyboard?sb=${project.id}` as any)}
-                    style={({ pressed, hovered }: any) => [
-                      styles.projectCard,
-                      { backgroundColor: colors.surface, borderColor: colors.border },
-                      hovered && { borderColor: colors.primary, transform: [{ translateY: -2 }] },
-                      pressed && { opacity: 0.9 },
-                      shadow(colors),
-                      Platform.OS === 'web' && ({ cursor: 'pointer', transition: 'all 160ms ease' } as any),
-                    ]}
-                  >
-                    {/* Mockup Poster Frame (9:16 aspect preview) */}
-                    <View style={styles.posterPreview}>
-                      <View style={[styles.posterInner, { backgroundColor: '#0F172A' }]}>
-                        <Icon name="play" size={22} color="#FFFFFF" />
-                        <View style={styles.posterBadgeOverlay}>
-                          <Badge
-                            label={project.status === 'ready' ? 'READY' : project.status === 'processing' ? 'PROCESSING' : 'DRAFT'}
-                            tone={project.status === 'ready' ? 'success' : 'info'}
-                          />
-                        </View>
-                      </View>
-                    </View>
-
-                    {/* Card Content Details */}
-                    <View style={styles.projectCardDetails}>
-                      <Text style={{ fontFamily: font.bold, fontSize: 14, color: colors.text }} numberOfLines={1}>
-                        {title}
-                      </Text>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        <Text style={{ fontFamily: font.medium, fontSize: 11, color: colors.textMuted }}>
-                          {duration} • {scenesCount} scenes
-                        </Text>
-                        <Text style={{ fontFamily: font.mono, fontSize: 10, color: colors.primary }}>
-                          {project.style}
-                        </Text>
-                      </View>
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </View>
-          )}
-        </View>
-
-        {/* =========================================================================
-            3. SUPPORTING CONTENT: Short Tutorial Cards (Horizontal Scroll)
-           ========================================================================= */}
-        <View style={{ gap: spacing.sm, marginTop: spacing.lg }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <T variant="h3" style={{ fontSize: 15, fontWeight: '700' }}>
-              Learn & Level Up
-            </T>
-            <T variant="small" style={{ color: colors.primary, fontWeight: '600' }}>
-              View all tutorials →
-            </T>
-          </View>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tutorialScroll}>
-            {[
-              {
-                title: 'Auto-Reframe: Tracking faces for 9:16 vertical clips',
-                duration: '1:45 min',
-                icon: 'video' as const,
-                color: '#6C4CF0',
-              },
-              {
-                title: 'Karaoke Captions: Word-by-word animated highlights',
-                duration: '2:10 min',
-                icon: 'type' as const,
-                color: '#FF5A1F',
-              },
-              {
-                title: 'Sound Design: Auto punch zooms and tactical SFX',
-                duration: '1:20 min',
-                icon: 'zap' as const,
-                color: '#10B981',
-              },
-              {
-                title: 'Direct Scheduling: Publishing straight to Instagram & Shorts',
-                duration: '3:05 min',
-                icon: 'share' as const,
-                color: '#06B6D4',
-              },
-            ].map((tut, i) => (
-              <Pressable
-                key={i}
-                onPress={() => toast(`Opening tutorial: ${tut.title}`)}
-                style={({ pressed, hovered }: any) => [
-                  styles.tutorialCard,
-                  { backgroundColor: colors.surface, borderColor: colors.border },
-                  hovered && { borderColor: tut.color },
-                  pressed && { opacity: 0.9 },
-                  Platform.OS === 'web' && ({ cursor: 'pointer' } as any),
-                ]}
-              >
-                <View style={[styles.tutorialThumb, { backgroundColor: tut.color + '15' }]}>
-                  <Icon name={tut.icon} size={22} color={tut.color} />
-                  <View style={styles.durationChip}>
-                    <Text style={{ fontFamily: font.mono, fontSize: 10, color: '#FFFFFF' }}>
-                      {tut.duration}
-                    </Text>
-                  </View>
-                </View>
-                <Text style={{ fontFamily: font.semibold, fontSize: 12, color: colors.text, marginTop: 8 }} numberOfLines={2}>
-                  {tut.title}
-                </Text>
-              </Pressable>
-            ))}
-          </ScrollView>
-        </View>
-
-        {/* =========================================================================
-            4. SUPPORTING CONTENT: Community Showcase Grid
-           ========================================================================= */}
-        <View style={{ gap: spacing.sm, marginTop: spacing.md, marginBottom: spacing.xl }}>
-          <T variant="h3" style={{ fontSize: 15, fontWeight: '700' }}>
-            Built with GrowthOS Video Automation
-          </T>
-
-          <View style={styles.communityGrid}>
-            {[
-              { title: 'AI Cold Email Strategy Breakdown', views: '+18.4k views', creator: '@alex_builds', tag: 'B2B SaaS' },
-              { title: '3 Productivity Habits That Changed My Year', views: '+9.2k views', creator: '@growth_hacks', tag: 'Personal Brand' },
-              { title: 'Why Cursor AI is Taking Over Coding', views: '+34.1k views', creator: '@sarah_tech', tag: 'Tech News' },
-            ].map((showcase, i) => (
-              <View
-                key={i}
-                style={[
-                  styles.showcaseCard,
-                  { backgroundColor: colors.surface, borderColor: colors.border },
-                  shadow(colors),
-                ]}
-              >
-                <View style={styles.showcaseThumb}>
-                  <View style={[styles.showcaseTag, { backgroundColor: 'rgba(0,0,0,0.7)' }]}>
-                    <Text style={{ fontFamily: font.bold, fontSize: 10, color: '#FFFFFF' }}>
-                      {showcase.views}
-                    </Text>
-                  </View>
-                  <Icon name="play" size={20} color="#FFFFFF" />
-                </View>
-                <View style={{ padding: 10, gap: 2 }}>
-                  <Text style={{ fontFamily: font.bold, fontSize: 12, color: colors.text }} numberOfLines={1}>
-                    {showcase.title}
-                  </Text>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontFamily: font.regular, fontSize: 11, color: colors.textMuted }}>
-                      {showcase.creator}
-                    </Text>
-                    <Badge label={showcase.tag} tone="neutral" />
-                  </View>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
+        <ProjectHistory onCreateFilm={() => setPickCardExpanded(true)} />
       </ScrollView>
 
       {/* Signature Template Wizard Modal */}

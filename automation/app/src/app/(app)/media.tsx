@@ -33,30 +33,10 @@ export default function MediaLibrary() {
     audio.current = a; setPlaying(s.id);
   }
 
-  // Demo data
-  const demoMedia = {
-    total_renders: 8,
-    total_sfx: 40,
-    renders: [
-      { id: '1', duration: 15, title: 'Event Highlight', created_at: Date.now() - 86400000 },
-      { id: '2', duration: 30, title: 'Behind The Scenes', created_at: Date.now() - 172800000 },
-      { id: '3', duration: 20, title: 'Product Demo', created_at: Date.now() - 259200000 },
-      { id: '4', duration: 25, title: 'Testimonial', created_at: Date.now() - 345600000 },
-      { id: '5', duration: 18, title: 'Tutorial', created_at: Date.now() - 432000000 },
-      { id: '6', duration: 22, title: 'Announcement', created_at: Date.now() - 518400000 },
-      { id: '7', duration: 28, title: 'Campaign', created_at: Date.now() - 604800000 },
-      { id: '8', duration: 16, title: 'Social Teaser', created_at: Date.now() - 691200000 },
-    ],
-    sfx: [
-      { id: 'sfx1', name: 'Whoosh', category: 'Transitions', url: '#' },
-      { id: 'sfx2', name: 'Pop', category: 'Impact', url: '#' },
-      { id: 'sfx3', name: 'Success Chime', category: 'Positive', url: '#' },
-    ]
-  };
-
   if (error && !media) return <Page title="Media Library"><ErrorState message={error} onRetry={load} /></Page>;
+  if (!media) return <Page title="Media Library"><Skeleton /></Page>;
 
-  const finalMedia = media || demoMedia;
+  const finalMedia = media;
   const cats = Array.from(new Set<string>(finalMedia.sfx.map((s: any) => s.category)));
   const sfx = finalMedia.sfx.filter((s: any) => !cat || s.category === cat);
 

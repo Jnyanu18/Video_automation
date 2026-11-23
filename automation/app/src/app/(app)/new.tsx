@@ -1,171 +1,222 @@
 import React, { useEffect, useState } from 'react';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 import { Screen } from '../../components/Screen';
-import { Banner, Button, Card, Chips, Field, Input, Picker, T } from '../../components/ui';
+import { Badge, Banner, Button, Card, Field, Input, Picker, T } from '../../components/ui';
 import { Icon } from '../../components/Icon';
-import { errorText, get, post, uploadVideo } from '../../api/client';
+import { useWide } from '../../components/useWide';
+import { errorText, get, uploadVideo } from '../../api/client';
 import { editor } from '../../api/editor';
-import type { Options, UploadInfo } from '../../api/types';
-import { useQuery } from '../../state/useQuery';
+import type { UploadInfo } from '../../api/types';
 import { useToast } from '../../state/toast';
 import { font, radius, spacing, useTheme } from '../../theme';
 
-type Mode = 'url' | 'editor' | 'upload';
+const GOAL_OPTIONS = [
+  { value: 'Viral retention & engagement', label: 'Viral retention & engagement' },
+  { value: 'Educational explainer', label: 'Educational explainer' },
+  { value: 'Direct response & sales', label: 'Direct response & sales' },
+  { value: 'Brand storytelling', label: 'Brand storytelling' },
+  { value: 'Product launch showcase', label: 'Product launch showcase' },
+];
 
-const val = (x: string | { value: string }) => (typeof x === 'string' ? x : x.value);
-const tagsOf = (s: string) => s.split(/[\s,]+/).filter(Boolean).map((t) => (t.startsWith('#') ? t : '#' + t));
+const AUDIENCE_OPTIONS = [
+  { value: 'Social audience / Gen Z', label: 'Social audience / Gen Z' },
+  { value: 'Founders & executives', label: 'Founders & executives' },
+  { value: 'Developers & builders', label: 'Developers & builders' },
+  { value: 'Creatives & designers', label: 'Creatives & designers' },
+  { value: 'Everyone', label: 'Everyone' },
+];
 
+const FORMAT_OPTIONS = [
+  { value: 'Vertical Reels / Shorts (9:16)', label: 'Vertical Reels / Shorts (9:16)' },
+  { value: 'Horizontal YouTube (16:9)', label: 'Horizontal YouTube (16:9)' },
+  { value: 'Square Feed (1:1)', label: 'Square Feed (1:1)' },
+];
+
+const DURATION_OPTIONS = [
+  { value: '30 seconds', label: '30 seconds' },
+  { value: '45 seconds', label: '45 seconds' },
+  { value: '60 seconds', label: '60 seconds' },
+  { value: 'Full condensed cut', label: 'Full condensed cut' },
+];
+
+const FEELING_OPTIONS = [
+  { value: 'High-energy & punchy', label: 'High-energy & punchy' },
+  { value: 'Cinematic & authentic', label: 'Cinematic & authentic' },
+  { value: 'Clean & professional', label: 'Clean & professional' },
+  { value: 'Fast-paced & witty', label: 'Fast-paced & witty' },
+  { value: 'Dramatic & impactful', label: 'Dramatic & impactful' },
+];
+
+const RHYTHM_OPTIONS = [
+  { value: 'Fast cuts & pattern interrupts', label: 'Fast cuts & pattern interrupts' },
+  { value: 'Steady rhythm with punch-ins', label: 'Steady rhythm with punch-ins' },
+  { value: 'Slow build, heavy payoff', label: 'Slow build, heavy payoff' },
+  { value: 'Beat-synced flow', label: 'Beat-synced flow' },
+];
+
+/**
+ * AI Video Editing Studio (Raw Clips + Reference Video):
+ * 01 Raw footage & brief -> 02 Creative direction (Storyboard) -> 03 Review your film
+ */
 export default function NewReel() {
   const router = useRouter();
   const toast = useToast();
   const { colors } = useTheme();
-  const [mode, setMode] = useState<Mode>('editor');
-  const { data: options } = useQuery<Options>(() => get('/api/options'), [], { live: false });
+  const wide = useWide();
+  const params = useLocalSearchParams<{ style?: string; footage?: string; note?: string; prompt?: string }>();
 
-  // shared fields
-  const [niche, setNiche] = useState('');
-  const [voiceStyle, setVoiceStyle] = useState('');
-  const [notes, setNotes] = useState('');
+  // 1. Film Title & Vision
+  const [filmTitle, setFilmTitle] = useState('Viral Hook Master Cut');
+  const [prompt, setPrompt] = useState(
+    'Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add dynamic karaoke captions.'
+  );
 
-  // url mode
-  const [url, setUrl] = useState('');
-  const [avatarId, setAvatarId] = useState('');
-  const [voiceId, setVoiceId] = useState('');
-  const [urlFallbackAvailable, setUrlFallbackAvailable] = useState(false);
-
-  // upload & editor mode video picker
+  // 2. Raw Footage State
   const [picked, setPicked] = useState<{ name: string; type: string; uri: string; blob?: Blob } | null>(null);
   const [progress, setProgress] = useState<number | null>(null);
   const [staged, setStaged] = useState<UploadInfo | null>(null);
-
-  // upload mode fields
-  const [caption, setCaption] = useState('');
-  const [overlay, setOverlay] = useState('');
-  const [tags, setTags] = useState('');
-
-  // AI Video Editor mode fields
-  const params = useLocalSearchParams<{ style?: string; footage?: string; note?: string; prompt?: string }>();
-  const [editorStyle, setEditorStyle] = useState(params.style || 'viral_hook_fast_pace');
-  const [editorPrompt, setEditorPrompt] = useState('Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add karaoke captions.');
-  const [seriesMode, setSeriesMode] = useState(false);
-  const [sendabilityFocus, setSendabilityFocus] = useState(true);
-  const [styleList, setStyleList] = useState<{ value: string; label: string }[]>([]);
   const [footage, setFootage] = useState<{ path: string; name: string; size_mb: number }[]>([]);
-  const [footagePath, setFootagePath] = useState('');
-  const [editorUrl, setEditorUrl] = useState('');
-  const [director, setDirector] = useState<'auto' | 'manual'>('auto');
-  const [note, setNote] = useState('');
+  const [footagePath, setFootagePath] = useState(params.footage || '');
 
-  useEffect(() => {
-    get('/api/editor/settings').then((r: any) => {
-      if (!params.style) setEditorStyle(r.settings.default_style);
-      setEditorPrompt(r.settings.default_prompt);
-    }).catch(() => undefined);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // 3. Reference Video State (The dedicated reference video box)
+  const [referenceUrl, setReferenceUrl] = useState('');
 
-  useEffect(() => {
-    if (mode !== 'editor') return;
-    editor.styles().then((r: any) => setStyleList([...Object.values(r.presets), ...Object.values(r.custom)].map((p: any) => ({ value: p.name, label: p.name.replace(/_/g, ' ') })))).catch(() => undefined);
-    editor.footage().then((r) => setFootage(r.files)).catch(() => undefined);
-  }, [mode]);
-  useEffect(() => {
-    if (params.style) { setEditorStyle(params.style); setMode('editor'); }
-    if (params.prompt) { setEditorPrompt(params.prompt); setDirector('manual'); setMode('editor'); }
-    if (params.note) { setNote(params.note); setMode('editor'); }
-    if (params.footage) { setFootagePath(params.footage); setMode('editor'); }
-  }, [params.style, params.prompt, params.note, params.footage]);
+  // 4. Selector Grid States
+  const [goal, setGoal] = useState('Viral retention & engagement');
+  const [audience, setAudience] = useState('Social audience / Gen Z');
+  const [format, setFormat] = useState('Vertical Reels / Shorts (9:16)');
+  const [duration, setDuration] = useState('30 seconds');
+  const [feeling, setFeeling] = useState('High-energy & punchy');
+  const [rhythm, setRhythm] = useState('Fast cuts & pattern interrupts');
 
+  // 5. Editing Style Preset
+  const [editorStyle, setEditorStyle] = useState(params.style || 'viral_hook_fast_pace');
+  const [styleList, setStyleList] = useState<{ value: string; label: string }[]>([]);
+
+  // State & Loading
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const niches = (options?.presets?.niches ?? []).map(val);
-  const voices = (options?.presets?.brandVoices ?? []).map(val);
-  const shared = () => ({
-    ...(niche ? { niche } : {}), ...(voiceStyle ? { brandVoice: voiceStyle } : {}), ...(notes.trim() ? { brandVoiceNotes: notes.trim() } : {}),
-  });
+  useEffect(() => {
+    get('/api/editor/settings')
+      .then((r: any) => {
+        if (!params.style && r?.settings?.default_style) setEditorStyle(r.settings.default_style);
+        if (!params.prompt && r?.settings?.default_prompt) setPrompt(r.settings.default_prompt);
+      })
+      .catch(() => undefined);
 
-  function done(r: { recordId: string; duplicate?: boolean }) {
-    toast(r.duplicate ? 'That one was already submitted. Opening it.' : 'Submitted.');
-    router.replace({ pathname: '/reels/[id]', params: { id: r.recordId } });
-  }
+    editor
+      .styles()
+      .then((r: any) => {
+        const presets = [...Object.values(r.presets || {}), ...Object.values(r.custom || {})];
+        setStyleList(presets.map((p: any) => ({ value: p.name, label: p.name.replace(/_/g, ' ') })));
+      })
+      .catch(() => undefined);
 
-  async function submitUrl() {
-    if (!/^https?:\/\//i.test(url.trim())) return setError('Paste a full link that starts with https://');
-    setBusy(true); setError(null); setUrlFallbackAvailable(false);
-    try {
-      done(await post('/api/reels', { url: url.trim(), ...shared(), ...(avatarId ? { avatarId } : {}), ...(voiceId ? { voiceId } : {}) }));
-    } catch (e) {
-      setError(errorText(e));
-      setUrlFallbackAvailable(true);
-    } finally { setBusy(false); }
-  }
+    editor
+      .footage()
+      .then((r) => setFootage(r.files || []))
+      .catch(() => undefined);
+  }, [params.style, params.prompt]);
 
-  async function autoEditUrlFallback() {
-    if (!url.trim()) return;
-    setBusy(true); setError(null);
-    try {
-      const res = await editor.createStoryboard({
-        url: url.trim(),
-        prompt: notes.trim() || 'Remake reel from link',
-        style: editorStyle,
-      });
-      toast('The editor is drafting your storyboard.');
-      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
-    } catch (e) {
-      setError(errorText(e));
-    } finally {
-      setBusy(false);
-    }
-  }
-
+  // File Picker
   async function chooseFile() {
     setError(null);
-    const res = await DocumentPicker.getDocumentAsync({ type: ['video/mp4', 'video/quicktime'], copyToCacheDirectory: true });
+    const res = await DocumentPicker.getDocumentAsync({
+      type: ['video/mp4', 'video/quicktime'],
+      copyToCacheDirectory: true,
+    });
     if (res.canceled || !res.assets?.[0]) return;
     const a = res.assets[0];
-    const f = { name: a.name, type: a.mimeType || 'video/mp4', uri: a.uri, blob: Platform.OS === 'web' ? (a.file as Blob | undefined) : undefined };
-    setPicked(f); setStaged(null); setFootagePath(''); setProgress(0);
+    const f = {
+      name: a.name,
+      type: a.mimeType || 'video/mp4',
+      uri: a.uri,
+      blob: Platform.OS === 'web' ? (a.file as Blob | undefined) : undefined,
+    };
+    setPicked(f);
+    setStaged(null);
+    setFootagePath('');
+    setProgress(0);
     try {
       const up = await uploadVideo(f, setProgress);
       setStaged(up);
     } catch (e) {
-      setPicked(null); setError(errorText(e));
-    } finally { setProgress(null); }
-  }
-
-  async function generateStoryboard() {
-    const link = editorUrl.trim();
-    if (!link && !staged && !footagePath) return setError('Paste a link, upload a video, or pick a file from the raw-footage folder.');
-    if (link && !/^https:\/\//i.test(link)) return setError('The link must start with https://');
-    setBusy(true); setError(null);
-    try {
-      const source = link ? { url: link } : staged ? { uploadId: staged.uploadId } : { video_path: footagePath };
-      const res = director === 'auto'
-        ? await editor.autoEdit({ ...source, style: editorStyle, instruction: note.trim() })
-        : await editor.createStoryboard({ ...source, style: editorStyle, prompt: editorPrompt, series_mode: seriesMode, sendability_focus: sendabilityFocus });
-      toast(director === 'auto' ? 'The director is working on your reel.' : 'The editor is drafting your storyboard.');
-      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
-    } catch (e) {
+      setPicked(null);
       setError(errorText(e));
     } finally {
-      setBusy(false);
+      setProgress(null);
     }
   }
 
-  async function submitUpload() {
-    const targetUploadId = staged?.uploadId;
-    if (!targetUploadId) return setError('Choose a video first.');
-    const promptText = caption.trim() || 'Original reel cut';
-    setBusy(true); setError(null);
+  function clearSelectedFootage() {
+    setPicked(null);
+    setStaged(null);
+    setFootagePath('');
+  }
+
+  // Generate Storyboard / Shape Creative Direction
+  async function submitCreativeDirection() {
+    setError(null);
+    const refLink = referenceUrl.trim();
+    if (!staged && !footagePath && !refLink) {
+      setError('Please add at least one raw clip or paste a reference video link to start editing.');
+      return;
+    }
+
+    if (refLink && !/^https?:\/\//i.test(refLink)) {
+      setError('Reference video URL must start with https://');
+      return;
+    }
+
+    setBusy(true);
     try {
-      const res = await editor.createStoryboard({
-        uploadId: targetUploadId,
-        prompt: promptText,
-        style: editorStyle,
-      });
-      toast('Storyboard created from uploaded video.');
+      // Synthesize full direction prompt
+      const directionSummary = [
+        filmTitle.trim() ? `Title: ${filmTitle.trim()}` : '',
+        `Goal: ${goal}`,
+        `Audience: ${audience}`,
+        `Format: ${format}`,
+        `Duration: ${duration}`,
+        `Feeling: ${feeling}`,
+        `Rhythm: ${rhythm}`,
+        refLink ? `Reference Video Pacing Guide: ${refLink}` : '',
+      ]
+        .filter(Boolean)
+        .join(' | ');
+
+      const combinedPrompt = `${prompt.trim()}\n\n[Direction: ${directionSummary}]`;
+
+      let res: { storyboard_id: string };
+
+      if (staged) {
+        // Uploaded file
+        res = await editor.autoEdit({
+          video_path: undefined,
+          url: undefined,
+          uploadId: staged.uploadId,
+          style: editorStyle,
+          instruction: combinedPrompt,
+        } as any);
+      } else if (footagePath) {
+        // Local raw footage path
+        res = await editor.autoEdit({
+          video_path: footagePath,
+          style: editorStyle,
+          instruction: combinedPrompt,
+        });
+      } else {
+        // Reference URL only
+        res = await editor.autoEdit({
+          url: refLink,
+          style: editorStyle,
+          instruction: combinedPrompt,
+        });
+      }
+
+      toast('The creative director is drafting your storyboard cut.');
       router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
     } catch (e) {
       setError(errorText(e));
@@ -175,216 +226,581 @@ export default function NewReel() {
   }
 
   const uploading = progress !== null;
+  const activeFootageName = staged?.fileName || picked?.name || (footagePath ? footagePath.split(/[\\/]/).pop() : '');
+  const posterTitle = filmTitle.trim() ? filmTitle.trim().toUpperCase() : 'MAKE IT MATTER.';
 
   return (
-    <Screen title="New reel" subtitle="Turn viral reels or raw footage into original, publish-ready videos." narrow>
-      {/* Mode switcher tabs */}
-      <View style={[styles.seg, { backgroundColor: colors.surfaceAlt }]}>
-        {([
-          { key: 'editor', label: 'Auto-edit', icon: 'sparkles', isPrimary: true },
-          { key: 'upload', label: 'Upload ready video', icon: 'upload', isPrimary: false },
-          { key: 'url', label: 'AI avatar remake', icon: 'link', isPrimary: false },
-        ] as const).map((m) => {
-          const isSelected = mode === m.key;
-          return (
-            <Pressable
-              key={m.key}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: isSelected }}
-              onPress={() => { setMode(m.key); setError(null); setUrlFallbackAvailable(false); }}
-              style={[
-                styles.segItem,
-                isSelected && { backgroundColor: colors.surface },
-                m.isPrimary && !isSelected && { borderColor: colors.primary + '33', borderWidth: 1 },
-              ]}
-            >
-              <Icon name={m.icon as any} size={15} color={isSelected ? colors.primary : colors.textMuted} />
-              <T variant="label" color={isSelected ? colors.primary : colors.textMuted}>{m.label}</T>
-              {m.isPrimary ? (
-                <View style={{ backgroundColor: isSelected ? colors.primarySoft : 'transparent', paddingHorizontal: 5, paddingVertical: 1, borderRadius: 6 }}>
-                  <T variant="small" style={{ fontSize: 10, fontWeight: '700' }} color={colors.primary}>AI</T>
-                </View>
-              ) : null}
-            </Pressable>
-          );
-        })}
+    <Screen title="AI Video Editing" subtitle="Turn raw footage and viral references into original, publish-ready videos.">
+      {/* ---------------- 3-Step Top Stepper ---------------- */}
+      <View style={[styles.stepperContainer, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+        <View style={[styles.stepItem, styles.stepItemActive]}>
+          <View style={[styles.stepBadge, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.onPrimary }}>01</Text>
+          </View>
+          <Text style={[styles.stepLabel, { color: colors.text }]}>Raw clips & brief</Text>
+        </View>
+
+        <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
+
+        <Pressable
+          accessibilityRole="tab"
+          onPress={() => router.push('/storyboard' as any)}
+          style={[styles.stepItem, { opacity: 0.6 }]}
+        >
+          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>02</Text>
+          </View>
+          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Creative direction</Text>
+        </Pressable>
+
+        <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
+
+        <Pressable
+          accessibilityRole="tab"
+          onPress={() => router.push('/timeline' as any)}
+          style={[styles.stepItem, { opacity: 0.6 }]}
+        >
+          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>03</Text>
+          </View>
+          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Review your film</Text>
+        </Pressable>
       </View>
 
-      <Card style={{ gap: spacing.lg }}>
-        {/* MODE 1: From reel link */}
-        {mode === 'url' ? (
-          <>
-            <Field label="Instagram reel link">
-              <Input value={url} onChangeText={(v) => { setUrl(v); setError(null); setUrlFallbackAvailable(false); }} placeholder="https://www.instagram.com/reel/…" autoCapitalize="none" autoCorrect={false} keyboardType="url" />
-            </Field>
+      {/* Global Error Alert */}
+      {error ? <Banner tone="danger">{error}</Banner> : null}
 
-            <Field label="Niche">
-              <Chips options={niches.map((n) => ({ value: n, label: n }))} value={niche} allowEmpty onChange={setNiche} />
-            </Field>
-            <Field label="Brand voice">
-              <Chips options={voices.map((n) => ({ value: n, label: n }))} value={voiceStyle} allowEmpty onChange={setVoiceStyle} />
-            </Field>
-            <Field label="Voice notes" hint="Optional. Anything the writer should know about your tone.">
-              <Input value={notes} onChangeText={setNotes} multiline style={{ minHeight: 72 }} />
-            </Field>
+      {/* ============================================================== */}
+      {/* STEP 1: SPLIT 2-COLUMN WORKFLOW                                */}
+      {/* ============================================================== */}
+      <View style={[styles.splitGrid, wide && styles.splitGridWide]}>
+        {/* Left Column: Form Controls */}
+        <View style={styles.formCol}>
+          <Card style={{ gap: spacing.lg }}>
+            <View style={styles.headerLine}>
+              <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
+                STEP 01 — RAW CLIPS & BRIEF
+              </T>
+              <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>ABOUT 2 MIN</Text>
+              </View>
+            </View>
 
-            <Field label="Avatar">
-              <Picker value={avatarId} placeholder="Default avatar" onChange={setAvatarId} options={(options?.avatars ?? []).map((a) => ({ value: a.id, label: a.name || a.id }))} />
-            </Field>
-            <Field label="Voice" hint={options?.hasMoreAvatars || options?.hasMoreVoices ? 'Only the first page of avatars and voices is listed.' : undefined}>
-              <Picker value={voiceId} placeholder="Default voice" onChange={setVoiceId}
-                options={(options?.voices ?? []).map((v) => ({ value: v.id, label: v.name || v.id, sub: v.language }))} />
-            </Field>
+            <View style={{ gap: 4 }}>
+              <T variant="h1" style={{ fontSize: 24, letterSpacing: -0.5 }}>
+                What are we cutting?
+              </T>
+              <T muted style={{ fontSize: 13.5 }}>
+                Add your raw footage clips and an optional reference video to shape the pacing.
+              </T>
+            </View>
 
-            {urlFallbackAvailable ? (
-              <Banner tone="warning">
+            {/* 1. Raw Clips Section */}
+            <View style={styles.boxSection}>
+              <View style={styles.boxHeader}>
+                <Icon name="film" size={16} color={colors.primary} />
+                <T variant="label" style={{ fontWeight: '700', letterSpacing: 0.5 }}>
+                  1. RAW FOOTAGE CLIPS
+                </T>
+              </View>
+
+              {activeFootageName ? (
+                <View
+                  style={[
+                    styles.selectedClipCard,
+                    { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
+                  ]}
+                >
+                  <View style={[styles.clipIconBadge, { backgroundColor: colors.primarySoft }]}>
+                    <Icon name="check" size={16} color={colors.primary} />
+                  </View>
+                  <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
+                    <Text style={[styles.clipNameText, { color: colors.text }]} numberOfLines={1}>
+                      {activeFootageName}
+                    </Text>
+                    <T variant="caption" muted>
+                      {staged ? `${(staged.sizeBytes / 1048576).toFixed(1)} MB · Ready for edit` : 'Selected from local footage'}
+                    </T>
+                  </View>
+                  <Button label="Remove" small variant="ghost" icon="x" onPress={clearSelectedFootage} />
+                </View>
+              ) : (
                 <View style={{ gap: spacing.sm }}>
-                  <T variant="body" style={{ fontWeight: '600' }}>
-                    Avatar remake pipeline unavailable or unconfigured
-                  </T>
-                  <T variant="small">
-                    {error ? `Reason: ${error}. ` : ''}The legacy n8n pipeline could not be reached. You can auto-edit this URL directly with the native AI Video Editor engine instead:
-                  </T>
-                  <Button
-                    label="Auto-edit this URL directly"
-                    variant="primary"
-                    icon="sparkles"
-                    loading={busy}
-                    onPress={autoEditUrlFallback}
-                  />
+                  <Pressable
+                    onPress={chooseFile}
+                    style={({ hovered }: any) => [
+                      styles.uploadDropZone,
+                      {
+                        backgroundColor: colors.surfaceAlt,
+                        borderColor: hovered ? colors.primary : colors.border,
+                      },
+                    ]}
+                  >
+                    <Icon name="upload" size={24} color={colors.primary} />
+                    <View style={{ alignItems: 'center', gap: 2 }}>
+                      <Text style={{ fontFamily: font.semibold, fontSize: 14, color: colors.text }}>
+                        {uploading ? `Uploading... ${progress || 0}%` : 'Upload raw clips from computer'}
+                      </Text>
+                      <T variant="caption" muted>
+                        Accepts MP4, MOV. Video stays on your machine.
+                      </T>
+                    </View>
+                  </Pressable>
+
+                  {footage.length > 0 ? (
+                    <View style={{ marginTop: 2 }}>
+                      <T variant="caption" faint style={{ marginBottom: 4 }}>
+                        OR CHOOSE FROM EXISTING RAW-FOOTAGE FOLDER:
+                      </T>
+                      <Picker
+                        value={footagePath}
+                        placeholder="Pick a file in raw-footage folder"
+                        onChange={(v) => {
+                          setFootagePath(v);
+                          setPicked(null);
+                          setStaged(null);
+                        }}
+                        options={footage.map((f) => ({
+                          value: f.path,
+                          label: f.name,
+                          sub: `${f.size_mb} MB`,
+                        }))}
+                      />
+                    </View>
+                  ) : null}
                 </View>
-              </Banner>
-            ) : error ? (
-              <Banner tone="danger">{error}</Banner>
-            ) : null}
-            <Button label="Submit reel" variant="primary" icon="send" full loading={busy} onPress={submitUrl} />
-          </>
-        ) : null}
+              )}
+            </View>
 
-        {/* MODE 2: Auto-edit. A link or a file in; a reviewable storyboard out. */}
-        {mode === 'editor' ? (
-          <>
-            <Banner tone="info">
-              Paste a link or add a video. The director transcribes it, tightens the cut, then plans the hook, animated diagrams, zooms and sound effects. You review the storyboard and approve before anything is rendered.
-            </Banner>
+            {/* 2. Reference Video Box (Requested feature) */}
+            <View style={styles.boxSection}>
+              <View style={styles.boxHeader}>
+                <Icon name="link" size={16} color={colors.primary} />
+                <T variant="label" style={{ fontWeight: '700', letterSpacing: 0.5 }}>
+                  2. REFERENCE VIDEO (OPTIONAL)
+                </T>
+              </View>
 
-            <Field label="Link to a video" hint="Instagram, YouTube, TikTok and similar. Only use videos you own or have permission to edit.">
-              <Input value={editorUrl} onChangeText={(v) => { setEditorUrl(v); if (v.trim()) { setStaged(null); setPicked(null); setFootagePath(''); } }}
-                placeholder="https://www.instagram.com/reel/…" autoCapitalize="none" autoCorrect={false} keyboardType="url" />
+              <Input
+                value={referenceUrl}
+                onChangeText={setReferenceUrl}
+                placeholder="https://www.instagram.com/reel/... or TikTok / YouTube Short"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <T variant="caption" muted style={{ marginTop: 2 }}>
+                Paste a viral reel or video. The AI director matches its cut frequency, hook pacing, and visual transitions.
+              </T>
+            </View>
+
+            {/* 3. Film Name */}
+            <Field label="GIVE YOUR FILM A NAME" hint="Working title for this reel">
+              <Input value={filmTitle} onChangeText={setFilmTitle} placeholder="Viral Hook Master Cut" />
             </Field>
 
-            <Field label="Or a video file" hint="MP4 or MOV from your computer.">
-              <Pressable accessibilityRole="button" onPress={uploading ? undefined : chooseFile}
-                style={({ hovered }: any) => [styles.drop, { borderColor: staged ? colors.success : hovered ? colors.primary : colors.border, backgroundColor: colors.surfaceAlt }]}>
-                <Icon name={staged ? 'check' : 'upload'} size={22} color={staged ? colors.success : colors.primary} />
-                <View style={{ flex: 1 }}>
-                  <T variant="h3" numberOfLines={1}>{picked ? picked.name : 'Choose a video'}</T>
-                  <T variant="small" muted>
-                    {uploading ? `Uploading… ${progress}%` : staged ? `Uploaded · ${Math.round(staged.durationSeconds)}s · ${(staged.sizeBytes / 1048576).toFixed(1)} MB` : 'Tap to browse'}
-                  </T>
-                </View>
-              </Pressable>
-              {uploading ? <View style={[styles.bar, { backgroundColor: colors.border }]}><View style={[styles.barFill, { width: `${progress}%`, backgroundColor: colors.primary }]} /></View> : null}
+            {/* 4. Describe Editing Vision */}
+            <Field
+              label="DESCRIBE YOUR EDITING VISION"
+              hint="Specify cuts, pacing, on-screen text, karaoke captions, or specific moments to emphasize."
+            >
+              <Input
+                value={prompt}
+                onChangeText={setPrompt}
+                multiline
+                style={{ minHeight: 90, lineHeight: 22 }}
+                placeholder="Cut dead air and silences, keep speech fast and engaging, reframe to 9:16 vertical, add karaoke captions."
+              />
             </Field>
 
-            {footage.length ? (
-              <Field label="Or footage already on this computer" hint="Files in the raw-footage folder">
-                <Picker value={footagePath} placeholder="Choose a file" onChange={(v) => { setFootagePath(v); if (v) { setStaged(null); setPicked(null); setEditorUrl(''); } }}
-                  options={footage.map((f) => ({ value: f.path, label: f.name, sub: `${f.size_mb} MB` }))} />
+            {/* 5. 2x3 Configuration Grid */}
+            <View style={styles.selectorsGrid}>
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>
+                  WHAT IS THE GOAL?
+                </T>
+                <Picker value={goal} placeholder="Choose goal" options={GOAL_OPTIONS} onChange={setGoal} />
+              </View>
+
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>
+                  WHO IS IT FOR?
+                </T>
+                <Picker value={audience} placeholder="Choose audience" options={AUDIENCE_OPTIONS} onChange={setAudience} />
+              </View>
+
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>
+                  WHERE WILL IT BE WATCHED?
+                </T>
+                <Picker value={format} placeholder="Choose format" options={FORMAT_OPTIONS} onChange={setFormat} />
+              </View>
+
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>
+                  HOW LONG?
+                </T>
+                <Picker value={duration} placeholder="Choose length" options={DURATION_OPTIONS} onChange={setDuration} />
+              </View>
+
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>
+                  CHOOSE A FEELING
+                </T>
+                <Picker value={feeling} placeholder="Choose feeling" options={FEELING_OPTIONS} onChange={setFeeling} />
+              </View>
+
+              <View style={styles.selectorItem}>
+                <T variant="label" muted style={styles.selectorLabel}>
+                  STORY RHYTHM
+                </T>
+                <Picker value={rhythm} placeholder="Choose rhythm" options={RHYTHM_OPTIONS} onChange={setRhythm} />
+              </View>
+            </View>
+
+            {/* Editing Style Preset */}
+            {styleList.length > 0 ? (
+              <Field label="EDITING STYLE PRESET" hint="Visual presets with pre-configured pacing and caption typography">
+                <Picker
+                  value={editorStyle}
+                  placeholder="Select editing style"
+                  options={styleList}
+                  onChange={setEditorStyle}
+                />
               </Field>
             ) : null}
 
-            <Field label="Editing style" hint="Sets pacing, pause length, caption look and loudness.">
-              <Chips options={styleList.length ? styleList : [{ value: editorStyle, label: editorStyle.replace(/_/g, ' ') }]} value={editorStyle} onChange={(v) => v && setEditorStyle(v)} />
-            </Field>
+            {/* Form Footer */}
+            <View style={styles.formFooter}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <Icon name="sparkles" size={14} color={colors.primary} />
+                <T variant="caption" faint>
+                  The editor cuts and reframes automatically. You approve before final render.
+                </T>
+              </View>
 
-            <Field label="Who decides the edit?">
-              <Chips<'auto' | 'manual'> options={[{ value: 'auto', label: 'The director (recommended)' }, { value: 'manual', label: 'I will describe it' }]} value={director} onChange={(v) => v && setDirector(v)} />
-            </Field>
+              <Button
+                label="Shape my creative direction"
+                variant="primary"
+                icon="sparkles"
+                loading={busy}
+                onPress={submitCreativeDirection}
+              />
+            </View>
+          </Card>
+        </View>
 
-            {director === 'auto' ? (
-              <Field label="Notes for the director (optional)" hint="For example: focus on the pricing claim, keep it under 45 seconds.">
-                <Input value={note} onChangeText={setNote} multiline style={{ minHeight: 60 }} />
-              </Field>
-            ) : (
-              <>
-                <Field label="Editor instructions" hint="The agent edits with tools from this description. It can lose track on long, multi-step requests.">
-                  <Input value={editorPrompt} onChangeText={setEditorPrompt} multiline style={{ minHeight: 60 }} />
-                </Field>
-                <Field label="Growth options">
-                  <Chips<'dm' | 'series'> options={[{ value: 'dm', label: sendabilityFocus ? 'Share trigger: on' : 'Share trigger: off' }, { value: 'series', label: seriesMode ? 'Series mode: on' : 'Series mode: off' }]}
-                    value="" onChange={(v) => { if (v === 'dm') setSendabilityFocus(!sendabilityFocus); if (v === 'series') setSeriesMode(!seriesMode); }} />
-                </Field>
-              </>
-            )}
+        {/* Right Column: Aesthetic Glimpse of the Process */}
+        <View style={styles.previewCol}>
+          <Card style={{ gap: spacing.lg, backgroundColor: colors.surface }}>
+            <View style={styles.headerLine}>
+              <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
+                A GLIMPSE OF THE PROCESS
+              </T>
+              <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>STUDIO</Text>
+              </View>
+            </View>
 
-            <Button label={director === 'auto' ? 'Auto-edit this video' : 'Generate storyboard'} variant="primary" icon="sparkles" full loading={busy}
-              disabled={uploading} onPress={generateStoryboard} />
-            <T variant="small" faint>Runs in the background; the next screen shows each step. Nothing is rendered or published until you approve.</T>
+            <T variant="h2" style={{ fontSize: 16 }}>
+              Raw footage, transformed with vision.
+            </T>
 
-            {error ? <Banner tone="danger">{error}</Banner> : null}
-          </>
-        ) : null}
+            {/* Aesthetic Poster Card */}
+            <View
+              style={[
+                styles.posterCard,
+                {
+                  backgroundColor: colors.surfaceAlt,
+                  borderColor: colors.border,
+                },
+              ]}
+            >
+              <View style={styles.posterTopLine}>
+                <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>MF / EDITORIAL STUDY</Text>
+                <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>001</Text>
+              </View>
 
-        {/* MODE 3: Upload ready video */}
-        {mode === 'upload' ? (
-          <>
-            <Banner tone="info">
-              Upload your video directly into the unified video editing engine. It creates a storyboard ready for cut editing, captions, and rendering without requiring Airtable.
-            </Banner>
+              <View style={styles.posterCenter}>
+                <Text style={[styles.posterSubheading, { color: colors.primary }]}>
+                  {feeling.toUpperCase()}
+                </Text>
+                <Text style={[styles.posterTitleText, { color: colors.text }]} numberOfLines={3}>
+                  {posterTitle}
+                </Text>
+                <View style={{ marginTop: 8, gap: 4 }}>
+                  <Text style={[styles.posterStatusPill, { color: activeFootageName ? colors.primary : colors.textMuted }]}>
+                    {activeFootageName ? `▶ CLIP: ${activeFootageName}` : '○ NO RAW CLIPS ATTACHED YET'}
+                  </Text>
+                  {referenceUrl.trim() ? (
+                    <Text style={[styles.posterStatusPill, { color: colors.primary }]}>
+                      ✦ REFERENCE GUIDED ACTIVE
+                    </Text>
+                  ) : null}
+                </View>
+              </View>
 
-            <Field label="Video file" hint="MP4 or MOV.">
-              <Pressable accessibilityRole="button" onPress={uploading ? undefined : chooseFile}
-                style={({ hovered }: any) => [styles.drop, { borderColor: staged ? colors.success : hovered ? colors.primary : colors.border, backgroundColor: colors.surfaceAlt }]}>
-                <Icon name={staged ? 'check' : 'upload'} size={22} color={staged ? colors.success : colors.primary} />
-                <View style={{ flex: 1 }}>
-                  <T variant="h3" numberOfLines={1}>{picked ? picked.name : 'Choose a video'}</T>
+              <View style={[styles.posterBottomLine, { borderTopColor: colors.border }]}>
+                <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>AI VIDEO STUDIO</Text>
+                <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>YOUR FOOTAGE</Text>
+                <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>01 23</Text>
+              </View>
+            </View>
+
+            {/* Process Highlights */}
+            <View style={{ gap: spacing.md, marginTop: spacing.xs }}>
+              <View style={styles.highlightRow}>
+                <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
+                  <Icon name="sparkles" size={16} color={colors.primary} />
+                </View>
+                <View style={{ flex: 1, gap: 2 }}>
+                  <T variant="label" style={{ fontWeight: '700' }}>
+                    Multimodal Scene Indexing
+                  </T>
                   <T variant="small" muted>
-                    {uploading ? `Uploading… ${progress}%` : staged ? `Uploaded · ${Math.round(staged.durationSeconds)}s · ${(staged.sizeBytes / 1048576).toFixed(1)} MB` : 'Tap to browse'}
+                    Analyzes spoken speech, detected objects, and keyframe motion — no blind cuts.
                   </T>
                 </View>
-              </Pressable>
-              {uploading ? <View style={[styles.bar, { backgroundColor: colors.border }]}><View style={[styles.barFill, { width: `${progress}%`, backgroundColor: colors.primary }]} /></View> : null}
-            </Field>
+              </View>
 
-            <Field label="Caption / Editing instructions" hint="Guidance for the video storyboard cut.">
-              <Input value={caption} onChangeText={setCaption} multiline placeholder="e.g. Cut dead air, hook in first 3s" />
-            </Field>
+              <View style={styles.highlightRow}>
+                <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
+                  <Icon name="link" size={16} color={colors.primary} />
+                </View>
+                <View style={{ flex: 1, gap: 2 }}>
+                  <T variant="label" style={{ fontWeight: '700' }}>
+                    Reference-Guided Pacing
+                  </T>
+                  <T variant="small" muted>
+                    Recreates viral cut timing and hook structure from your reference video.
+                  </T>
+                </View>
+              </View>
 
-            <Field label="Editing style" hint="Sets pacing, pause length, and caption styling.">
-              <Chips options={styleList.length ? styleList : [{ value: editorStyle, label: editorStyle.replace(/_/g, ' ') }]} value={editorStyle} onChange={(v) => v && setEditorStyle(v)} />
-            </Field>
-
-            <Field label="On-screen overlay" hint="Optional text shown on the video."><Input value={overlay} onChangeText={setOverlay} /></Field>
-            <Field label="Hashtags"><Input value={tags} onChangeText={setTags} placeholder="#fitness #tips" autoCapitalize="none" /></Field>
-
-            <Field label="Niche">
-              <Chips options={niches.map((n) => ({ value: n, label: n }))} value={niche} allowEmpty onChange={setNiche} />
-            </Field>
-            <Field label="Brand voice">
-              <Chips options={voices.map((n) => ({ value: n, label: n }))} value={voiceStyle} allowEmpty onChange={setVoiceStyle} />
-            </Field>
-
-            {error ? <Banner tone="danger">{error}</Banner> : null}
-            <Button label="Create storyboard" variant="primary" icon="sparkles" full loading={busy}
-              disabled={!staged || uploading} onPress={submitUpload} />
-          </>
-        ) : null}
-      </Card>
+              <View style={styles.highlightRow}>
+                <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
+                  <Icon name="clock" size={16} color={colors.primary} />
+                </View>
+                <View style={{ flex: 1, gap: 2 }}>
+                  <T variant="label" style={{ fontWeight: '700' }}>
+                    You Stay in Control
+                  </T>
+                  <T variant="small" muted>
+                    Review every scene and caption in the Storyboard before final rendering.
+                  </T>
+                </View>
+              </View>
+            </View>
+          </Card>
+        </View>
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  seg: { flexDirection: 'row', padding: 4, borderRadius: radius.md, marginBottom: spacing.md },
-  segItem: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 42, borderRadius: radius.sm + 2 },
-  drop: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, padding: spacing.lg, borderRadius: radius.md, borderWidth: 1.5, borderStyle: 'dashed' },
-  bar: { height: 6, borderRadius: 3, overflow: 'hidden', marginTop: spacing.sm },
-  barFill: { height: 6, borderRadius: 3 },
-  storyboardBox: { borderWidth: 1, borderRadius: radius.md, padding: spacing.lg, gap: spacing.md, marginTop: spacing.sm },
-  statRow: { flexDirection: 'row', justifyContent: 'space-around', padding: spacing.md, borderWidth: 1, borderRadius: radius.sm },
-  statCol: { alignItems: 'center' },
-  sceneCard: { padding: spacing.md, borderWidth: 1, borderRadius: radius.sm, gap: 4 },
-  captionPreview: { padding: 6, borderRadius: radius.sm / 2, marginTop: 4 },
+  /* Stepper */
+  stepperContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: radius.lg,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginBottom: spacing.md,
+    gap: 16,
+  },
+  stepItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    cursor: 'pointer' as any,
+  },
+  stepItemActive: {},
+  stepBadge: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepLabel: {
+    fontFamily: font.semibold,
+    fontSize: 13,
+  },
+  stepConnector: {
+    width: 24,
+    height: 1,
+  },
+
+  /* Split Layout */
+  splitGrid: {
+    gap: spacing.xl,
+  },
+  splitGridWide: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  formCol: {
+    flex: 1.25,
+    minWidth: 0,
+  },
+  previewCol: {
+    flex: 0.9,
+    minWidth: 320,
+  },
+
+  headerLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  eyebrowTag: {
+    fontFamily: font.mono,
+    fontWeight: '700',
+    letterSpacing: 1,
+    fontSize: 11,
+  },
+  pillBadge: {
+    borderWidth: 1,
+    borderRadius: radius.pill,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  pillBadgeText: {
+    fontFamily: font.mono,
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+
+  /* Box Sections for Raw Clips and Reference Video */
+  boxSection: {
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: radius.md,
+    padding: spacing.md,
+    gap: 8,
+  },
+  boxHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  uploadDropZone: {
+    borderWidth: 1.5,
+    borderStyle: 'dashed',
+    borderRadius: radius.md,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    cursor: 'pointer' as any,
+  },
+  selectedClipCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    padding: 12,
+    borderRadius: radius.sm,
+    borderWidth: 1,
+  },
+  clipIconBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  clipNameText: {
+    fontFamily: font.semibold,
+    fontSize: 13.5,
+  },
+
+  /* Selectors Grid */
+  selectorsGrid: {
+    gap: spacing.md,
+  },
+  selectorItem: {
+    gap: 4,
+  },
+  selectorLabel: {
+    fontSize: 10.5,
+    fontFamily: font.mono,
+    letterSpacing: 0.8,
+  },
+
+  formFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: spacing.md,
+    paddingTop: spacing.xs,
+  },
+
+  /* Poster Card */
+  posterCard: {
+    borderRadius: radius.md,
+    borderWidth: 1,
+    padding: spacing.lg,
+    aspectRatio: 1 / 1.05,
+    justifyContent: 'space-between',
+    marginVertical: spacing.xs,
+  },
+  posterTopLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  posterCenter: {
+    marginVertical: 'auto',
+    gap: 6,
+  },
+  posterSubheading: {
+    fontFamily: font.mono,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 1.2,
+  },
+  posterTitleText: {
+    fontFamily: font.bold,
+    fontSize: 32,
+    lineHeight: 34,
+    letterSpacing: -1,
+  },
+  posterStatusPill: {
+    fontFamily: font.mono,
+    fontSize: 9.5,
+    fontWeight: '700',
+    letterSpacing: 0.6,
+  },
+  posterBottomLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderTopWidth: 1,
+    paddingTop: 10,
+  },
+  posterMonoText: {
+    fontFamily: font.mono,
+    fontSize: 9,
+    fontWeight: '600',
+    letterSpacing: 0.8,
+  },
+
+  /* Highlights */
+  highlightRow: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'flex-start',
+  },
+  highlightIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: radius.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 1,
+  },
 });
-void font;

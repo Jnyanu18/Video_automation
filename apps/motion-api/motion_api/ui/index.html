@@ -3,198 +3,1519 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Motion Films</title>
+<title>Motion Films · Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0a0b; --panel:#131316; --panel-2:#1a1a1f; --line:#26262d;
-    --text:#f2f2f4; --muted:#8b8b96; --accent:#ff5a1f; --accent-dim:#ff5a1f22;
-    --good:#38d27a; --bad:#ff5468; --warn:#e8b339;
-    --radius:14px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    background:var(--bg); color:var(--text);
-    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--accent)}
-  .wrap{max-width:1180px;margin:0 auto;padding:32px 16px 80px}
-
-  header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
-  .mark{width:34px;height:34px;border-radius:9px;background:var(--accent);
-    display:grid;place-items:center;flex:none}
-  .mark svg{width:19px;height:19px;display:block}
-  h1{font-size:21px;font-weight:650;margin:0;letter-spacing:-0.01em}
-  .sub{color:var(--muted);font-size:14px;margin:0 0 28px 46px}
-  @media (max-width:640px){ .sub{margin-left:0} }
-
-  .grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
-  @media (max-width:900px){ .grid{grid-template-columns:minmax(0,1fr)} }
-
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
-  .card + .card{margin-top:16px}
-  .card h2{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
-    color:var(--muted);margin:0 0 14px}
-
-  label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
-  textarea,input[type=text]{
-    width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;
-    color:var(--text);padding:12px 13px;font:inherit;resize:vertical;outline:none;
-  }
-  textarea:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
-  textarea{min-height:132px;line-height:1.5}
-  .hint{color:var(--muted);font-size:12.5px;margin:7px 0 0}
-
-  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
-  button{
-    background:var(--accent);color:#fff;border:0;border-radius:10px;
-    padding:11px 18px;font:inherit;font-weight:600;cursor:pointer;
-  }
-  button:hover:not(:disabled){filter:brightness(1.08)}
-  button:disabled{opacity:.45;cursor:not-allowed}
-  button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-
-  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
-    padding:4px 10px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line)}
-  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--muted)}
-  .badge.running{color:var(--warn)} .badge.running .dot{background:var(--warn)}
-  .badge.done{color:var(--good)}    .badge.done .dot{background:var(--good)}
-  .badge.failed{color:var(--bad)}   .badge.failed .dot{background:var(--bad)}
-  @media (prefers-reduced-motion:no-preference){
-    .badge.running .dot{animation:pulse 1.4s ease-in-out infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  :root {
+    --bg: #09090b;
+    --sidebar-bg: #0d0d11;
+    --panel: #131317;
+    --panel-2: #18181e;
+    --panel-3: #202027;
+    --line: #222229;
+    --line-focus: #ff5a1f;
+    --text: #f4f4f6;
+    --text-muted: #838392;
+    --text-dim: #545462;
+    --accent: #ff5a1f;
+    --accent-hover: #ff6f3b;
+    --accent-dim: rgba(255, 90, 31, 0.12);
+    --accent-dim-strong: rgba(255, 90, 31, 0.22);
+    --good: #34d399;
+    --bad: #f87171;
+    --warn: #fbbf24;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   }
 
-  .jobhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .brief-echo{color:var(--muted);font-size:13.5px;margin:10px 0 0;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-  .meters{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
-  .meter .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-  .meter .v{font-size:19px;font-weight:650;font-family:var(--mono);margin-top:2px}
+  /* App Shell */
+  .app-layout {
+    display: flex;
+    min-height: 100vh;
+  }
 
-  .stills{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-top:4px}
-  .still{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#000;position:relative}
-  .still img{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
-  .still .t{position:absolute;left:6px;bottom:6px;background:#000a;backdrop-filter:blur(3px);
-    font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:5px}
+  /* Left Sidebar */
+  aside.sidebar {
+    width: 270px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 20px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
 
-  video{width:100%;max-height:70vh;border-radius:10px;background:#000;display:block}
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 16px;
+    box-shadow: 0 0 16px var(--accent-dim-strong);
+    flex-shrink: 0;
+  }
+  .brand-text h1 {
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    color: #fff;
+  }
+  .brand-text p {
+    margin: 1px 0 0;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
 
-  .checks{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
-  .checks li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px}
-  .checks .ic{flex:none;width:16px;height:16px;margin-top:2px}
+  /* Workspace Dropdown */
+  .workspace-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .workspace-card:hover {
+    border-color: var(--text-dim);
+    background: var(--panel-2);
+  }
+  .workspace-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: #2b2b36;
+    color: #f0f0f5;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .workspace-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .workspace-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .workspace-sub {
+    font-size: 10.5px;
+    color: var(--text-muted);
+  }
+  .workspace-chevron {
+    color: var(--text-dim);
+    font-size: 11px;
+  }
 
-  .joblist{display:grid;gap:7px}
-  .joblist button{width:100%;text-align:left;background:var(--panel-2);color:var(--text);
-    border:1px solid transparent;font-weight:500;padding:10px 12px;border-radius:10px}
-  .joblist button:hover{border-color:var(--line)}
-  .joblist button[aria-current=true]{border-color:var(--accent);background:var(--accent-dim)}
-  .joblist .jb{font-size:13px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-  .joblist .jm{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:3px}
+  /* Nav Section */
+  .nav-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0 0 10px 6px;
+  }
 
-  .note{border-radius:10px;padding:12px 14px;font-size:13.5px;border:1px solid var(--line);
-    background:var(--panel-2);margin-top:14px}
-  .note.bad{border-color:#ff546844;background:#ff54680f;color:#ffc2c9}
-  .note code{font-family:var(--mono);font-size:12.5px;word-break:break-word}
-  .empty{color:var(--muted);font-size:13.5px}
-  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+    margin-bottom: 5px;
+  }
+  .nav-btn:hover {
+    color: var(--text);
+    background: var(--panel);
+  }
+  .nav-btn.active {
+    color: #fff;
+    background: var(--panel-2);
+    border-color: var(--line);
+  }
+  .nav-btn.primary-action {
+    background: var(--accent-dim);
+    border-color: rgba(255, 90, 31, 0.3);
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .nav-btn.primary-action:hover {
+    background: rgba(255, 90, 31, 0.2);
+    border-color: var(--accent);
+  }
+  .nav-btn.primary-action .nav-icon {
+    color: var(--accent);
+  }
+  .nav-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 99px;
+    background: var(--panel-3);
+    color: var(--text-muted);
+  }
+
+  /* Sidebar Footer Box */
+  .sidebar-spacer {
+    flex: 1;
+  }
+  .help-box {
+    background: linear-gradient(180deg, #18181f 0%, #121217 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 14px 12px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .help-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(255, 90, 31, 0.15) 0%, transparent 70%);
+  }
+  .help-sparkle {
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .help-text {
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+  }
+  .help-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .help-link:hover {
+    text-decoration: underline;
+  }
+
+  /* User Account Mini-card */
+  .user-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 4px 4px;
+    border-top: 1px solid var(--line);
+  }
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2a2a35;
+    border: 1px solid #3c3c4a;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #e0e0ea;
+  }
+  .user-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .user-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .user-plan {
+    font-size: 10.5px;
+    color: var(--text-muted);
+  }
+  .user-more {
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* Main Wrapper */
+  main.main-viewport {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Top Stepper Bar */
+  header.stepper-header {
+    border-bottom: 1px solid var(--line);
+    background: rgba(9, 9, 11, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stepper-nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .step-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    opacity: 0.45;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .step-node:hover {
+    opacity: 0.8;
+  }
+  .step-node.active {
+    opacity: 1;
+  }
+  .step-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-dim);
+    font-size: 11px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    color: var(--text-muted);
+  }
+  .step-node.active .step-circle {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 10px var(--accent-dim-strong);
+  }
+  .step-node.completed .step-circle {
+    border-color: var(--good);
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--good);
+  }
+  .step-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  /* Content Container */
+  .view-container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 36px 36px 80px;
+  }
+
+  /* Step 1 Split Grid */
+  .brief-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.95fr);
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 1024px) {
+    .brief-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* Form Column */
+  .form-header-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .step-tagline {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .time-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: var(--mono);
+  }
+  .form-title {
+    font-size: 26px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: #fff;
+  }
+  .form-subtitle {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin: 0 0 28px;
+  }
+
+  /* Input fields */
+  .field-group {
+    margin-bottom: 22px;
+  }
+  .field-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-family: var(--mono);
+  }
+  .text-input, .textarea-input, .select-input {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    padding: 12px 14px;
+    font-size: 13.5px;
+    font-family: var(--font);
+    transition: all 0.15s ease;
+    outline: none;
+  }
+  .text-input:focus, .textarea-input:focus, .select-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+  .textarea-input {
+    min-height: 110px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  /* Multi-option 2-col Grid */
+  .select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 18px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 640px) {
+    .select-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .select-wrapper {
+    position: relative;
+  }
+  .select-input {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 32px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23838392' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+  .select-input option {
+    background: var(--panel-2);
+    color: var(--text);
+  }
+
+  /* Form Footer */
+  .form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 6px;
+    flex-wrap: wrap;
+  }
+  .hint-refine {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .hint-refine svg {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 13px 24px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 16px var(--accent-dim-strong);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 90, 31, 0.35);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Right Poster Preview Column */
+  .preview-col {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+  .preview-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .preview-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .studio-pill {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: var(--mono);
+  }
+  .preview-headline {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 20px;
+  }
+
+  /* The Aesthetic Study Poster */
+  .poster-card {
+    aspect-ratio: 1 / 1.08;
+    background: radial-gradient(circle at 75% 25%, #3c1e13 0%, #170d09 50%, #0a0604 100%);
+    border: 1px solid #3d2319;
+    border-radius: var(--radius-md);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 60px rgba(255, 90, 31, 0.08), 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+  .poster-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+    pointer-events: none;
+  }
+  .poster-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #c79a86;
+    text-transform: uppercase;
+  }
+  .poster-body {
+    margin: auto 0;
+  }
+  .poster-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #ff8554;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .poster-title {
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+    text-transform: uppercase;
+    max-width: 90%;
+    word-break: break-word;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .poster-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #a47b6a;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(164, 123, 106, 0.2);
+    padding-top: 12px;
+  }
+
+  /* Process Highlights Below Poster */
+  .preview-points {
+    margin-top: 24px;
+    display: grid;
+    gap: 14px;
+  }
+  .point-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .point-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .point-text h4 {
+    margin: 0 0 2px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .point-text p {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  /* Step 2 & 3 View Container */
+  .director-view, .review-view, .films-view, .brand-view {
+    display: none;
+  }
+  .director-view.active, .review-view.active, .films-view.active, .brand-view.active {
+    display: block;
+  }
+
+  /* Studio Telemetry Cards */
+  .telemetry-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-bottom: 4px;
+  }
+  .stat-val {
+    font-size: 24px;
+    font-weight: 750;
+    color: #fff;
+    font-family: var(--mono);
+  }
+
+  /* Status Badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 700;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+  }
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-dim);
+  }
+  .status-badge.running {
+    color: var(--warn);
+    border-color: rgba(251, 191, 36, 0.3);
+    background: rgba(251, 191, 36, 0.08);
+  }
+  .status-badge.running .status-dot {
+    background: var(--warn);
+    animation: pulse 1.2s infinite;
+  }
+  .status-badge.done {
+    color: var(--good);
+    border-color: rgba(52, 211, 153, 0.3);
+    background: rgba(52, 211, 153, 0.08);
+  }
+  .status-badge.done .status-dot {
+    background: var(--good);
+  }
+  .status-badge.failed {
+    color: var(--bad);
+    border-color: rgba(248, 113, 113, 0.3);
+    background: rgba(248, 113, 113, 0.08);
+  }
+  .status-badge.failed .status-dot {
+    background: var(--bad);
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.85); }
+  }
+
+  /* Director Stills Grid */
+  .stills-section {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-top: 24px;
+  }
+  .stills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .still-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    aspect-ratio: 9 / 16;
+  }
+  .still-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .still-time {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  /* Finished Video Card */
+  .film-theater {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .film-theater {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .video-container {
+    background: #000;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  }
+  video.final-video {
+    width: 100%;
+    max-height: 68vh;
+    display: block;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    background: #000;
+  }
+
+  /* Scorecard & Rubric */
+  .scorecard-panel h3 {
+    font-size: 13.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin: 0 0 16px;
+  }
+  .meters-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .meter-box {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+  }
+  .meter-k {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .meter-v {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    font-family: var(--mono);
+    margin-top: 3px;
+  }
+
+  .rubric-checks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: grid;
+    gap: 8px;
+  }
+  .rubric-checks li {
+    display: flex;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--text);
+    align-items: flex-start;
+  }
+  .rubric-checks svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Notes & Alerts */
+  .alert-banner {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-top: 20px;
+    font-size: 13px;
+  }
+  .alert-banner.error {
+    background: rgba(248, 113, 113, 0.08);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: #fca5a5;
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: none;
+    place-items: center;
+    padding: 20px;
+  }
+  .modal-overlay.open {
+    display: grid;
+  }
+  .modal-box {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 520px;
+    padding: 28px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  }
+  .modal-title {
+    font-size: 18px;
+    font-weight: 750;
+    color: #fff;
+    margin: 0 0 8px;
+  }
+  .modal-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .modal-close:hover {
+    color: #fff;
+  }
+
+  /* Film list table / items */
+  .films-table {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .film-item-row {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .film-item-row:hover {
+    border-color: var(--accent);
+    background: var(--panel-2);
+  }
+  .film-item-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .film-item-brief {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .film-item-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>
-      </svg>
+
+<div class="app-layout">
+  <!-- Left Studio Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-mark">M</div>
+      <div class="brand-text">
+        <h1>Motion Film</h1>
+        <p>Make something that moves</p>
+      </div>
     </div>
-    <h1>Motion Films</h1>
-  </header>
-  <p class="sub">A brief goes in. Claude directs the film, renders frames, looks at them,
-    critiques its own work and iterates until it passes the rubric.</p>
 
-  <div class="grid">
-    <main>
-      <section class="card">
-        <h2>The brief</h2>
-        <label for="brief">What is the film for?</label>
-        <textarea id="brief" placeholder="A 20 second launch film for an AI video editor. Confident, fast, a little dry. The point: editing a reel by hand takes hours, this takes about thirty seconds. End on the product name and a single call to action."></textarea>
-        <p class="hint">Say what it is for, who it is for and the one thing it must land.
-          Tone and length help. The director decides the shots.</p>
-        <div class="row">
-          <button id="go">Direct the film</button>
-          <span id="gostate" class="empty" role="status" aria-live="polite"></span>
+    <!-- Workspace Selector -->
+    <div class="workspace-card" id="workspaceBtn" title="Switch workspace">
+      <div class="workspace-icon">J</div>
+      <div class="workspace-info">
+        <div class="workspace-name">My creative space</div>
+        <div class="workspace-sub">Personal workspace</div>
+      </div>
+      <div class="workspace-chevron">▼</div>
+    </div>
+
+    <!-- Your Studio Nav -->
+    <div class="nav-section-title">Your Studio</div>
+    
+    <button class="nav-btn primary-action" id="navNewFilm">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+          <path d="M5 12h14M12 5v14"/>
+        </svg>
+      </span>
+      <span>Create a film</span>
+    </button>
+
+    <button class="nav-btn active" id="navMyFilms">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+          <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M17 3v18M3 12h18"/>
+        </svg>
+      </span>
+      <span>My films</span>
+      <span class="nav-badge" id="sidebarJobCount">0</span>
+    </button>
+
+    <button class="nav-btn" id="navBrandKit">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+          <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+        </svg>
+      </span>
+      <span>Brand kit</span>
+    </button>
+
+    <div class="sidebar-spacer"></div>
+
+    <!-- Helpful Bottom Card -->
+    <div class="help-box">
+      <div class="help-sparkle">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+          <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+        </svg>
+        <span>A little help goes a long way.</span>
+      </div>
+      <p class="help-text">Start with an idea. Your creative director iterates and looks at rendered frames until it is right.</p>
+      <a class="help-link" id="helpHowItWorks">How it works ↗</a>
+    </div>
+
+    <!-- Account Footer -->
+    <div class="user-footer">
+      <div class="user-avatar">JU</div>
+      <div class="user-info">
+        <div class="user-name">Creator account</div>
+        <div class="user-plan">Personal plan</div>
+      </div>
+      <div class="user-more">•••</div>
+    </div>
+  </aside>
+
+  <!-- Main Viewport -->
+  <main class="main-viewport">
+    <!-- Top Stepper Bar -->
+    <header class="stepper-header">
+      <nav class="stepper-nav">
+        <div class="step-node active" id="stepNode1" data-step="1">
+          <div class="step-circle">01</div>
+          <span class="step-label">Your brief</span>
         </div>
-        <div id="nokey" class="note bad" hidden>
-          <strong>No API key on this service.</strong> A brief would fail at the model call.
-          Stop the service, set <code id="keyvar">ANTHROPIC_API_KEY</code> in its environment, and start it again.
+        <div class="step-node" id="stepNode2" data-step="2">
+          <div class="step-circle">02</div>
+          <span class="step-label">Creative direction</span>
         </div>
-        <div id="formerr" class="note bad" hidden></div>
-      </section>
-
-      <section class="card" id="jobcard" hidden aria-live="polite">
-        <div class="jobhead">
-          <h2 style="margin:0">The film</h2>
-          <span id="badge" class="badge"><span class="dot"></span><span id="badgetext">queued</span></span>
+        <div class="step-node" id="stepNode3" data-step="3">
+          <div class="step-circle">03</div>
+          <span class="step-label">Review your film</span>
         </div>
-        <p class="brief-echo" id="briefecho"></p>
+      </nav>
+    </header>
 
-        <div class="meters">
-          <div class="meter"><div class="k">Rounds</div><div class="v" id="m-rounds">0</div></div>
-          <div class="meter"><div class="k">Frames seen</div><div class="v" id="m-stills">0</div></div>
-          <div class="meter"><div class="k">Elapsed</div><div class="v" id="m-elapsed">0:00</div></div>
+    <div class="view-container">
+      
+      <!-- ============================================== -->
+      <!-- STEP 1: YOUR BRIEF (CREATIVE STARTING POINT)   -->
+      <!-- ============================================== -->
+      <section class="step-view active" id="viewStep1">
+        <div class="brief-grid">
+          <!-- Left Column: The Input Form -->
+          <div class="form-col">
+            <div class="form-header-line">
+              <span class="step-tagline">Step 01 — The Starting Point</span>
+              <span class="time-badge">About 2 min</span>
+            </div>
+            <h2 class="form-title">What are we making?</h2>
+            <p class="form-subtitle">A few details help your creative director understand the vision.</p>
+
+            <div class="field-group">
+              <label class="field-label" for="filmName">Give your film a name</label>
+              <input type="text" class="text-input" id="filmName" placeholder="The power of a single moment" value="The power of a single moment">
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="filmIdea">Describe your idea</label>
+              <textarea class="textarea-input" id="filmIdea" placeholder="Create a cinematic, human brand film about turning ambitious ideas into real-world momentum. Build anticipation, create a moment of silence, then deliver a powerful visual payoff.">Create a cinematic, human brand film about turning ambitious ideas into real-world momentum. Build anticipation, create a moment of silence, then deliver a powerful visual payoff.</textarea>
+            </div>
+
+            <!-- 2x3 Selector Grid -->
+            <div class="select-grid">
+              <div class="field-group">
+                <label class="field-label" for="filmGoal">What is the goal?</label>
+                <div class="select-wrapper">
+                  <select class="select-input" id="filmGoal">
+                    <option value="Build awareness" selected>Build awareness</option>
+                    <option value="Drive sales & conversions">Drive sales & conversions</option>
+                    <option value="Product launch showcase">Product launch showcase</option>
+                    <option value="Explain a concept">Explain a concept</option>
+                    <option value="Brand manifesto">Brand manifesto</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="filmAudience">Who is it for?</label>
+                <div class="select-wrapper">
+                  <select class="select-input" id="filmAudience">
+                    <option value="Everyone" selected>Everyone</option>
+                    <option value="Founders & executives">Founders & executives</option>
+                    <option value="Developers & builders">Developers & builders</option>
+                    <option value="Creatives & designers">Creatives & designers</option>
+                    <option value="Social audience">Social audience</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="filmFormat">Where will it be watched?</label>
+                <div class="select-wrapper">
+                  <select class="select-input" id="filmFormat">
+                    <option value="Vertical Reels / Shorts" selected>Vertical Reels / Shorts</option>
+                    <option value="Horizontal YouTube (16:9)">Horizontal YouTube (16:9)</option>
+                    <option value="Square Feed (1:1)">Square Feed (1:1)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="filmDuration">How long?</label>
+                <div class="select-wrapper">
+                  <select class="select-input" id="filmDuration">
+                    <option value="15 seconds">15 seconds</option>
+                    <option value="30 seconds" selected>30 seconds</option>
+                    <option value="45 seconds">45 seconds</option>
+                    <option value="60 seconds">60 seconds</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="filmFeeling">Choose a feeling</label>
+                <div class="select-wrapper">
+                  <select class="select-input" id="filmFeeling">
+                    <option value="Cinematic & powerful" selected>Cinematic & powerful</option>
+                    <option value="Clean & minimal">Clean & minimal</option>
+                    <option value="High-energy & punchy">High-energy & punchy</option>
+                    <option value="Dark & technical">Dark & technical</option>
+                    <option value="Playful & lively">Playful & lively</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="filmRhythm">Story rhythm</label>
+                <div class="select-wrapper">
+                  <select class="select-input" id="filmRhythm">
+                    <option value="Build slowly, finish strong" selected>Build slowly, finish strong</option>
+                    <option value="Fast & punchy throughout">Fast & punchy throughout</option>
+                    <option value="Rhythm & beat-synced">Rhythm & beat-synced</option>
+                    <option value="Steady & confident">Steady & confident</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-footer">
+              <div class="hint-refine">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                  <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                </svg>
+                <span>You can refine every choice later.</span>
+              </div>
+              <button class="btn-primary" id="btnSubmitBrief">
+                <span>Shape my creative direction</span>
+                <span>↗</span>
+              </button>
+            </div>
+
+            <div id="briefErrorAlert" class="alert-banner error" style="display:none"></div>
+          </div>
+
+          <!-- Right Column: Aesthetic Glimpse of the Process -->
+          <div class="preview-col">
+            <div class="preview-top">
+              <span class="preview-tag">A Glimpse of the Process</span>
+              <span class="studio-pill">Studio</span>
+            </div>
+            <h3 class="preview-headline">Your idea, with a point of view.</h3>
+
+            <!-- Dynamic Aesthetic Poster -->
+            <div class="poster-card" id="posterCard">
+              <div class="poster-header">
+                <span>MF / Creative Study</span>
+                <span>001</span>
+              </div>
+              <div class="poster-body">
+                <div class="poster-eyebrow" id="posterEyebrow">Start with a feeling</div>
+                <div class="poster-title" id="posterTitle">MAKE IT MATTER.</div>
+              </div>
+              <div class="poster-footer">
+                <span>Motion Film Studio</span>
+                <span>Your Story</span>
+                <span>Your Point of View</span>
+                <span>01 23</span>
+              </div>
+            </div>
+
+            <!-- Two Highlights -->
+            <div class="preview-points">
+              <div class="point-item">
+                <span class="point-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                  </svg>
+                </span>
+                <div class="point-text">
+                  <h4>Made around your idea</h4>
+                  <p>Your creative direction is built from your brief — not a generic template.</p>
+                </div>
+              </div>
+
+              <div class="point-item">
+                <span class="point-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+                <div class="point-text">
+                  <h4>You stay in control</h4>
+                  <p>Review the direction and inspect rendered stills before finalizing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- STEP 2: CREATIVE DIRECTION (DIRECTOR AT WORK)  -->
+      <!-- ============================================== -->
+      <section class="step-view director-view" id="viewStep2">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 24px; flex-wrap: wrap; gap:16px;">
+          <div>
+            <div class="form-header-line">
+              <span class="step-tagline">Step 02 — Creative Direction</span>
+              <span class="time-badge" id="telemetryElapsed">0:00</span>
+            </div>
+            <h2 class="form-title" id="jobHeadingTitle">Directing your film...</h2>
+            <p class="form-subtitle" id="jobBriefEcho" style="max-width: 780px;"></p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <div class="status-badge running" id="jobBadge">
+              <span class="status-dot"></span>
+              <span id="jobBadgeText">running</span>
+            </div>
+            <button class="btn-primary" id="btnGoToReview" style="display:none">
+              <span>Review your film</span>
+              <span>→</span>
+            </button>
+          </div>
         </div>
 
-        <div id="stopnote" class="note" hidden></div>
-        <div id="errnote" class="note bad" hidden></div>
-      </section>
-
-      <section class="card" id="filmcard" hidden>
-        <h2>The finished film</h2>
-        <video id="film" controls playsinline preload="metadata"></video>
-        <div class="row">
-          <a id="dl" class="badge" download>Download mp4</a>
+        <!-- Telemetry Cards -->
+        <div class="telemetry-row">
+          <div class="stat-card">
+            <div class="stat-label">Director Rounds</div>
+            <div class="stat-val" id="telemetryRounds">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Frames Inspected</div>
+            <div class="stat-val" id="telemetryStills">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Director Status</div>
+            <div class="stat-val" style="font-size:18px;" id="telemetryStatus">Active</div>
+          </div>
         </div>
-        <div id="score"></div>
+
+        <!-- Stills Gallery -->
+        <div class="stills-section" id="stillsSection">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); font-family:var(--mono);">
+              What the director is looking at
+            </h3>
+            <span style="font-size:12px; color:var(--text-muted);" id="stillsCountLabel">0 frames rendered</span>
+          </div>
+          <div class="stills-grid" id="stillsGrid">
+            <p style="color:var(--text-muted); font-size:13px; margin: 16px 0;">Frames will appear here as the director captures and critiques them.</p>
+          </div>
+        </div>
+
+        <div id="directorErrorBox" class="alert-banner error" style="display:none; margin-top:20px;"></div>
       </section>
 
-      <section class="card" id="stillcard" hidden>
-        <h2>What the director looked at</h2>
-        <div class="stills" id="stills"></div>
-      </section>
-    </main>
+      <!-- ============================================== -->
+      <!-- STEP 3: REVIEW YOUR FILM (PLAYER & SCORECARD)  -->
+      <!-- ============================================== -->
+      <section class="step-view review-view" id="viewStep3">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 24px; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div class="form-header-line">
+              <span class="step-tagline">Step 03 — Review Your Film</span>
+              <span class="time-badge">Final Cut</span>
+            </div>
+            <h2 class="form-title" id="reviewFilmTitle">Your film is ready</h2>
+            <p class="form-subtitle">Directed, rendered with Remotion, and validated against the motion rubric.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <a class="btn-primary" id="btnDownloadFilm" download="film.mp4" href="#">
+              <span>Download MP4</span>
+              <span>↓</span>
+            </a>
+            <button class="nav-btn" id="btnNewFromReview" style="background:var(--panel-2); border-color:var(--line); color:#fff;">
+              + Create another film
+            </button>
+          </div>
+        </div>
 
-    <aside>
-      <section class="card">
-        <h2>Recent films</h2>
-        <div class="joblist" id="joblist"><p class="empty">Nothing yet.</p></div>
+        <!-- Theater + Scorecard -->
+        <div class="film-theater">
+          <div class="video-container">
+            <video class="final-video" id="finalVideoPlayer" controls playsinline preload="metadata"></video>
+          </div>
+
+          <div class="scorecard-panel">
+            <h3>Motion Scorecard</h3>
+            <div class="meters-list">
+              <div class="meter-box">
+                <div class="meter-k">Duration</div>
+                <div class="meter-v" id="mDuration">—</div>
+              </div>
+              <div class="meter-box">
+                <div class="meter-k">Frame Rate</div>
+                <div class="meter-v" id="mFps">—</div>
+              </div>
+              <div class="meter-box">
+                <div class="meter-k">Loudness</div>
+                <div class="meter-v" id="mLufs">—</div>
+              </div>
+              <div class="meter-box">
+                <div class="meter-k">Peak</div>
+                <div class="meter-v" id="mPeak">—</div>
+              </div>
+            </div>
+
+            <h3>Rubric Evaluation</h3>
+            <ul class="rubric-checks" id="rubricChecksList">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+                <span>Automated quality score pending.</span>
+              </li>
+            </ul>
+
+            <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line);">
+              <button class="nav-btn" id="btnBackToStills" style="width:100%; justify-content:center;">
+                Inspect director stills
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
-      <section class="card">
-        <h2>Service</h2>
-        <p class="empty" id="health">checking…</p>
+
+      <!-- ============================================== -->
+      <!-- MY FILMS VIEW                                  -->
+      <!-- ============================================== -->
+      <section class="step-view films-view" id="viewMyFilms">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <div>
+            <h2 class="form-title">My Films</h2>
+            <p class="form-subtitle">All creative directions and rendered films in your studio.</p>
+          </div>
+          <button class="btn-primary" id="btnCreateFilmFromList">+ Create a film</button>
+        </div>
+        <div class="films-table" id="allFilmsList">
+          <p style="color:var(--text-muted);">Loading films...</p>
+        </div>
       </section>
-    </aside>
-  </div>
+
+      <!-- ============================================== -->
+      <!-- BRAND KIT MODAL                                -->
+      <!-- ============================================== -->
+      <div class="modal-overlay" id="brandKitModal">
+        <div class="modal-box">
+          <button class="modal-close" id="closeBrandModal">✕</button>
+          <h3 class="modal-title">Studio Brand Kit</h3>
+          <p class="modal-desc">These preferences are automatically injected into your creative director's instructions.</p>
+
+          <div class="field-group">
+            <label class="field-label">Brand or Product Name</label>
+            <input type="text" class="text-input" id="brandKitName" placeholder="e.g. GrowthOS / Studio 18">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Primary Brand Accent Color</label>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <input type="color" id="brandKitColor" value="#ff5a1f" style="width:44px; height:44px; padding:0; border:1px solid var(--line); border-radius:8px; cursor:pointer; background:none;">
+              <input type="text" class="text-input" id="brandKitColorHex" value="#ff5a1f" style="flex:1;">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Typography Personality</label>
+            <select class="select-input" id="brandKitType">
+              <option value="Modern Sans / Bold Grotesk">Modern Sans / Bold Grotesk (Default)</option>
+              <option value="Editorial Serif / Elegant">Editorial Serif / Elegant</option>
+              <option value="Technical Monospace / Cyber">Technical Monospace / Cyber</option>
+              <option value="Humanist / Warm">Humanist / Warm</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Tone & Rules</label>
+            <textarea class="textarea-input" id="brandKitRules" style="min-height:80px;" placeholder="e.g. Clean typography, confident pacing, no cheese, end on product monogram."></textarea>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+            <button class="nav-btn" id="cancelBrandModal" style="width:auto;">Cancel</button>
+            <button class="btn-primary" id="saveBrandModal">Save Brand Kit</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </div>
 
 <script>
 (function(){
   "use strict";
+
+  // Helpers
   var $ = function(id){ return document.getElementById(id); };
-  var current = null, timer = null, startedAt = 0;
+  var currentJobId = null;
+  var pollTimer = null;
+  var startedAt = 0;
 
   function esc(s){
     return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
       return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
     });
   }
+
   function clock(ms){
-    var s = Math.max(0, Math.floor(ms/1000));
-    return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0");
+    var s = Math.max(0, Math.floor(ms / 1000));
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
   }
+
   function api(path, opts){
     return fetch(path, opts).then(function(r){
       if(!r.ok) return r.text().then(function(t){ throw new Error(t || (r.status + " " + r.statusText)); });
@@ -202,130 +1523,232 @@
     });
   }
 
-  // ---- health
-  api("/health").then(function(h){
-    $("health").innerHTML = "motion-api up · " + h.jobs + " job" + (h.jobs === 1 ? "" : "s") + " on disk" +
-      (h.configured === false ? " · no API key" : "") +
-      (h.model ? '<br><span style="font-family:var(--mono);font-size:12px">' + esc(h.model) + "</span>" : "");
-    if(h.configured === false){
-      $("keyvar").textContent = h.provider === "gemini" ? "GEMINI_API_KEY" : "ANTHROPIC_API_KEY";
-      $("nokey").hidden = false;
-      $("go").disabled = true;
-    }
-  }).catch(function(){
-    $("health").textContent = "motion-api is not reachable";
+  // --- View Switcher ---
+  var views = {
+    step1: $("viewStep1"),
+    step2: $("viewStep2"),
+    step3: $("viewStep3"),
+    films: $("viewMyFilms")
+  };
+
+  function setView(viewName){
+    Object.keys(views).forEach(function(k){
+      if(views[k]) {
+        views[k].style.display = (k === viewName) ? "block" : "none";
+        views[k].classList.toggle("active", k === viewName);
+      }
+    });
+
+    // Update stepper status
+    $("stepNode1").className = "step-node" + (viewName === "step1" ? " active" : (currentJobId ? " completed" : ""));
+    $("stepNode2").className = "step-node" + (viewName === "step2" ? " active" : (viewName === "step3" ? " completed" : ""));
+    $("stepNode3").className = "step-node" + (viewName === "step3" ? " active" : "");
+
+    // Update sidebar navigation active classes
+    $("navNewFilm").classList.toggle("active", viewName === "step1");
+    $("navMyFilms").classList.toggle("active", viewName === "films");
+  }
+
+  // Wire Top Stepper Nodes
+  $("stepNode1").addEventListener("click", function(){ setView("step1"); });
+  $("stepNode2").addEventListener("click", function(){
+    if(currentJobId) setView("step2");
+  });
+  $("stepNode3").addEventListener("click", function(){
+    if(currentJobId) setView("step3");
   });
 
-  // ---- submit
-  $("go").addEventListener("click", function(){
-    var brief = $("brief").value.trim();
-    $("formerr").hidden = true;
-    if(brief.length < 12){
-      $("formerr").hidden = false;
-      $("formerr").textContent = "Give the director a little more to work with — a sentence or two at least.";
+  // Wire Sidebar Nav
+  $("navNewFilm").addEventListener("click", function(){ setView("step1"); });
+  $("navMyFilms").addEventListener("click", function(){
+    setView("films");
+    loadAllFilmsList();
+  });
+  $("btnCreateFilmFromList").addEventListener("click", function(){ setView("step1"); });
+  $("btnNewFromReview").addEventListener("click", function(){ setView("step1"); });
+  $("btnBackToStills").addEventListener("click", function(){ setView("step2"); });
+  $("btnGoToReview").addEventListener("click", function(){ setView("step3"); });
+
+  // --- Dynamic Live Poster Updater ---
+  function updatePoster(){
+    var name = $("filmName").value.trim() || "The power of a single moment";
+    var feeling = $("filmFeeling").value || "Cinematic & powerful";
+    
+    // Choose dynamic punchy slogan based on feeling
+    var slogans = {
+      "Cinematic & powerful": "MAKE IT MATTER.",
+      "Clean & minimal": "LESS IS MORE.",
+      "High-energy & punchy": "SPEED OF LIGHT.",
+      "Dark & technical": "SYSTEM CORE.",
+      "Playful & lively": "SPARK JOY."
+    };
+    var slogan = slogans[feeling] || "MAKE IT MATTER.";
+
+    $("posterEyebrow").textContent = feeling;
+    $("posterTitle").textContent = name.length > 28 ? (name.slice(0, 26).toUpperCase() + "...") : (name.toUpperCase() || slogan);
+  }
+
+  $("filmName").addEventListener("input", updatePoster);
+  $("filmFeeling").addEventListener("change", updatePoster);
+  updatePoster();
+
+  // --- Brand Kit Modal ---
+  var brandModal = $("brandKitModal");
+  $("navBrandKit").addEventListener("click", function(){
+    // Load existing
+    var saved = localStorage.getItem("motion_brand_kit");
+    if(saved){
+      try {
+        var b = JSON.parse(saved);
+        $("brandKitName").value = b.name || "";
+        $("brandKitColor").value = b.color || "#ff5a1f";
+        $("brandKitColorHex").value = b.color || "#ff5a1f";
+        $("brandKitType").value = b.type || "Modern Sans / Bold Grotesk";
+        $("brandKitRules").value = b.rules || "";
+      } catch(e){}
+    }
+    brandModal.classList.add("open");
+  });
+  $("closeBrandModal").addEventListener("click", function(){ brandModal.classList.remove("open"); });
+  $("cancelBrandModal").addEventListener("click", function(){ brandModal.classList.remove("open"); });
+  $("brandKitColor").addEventListener("input", function(){
+    $("brandKitColorHex").value = this.value;
+  });
+  $("brandKitColorHex").addEventListener("input", function(){
+    $("brandKitColor").value = this.value;
+  });
+  $("saveBrandModal").addEventListener("click", function(){
+    var b = {
+      name: $("brandKitName").value.trim(),
+      color: $("brandKitColor").value,
+      type: $("brandKitType").value,
+      rules: $("brandKitRules").value.trim()
+    };
+    localStorage.setItem("motion_brand_kit", JSON.stringify(b));
+    brandModal.classList.remove("open");
+  });
+
+  // --- Submit Brief ---
+  $("btnSubmitBrief").addEventListener("click", function(){
+    var name = $("filmName").value.trim() || "Brand Film";
+    var idea = $("filmIdea").value.trim();
+    var goal = $("filmGoal").value;
+    var audience = $("filmAudience").value;
+    var format = $("filmFormat").value;
+    var duration = $("filmDuration").value;
+    var feeling = $("filmFeeling").value;
+    var rhythm = $("filmRhythm").value;
+
+    $("briefErrorAlert").style.display = "none";
+
+    if(idea.length < 10){
+      $("briefErrorAlert").textContent = "Please provide a little more detail in your idea description (at least 2 sentences).";
+      $("briefErrorAlert").style.display = "block";
       return;
     }
-    $("go").disabled = true;
-    $("gostate").textContent = "sending…";
+
+    // Build synthesized rich creative brief
+    var fullBrief = "Film Name: " + name + "\n" +
+      "Core Idea: " + idea + "\n" +
+      "Goal: " + goal + " | Audience: " + audience + "\n" +
+      "Format: " + format + " | Duration: " + duration + "\n" +
+      "Feeling: " + feeling + " | Story Rhythm: " + rhythm;
+
+    // Append Brand Kit if present
+    var savedBrand = localStorage.getItem("motion_brand_kit");
+    if(savedBrand){
+      try {
+        var b = JSON.parse(savedBrand);
+        if(b.name || b.rules){
+          fullBrief += "\nBrand Context: " + (b.name ? ("Product: " + b.name + "; ") : "") +
+            (b.color ? ("Accent Color: " + b.color + "; ") : "") +
+            (b.type ? ("Typography: " + b.type + "; ") : "") +
+            (b.rules ? ("Guidelines: " + b.rules) : "");
+        }
+      } catch(e){}
+    }
+
+    $("btnSubmitBrief").disabled = true;
+    $("btnSubmitBrief").querySelector("span").textContent = "Starting creative director…";
+
     api("/motion/jobs", {
-      method:"POST",
-      headers:{"content-type":"application/json"},
-      body: JSON.stringify({ brief: brief })
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ brief: fullBrief, name: name + ".mp4" })
     }).then(function(j){
-      $("gostate").textContent = "";
-      $("go").disabled = false;
-      watch(j.id);
-      loadJobs();
-    }).catch(function(e){
-      $("go").disabled = false;
-      $("gostate").textContent = "";
-      $("formerr").hidden = false;
-      $("formerr").innerHTML = "Could not start the film. <code>" + esc(e.message) + "</code>";
+      $("btnSubmitBrief").disabled = false;
+      $("btnSubmitBrief").querySelector("span").textContent = "Shape my creative direction";
+      watchJob(j.id, name);
+      setView("step2");
+      loadJobCount();
+    }).catch(function(err){
+      $("btnSubmitBrief").disabled = false;
+      $("btnSubmitBrief").querySelector("span").textContent = "Shape my creative direction";
+      $("briefErrorAlert").innerHTML = "Could not start film: <code>" + esc(err.message) + "</code>";
+      $("briefErrorAlert").style.display = "block";
     });
   });
 
-  // ---- watch one job
-  function watch(id){
-    current = id;
+  // --- Watch Job (Creative Direction & Polling) ---
+  function watchJob(id, optTitle){
+    currentJobId = id;
     startedAt = Date.now();
-    $("jobcard").hidden = false;
-    $("filmcard").hidden = true;
-    $("stillcard").hidden = true;
-    $("stills").innerHTML = "";
-    tick();
-    if(timer) clearInterval(timer);
-    timer = setInterval(tick, 2500);
+
+    if(optTitle) {
+      $("jobHeadingTitle").textContent = optTitle;
+      $("reviewFilmTitle").textContent = optTitle;
+    }
+
+    $("btnGoToReview").style.display = "none";
+    $("stillsGrid").innerHTML = '<p style="color:var(--text-muted); font-size:13px; margin: 16px 0;">Frames will appear here as the director captures and critiques them.</p>';
+
+    tickJob();
+    if(pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(tickJob, 2500);
   }
 
-  function tick(){
-    if(!current) return;
-    api("/motion/jobs/" + current).then(render).catch(function(){});
+  function tickJob(){
+    if(!currentJobId) return;
+    api("/motion/jobs/" + currentJobId).then(renderJobState).catch(function(){});
   }
 
-  function render(j){
-    $("badgetext").textContent = j.status;
-    $("badge").className = "badge " + j.status;
-    $("briefecho").textContent = j.brief;
-    $("m-rounds").textContent = j.rounds || 0;
-    $("m-stills").textContent = (j.stills || []).length;
+  function renderJobState(j){
+    $("jobBadgeText").textContent = j.status;
+    $("jobBadge").className = "status-badge " + j.status;
+    $("jobBriefEcho").textContent = j.brief;
+    $("telemetryRounds").textContent = j.rounds || 0;
+    $("telemetryStills").textContent = (j.stills || []).length;
+    $("telemetryStatus").textContent = j.status === "done" ? "Completed" : (j.status === "failed" ? "Encountered Error" : "Directing");
 
-    var end = (j.status === "done" || j.status === "failed")
-      ? (j.updated * 1000) : Date.now();
-    $("m-elapsed").textContent = clock(end - (j.created * 1000));
+    var end = (j.status === "done" || j.status === "failed") ? (j.updated * 1000) : Date.now();
+    var elapsedFormatted = clock(end - (j.created * 1000));
+    $("telemetryElapsed").textContent = elapsedFormatted;
 
-    $("stopnote").hidden = !j.stopped;
-    if(j.stopped) $("stopnote").textContent = "The director stopped: " + j.stopped;
-
+    // Error alert
     var errs = j.errors || [];
-    $("errnote").hidden = errs.length === 0;
     if(errs.length){
-      $("errnote").innerHTML = "<strong>" + errs.length + " problem" +
-        (errs.length===1?"":"s") + "</strong><br><code>" + esc(errs.join("\n")) + "</code>";
+      $("directorErrorBox").style.display = "block";
+      $("directorErrorBox").innerHTML = "<strong>Problem encountered during render:</strong><br><code>" + esc(errs.join("\n")) + "</code>";
+    } else {
+      $("directorErrorBox").style.display = "none";
     }
 
     loadStills(j);
 
     if(j.status === "done" && j.final_path){
       var src = "/motion/jobs/" + j.id + "/film";
-      if($("film").getAttribute("src") !== src){
-        $("film").setAttribute("src", src);
-        $("dl").setAttribute("href", src);
+      if($("finalVideoPlayer").getAttribute("src") !== src){
+        $("finalVideoPlayer").setAttribute("src", src);
+        $("btnDownloadFilm").setAttribute("href", src);
       }
-      $("filmcard").hidden = false;
-      renderScore(j.scorecard);
+      $("btnGoToReview").style.display = "inline-flex";
+      renderScorecard(j.scorecard);
     }
+
     if(j.status === "done" || j.status === "failed"){
-      if(timer){ clearInterval(timer); timer = null; }
-      loadJobs();
+      if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+      loadJobCount();
     }
-  }
-
-  function renderScore(card){
-    if(!card){ $("score").innerHTML = ""; return; }
-    var fails = card.failures || [];
-    var rows = [
-      ["Duration", card.duration != null ? card.duration.toFixed(2) + "s" : "—"],
-      ["Frame rate", card.fps != null ? card.fps + " fps" : "—"],
-      ["Loudness", card.lufs != null ? card.lufs.toFixed(1) + " LUFS" : "—"],
-      ["Peak", card.peak != null ? card.peak.toFixed(1) + " dB" : "—"]
-    ];
-    var html = '<div class="meters">';
-    rows.forEach(function(r){
-      html += '<div class="meter"><div class="k">' + esc(r[0]) + '</div><div class="v">' + esc(r[1]) + '</div></div>';
-    });
-    html += "</div>";
-
-    var ok = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#38d27a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-    var no = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ff5468" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
-    html += '<ul class="checks">';
-    if(card.passes && !fails.length){
-      html += "<li>" + ok + "<span>Passes the rubric.</span></li>";
-    } else {
-      fails.forEach(function(f){ html += "<li>" + no + "<span>" + esc(f) + "</span></li>"; });
-      if(!fails.length) html += "<li>" + no + "<span>Did not pass the rubric.</span></li>";
-    }
-    html += "</ul>";
-    $("score").innerHTML = html;
   }
 
   function loadStills(j){
@@ -333,33 +1756,89 @@
     api("/motion/jobs/" + j.id + "/stills").then(function(d){
       var list = d.stills || [];
       if(!list.length) return;
-      $("stillcard").hidden = false;
-      if($("stills").childElementCount === list.length) return;
-      $("stills").innerHTML = list.map(function(s){
-        return '<figure class="still" style="margin:0">' +
-          '<img src="' + esc(s.url) + '" alt="Frame at ' + s.t.toFixed(2) + ' seconds" loading="lazy">' +
-          '<figcaption class="t">' + s.t.toFixed(2) + 's</figcaption></figure>';
+      $("stillsCountLabel").textContent = list.length + " frames rendered";
+      if($("stillsGrid").querySelectorAll(".still-card").length === list.length) return;
+
+      $("stillsGrid").innerHTML = list.map(function(s){
+        return '<div class="still-card">' +
+          '<img src="' + esc(s.url) + '" alt="Frame at ' + s.t.toFixed(2) + 's" loading="lazy">' +
+          '<span class="still-time">' + s.t.toFixed(2) + 's</span>' +
+          '</div>';
       }).join("");
     }).catch(function(){});
   }
 
-  // ---- recent jobs
-  function loadJobs(){
+  function renderScorecard(card){
+    if(!card) return;
+    $("mDuration").textContent = card.duration != null ? card.duration.toFixed(2) + "s" : "—";
+    $("mFps").textContent = card.fps != null ? card.fps + " fps" : "—";
+    $("mLufs").textContent = card.lufs != null ? card.lufs.toFixed(1) + " LUFS" : "—";
+    $("mPeak").textContent = card.peak != null ? card.peak.toFixed(1) + " dB" : "—";
+
+    var fails = card.failures || [];
+    var okSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M20 6 9 17l-5-5"/></svg>';
+    var noSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+
+    var html = "";
+    if(card.passes && !fails.length){
+      html += '<li>' + okSvg + '<span>Passes full motion rubric (frame rate, duration, loudness compliance).</span></li>';
+    } else {
+      fails.forEach(function(f){
+        html += '<li>' + noSvg + '<span>' + esc(f) + '</span></li>';
+      });
+      if(!fails.length){
+        html += '<li>' + noSvg + '<span>Did not pass rubric criteria.</span></li>';
+      }
+    }
+    $("rubricChecksList").innerHTML = html;
+  }
+
+  // --- All Films List ---
+  function loadAllFilmsList(){
     api("/motion/jobs").then(function(d){
-      var jobs = d.jobs || [];
-      if(!jobs.length){ $("joblist").innerHTML = '<p class="empty">Nothing yet.</p>'; return; }
-      $("joblist").innerHTML = "";
-      jobs.slice(0,12).forEach(function(j){
-        var b = document.createElement("button");
-        b.setAttribute("aria-current", String(j.id === current));
-        b.innerHTML = '<div class="jb">' + esc(j.brief) + "</div>" +
-          '<div class="jm">' + esc(j.status) + " · " + esc(j.id) + "</div>";
-        b.addEventListener("click", function(){ watch(j.id); loadJobs(); });
-        $("joblist").appendChild(b);
+      var list = d.jobs || [];
+      $("sidebarJobCount").textContent = list.length;
+      if(!list.length){
+        $("allFilmsList").innerHTML = '<p style="color:var(--text-muted); font-size:13.5px;">No films created yet. Start with your first creative brief!</p>';
+        return;
+      }
+      $("allFilmsList").innerHTML = list.map(function(j){
+        var dateStr = new Date(j.created * 1000).toLocaleDateString(undefined, {
+          month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
+        });
+        return '<div class="film-item-row" data-id="' + esc(j.id) + '">' +
+          '<div class="film-item-main">' +
+            '<div class="film-item-brief">' + esc(j.brief) + '</div>' +
+            '<div class="film-item-meta">' + esc(j.id) + ' · ' + dateStr + '</div>' +
+          '</div>' +
+          '<div class="status-badge ' + esc(j.status) + '">' +
+            '<span class="status-dot"></span>' +
+            '<span>' + esc(j.status) + '</span>' +
+          '</div>' +
+        '</div>';
+      }).join("");
+
+      // Wire row clicks
+      var rows = $("allFilmsList").querySelectorAll(".film-item-row");
+      rows.forEach(function(r){
+        r.addEventListener("click", function(){
+          var id = this.getAttribute("data-id");
+          watchJob(id);
+          setView("step2");
+        });
       });
     }).catch(function(){});
   }
-  loadJobs();
+
+  function loadJobCount(){
+    api("/motion/jobs").then(function(d){
+      var list = d.jobs || [];
+      $("sidebarJobCount").textContent = list.length;
+    }).catch(function(){});
+  }
+
+  // Init
+  loadJobCount();
 })();
 </script>
 </body>

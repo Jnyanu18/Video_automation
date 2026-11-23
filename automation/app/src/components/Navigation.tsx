@@ -35,7 +35,6 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
   {
     title: 'ASSETS & INTEL',
     items: [
-      { href: '/footage', label: 'Footage Intelligence', icon: 'database' },
       { href: '/editing-memory', label: 'Editing Memory', icon: 'clock' },
       { href: '/media', label: 'Media Library', icon: 'music' },
     ],
@@ -51,7 +50,6 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
 ];
 
 export const DEVELOP_NAV_ITEMS: NavItem[] = [
-  { href: '/footage', label: 'Footage Intelligence', icon: 'eye' },
   { href: '/versions', label: 'Multi-Version Studio', icon: 'copy' },
   { href: '/intelligence', label: 'Content Intelligence', icon: 'cpu' },
   { href: '/qa', label: 'Render QA', icon: 'check-circle' },
@@ -85,9 +83,9 @@ export function ChoppityIconRail() {
     { href: '/', label: 'Projects', icon: 'folder' },
     { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
     { href: '/timeline', label: 'Timeline', icon: 'sliders' },
+    { href: '/motion', label: 'Motion Films', icon: 'zap' },
     { href: '/publishing', label: 'Calendar', icon: 'calendar' },
     { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
-    { href: '/footage', label: 'Storage', icon: 'database' },
   ];
 
   const bottomRailItems: { label: string; icon: IconName; href?: string; action?: () => void }[] = [
@@ -240,6 +238,7 @@ export function ChoppityHeader() {
     { label: 'Auto-Clipper', href: '/' },
     { label: 'Storyboard', href: '/storyboard' },
     { label: 'Timeline', href: '/timeline' },
+    { label: 'Motion Films', href: '/motion' },
   ];
 
   return (

@@ -26,31 +26,8 @@ export default function EditingMemoryScreen() {
     loadMemory();
   }, []);
 
-  const records = memoryData?.records || [
-    { record_id: 'rec_01', title: 'Stop Building Features Nobody Asked For', style_id: 'viral_hook_fast_pace', duration_seconds: 29.4, hook_type: 'visual_punch_in', reach: 94200, completion_rate: 0.758, sends_per_1k_reach: 40.5 },
-    { record_id: 'rec_02', title: 'Why Fast Multiplication is Pure Mental Math', style_id: 'educational_masterclass', duration_seconds: 42.0, hook_type: 'question', reach: 62100, completion_rate: 0.742, sends_per_1k_reach: 39.9 },
-    { record_id: 'rec_03', title: 'The Cold Email That Converted at 14%', style_id: 'viral_hook_fast_pace', duration_seconds: 24.2, hook_type: 'bold_statement', reach: 28200, completion_rate: 0.710, sends_per_1k_reach: 34.8 },
-    { record_id: 'rec_04', title: 'Founder Office Hours: Q&A Intro', style_id: 'yc_presentation', duration_seconds: 55.0, hook_type: 'delayed_intro', reach: 14200, completion_rate: 0.440, sends_per_1k_reach: 13.4 },
-  ];
-
-  const recommendations = memoryData?.recommendations || [
-    {
-      type: 'HOOK_ANALYSIS',
-      title: 'Immediate Visual Punch-In Outperforms Delayed Introductions',
-      evidence: 'Reels with immediate 0-3s punch-in hooks had a median completion rate of 75.8%, compared to 44.0% for reels starting with greeting introductions (+31.8% advantage across your published catalog).',
-      action: 'Ensure the first 3 seconds feature a visual punch-in zoom and immediately state the core problem.',
-      sample_size: 4,
-      confidence: 0.94,
-    },
-    {
-      type: 'SHAREABILITY_ANALYSIS',
-      title: 'High DM Send Velocity on Fast-Paced Cuts',
-      evidence: 'Fast-paced reels generated a median of 40.5 DM shares per 1,000 reach, placing your content in the top quartile of Instagram explore distribution.',
-      action: 'Maintain cut intervals below 2.0s and conclude with an explicit peer-share trigger ("Send this to your cofounder").',
-      sample_size: 4,
-      confidence: 0.91,
-    },
-  ];
+  const records = memoryData?.records ?? [];
+  const recommendations = memoryData?.recommendations ?? [];
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>

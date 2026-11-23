@@ -27,6 +27,12 @@ def test_health(client):
     assert r.status_code == 200 and r.json()["ok"] is True
 
 
+def test_index_ui(client):
+    r = client.get("/")
+    assert r.status_code == 200
+    assert "Motion Films" in r.text
+
+
 def test_a_brief_becomes_a_scored_film(client):
     r = client.post("/motion/jobs", json={"brief": "15s launch film for a yoga app"})
     assert r.status_code == 202
