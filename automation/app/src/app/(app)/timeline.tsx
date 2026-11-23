@@ -3,8 +3,8 @@ import { Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 're
 import { useRouter } from 'expo-router';
 import { Icon } from '../../components/Icon';
 import { VideoPlayer } from '../../components/VideoPlayer';
-import { Button, EmptyState, ErrorState, Skeleton, T } from '../../components/ui';
-import { absoluteUrl, errorText } from '../../api/client';
+import { Button, EmptyState, ErrorState, Input, Skeleton, T } from '../../components/ui';
+import { absoluteUrl, errorText, post } from '../../api/client';
 import { editor, Scene } from '../../api/editor';
 import { useStoryboards } from '../../state/useStoryboards';
 import { useToast } from '../../state/toast';
@@ -54,6 +54,27 @@ export default function TimelineEditor() {
   const renderUrl = current?.latest_render?.video_url || current?.latest_preview?.video_url;
 
   useEffect(() => { setSelectedIndex(0); }, [current?.id]);
+
+  // A change request for the selected clip: films from the creative director come back as a new version,
+  // engine cuts go to the revision agent. Both are scoped to the scene the user picked on the timeline.
+  const agent = (current as any)?.agent as { root: string; pending: string | null } | undefined;
+  const [change, setChange] = useState('');
+  const [sending, setSending] = useState(false);
+  async function requestChange() {
+    if (!current || !selected || !change.trim()) return;
+    setSending(true);
+    try {
+      if (agent?.root) await post(`/api/editor/agent/jobs/${agent.root}/revise`, { message: change.trim(), scene: selected.index + 1 });
+      else await editor.chat(current.id, `Scene ${selected.index + 1} (${timeLabel(selected.start)}-${timeLabel(selected.end)}): ${change.trim()}`);
+      setChange('');
+      await reload();
+      toast(agent?.root ? 'Change request sent. A new version is in production.' : 'Revision started');
+    } catch (cause) {
+      toast(errorText(cause));
+    } finally {
+      setSending(false);
+    }
+  }
 
   async function startRender() {
     if (!current) return;
@@ -116,7 +137,7 @@ export default function TimelineEditor() {
               <View style={styles.asset}><Icon name="video" size={18} color="#6C4CF0" /><T style={styles.assetName}>Scenes ({scenes.length})</T></View>
               <View style={styles.asset}><Icon name="type" size={18} color="#9B6CF0" /><T style={styles.assetName}>Captions ({scenes.filter((item) => item.scene.caption).length})</T></View>
               <View style={styles.asset}><Icon name="volume" size={18} color="#10B981" /><T style={styles.assetName}>Sound cues ({scenes.reduce((sum, item) => sum + (item.scene.sfx?.length || 0), 0)})</T></View>
-              <T style={[styles.subtle, { marginTop: 18 }]}>Edit scene details in Storyboard. Timeline changes are not saved from this view.</T>
+              <T style={[styles.subtle, { marginTop: 18 }]}>Pick a clip on the timeline, then describe the change in the inspector. It comes back as a new version to review.</T>
             </View>
           </View>
 
@@ -156,14 +177,27 @@ export default function TimelineEditor() {
                   <T style={styles.fieldLabel}>SOUND CUES</T><T style={styles.fieldValue}>{selected.scene.sfx?.map((cue) => cue.name).join(', ') || 'None'}</T>
                 </>
               ) : <T style={styles.subtle}>Select a scene on the timeline to inspect it.</T>}
-              <View style={{ marginTop: 20 }}><Button label="Edit in Storyboard" variant="secondary" onPress={() => router.push({ pathname: '/storyboard', params: { sb: current.id } })} /></View>
+              {selected ? (
+                <View style={{ marginTop: 14, gap: 8 }}>
+                  <T style={styles.fieldLabel}>CHANGE THIS CLIP</T>
+                  {agent?.pending ? (
+                    <T style={styles.subtle}>A new version is in production. You can ask for more changes once it lands.</T>
+                  ) : (
+                    <>
+                      <Input value={change} onChangeText={setChange} multiline placeholder={`e.g. Make scene ${selected.index + 1} faster, change the text to…`} />
+                      <Button label={sending ? 'Sending…' : 'Request change'} variant="primary" icon="send" loading={sending} disabled={!change.trim() || sending} onPress={requestChange} />
+                    </>
+                  )}
+                </View>
+              ) : null}
+              <View style={{ marginTop: 12 }}><Button label="Open in Storyboard" variant="secondary" onPress={() => router.push({ pathname: '/storyboard', params: { sb: current.id } })} /></View>
             </View>
           </View>
         </View>
 
         <View style={styles.timeline}>
           <View style={styles.timelineToolbar}><View><T style={styles.panelTitle}>TIMELINE</T><T style={styles.subtle}>Select a clip to inspect its saved storyboard data</T></View><T style={styles.timecode}>{timeLabel(duration)} total</T></View>
-          <ScrollView horizontal contentContainerStyle={{ minWidth: 760 }}>
+          <ScrollView horizontal contentContainerStyle={{ minWidth: 760, flexGrow: 1 }}>
             <View style={{ width: '100%' }}>
               <View style={styles.ruler}><T style={styles.trackName}>TRACKS</T><View style={styles.rulerLane}>{Array.from({ length: 6 }, (_, index) => <T key={index} style={styles.tick}>{timeLabel(duration * index / 5)}</T>)}</View></View>
               <TrackRow label={current.lane === 'motion' ? 'M1  Motion' : 'V1  Video'} color="#6C4CF0" scenes={scenes} duration={duration} selectedIndex={selectedIndex} selectScene={selectScene} text={(item) => item.scene.type || `Scene ${item.index + 1}`} />

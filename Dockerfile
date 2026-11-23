@@ -53,6 +53,7 @@ COPY automation/test/n8n-sim.cjs ./test/n8n-sim.cjs
 COPY automation/lib ./lib
 COPY automation/adapters ./adapters
 COPY automation/web/dist ./web/dist
+COPY automation/media ./media
 COPY automation/editor /app/editor
 COPY automation/creator-studio /app/creator-studio
 COPY automation/n8n/*.json /app/n8n/

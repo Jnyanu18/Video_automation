@@ -39,3 +39,8 @@ packages/motion-kit/.bundle/
 automation/editor/services/api/.data/
 final_push.log
 push_output.txt
+
+# Creative-director job queue: client briefs, account ids, downloaded client images and renders (runtime data, never in git)
+automation/editor/work/agent_queue/
+# local engine / gateway logs
+automation/editor/work/*.log

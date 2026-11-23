@@ -15,11 +15,10 @@ editor/work/
 editor/renders/
 editor/.jobs-archive/
 
-# Dependencies and build output are produced inside the image.
+# Dependencies and temporary build output stay out of the image.
 node_modules/
 **/node_modules/
 app/dist/
-web/dist/
 .expo/
 **/.expo/
 
@@ -34,8 +33,9 @@ __pycache__/
 *.log
 npm-debug.log*
 
-# Media does not belong in a build context.
+# Only the studio-owned finished films belong in this build context.
 *.mp4
+!media/*.mp4
 *.mov
 *.mkv
 *.wav

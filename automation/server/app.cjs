@@ -398,26 +398,41 @@ function createApp(cfg, deps) {
       // signed-in browser is answered out of its OWN account's folder and never anyone else's.
       const session = auth.read(parseCookies(req.headers.cookie)[auth.COOKIE], Date.now());
 
-      // Serve demo videos from /media/filename.mp4
+      // Serve studio demo films and reel thumbnails.
       const decodedPath = decodeURIComponent(url.pathname);
-      const demoMedia = /^\/media\/([a-zA-Z0-9._\-() ]+\.mp4)$/.exec(decodedPath);
-      if (demoMedia && (req.method === 'GET' || req.method === 'HEAD')) {
+      const studioMedia = /^\/media\/([a-zA-Z0-9._\-() ]+\.(mp4|jpg|jpeg|png|webp))$/i.exec(decodedPath);
+      if (studioMedia && (req.method === 'GET' || req.method === 'HEAD')) {
         res.removeHeader('content-security-policy');
-        const filename = demoMedia[1];
+        const filename = studioMedia[1];
         const filepath = path.join(__dirname, '..', 'media', filename);
         if (fs.existsSync(filepath)) {
           const stat = fs.statSync(filepath);
           const filesize = stat.size;
-          const range = req.headers.range;
-          if (range) {
-            const parts = range.replace(/bytes=/, "").split("-");
-            const start = parseInt(parts[0], 10);
-            const end = parts[1] ? parseInt(parts[1], 10) : filesize - 1;
-            res.writeHead(206, { 'Content-Range': `bytes ${start}-${end}/${filesize}`, 'Accept-Ranges': 'bytes', 'Content-Length': (end - start) + 1, 'Content-Type': 'video/mp4' });
-            fs.createReadStream(filepath, { start, end }).pipe(res);
+          const ext = path.extname(filename).toLowerCase();
+          const contentType = ext === '.mp4' ? 'video/mp4' : (ext === '.png' ? 'image/png' : (ext === '.webp' ? 'image/webp' : 'image/jpeg'));
+          if (ext === '.mp4') {
+            const range = req.headers.range;
+            if (range) {
+              const match = /^bytes=(\d+)-(\d*)$/.exec(range);
+              const start = match ? Number(match[1]) : NaN;
+              const end = match && match[2] ? Number(match[2]) : filesize - 1;
+              if (!Number.isInteger(start) || !Number.isInteger(end) || start >= filesize || end < start || end >= filesize) {
+                res.writeHead(416, { 'Content-Range': `bytes */${filesize}` });
+                res.end();
+                return;
+              }
+              res.writeHead(206, { 'Content-Range': `bytes ${start}-${end}/${filesize}`, 'Accept-Ranges': 'bytes', 'Content-Length': (end - start) + 1, 'Content-Type': contentType });
+              if (req.method === 'HEAD') res.end();
+              else fs.createReadStream(filepath, { start, end }).pipe(res);
+            } else {
+              res.writeHead(200, { 'Content-Length': filesize, 'Content-Type': contentType, 'Accept-Ranges': 'bytes' });
+              if (req.method === 'HEAD') res.end();
+              else fs.createReadStream(filepath).pipe(res);
+            }
           } else {
-            res.writeHead(200, { 'Content-Length': filesize, 'Content-Type': 'video/mp4', 'Accept-Ranges': 'bytes' });
-            fs.createReadStream(filepath).pipe(res);
+            res.writeHead(200, { 'Content-Length': filesize, 'Content-Type': contentType, 'Cache-Control': 'public, max-age=86400', 'Accept-Ranges': 'bytes' });
+            if (req.method === 'HEAD') res.end();
+            else fs.createReadStream(filepath).pipe(res);
           }
           return;
         }

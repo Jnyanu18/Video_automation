@@ -45,6 +45,7 @@ COPY test/n8n-sim.cjs ./test/n8n-sim.cjs
 COPY lib ./lib
 COPY adapters ./adapters
 COPY web/dist ./web/dist
+COPY media ./media
 COPY editor /app/editor
 COPY creator-studio /app/creator-studio
 WORKDIR /app/creator-studio

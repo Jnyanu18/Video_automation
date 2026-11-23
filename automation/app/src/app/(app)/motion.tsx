@@ -5,8 +5,9 @@ import { Icon } from '../../components/Icon';
 import { Badge, Banner, Button, Card, Field, Input, Picker, SectionTitle, T } from '../../components/ui';
 import { VideoPlayer } from '../../components/VideoPlayer';
 import { useWide } from '../../components/useWide';
-import { absoluteUrl, errorText } from '../../api/client';
+import { absoluteUrl, errorText, post } from '../../api/client';
 import { editor, num, StoryboardCard, Storyboard } from '../../api/editor';
+import { DirectorJob, latestDirectorJob } from '../../components/DirectorJob';
 import { useToast } from '../../state/toast';
 import { font, radius, spacing, useTheme } from '../../theme';
 
@@ -165,19 +166,48 @@ export default function MotionGraphics() {
     });
   }
 
+  // Every brief goes to the creative director (studio/agent_bridge.py) with each form field as its own value,
+  // never glued into the prompt text.
+  const [jobId, setJobId] = useState<string | null>(null);
+  useEffect(() => {
+    latestDirectorJob('motion')
+      .then((j) => {
+        if (!j || j.status === 'cancelled') return;
+        setJobId(j.id); // reopen the latest film: in production -> step 2, finished -> step 3
+        if (j.status === 'queued' || j.status === 'working') setActiveStep(2);
+        else if (j.status === 'done') setActiveStep(3);
+      })
+      .catch(() => undefined);
+  }, []);
+
   async function build() {
     if (prompt.trim().length < 3) {
-      return setError('Write your idea first. The first line becomes the hook on screen.');
+      return setError('Describe your idea first.');
     }
     await act(
       'build',
       async () => {
-        const r = await editor.motionCreate(brief());
-        setSb(r.data);
+        const r = await post('/api/editor/agent/jobs', {
+          kind: 'motion',
+          prompt: prompt.trim(),
+          title: title.trim() || undefined,
+          format: format.includes('16:9') ? '16:9' : format.includes('1:1') ? '1:1' : '9:16',
+          duration: parseInt(duration, 10) || 30,
+          direction: { goal, audience, feeling, rhythm, button: button.trim(), url: url.trim(), tagline: tagline.trim() },
+        });
+        setSb(null);
+        setJobId(r.job.id);
         setActiveStep(2);
       },
-      'Building your motion reel.'
+      'Brief sent. Your film is in production.'
     );
+  }
+
+  function startOver() {
+    setJobId(null);
+    setSb(null);
+    setPreview(null);
+    setActiveStep(1);
   }
 
   const card = sb?.storyboard ?? preview;
@@ -220,9 +250,9 @@ export default function MotionGraphics() {
         <Pressable
           accessibilityRole="tab"
           onPress={() => {
-            if (card || sb) setActiveStep(2);
+            if (card || sb || jobId) setActiveStep(2);
           }}
-          style={[styles.stepItem, activeStep === 2 && styles.stepItemActive, !card && !sb && { opacity: 0.5 }]}
+          style={[styles.stepItem, activeStep === 2 && styles.stepItemActive, !card && !sb && !jobId && { opacity: 0.5 }]}
         >
           <View
             style={[
@@ -246,9 +276,9 @@ export default function MotionGraphics() {
         <Pressable
           accessibilityRole="tab"
           onPress={() => {
-            if (video) setActiveStep(3);
+            if (video || jobId) setActiveStep(3);
           }}
-          style={[styles.stepItem, activeStep === 3 && styles.stepItemActive, !video && { opacity: 0.5 }]}
+          style={[styles.stepItem, activeStep === 3 && styles.stepItemActive, !video && !jobId && { opacity: 0.5 }]}
         >
           <View
             style={[
@@ -401,12 +431,6 @@ export default function MotionGraphics() {
 
                 <View style={{ flexDirection: 'row', gap: spacing.sm, flexWrap: 'wrap' }}>
                   <Button
-                    label="Show scenes"
-                    icon="eye"
-                    loading={busy === 'preview'}
-                    onPress={showScenes}
-                  />
-                  <Button
                     label="Shape my creative direction"
                     variant="primary"
                     icon="sparkles"
@@ -503,7 +527,15 @@ export default function MotionGraphics() {
       {/* ============================================================== */}
       {/* STEP 2: CREATIVE DIRECTION (SCENES & STORYBOARD APPROVAL)      */}
       {/* ============================================================== */}
-      {activeStep === 2 ? (
+      {activeStep !== 1 && jobId ? (
+        <DirectorJob
+          jobId={jobId}
+          onNew={startOver}
+          onStatus={(j) => { if (j.status === 'done' && activeStep !== 3) setActiveStep(3); }}
+        />
+      ) : null}
+
+      {activeStep === 2 && !jobId ? (
         <View style={{ gap: spacing.lg }}>
           <Card>
             <View style={styles.head}>
@@ -666,7 +698,7 @@ export default function MotionGraphics() {
       {/* ============================================================== */}
       {/* STEP 3: REVIEW YOUR FILM (VIDEO PLAYER & SCORECARD)            */}
       {/* ============================================================== */}
-      {activeStep === 3 ? (
+      {activeStep === 3 && !jobId ? (
         <View style={{ gap: spacing.lg }}>
           <Card>
             <View style={styles.head}>

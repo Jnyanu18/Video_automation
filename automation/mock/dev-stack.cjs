@@ -16,7 +16,7 @@ async function main() {
   const mockUrl = await mock.listen(Number(process.env.DEV_MOCK_PORT) || 0);
   const sim = createSimN8n({ mockUrl, waitScale: Number(process.env.DEV_WAIT_SCALE) || 0.2 });
   const simUrl = await sim.listen(Number(process.env.DEV_N8N_PORT) || 0);
-  const uploadDir = fs.mkdtempSync(path.join(os.tmpdir(), 'reels-dev-uploads-'));
+  const uploadDir = process.env.EDITOR_UPLOADS_DIR || fs.mkdtempSync(path.join(os.tmpdir(), 'reels-dev-uploads-'));
   const cfg = loadConfig({
     PORT: process.env.PORT || '8787', HOST: '127.0.0.1', DASHBOARD_PASSWORD: PASSWORD, SESSION_SECRET: 'dev-session-secret-dev-session-secret-0000',
     USERS_FILE: process.env.USERS_FILE || path.join(__dirname, '..', 'server', 'storage', 'users.json'),
@@ -35,7 +35,7 @@ async function main() {
     await app.close();
     await sim.close();
     await mock.close();
-    fs.rmSync(uploadDir, { recursive: true, force: true });
+    if (!process.env.EDITOR_UPLOADS_DIR) fs.rmSync(uploadDir, { recursive: true, force: true });
     process.exit(0);
   };
   process.on('SIGINT', stop);

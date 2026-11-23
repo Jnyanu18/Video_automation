@@ -35,11 +35,13 @@ from agent.openai_compat import load_dotenv  # noqa: E402
 from agent.review import run_scorecard  # noqa: E402
 from services.api.editor_api import adapters  # noqa: E402
 from services.render import render_final_info, render_preview_info  # noqa: E402
-from studio import analytics, animator, carousel as carousel_mod, director, health, ingest as ingest_mod, longform as longform_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
+from studio import analytics, animator, carousel as carousel_mod, director, film_library, health, ingest as ingest_mod, longform as longform_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
 from studio.presets import PRESET_STYLES, probe_video_file  # noqa: E402
 from studio.publishing import PLATFORMS, Publisher  # noqa: E402
 from studio import tenancy  # noqa: E402
 from studio.motion_api import register_motion_routes  # noqa: E402
+from studio.agent_bridge import register_agent_routes  # noqa: E402
+from studio.agent_storyboards import register_agent_storyboards  # noqa: E402
 from studio.store import Store  # noqa: E402
 from styles.aggregate import aggregate as aggregate_styles  # noqa: E402
 from styles.style_extract import extract_style as do_extract_style, save_style  # noqa: E402
@@ -251,6 +253,7 @@ class StyleLearnRequest(BaseModel):
     name: str = Field(min_length=2, max_length=40)
     urls: List[str] = []
     video_paths: List[str] = []
+    reference_ids: List[str] = []
 
 
 class CarouselRequest(BaseModel):
@@ -273,6 +276,7 @@ class MusicRequest(BaseModel):
 class AutoEditRequest(BaseModel):
     url: Optional[str] = None
     video_path: Optional[str] = None
+    reference_video_id: Optional[str] = None
     style: Optional[str] = "viral_hook_fast_pace"
     instruction: Optional[str] = Field(default="", max_length=1500)
 
@@ -703,7 +707,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         name = "".join(ch if ch.isalnum() or ch in "_-" else "_" for ch in req.name.strip())[:40]
         if name in PRESET_STYLES:
             raise HTTPException(400, f"'{name}' is a built-in preset name; choose another")
-        n = len(req.urls) + len(req.video_paths)
+        n = len(req.urls) + len(req.video_paths) + len(req.reference_ids)
         if not 1 <= n <= 5:
             raise HTTPException(400, "Give between 1 and 5 reference videos (links or files)")
         try:
@@ -713,6 +717,11 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         if urls and ingest_mod.ytdlp_path() is None:
             raise HTTPException(503, "yt-dlp is not installed, so links cannot be downloaded. Use files, or run: pip install yt-dlp")
         paths = [safe_video_path(p, roots) for p in req.video_paths]
+        for reference_id in req.reference_ids:
+            reference = film_library.reference_path(reference_id)
+            if reference is None:
+                raise HTTPException(404, f"Reference video '{reference_id}' not found")
+            paths.append(reference)
         jid = "stl_" + uuid.uuid4().hex[:10]
         with style_lock:
             style_jobs[jid] = {"id": jid, "name": name, "status": "running", "message": "Starting", "error": None}
@@ -809,7 +818,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             r["stage_text"] = text
         store.update("storyboards", sb_id, add)
 
-    def _run_auto_job(sb_id: str, url: Optional[str], video_path: Optional[Path], style: str, instruction: str, client: Any) -> None:
+    def _run_auto_job(sb_id: str, url: Optional[str], video_path: Optional[Path], style: str, instruction: str,
+                      client: Any, reference_path: Optional[Path] = None) -> None:
         try:
             if url:
                 _stage(sb_id, "Downloading the video from the link")
@@ -825,6 +835,21 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             assert video_path is not None
             info = probe_video_file(video_path)
             sb = store.snapshot("storyboards", sb_id)
+            if reference_path is not None:
+                _stage(sb_id, f"Measuring pacing and captions in reference film {reference_path.name}")
+                profile = do_extract_style(str(reference_path), name=reference_path.stem)
+                (Path(sb["workdir"]) / "reference_style.json").write_text(
+                    json.dumps(profile, ensure_ascii=False, indent=2), encoding="utf-8"
+                )
+                edit_params = profile.get("edit_params") or {}
+                measured = [
+                    f"average shot length {edit_params['target_shot_length']}s" if edit_params.get("target_shot_length") else "",
+                    f"maximum pause {edit_params['max_pause']}s" if edit_params.get("max_pause") else "",
+                    f"caption style {edit_params['caption_style']}" if edit_params.get("caption_style") else "",
+                    f"up to {edit_params['caption_max_words']} caption words" if edit_params.get("caption_max_words") else "",
+                ]
+                instruction = (instruction + "\nUse the selected studio reference's measured editing rhythm: "
+                               + ", ".join(item for item in measured if item) + ".").strip()
             plan = {"version": 1, "source": {"path": str(video_path), **info}, "output": {"width": 1080, "height": 1920, "fps": info["fps"]},
                     "keep": [{"id": "k1", "start": 0.0, "end": info["duration"]}], "captions": [], "reframe": {"mode": "center", "track": []},
                     "zooms": [], "transitions": [], "overlays": [], "style_ref": style, "notes": f"Auto edit: {video_path.stem}"}
@@ -909,6 +934,11 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
                 raise HTTPException(503, "yt-dlp is not installed, so links cannot be downloaded. Upload the file or run: pip install yt-dlp")
         else:
             vpath = safe_video_path(req.video_path, roots)
+        reference_path = None
+        if req.reference_video_id:
+            reference_path = film_library.reference_path(req.reference_video_id)
+            if reference_path is None:
+                raise HTTPException(404, f"Reference video '{req.reference_video_id}' not found")
         try:
             client = adapters._make_client()
         except Exception:
@@ -918,12 +948,13 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         work.mkdir(parents=True, exist_ok=True)
         sb = {"id": sb_id, "status": "processing", "error": None, "lane": "footage", "video_path": req.url or str(vpath), "source_url": req.url, "style": style,
               "prompt": f"Auto edit{(': ' + req.instruction) if req.instruction else ''}", "series": None,
+              "reference_video_id": req.reference_video_id,
               "plan": {"version": 1, "source": {}, "keep": [], "notes": ""}, "storyboard": None, "workdir": str(work), "agent_reply": "",
               "events": [], "messages": [], "approved": False, "approved_at": None, "latest_render": None, "latest_preview": None,
               "renders": [], "render_job": None, "director": None, "posts": None}
         store.put("storyboards", sb_id, sb)
         store.log("storyboard", f"Auto edit started ({'link' if req.url else Path(vpath).name})", id=sb_id)
-        threading.Thread(target=_run_auto_job, args=(sb_id, req.url, vpath, style, req.instruction or "", client), daemon=True, name=f"auto-{sb_id}").start()
+        threading.Thread(target=_run_auto_job, args=(sb_id, req.url, vpath, style, req.instruction or "", client, reference_path), daemon=True, name=f"auto-{sb_id}").start()
         return {"ok": True, "storyboard_id": sb_id, "data": public(sb)}
 
     @app.post("/api/editor/storyboard/{sb_id}/posts")
@@ -1113,15 +1144,13 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
 
     @app.get("/api/editor/creative-library")
     def get_creative_library():
-        lib_path = work_dir / "creative_library.json"
-        if lib_path.exists():
-            try:
-                with open(lib_path, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    return {"ok": True, "films": data}
-            except Exception:
-                pass
-        return {"ok": True, "films": []}
+        return {"ok": True, "films": film_library.list_films()}
+
+    @app.get("/api/editor/reference-videos")
+    def get_reference_videos():
+        return {"ok": True, "references": [
+            film for film in film_library.list_films() if film["is_reference"]
+        ]}
 
     @app.get("/api/editor/storyboards")
     def list_storyboards():
@@ -1857,6 +1886,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         return job
 
     register_motion_routes(app, store, work_dir, renders_dir, render_lock, roots)
+    register_agent_routes(app, user_id if tenant else None, uploads_dir, roots)
+    register_agent_storyboards(app, user_id if tenant else None, store, work_dir, renders_dir)
     return app
 
 

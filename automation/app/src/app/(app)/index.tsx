@@ -14,6 +14,7 @@ import { Icon } from '../../components/Icon';
 import { Badge, Banner, Button, Card, Field, Input, Picker, T } from '../../components/ui';
 import { TemplateWizard } from '../../components/TemplateWizard';
 import { ProjectHistory } from '../../components/ProjectHistory';
+import type { FilmProject } from '../../components/ProjectHistory';
 import { useStoryboards } from '../../state/useStoryboards';
 import { useToast } from '../../state/toast';
 import { useWide } from '../../components/useWide';
@@ -91,6 +92,8 @@ export default function ChoppityHomeScreen() {
 
   // 3. Reference Video State (The dedicated reference video box)
   const [referenceUrl, setReferenceUrl] = useState('');
+  const [referenceId, setReferenceId] = useState('');
+  const [referenceFilms, setReferenceFilms] = useState<FilmProject[]>([]);
 
   // 4. Selector Grid States
   const [goal, setGoal] = useState('Viral retention & engagement');
@@ -128,6 +131,7 @@ export default function ChoppityHomeScreen() {
       .footage()
       .then((r) => setFootage(r.files || []))
       .catch(() => undefined);
+    editor.creativeLibrary().then((films) => setReferenceFilms(films)).catch(() => undefined);
   }, []);
 
   // File Picker
@@ -191,6 +195,7 @@ export default function ChoppityHomeScreen() {
         `Feeling: ${feeling}`,
         `Rhythm: ${rhythm}`,
         refLink ? `Reference Video Pacing Guide: ${refLink}` : '',
+        referenceId ? `Studio reference: ${referenceFilms.find((film) => film.id === referenceId)?.title || referenceId}` : '',
       ]
         .filter(Boolean)
         .join(' | ');
@@ -206,18 +211,21 @@ export default function ChoppityHomeScreen() {
           uploadId: staged.uploadId,
           style: editorStyle,
           instruction: combinedPrompt,
+          reference_video_id: referenceId || undefined,
         } as any);
       } else if (footagePath) {
         res = await editor.autoEdit({
           video_path: footagePath,
           style: editorStyle,
           instruction: combinedPrompt,
+          reference_video_id: referenceId || undefined,
         });
       } else {
         res = await editor.autoEdit({
           url: refLink,
           style: editorStyle,
           instruction: combinedPrompt,
+          reference_video_id: referenceId || undefined,
         });
       }
 
@@ -402,8 +410,14 @@ export default function ChoppityHomeScreen() {
                     autoCapitalize="none"
                     autoCorrect={false}
                   />
+                  <Picker
+                    value={referenceId}
+                    placeholder="Choose one of your films as a reference"
+                    options={referenceFilms.map((film) => ({ value: film.id, label: film.title }))}
+                    onChange={setReferenceId}
+                  />
                   <T variant="caption" muted style={{ marginTop: 2 }}>
-                    Paste a viral reel or video. The AI director matches its cut frequency, hook pacing, and visual transitions.
+                    Choose one of your films to measure its editing rhythm, or paste a video link.
                   </T>
                 </View>
 

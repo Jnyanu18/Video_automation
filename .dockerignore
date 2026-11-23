@@ -41,3 +41,4 @@ automation/creator-studio/.claude/
 **/*.mp3
 **/*.wav
 !automation/editor/assets/sfx/*.wav
+!automation/media/*.mp4

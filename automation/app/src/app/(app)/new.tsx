@@ -6,8 +6,10 @@ import { Screen } from '../../components/Screen';
 import { Badge, Banner, Button, Card, Field, Input, Picker, T } from '../../components/ui';
 import { Icon } from '../../components/Icon';
 import { useWide } from '../../components/useWide';
-import { errorText, get, uploadVideo } from '../../api/client';
+import { errorText, get, post, uploadVideo } from '../../api/client';
 import { editor } from '../../api/editor';
+import { DirectorJob, latestDirectorJob } from '../../components/DirectorJob';
+import type { FilmProject } from '../../components/ProjectHistory';
 import type { UploadInfo } from '../../api/types';
 import { useToast } from '../../state/toast';
 import { font, radius, spacing, useTheme } from '../../theme';
@@ -65,7 +67,7 @@ export default function NewReel() {
   const toast = useToast();
   const { colors } = useTheme();
   const wide = useWide();
-  const params = useLocalSearchParams<{ style?: string; footage?: string; note?: string; prompt?: string }>();
+  const params = useLocalSearchParams<{ style?: string; footage?: string; note?: string; prompt?: string; reference?: string }>();
 
   // 1. Film Title & Vision
   const [filmTitle, setFilmTitle] = useState('Viral Hook Master Cut');
@@ -82,6 +84,8 @@ export default function NewReel() {
 
   // 3. Reference Video State (The dedicated reference video box)
   const [referenceUrl, setReferenceUrl] = useState('');
+  const [referenceId, setReferenceId] = useState(params.reference || '');
+  const [referenceFilms, setReferenceFilms] = useState<FilmProject[]>([]);
 
   // 4. Selector Grid States
   const [goal, setGoal] = useState('Viral retention & engagement');
@@ -119,36 +123,45 @@ export default function NewReel() {
       .footage()
       .then((r) => setFootage(r.files || []))
       .catch(() => undefined);
+    editor.creativeLibrary().then((films) => setReferenceFilms(films)).catch(() => undefined);
   }, [params.style, params.prompt]);
 
-  // File Picker
+  // Many clips go into one edit: each is uploaded on its own and listed below the drop zone.
+  const [clips, setClips] = useState<UploadInfo[]>([]);
+  const [uploadingName, setUploadingName] = useState('');
+  const [jobId, setJobId] = useState<string | null>(null);
+  useEffect(() => {
+    latestDirectorJob('edit')
+      .then((j) => { if (j && j.status !== 'cancelled') setJobId(j.id); })
+      .catch(() => undefined);
+  }, []);
+
   async function chooseFile() {
     setError(null);
     const res = await DocumentPicker.getDocumentAsync({
       type: ['video/mp4', 'video/quicktime'],
+      multiple: true,
       copyToCacheDirectory: true,
     });
-    if (res.canceled || !res.assets?.[0]) return;
-    const a = res.assets[0];
-    const f = {
-      name: a.name,
-      type: a.mimeType || 'video/mp4',
-      uri: a.uri,
-      blob: Platform.OS === 'web' ? (a.file as Blob | undefined) : undefined,
-    };
-    setPicked(f);
-    setStaged(null);
-    setFootagePath('');
-    setProgress(0);
-    try {
-      const up = await uploadVideo(f, setProgress);
-      setStaged(up);
-    } catch (e) {
-      setPicked(null);
-      setError(errorText(e));
-    } finally {
-      setProgress(null);
+    if (res.canceled || !res.assets?.length) return;
+    for (const a of res.assets) {
+      const f = {
+        name: a.name,
+        type: a.mimeType || 'video/mp4',
+        uri: a.uri,
+        blob: Platform.OS === 'web' ? (a.file as Blob | undefined) : undefined,
+      };
+      setUploadingName(a.name);
+      setProgress(0);
+      try {
+        const up = await uploadVideo(f, setProgress);
+        setClips((c) => [...c, up]);
+      } catch (e) {
+        setError(`${a.name}: ${errorText(e)}`);
+      }
     }
+    setProgress(null);
+    setUploadingName('');
   }
 
   function clearSelectedFootage() {
@@ -161,8 +174,8 @@ export default function NewReel() {
   async function submitCreativeDirection() {
     setError(null);
     const refLink = referenceUrl.trim();
-    if (!staged && !footagePath && !refLink) {
-      setError('Please add at least one raw clip or paste a reference video link to start editing.');
+    if (!clips.length && !footagePath) {
+      setError('Add the raw clips to edit. The reference only guides the style.');
       return;
     }
 
@@ -173,51 +186,27 @@ export default function NewReel() {
 
     setBusy(true);
     try {
-      // Synthesize full direction prompt
-      const directionSummary = [
-        filmTitle.trim() ? `Title: ${filmTitle.trim()}` : '',
-        `Goal: ${goal}`,
-        `Audience: ${audience}`,
-        `Format: ${format}`,
-        `Duration: ${duration}`,
-        `Feeling: ${feeling}`,
-        `Rhythm: ${rhythm}`,
-        refLink ? `Reference Video Pacing Guide: ${refLink}` : '',
-      ]
-        .filter(Boolean)
-        .join(' | ');
-
-      const combinedPrompt = `${prompt.trim()}\n\n[Direction: ${directionSummary}]`;
-
-      let res: { storyboard_id: string };
-
-      if (staged) {
-        // Uploaded file
-        res = await editor.autoEdit({
-          video_path: undefined,
-          url: undefined,
-          uploadId: staged.uploadId,
-          style: editorStyle,
-          instruction: combinedPrompt,
-        } as any);
-      } else if (footagePath) {
-        // Local raw footage path
-        res = await editor.autoEdit({
-          video_path: footagePath,
-          style: editorStyle,
-          instruction: combinedPrompt,
-        });
-      } else {
-        // Reference URL only
-        res = await editor.autoEdit({
-          url: refLink,
-          style: editorStyle,
-          instruction: combinedPrompt,
-        });
-      }
-
-      toast('The creative director is drafting your storyboard cut.');
-      router.push({ pathname: '/storyboard', params: { sb: res.storyboard_id } });
+      // Every form field travels as its own value to the creative director (studio/agent_bridge.py).
+      const studioRef = referenceId ? referenceFilms.find((film) => film.id === referenceId)?.title || referenceId : '';
+      const r = await post('/api/editor/agent/jobs', {
+        kind: 'edit',
+        prompt: prompt.trim() || 'Edit these clips into a strong short film.',
+        title: filmTitle.trim() || undefined,
+        format: format.includes('16:9') ? '16:9' : format.includes('1:1') ? '1:1' : '9:16',
+        duration: parseInt(duration, 10) || 60,
+        upload_ids: clips.map((c) => c.uploadId),
+        footage_paths: footagePath ? [footagePath] : [],
+        reference_url: refLink || undefined,
+        reference_video_id: referenceId || undefined,
+        direction: {
+          goal, audience, feeling, rhythm, style: editorStyle, length: duration,
+          studio_reference_id: referenceId || '', studio_reference: studioRef,
+        },
+      });
+      setJobId(r.job.id);
+      setClips([]);
+      setFootagePath('');
+      toast('Brief sent. Your edit is in production.');
     } catch (e) {
       setError(errorText(e));
     } finally {
@@ -270,6 +259,9 @@ export default function NewReel() {
       {/* Global Error Alert */}
       {error ? <Banner tone="danger">{error}</Banner> : null}
 
+      {/* The edit in production (or finished) for this account */}
+      {jobId ? <DirectorJob jobId={jobId} onNew={() => setJobId(null)} /> : null}
+
       {/* ============================================================== */}
       {/* STEP 1: SPLIT 2-COLUMN WORKFLOW                                */}
       {/* ============================================================== */}
@@ -304,27 +296,35 @@ export default function NewReel() {
                 </T>
               </View>
 
-              {activeFootageName ? (
+              {clips.map((c) => (
                 <View
-                  style={[
-                    styles.selectedClipCard,
-                    { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
-                  ]}
+                  key={c.uploadId}
+                  style={[styles.selectedClipCard, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}
                 >
                   <View style={[styles.clipIconBadge, { backgroundColor: colors.primarySoft }]}>
                     <Icon name="check" size={16} color={colors.primary} />
                   </View>
                   <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
-                    <Text style={[styles.clipNameText, { color: colors.text }]} numberOfLines={1}>
-                      {activeFootageName}
-                    </Text>
-                    <T variant="caption" muted>
-                      {staged ? `${(staged.sizeBytes / 1048576).toFixed(1)} MB · Ready for edit` : 'Selected from local footage'}
-                    </T>
+                    <Text style={[styles.clipNameText, { color: colors.text }]} numberOfLines={1}>{c.fileName}</Text>
+                    <T variant="caption" muted>{`${(c.sizeBytes / 1048576).toFixed(1)} MB · Ready for edit`}</T>
+                  </View>
+                  <Button label="Remove" small variant="ghost" icon="x"
+                    onPress={() => setClips((x) => x.filter((y) => y.uploadId !== c.uploadId))} />
+                </View>
+              ))}
+              {footagePath ? (
+                <View style={[styles.selectedClipCard, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+                  <View style={[styles.clipIconBadge, { backgroundColor: colors.primarySoft }]}>
+                    <Icon name="check" size={16} color={colors.primary} />
+                  </View>
+                  <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
+                    <Text style={[styles.clipNameText, { color: colors.text }]} numberOfLines={1}>{activeFootageName}</Text>
+                    <T variant="caption" muted>Selected from local footage</T>
                   </View>
                   <Button label="Remove" small variant="ghost" icon="x" onPress={clearSelectedFootage} />
                 </View>
-              ) : (
+              ) : null}
+              {(
                 <View style={{ gap: spacing.sm }}>
                   <Pressable
                     onPress={chooseFile}
@@ -339,7 +339,11 @@ export default function NewReel() {
                     <Icon name="upload" size={24} color={colors.primary} />
                     <View style={{ alignItems: 'center', gap: 2 }}>
                       <Text style={{ fontFamily: font.semibold, fontSize: 14, color: colors.text }}>
-                        {uploading ? `Uploading... ${progress || 0}%` : 'Upload raw clips from computer'}
+                        {uploading
+                          ? `Uploading ${uploadingName}… ${progress || 0}%`
+                          : clips.length
+                          ? `Add more clips (${clips.length} added)`
+                          : 'Upload raw clips from computer'}
                       </Text>
                       <T variant="caption" muted>
                         Accepts MP4, MOV. Video stays on your machine.
@@ -388,8 +392,14 @@ export default function NewReel() {
                 autoCapitalize="none"
                 autoCorrect={false}
               />
+              <Picker
+                value={referenceId}
+                placeholder="Choose one of your films as a reference"
+                options={referenceFilms.map((film) => ({ value: film.id, label: film.title }))}
+                onChange={setReferenceId}
+              />
               <T variant="caption" muted style={{ marginTop: 2 }}>
-                Paste a viral reel or video. The AI director matches its cut frequency, hook pacing, and visual transitions.
+                Choose one of your films to measure its editing rhythm, or paste a video link.
               </T>
             </View>
 

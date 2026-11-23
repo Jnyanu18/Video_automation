@@ -6,7 +6,7 @@ import {
   Pressable,
   Platform,
   Modal,
-  ScrollView,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Icon } from './Icon';
@@ -26,12 +26,15 @@ export interface FilmProject {
   format: string;
   status: 'SAVED' | 'IN REVIEW' | 'READY' | 'DRAFT';
   videoUrl: string;
+  thumbnailUrl?: string | null;
+  reference_id?: string | null;
   duration: string;
   gradientStart: string;
   gradientEnd: string;
   accentColor: string;
   isLandscape?: boolean;
 }
+
 
 interface ProjectHistoryProps {
   customFilms?: FilmProject[];
@@ -155,7 +158,7 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
       </View>
 
       {/* =========================================================================
-          3. CINEMATIC FILM CARDS GRID (3 Columns Matching Reference)
+          3. CINEMATIC FILM CARDS GRID (With Real Reel Images!)
           ========================================================================= */}
       <View style={styles.filmsGrid}>
         {filteredFilms.length === 0 && (
@@ -172,21 +175,43 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                 style={({ pressed, hovered }: any) => [
                   styles.cinematicCardSurface,
                   {
-                    backgroundColor: film.gradientStart,
                     borderColor: hovered ? (film.accentColor || '#6C4CF0') : '#232936',
                   },
                   hovered && styles.cinematicCardHovered,
                   pressed && { opacity: 0.95 },
-                  Platform.OS === 'web' && ({
-                    cursor: 'pointer',
-                    background: `linear-gradient(135deg, ${film.gradientStart} 0%, ${film.gradientEnd} 100%)`,
-                  } as any),
                 ]}
               >
-                {/* Top Kicker (e.g. 01 / BRAND STORY) */}
+                {/* 1. Real Reel Thumbnail Image Background */}
+                {film.thumbnailUrl ? (
+                  <Image
+                    source={{ uri: film.thumbnailUrl }}
+                    style={styles.cardBgImage}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <View
+                    style={[
+                      StyleSheet.absoluteFill,
+                      {
+                        backgroundColor: film.gradientStart,
+                        ...(Platform.OS === 'web'
+                          ? {
+                              background: `linear-gradient(135deg, ${film.gradientStart} 0%, ${film.gradientEnd} 100%)`,
+                            }
+                          : {}),
+                      },
+                    ]}
+                  />
+                )}
+
+                {/* 2. Cinematic Dark Gradient Vignette for Readability */}
+                <View style={styles.cardDarkGradientOverlay} />
+
+                {/* 3. Top Kicker (e.g. 01 / MOTION GRAPHICS) & Duration Pill */}
                 <View style={styles.cardTopRow}>
-                  <Text style={styles.cardKickerText}>{film.number}</Text>
-                  {/* Play badge in top right matching user screenshot */}
+                  <View style={styles.kickerPill}>
+                    <Text style={styles.cardKickerText}>{film.number}</Text>
+                  </View>
                   <View style={styles.playTopBadge}>
                     <Icon name="play" size={10} color="#FFFFFF" />
                     {film.duration && (
@@ -195,20 +220,16 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                   </View>
                 </View>
 
-                {/* Center Bold Editorial Headline */}
+                {/* 4. Center Bold Editorial Headline */}
                 <View style={styles.cardCenterTitleBox}>
                   <Text style={styles.cardGraphicTitle}>{film.graphicTitle}</Text>
                 </View>
 
-                {/* Bottom Motto Inside Card */}
+                {/* 5. Bottom Tagline Motto & Hover Play Icon */}
                 <View style={styles.cardBottomRow}>
                   <Text style={styles.cardTaglineText}>{film.tagline}</Text>
-                </View>
-
-                {/* Hover Play Button Overlay */}
-                <View style={styles.cardPlayOverlay}>
                   <View style={[styles.playIconCircle, { borderColor: film.accentColor }]}>
-                    <Icon name="play" size={16} color="#FFFFFF" />
+                    <Icon name="play" size={15} color="#FFFFFF" />
                   </View>
                 </View>
               </Pressable>
@@ -281,22 +302,21 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                   style={styles.modalTimelineBtn}
                   onPress={() => {
                     setSelectedFilm(null);
-                    router.push('/timeline');
+                    router.push({ pathname: '/new', params: { reference: selectedFilm.reference_id || selectedFilm.id } });
                   }}
                 >
-                  <Icon name="sliders" size={15} color="#FFFFFF" />
-                  <Text style={styles.modalTimelineBtnText}>Open in Timeline Editor</Text>
+                  <Icon name="sparkles" size={15} color="#FFFFFF" />
+                  <Text style={styles.modalTimelineBtnText}>Use as reference</Text>
                 </Pressable>
 
                 <Pressable
                   style={styles.modalStoryboardBtn}
                   onPress={() => {
                     setSelectedFilm(null);
-                    router.push('/storyboard');
                   }}
                 >
-                  <Icon name="layers" size={15} color="#0F172A" />
-                  <Text style={styles.modalStoryboardBtnText}>Storyboard View</Text>
+                  <Icon name="x" size={15} color="#0F172A" />
+                  <Text style={styles.modalStoryboardBtnText}>Close</Text>
                 </Pressable>
               </View>
             </View>
@@ -459,47 +479,96 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
     elevation: 4,
+    backgroundColor: '#090D16',
+    ...Platform.select({
+      web: {
+        cursor: 'pointer',
+      } as any,
+    }),
   },
   cinematicCardHovered: {
     transform: [{ translateY: -3 }],
+  },
+  cardBgImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+  },
+  cardDarkGradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(5, 7, 12, 0.45)',
+    ...Platform.select({
+      web: {
+        background:
+          'linear-gradient(180deg, rgba(5, 8, 14, 0.75) 0%, rgba(5, 8, 14, 0.22) 42%, rgba(5, 8, 14, 0.65) 72%, rgba(5, 8, 14, 0.95) 100%)',
+      } as any,
+    }),
   },
   cardTopRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    zIndex: 2,
+  },
+  kickerPill: {
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    ...Platform.select({
+      web: {
+        backdropFilter: 'blur(6px)',
+      } as any,
+    }),
   },
   cardKickerText: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: '800',
     fontFamily: font.mono,
-    color: 'rgba(255, 255, 255, 0.65)',
+    color: '#F8FAFC',
     letterSpacing: 1.4,
   },
   playTopBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingVertical: 2,
-    paddingHorizontal: 6,
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    paddingVertical: 3,
+    paddingHorizontal: 7,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.18)',
+    ...Platform.select({
+      web: {
+        backdropFilter: 'blur(6px)',
+      } as any,
+    }),
   },
   cardDurationText: {
     fontSize: 10,
     fontWeight: '700',
     fontFamily: font.mono,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#FFFFFF',
   },
   cardCenterTitleBox: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingVertical: 8,
+    zIndex: 2,
   },
   cardGraphicTitle: {
     fontSize: 22,
@@ -508,32 +577,53 @@ const styles = StyleSheet.create({
     letterSpacing: -0.4,
     lineHeight: 26,
     textTransform: 'uppercase',
+    ...Platform.select({
+      web: {
+        textShadow: '0 2px 8px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.95)',
+      } as any,
+      default: {
+        textShadowColor: 'rgba(0,0,0,0.85)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 8,
+      },
+    }),
   },
   cardBottomRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    zIndex: 2,
   },
   cardTaglineText: {
-    fontSize: 9,
-    fontWeight: '700',
+    fontSize: 9.5,
+    fontWeight: '800',
     fontFamily: font.mono,
-    color: 'rgba(255, 255, 255, 0.45)',
+    color: 'rgba(255, 255, 255, 0.85)',
     letterSpacing: 1.5,
-  },
-  cardPlayOverlay: {
-    position: 'absolute',
-    bottom: 14,
-    right: 14,
+    ...Platform.select({
+      web: {
+        textShadow: '0 1px 4px rgba(0,0,0,0.9)',
+      } as any,
+      default: {
+        textShadowColor: 'rgba(0,0,0,0.9)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 4,
+      },
+    }),
   },
   playIconCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
     borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
+    ...Platform.select({
+      web: {
+        backdropFilter: 'blur(6px)',
+      } as any,
+    }),
   },
 
   /* Meta Below Card */

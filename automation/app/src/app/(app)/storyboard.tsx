@@ -80,6 +80,7 @@ export default function StoryboardScreen() {
   }
 
   const card = finalSb.storyboard;
+  const agent = (finalSb as any).agent as { root: string; version_number: number; pending: string | null } | undefined;
   const sc = card?.scorecard;
   const rendering = finalSb.render_job?.status === 'running' || finalSb.render_job?.status === 'queued';
   const processing = finalSb.status === 'processing';
@@ -129,6 +130,11 @@ export default function StoryboardScreen() {
         </Banner>
       ) : null}
       {finalSb.error ? <Banner tone="danger">{finalSb.error}</Banner> : null}
+      {agent?.pending ? (
+        <Banner tone="info">
+          Your change request is in production. The new version replaces this one here as soon as it is ready.
+        </Banner>
+      ) : null}
       {finalSb.render_job?.status === 'failed' ? (
         <Banner tone="danger">Render failed: {finalSb.render_job.error}</Banner>
       ) : null}
@@ -263,10 +269,12 @@ export default function StoryboardScreen() {
                       act(
                         'chat',
                         async () => {
-                          await editor.chat(finalSb.id, msg.trim());
+                          // Films from the creative director are revised as a new version; engine cuts use the chat agent.
+                          if (agent?.root) await post(`/api/editor/agent/jobs/${agent.root}/revise`, { message: msg.trim() });
+                          else await editor.chat(finalSb.id, msg.trim());
                           setMsg('');
                         },
-                        'Revision started'
+                        agent?.root ? 'Change request sent. A new version is in production.' : 'Revision started'
                       )
                     }
                   />
