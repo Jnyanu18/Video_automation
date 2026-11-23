@@ -1,0 +1,43 @@
+# Railway builds from the repository root. Keep its context limited to the app.
+.git/
+.agents/
+.claude/
+.pytest_cache/
+.restructure/
+agentic-video-editor/
+apps/
+assets/
+creator-studio/
+docs/
+new project - marketing automatio/
+opus-motion-library/
+packages/
+reelforge/
+remotion-templates/
+research/
+scratchpad/
+skills/
+tools/
+vishnu-studio/
+work/
+
+# Local state and dependencies are never needed in the image.
+automation/app/
+automation/runtime/
+automation/server/storage/
+automation/editor/work/
+automation/editor/renders/
+automation/editor/.jobs-archive/
+automation/creator-studio/.agents/
+automation/creator-studio/.claude/
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+**/.expo/
+**/*.pyc
+**/*.mp4
+**/*.mov
+**/*.mkv
+**/*.mp3
+**/*.wav
+!automation/editor/assets/sfx/*.wav
