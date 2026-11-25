@@ -1,0 +1,46 @@
+{
+  "fictionalBrand": "FORM / Training Club",
+  "durationSeconds": 15,
+  "fps": 60,
+  "width": 1920,
+  "height": 1080,
+  "totalFrames": 900,
+  "bpm": 128,
+  "chapters": [
+    {
+      "from": 0,
+      "message": "SHOW UP"
+    },
+    {
+      "from": 112,
+      "message": "BUILD YOUR STRONG"
+    },
+    {
+      "from": 225,
+      "message": "FIND YOUR FORM"
+    },
+    {
+      "from": 337,
+      "message": "REP BY REP"
+    },
+    {
+      "from": 450,
+      "message": "FEEL THE POWER"
+    },
+    {
+      "from": 562,
+      "message": "FIND YOUR RHYTHM"
+    },
+    {
+      "from": 675,
+      "message": "TRAIN YOUR WAY"
+    },
+    {
+      "from": 787,
+      "message": "JOIN FORM"
+    }
+  ],
+  "audio": "Original synthesized percussion, no voiceover",
+  "style": "neo-swiss-kinetic",
+  "claimPolicy": "No prices, results, rankings, addresses or real booking links invented."
+}

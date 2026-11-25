@@ -1,0 +1,497 @@
+[
+  {
+    "w": "Modern",
+    "start": 0.0,
+    "end": 0.4
+  },
+  {
+    "w": "sailors",
+    "start": 0.4,
+    "end": 0.78
+  },
+  {
+    "w": "once",
+    "start": 0.78,
+    "end": 1.22
+  },
+  {
+    "w": "stuck",
+    "start": 1.22,
+    "end": 1.62
+  },
+  {
+    "w": "countless",
+    "start": 1.62,
+    "end": 2.1
+  },
+  {
+    "w": "QR",
+    "start": 2.1,
+    "end": 2.54
+  },
+  {
+    "w": "codes",
+    "start": 2.54,
+    "end": 3.02
+  },
+  {
+    "w": "on",
+    "start": 3.02,
+    "end": 3.18
+  },
+  {
+    "w": "their",
+    "start": 3.18,
+    "end": 3.3
+  },
+  {
+    "w": "warships,",
+    "start": 3.3,
+    "end": 3.78
+  },
+  {
+    "w": "from",
+    "start": 4.14,
+    "end": 4.44
+  },
+  {
+    "w": "literally",
+    "start": 4.44,
+    "end": 4.84
+  },
+  {
+    "w": "every",
+    "start": 4.84,
+    "end": 5.26
+  },
+  {
+    "w": "corner.",
+    "start": 5.26,
+    "end": 5.66
+  },
+  {
+    "w": "They",
+    "start": 6.26,
+    "end": 6.36
+  },
+  {
+    "w": "did",
+    "start": 6.36,
+    "end": 6.6
+  },
+  {
+    "w": "this",
+    "start": 6.6,
+    "end": 6.84
+  },
+  {
+    "w": "because",
+    "start": 6.84,
+    "end": 7.18
+  },
+  {
+    "w": "enemy",
+    "start": 7.18,
+    "end": 7.7
+  },
+  {
+    "w": "drones",
+    "start": 7.7,
+    "end": 8.18
+  },
+  {
+    "w": "were",
+    "start": 8.18,
+    "end": 8.42
+  },
+  {
+    "w": "blasting",
+    "start": 8.42,
+    "end": 8.88
+  },
+  {
+    "w": "their",
+    "start": 8.88,
+    "end": 9.14
+  },
+  {
+    "w": "ships",
+    "start": 9.14,
+    "end": 9.48
+  },
+  {
+    "w": "more",
+    "start": 9.48,
+    "end": 9.8
+  },
+  {
+    "w": "often.",
+    "start": 9.8,
+    "end": 10.18
+  },
+  {
+    "w": "But",
+    "start": 10.6,
+    "end": 10.78
+  },
+  {
+    "w": "now,",
+    "start": 10.78,
+    "end": 11.12
+  },
+  {
+    "w": "as",
+    "start": 11.58,
+    "end": 11.8
+  },
+  {
+    "w": "these",
+    "start": 11.8,
+    "end": 11.98
+  },
+  {
+    "w": "drones",
+    "start": 11.98,
+    "end": 12.5
+  },
+  {
+    "w": "scan",
+    "start": 12.5,
+    "end": 13.06
+  },
+  {
+    "w": "the",
+    "start": 13.06,
+    "end": 13.28
+  },
+  {
+    "w": "ship,",
+    "start": 13.28,
+    "end": 13.56
+  },
+  {
+    "w": "they",
+    "start": 14.04,
+    "end": 14.18
+  },
+  {
+    "w": "scan",
+    "start": 14.18,
+    "end": 14.48
+  },
+  {
+    "w": "the",
+    "start": 14.48,
+    "end": 14.64
+  },
+  {
+    "w": "QR",
+    "start": 14.64,
+    "end": 14.96
+  },
+  {
+    "w": "code,",
+    "start": 14.96,
+    "end": 15.44
+  },
+  {
+    "w": "which",
+    "start": 15.7,
+    "end": 16.0
+  },
+  {
+    "w": "takes",
+    "start": 16.0,
+    "end": 16.26
+  },
+  {
+    "w": "them",
+    "start": 16.26,
+    "end": 16.48
+  },
+  {
+    "w": "straight",
+    "start": 16.48,
+    "end": 16.84
+  },
+  {
+    "w": "to",
+    "start": 16.84,
+    "end": 17.08
+  },
+  {
+    "w": "Auralion",
+    "start": 17.08,
+    "end": 17.8
+  },
+  {
+    "w": "Labs,",
+    "start": 17.8,
+    "end": 18.18
+  },
+  {
+    "w": "the",
+    "start": 18.66,
+    "end": 18.78
+  },
+  {
+    "w": "studio",
+    "start": 18.78,
+    "end": 19.18
+  },
+  {
+    "w": "building",
+    "start": 19.18,
+    "end": 19.54
+  },
+  {
+    "w": "AI",
+    "start": 19.54,
+    "end": 20.02
+  },
+  {
+    "w": "receptionists",
+    "start": 20.02,
+    "end": 20.84
+  },
+  {
+    "w": "for",
+    "start": 20.84,
+    "end": 21.12
+  },
+  {
+    "w": "local",
+    "start": 21.12,
+    "end": 21.4
+  },
+  {
+    "w": "service",
+    "start": 21.4,
+    "end": 21.82
+  },
+  {
+    "w": "businesses.",
+    "start": 21.82,
+    "end": 22.22
+  },
+  {
+    "w": "Our",
+    "start": 22.82,
+    "end": 22.98
+  },
+  {
+    "w": "receptionist,",
+    "start": 22.98,
+    "end": 23.66
+  },
+  {
+    "w": "Ava,",
+    "start": 23.92,
+    "end": 24.04
+  },
+  {
+    "w": "picks",
+    "start": 24.24,
+    "end": 24.38
+  },
+  {
+    "w": "up",
+    "start": 24.38,
+    "end": 24.62
+  },
+  {
+    "w": "every",
+    "start": 24.62,
+    "end": 24.96
+  },
+  {
+    "w": "call",
+    "start": 24.96,
+    "end": 25.26
+  },
+  {
+    "w": "your",
+    "start": 25.26,
+    "end": 25.42
+  },
+  {
+    "w": "business",
+    "start": 25.42,
+    "end": 25.7
+  },
+  {
+    "w": "gets,",
+    "start": 25.7,
+    "end": 26.12
+  },
+  {
+    "w": "books",
+    "start": 26.78,
+    "end": 27.04
+  },
+  {
+    "w": "the",
+    "start": 27.04,
+    "end": 27.26
+  },
+  {
+    "w": "job",
+    "start": 27.26,
+    "end": 27.54
+  },
+  {
+    "w": "into",
+    "start": 27.54,
+    "end": 27.74
+  },
+  {
+    "w": "your",
+    "start": 27.74,
+    "end": 27.9
+  },
+  {
+    "w": "calendar,",
+    "start": 27.9,
+    "end": 28.34
+  },
+  {
+    "w": "or",
+    "start": 28.76,
+    "end": 29.08
+  },
+  {
+    "w": "takes",
+    "start": 29.08,
+    "end": 29.34
+  },
+  {
+    "w": "a",
+    "start": 29.34,
+    "end": 29.54
+  },
+  {
+    "w": "message",
+    "start": 29.54,
+    "end": 29.86
+  },
+  {
+    "w": "and",
+    "start": 29.86,
+    "end": 30.26
+  },
+  {
+    "w": "sends",
+    "start": 30.26,
+    "end": 30.54
+  },
+  {
+    "w": "it",
+    "start": 30.54,
+    "end": 30.68
+  },
+  {
+    "w": "to",
+    "start": 30.68,
+    "end": 30.8
+  },
+  {
+    "w": "you,",
+    "start": 30.8,
+    "end": 31.0
+  },
+  {
+    "w": "even",
+    "start": 31.46,
+    "end": 31.76
+  },
+  {
+    "w": "while",
+    "start": 31.76,
+    "end": 32.08
+  },
+  {
+    "w": "you're",
+    "start": 32.08,
+    "end": 32.28
+  },
+  {
+    "w": "on",
+    "start": 32.28,
+    "end": 32.4
+  },
+  {
+    "w": "a",
+    "start": 32.4,
+    "end": 32.48
+  },
+  {
+    "w": "job.",
+    "start": 32.48,
+    "end": 32.8
+  },
+  {
+    "w": "Get",
+    "start": 33.4,
+    "end": 33.5
+  },
+  {
+    "w": "your",
+    "start": 33.5,
+    "end": 33.68
+  },
+  {
+    "w": "free",
+    "start": 33.68,
+    "end": 34.06
+  },
+  {
+    "w": "missed",
+    "start": 34.06,
+    "end": 34.46
+  },
+  {
+    "w": "-call",
+    "start": 34.46,
+    "end": 34.82
+  },
+  {
+    "w": "audit.",
+    "start": 34.82,
+    "end": 35.46
+  },
+  {
+    "w": "Stop",
+    "start": 35.98,
+    "end": 36.34
+  },
+  {
+    "w": "missing",
+    "start": 36.34,
+    "end": 36.72
+  },
+  {
+    "w": "calls,",
+    "start": 36.72,
+    "end": 37.22
+  },
+  {
+    "w": "only",
+    "start": 37.48,
+    "end": 38.06
+  },
+  {
+    "w": "at",
+    "start": 38.06,
+    "end": 38.28
+  },
+  {
+    "w": "Auralion",
+    "start": 38.28,
+    "end": 38.88
+  },
+  {
+    "w": "Labs.",
+    "start": 38.88,
+    "end": 39.16
+  }
+]

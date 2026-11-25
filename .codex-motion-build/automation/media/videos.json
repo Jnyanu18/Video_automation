@@ -1,0 +1,123 @@
+[
+  {
+    "id": "film-01",
+    "title": "Behind the Scene A — Our Track",
+    "filename": "behind-the-scene-A-our-track.mp4",
+    "category": "hybrid",
+    "duration_seconds": 22.77,
+    "width": 1080,
+    "height": 1920,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-02",
+    "title": "Behind the Scene B — Reference Audio",
+    "filename": "behind-the-scene-B-reference-audio.mp4",
+    "category": "hybrid",
+    "duration_seconds": 31.5,
+    "width": 1080,
+    "height": 1920,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-03",
+    "title": "Claude Motion Reel",
+    "filename": "claude_motion_reel.mp4",
+    "category": "motion_graphics",
+    "duration_seconds": 13.44,
+    "width": 848,
+    "height": 480,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-04",
+    "title": "Motion Graphics AILO",
+    "filename": "motiongraphics_ailo.mp4",
+    "category": "motion_graphics",
+    "duration_seconds": 15.02,
+    "width": 480,
+    "height": 864,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-05",
+    "title": "NaatiRoots",
+    "filename": "naatiiroots.mp4",
+    "category": "ai_editing",
+    "duration_seconds": 32,
+    "width": 480,
+    "height": 864,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-06",
+    "title": "NaatiRoots 15s Vertical",
+    "filename": "NaatiRoots_15s_vertical (1).mp4",
+    "category": "hybrid",
+    "duration_seconds": 15,
+    "width": 1080,
+    "height": 1920,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-07",
+    "title": "NaatiRoots 15s Reel",
+    "filename": "NaatiRoots_Reel_15s.mp4",
+    "category": "hybrid",
+    "duration_seconds": 15,
+    "width": 1920,
+    "height": 1080,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-08",
+    "title": "Rockcastle Motion Graphics",
+    "filename": "rockcastle_motiongrpahis.mp4",
+    "category": "motion_graphics",
+    "duration_seconds": 25,
+    "width": 480,
+    "height": 864,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-09",
+    "title": "Tool Launch",
+    "filename": "tool_launch.mp4",
+    "category": "motion_graphics",
+    "duration_seconds": 15.06,
+    "width": 848,
+    "height": 480,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-10",
+    "title": "Build What's Next",
+    "filename": "video_2026-11-21_11-34-25.mp4",
+    "category": "motion_graphics",
+    "duration_seconds": 15.02,
+    "width": 720,
+    "height": 1280,
+    "origin": "studio_generated",
+    "is_reference": true
+  },
+  {
+    "id": "film-11",
+    "title": "AILO Motion Reel",
+    "filename": "video_2026-11-21_11-34-42.mp4",
+    "category": "motion_graphics",
+    "duration_seconds": 15.02,
+    "width": 1280,
+    "height": 720,
+    "origin": "studio_generated",
+    "is_reference": true
+  }
+]

@@ -1,0 +1,1 @@
+{"version":3,"sources":["withDocumentPicker.ts"],"sourcesContent":[null],"names":["pkg","require","createRunOncePlugin","withDocumentPickerIOS","name","version"],"mappings":";;;;+BAMA;;;eAAA;;;;yBANoC;;;;;;uCAEE;AAEtC,MAAMA,MAAMC,QAAQ;MAEpB,WAAeC,IAAAA,oCAAmB,EAACC,4CAAqB,EAAEH,IAAII,IAAI,EAAEJ,IAAIK,OAAO"}

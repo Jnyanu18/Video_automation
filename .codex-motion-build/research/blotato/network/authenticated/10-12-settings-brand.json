@@ -1,0 +1,288 @@
+{
+ "requested": "/settings/brand",
+ "url": "https://my.blotato.com/settings/brand",
+ "title": "Blotato",
+ "headings": [
+  "Settings",
+  "My Brand"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "My Brand",
+   "h": "/settings/brand"
+  },
+  {
+   "t": "API",
+   "h": "/settings/api"
+  },
+  {
+   "t": "Profile",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "Billing",
+   "h": "/settings/billing"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "Acme Inc.",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "https://example.com",
+   "aria": ""
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "ph": "We help small businesses grow their social media presence through AI-powered content creation...",
+   "aria": ""
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "ph": "Busy entrepreneurs and small business owners who want to save time on content creation while maintaining a strong social media presence...",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "text",
+   "ph": "United States, Europe, worldwide...",
+   "aria": ""
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "ph": "What topics resonate with your audience?",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "file",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "input",
+   "type": "file",
+   "ph": "",
+   "aria": ""
+  },
+  {
+   "tag": "textarea",
+   "type": "textarea",
+   "ph": "",
+   "aria": ""
+  }
+ ],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings\nSettings\nMy Brand\nAPI\nProfile\nBilling\nMy Brand\nBrand\n\nYour primary brand is used by default in content generation\n\nPRIMARY\n\nBasics\n\nLanguage\n\nGenerated posts will use this language\n\nBrand name\nWebsite\n\nYour Business\n\nWhat products or services do you offer?\nDescribe your ideal customers\nWhere are your customers located?\n\nContent\n\nWhat do you post about?\n\nBrand Visuals (optional)\n\nUpload social posts, product photos, or marketing images\n\nDrop images here or click to upload\n\n.png, .gif, .jpeg, .jpg, .svg, .webp, .avif\n\nMax 10MB\n\nBrand Documents (optional)\n\nUpload business docs, slide decks, or marketing materials\n\nDrop documents here or click to upload\n\n.pdf, .pptx, .ppt, .docx, .doc\n\nMax 25MB\n\n1",
+ "api": [
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774397319&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774397397&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/brands",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774398318&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774400343&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774403905&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774408984&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-ytlowPm8JD1cFRWx3xb6YioVZTNCabWXWRsRfkYjlvEmyK_DG3pV8TOFWVeRotelLYFcvneFWehFrdkfNI6O7ebnf5ff6cKQAU2I?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "eventGuid",
+    "eventData"
+   ],
+   "type": null
+  },
+  {
+   "dir": "in",
+   "keys": [
+    "eventName",
+    "eventData",
+    "eventGuid",
+    "nx.Topics",
+    "nx.Destination"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "10-12-settings-brand.png"
+}

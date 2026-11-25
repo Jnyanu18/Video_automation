@@ -1,0 +1,79 @@
+[
+  {
+    "id": "01-stack",
+    "start": 0.0,
+    "end": 7.221,
+    "words": "these are",
+    "desc": ""
+  },
+  {
+    "id": "02-stack",
+    "start": 7.221,
+    "end": 13.33,
+    "words": "the first in",
+    "desc": ""
+  },
+  {
+    "id": "03-stack",
+    "start": 13.33,
+    "end": 22.452,
+    "words": "if you write",
+    "desc": ""
+  },
+  {
+    "id": "04-stack",
+    "start": 22.452,
+    "end": 30.286,
+    "words": "for design",
+    "desc": ""
+  },
+  {
+    "id": "05-stack",
+    "start": 30.286,
+    "end": 38.418,
+    "words": "to research",
+    "desc": ""
+  },
+  {
+    "id": "06-stack",
+    "start": 38.418,
+    "end": 46.491,
+    "words": "for writing",
+    "desc": ""
+  },
+  {
+    "id": "07-stack",
+    "start": 46.491,
+    "end": 53.862,
+    "words": "and if your",
+    "desc": ""
+  },
+  {
+    "id": "08-stack",
+    "start": 53.862,
+    "end": 59.097,
+    "words": "now the check",
+    "desc": ""
+  },
+  {
+    "id": "09-stack",
+    "start": 59.097,
+    "end": 64.252,
+    "words": "so scan",
+    "desc": ""
+  },
+  {
+    "id": "10-stack",
+    "start": 64.252,
+    "end": 67.569,
+    "words": "it looks for",
+    "desc": ""
+  },
+  {
+    "id": "11-end",
+    "start": 67.569,
+    "end": 73.019,
+    "words": "comment",
+    "desc": ""
+  }
+]

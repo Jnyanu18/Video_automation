@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-18",
+  "purpose": "Fictional photo-studio portfolio demonstration for a generated motion reel",
+  "origin": "Generated from original prompts with image_gen; no downloaded or reference-video images",
+  "realClientPortfolio": false,
+  "realPeopleRepresented": false,
+  "namesOrLogos": false,
+  "assetEditing": "None. Original generated PNG files copied unchanged; no cropping or processing.",
+  "assets": [
+    {
+      "id": "hero",
+      "path": "public/hero.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2465443,
+      "sha256": "06b623f27240ec9bd61720218ef8019ca7405a764eb4cba16fe460b7e884a2b5",
+      "source": "OpenAI image generation",
+      "edited": false,
+      "description": "Fictional adult fashion portrait, orange coat on cobalt studio sweep",
+      "generationFileId": "exec-16b7508e-e094-481c-b639-1f7b6e1fda40"
+    },
+    {
+      "id": "stilllife",
+      "path": "public/stilllife.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1885638,
+      "sha256": "377227cfc7b3bb3ff0d28e79d58c4314bccf4d54110b0cf1ef67410bd7ea6730",
+      "source": "OpenAI image generation",
+      "edited": false,
+      "description": "Original product-style chrome sphere, orange calla lily and cobalt glass vase",
+      "generationFileId": "exec-18ee9468-23ec-47af-934f-390c5214c2cd"
+    },
+    {
+      "id": "movement",
+      "path": "public/movement.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1922710,
+      "sha256": "860652f223e2a1c45c1d7006c4e7dcdf989d9857c3f5858a14416fc675711d4d",
+      "source": "OpenAI image generation",
+      "edited": false,
+      "description": "Fictional adult dancer in cobalt fabric on vermilion studio backdrop",
+      "generationFileId": "exec-04792216-d211-4b9e-8d6a-1daf8bd349fb"
+    }
+  ],
+  "packageNote": "Historical generated assets copied unchanged into the v1.6 source example. Generation IDs replace machine-specific paths; public/ paths resolve inside this folder."
+}

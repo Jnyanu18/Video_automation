@@ -1,0 +1,31 @@
+{
+  "media_id": "ea2eeab47957",
+  "video_path": "J:\\ai editor\\automation\\editor\\services\\api\\.data\\projects\\1007131c-9001-4654-beaf-2c8e8da4bb3f\\work\\final_cut.mp4",
+  "duration": 15.155,
+  "resolution": "1080x1920",
+  "fps": 60.0,
+  "audio_stream": true,
+  "scenes_count": 1,
+  "silences_count": 6,
+  "total_speech_words": 31,
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "start": 0.0,
+      "end": 15.155,
+      "duration": 15.155,
+      "keyframe": "J:\\ai editor\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\index_final_cut\\keyframes\\kf_000_7.58s.jpg",
+      "transcript": "como lo que est\u00e1 en el momento. Ahora vamos a hacer un venta de truble. Y ahora s\u00ed, vamos a hacer un venta de truble. Y vamos a hacer un vento.",
+      "words_count": 31,
+      "visual_tags": [
+        "hook",
+        "introduction"
+      ],
+      "camera": {
+        "framing": "Close-Up / Talking Head",
+        "face_detected": true,
+        "motion": "Steady / Static"
+      }
+    }
+  ]
+}

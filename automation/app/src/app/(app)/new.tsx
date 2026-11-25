@@ -8,7 +8,9 @@ import { Icon } from '../../components/Icon';
 import { useWide } from '../../components/useWide';
 import { errorText, get, post, uploadVideo } from '../../api/client';
 import { editor } from '../../api/editor';
-import { DirectorJob, latestDirectorJob } from '../../components/DirectorJob';
+import { latestDirectorJob } from '../../components/DirectorJob';
+import { ProductionPanel } from '../../components/ProductionPanel';
+import { CustomAudio, type SelectedAudio } from '../../components/CustomAudio';
 import type { FilmProject } from '../../components/ProjectHistory';
 import type { UploadInfo } from '../../api/types';
 import { useToast } from '../../state/toast';
@@ -59,10 +61,10 @@ const RHYTHM_OPTIONS = [
 ];
 
 /**
- * AI Video Editing Studio (Raw Clips + Reference Video):
- * 01 Raw footage & brief -> 02 Creative direction (Storyboard) -> 03 Review your film
+ * AI Video Editing Studio: raw clips + references + brief on the left, the live production line on the right.
+ * Also the home page (index.tsx renders it with the project gallery as `footer`).
  */
-export default function NewReel() {
+export default function NewReel({ footer }: { footer?: React.ReactNode } = {}) {
   const router = useRouter();
   const toast = useToast();
   const { colors } = useTheme();
@@ -86,6 +88,8 @@ export default function NewReel() {
   const [referenceUrl, setReferenceUrl] = useState('');
   const [referenceId, setReferenceId] = useState(params.reference || '');
   const [referenceFilms, setReferenceFilms] = useState<FilmProject[]>([]);
+  const [customAudio, setCustomAudio] = useState<SelectedAudio | null>(null);
+  const [audioUploading, setAudioUploading] = useState(false);
 
   // 4. Selector Grid States
   const [goal, setGoal] = useState('Viral retention & engagement');
@@ -173,6 +177,10 @@ export default function NewReel() {
   // Generate Storyboard / Shape Creative Direction
   async function submitCreativeDirection() {
     setError(null);
+    if (audioUploading) {
+      setError('Wait for your audio upload to finish.');
+      return;
+    }
     const refLink = referenceUrl.trim();
     if (!clips.length && !footagePath) {
       setError('Add the raw clips to edit. The reference only guides the style.');
@@ -198,6 +206,7 @@ export default function NewReel() {
         footage_paths: footagePath ? [footagePath] : [],
         reference_url: refLink || undefined,
         reference_video_id: referenceId || undefined,
+        audio_upload_id: customAudio?.id,
         direction: {
           goal, audience, feeling, rhythm, style: editorStyle, length: duration,
           studio_reference_id: referenceId || '', studio_reference: studioRef,
@@ -206,6 +215,7 @@ export default function NewReel() {
       setJobId(r.job.id);
       setClips([]);
       setFootagePath('');
+      setCustomAudio(null);
       toast('Brief sent. Your edit is in production.');
     } catch (e) {
       setError(errorText(e));
@@ -216,51 +226,11 @@ export default function NewReel() {
 
   const uploading = progress !== null;
   const activeFootageName = staged?.fileName || picked?.name || (footagePath ? footagePath.split(/[\\/]/).pop() : '');
-  const posterTitle = filmTitle.trim() ? filmTitle.trim().toUpperCase() : 'MAKE IT MATTER.';
 
   return (
     <Screen title="AI Video Editing" subtitle="Turn raw footage and viral references into original, publish-ready videos.">
-      {/* ---------------- 3-Step Top Stepper ---------------- */}
-      <View style={[styles.stepperContainer, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-        <View style={[styles.stepItem, styles.stepItemActive]}>
-          <View style={[styles.stepBadge, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.onPrimary }}>01</Text>
-          </View>
-          <Text style={[styles.stepLabel, { color: colors.text }]}>Raw clips & brief</Text>
-        </View>
-
-        <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
-
-        <Pressable
-          accessibilityRole="tab"
-          onPress={() => router.push('/storyboard' as any)}
-          style={[styles.stepItem, { opacity: 0.6 }]}
-        >
-          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>02</Text>
-          </View>
-          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Creative direction</Text>
-        </Pressable>
-
-        <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
-
-        <Pressable
-          accessibilityRole="tab"
-          onPress={() => router.push('/timeline' as any)}
-          style={[styles.stepItem, { opacity: 0.6 }]}
-        >
-          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>03</Text>
-          </View>
-          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Review your film</Text>
-        </Pressable>
-      </View>
-
       {/* Global Error Alert */}
       {error ? <Banner tone="danger">{error}</Banner> : null}
-
-      {/* The edit in production (or finished) for this account */}
-      {jobId ? <DirectorJob jobId={jobId} onNew={() => setJobId(null)} /> : null}
 
       {/* ============================================================== */}
       {/* STEP 1: SPLIT 2-COLUMN WORKFLOW                                */}
@@ -276,15 +246,6 @@ export default function NewReel() {
               <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
                 <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>ABOUT 2 MIN</Text>
               </View>
-            </View>
-
-            <View style={{ gap: 4 }}>
-              <T variant="h1" style={{ fontSize: 24, letterSpacing: -0.5 }}>
-                What are we cutting?
-              </T>
-              <T muted style={{ fontSize: 13.5 }}>
-                Add your raw footage clips and an optional reference video to shape the pacing.
-              </T>
             </View>
 
             {/* 1. Raw Clips Section */}
@@ -385,23 +346,32 @@ export default function NewReel() {
                 </T>
               </View>
 
-              <Input
-                value={referenceUrl}
-                onChangeText={setReferenceUrl}
-                placeholder="https://www.instagram.com/reel/... or TikTok / YouTube Short"
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              <Picker
-                value={referenceId}
-                placeholder="Choose one of your films as a reference"
-                options={referenceFilms.map((film) => ({ value: film.id, label: film.title }))}
-                onChange={setReferenceId}
-              />
+              {/* One row: your own film on the left, a video link on the right (keeps the page short) */}
+              <View style={styles.referenceRow}>
+                <View style={styles.referenceCell}>
+                  <Picker
+                    value={referenceId}
+                    placeholder="Choose one of your films as a reference"
+                    options={referenceFilms.map((film) => ({ value: film.id, label: film.title }))}
+                    onChange={setReferenceId}
+                  />
+                </View>
+                <View style={styles.referenceCell}>
+                  <Input
+                    value={referenceUrl}
+                    onChangeText={setReferenceUrl}
+                    placeholder="Or paste a reel / TikTok / YouTube link"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                  />
+                </View>
+              </View>
               <T variant="caption" muted style={{ marginTop: 2 }}>
                 Choose one of your films to measure its editing rhythm, or paste a video link.
               </T>
             </View>
+
+            <CustomAudio value={customAudio} onChange={setCustomAudio} onUploadingChange={setAudioUploading} />
 
             {/* 3. Film Name */}
             <Field label="GIVE YOUR FILM A NAME" hint="Working title for this reel">
@@ -465,19 +435,16 @@ export default function NewReel() {
                 </T>
                 <Picker value={rhythm} placeholder="Choose rhythm" options={RHYTHM_OPTIONS} onChange={setRhythm} />
               </View>
-            </View>
 
-            {/* Editing Style Preset */}
-            {styleList.length > 0 ? (
-              <Field label="EDITING STYLE PRESET" hint="Visual presets with pre-configured pacing and caption typography">
-                <Picker
-                  value={editorStyle}
-                  placeholder="Select editing style"
-                  options={styleList}
-                  onChange={setEditorStyle}
-                />
-              </Field>
-            ) : null}
+              {styleList.length > 0 ? (
+                <View style={styles.selectorItem}>
+                  <T variant="label" muted style={styles.selectorLabel}>
+                    EDITING STYLE PRESET
+                  </T>
+                  <Picker value={editorStyle} placeholder="Select editing style" options={styleList} onChange={setEditorStyle} />
+                </View>
+              ) : null}
+            </View>
 
             {/* Form Footer */}
             <View style={styles.formFooter}>
@@ -499,115 +466,28 @@ export default function NewReel() {
           </Card>
         </View>
 
-        {/* Right Column: Aesthetic Glimpse of the Process */}
+        {/* Right Column: the live production line for this account's latest edit */}
         <View style={styles.previewCol}>
-          <Card style={{ gap: spacing.lg, backgroundColor: colors.surface }}>
-            <View style={styles.headerLine}>
-              <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>
-                A GLIMPSE OF THE PROCESS
-              </T>
-              <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-                <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>STUDIO</Text>
-              </View>
-            </View>
-
-            <T variant="h2" style={{ fontSize: 16 }}>
-              Raw footage, transformed with vision.
-            </T>
-
-            {/* Aesthetic Poster Card */}
-            <View
-              style={[
-                styles.posterCard,
-                {
-                  backgroundColor: colors.surfaceAlt,
-                  borderColor: colors.border,
-                },
-              ]}
-            >
-              <View style={styles.posterTopLine}>
-                <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>MF / EDITORIAL STUDY</Text>
-                <Text style={[styles.posterMonoText, { color: colors.textMuted }]}>001</Text>
-              </View>
-
-              <View style={styles.posterCenter}>
-                <Text style={[styles.posterSubheading, { color: colors.primary }]}>
-                  {feeling.toUpperCase()}
-                </Text>
-                <Text style={[styles.posterTitleText, { color: colors.text }]} numberOfLines={3}>
-                  {posterTitle}
-                </Text>
-                <View style={{ marginTop: 8, gap: 4 }}>
-                  <Text style={[styles.posterStatusPill, { color: activeFootageName ? colors.primary : colors.textMuted }]}>
-                    {activeFootageName ? `▶ CLIP: ${activeFootageName}` : '○ NO RAW CLIPS ATTACHED YET'}
-                  </Text>
-                  {referenceUrl.trim() ? (
-                    <Text style={[styles.posterStatusPill, { color: colors.primary }]}>
-                      ✦ REFERENCE GUIDED ACTIVE
-                    </Text>
-                  ) : null}
-                </View>
-              </View>
-
-              <View style={[styles.posterBottomLine, { borderTopColor: colors.border }]}>
-                <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>AI VIDEO STUDIO</Text>
-                <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>YOUR FOOTAGE</Text>
-                <Text style={[styles.posterMonoText, { color: colors.textFaint }]}>01 23</Text>
-              </View>
-            </View>
-
-            {/* Process Highlights */}
-            <View style={{ gap: spacing.md, marginTop: spacing.xs }}>
-              <View style={styles.highlightRow}>
-                <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
-                  <Icon name="sparkles" size={16} color={colors.primary} />
-                </View>
-                <View style={{ flex: 1, gap: 2 }}>
-                  <T variant="label" style={{ fontWeight: '700' }}>
-                    Multimodal Scene Indexing
-                  </T>
-                  <T variant="small" muted>
-                    Analyzes spoken speech, detected objects, and keyframe motion — no blind cuts.
-                  </T>
-                </View>
-              </View>
-
-              <View style={styles.highlightRow}>
-                <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
-                  <Icon name="link" size={16} color={colors.primary} />
-                </View>
-                <View style={{ flex: 1, gap: 2 }}>
-                  <T variant="label" style={{ fontWeight: '700' }}>
-                    Reference-Guided Pacing
-                  </T>
-                  <T variant="small" muted>
-                    Recreates viral cut timing and hook structure from your reference video.
-                  </T>
-                </View>
-              </View>
-
-              <View style={styles.highlightRow}>
-                <View style={[styles.highlightIcon, { backgroundColor: colors.primarySoft }]}>
-                  <Icon name="clock" size={16} color={colors.primary} />
-                </View>
-                <View style={{ flex: 1, gap: 2 }}>
-                  <T variant="label" style={{ fontWeight: '700' }}>
-                    You Stay in Control
-                  </T>
-                  <T variant="small" muted>
-                    Review every scene and caption in the Storyboard before final rendering.
-                  </T>
-                </View>
-              </View>
-            </View>
-          </Card>
+          <ProductionPanel
+            kind="edit"
+            jobId={jobId}
+            onNew={() => setJobId(null)}
+            attached={{
+              clips: clips.length + (footagePath ? 1 : 0),
+              reference: referenceId ? referenceFilms.find((f) => f.id === referenceId)?.title || 'your film' : referenceUrl.trim() ? 'video link' : undefined,
+            }}
+          />
         </View>
       </View>
+      {footer}
     </Screen>
   );
 }
 
+
 const styles = StyleSheet.create({
+  referenceRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  referenceCell: { flexGrow: 1, flexBasis: 260, minWidth: 0 },
   /* Stepper */
   stepperContainer: {
     flexDirection: 'row',
@@ -731,10 +611,15 @@ const styles = StyleSheet.create({
 
   /* Selectors Grid */
   selectorsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: spacing.md,
   },
   selectorItem: {
     gap: 4,
+    flexGrow: 1,
+    flexBasis: 260,
+    minWidth: 0,
   },
   selectorLabel: {
     fontSize: 10.5,

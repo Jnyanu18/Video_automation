@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1080, height=1920"/>
+<script src="vendor/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family:sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+#main{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:0}
+.ov-full{position:absolute;inset:0;z-index:5;overflow:hidden}
+.ov-title{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 120.0px}
+.ov-lt{position:absolute;left:110.0px;bottom:499px;z-index:6}
+.ov-gfx{position:absolute;inset:110.0px;z-index:6;display:flex;align-items:center;justify-content:center}
+.tt{color:#fff;font-weight:800;font-size:72.0px;text-shadow:0 4px 18px rgba(0,0,0,.8)}
+.sub{color:#eee;font-weight:500;font-size:38.0px;margin-top:8.0px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.lt{background:rgba(0,0,0,.6);border-left:8.0px solid #ff7a00;padding:16.0px 28.0px}
+.lt .tt{font-size:44.0px}
+.cap{position:absolute;left:0;right:0;bottom:230px;z-index:10;text-align:center;padding:0 110.0px}
+.ct{display:inline-block;font-size:64.0px;line-height:1.2}
+.w{display:inline-block;transform-origin:50% 70%}
+</style></head><body>
+<div id="stage" data-composition-id="edit" data-start="0" data-duration="8.688" data-width="1080" data-height="1920" data-fps="30">
+  <video id="main" class="clip" data-start="0" data-duration="8.688" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
+  <div id="ov0" class="clip ov-lt" data-start="0.000" data-duration="8.660" data-track-index="1" style=""><div class="lt" id="ov0i"><div class="tt">Diwali Special</div><div class="sub">Festival of Light</div></div></div>
+  <div id="cap0" class="clip cap" data-start="0.000" data-duration="1.320" data-track-index="1" style=""><span class="ct" id="cap0t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">Hello everyone, as</span></div>
+  <div id="cap1" class="clip cap" data-start="1.320" data-duration="0.960" data-track-index="1" style=""><span class="ct" id="cap1t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">we celebrate Diwali,</span></div>
+  <div id="cap2" class="clip cap" data-start="2.640" data-duration="0.680" data-track-index="1" style=""><span class="ct" id="cap2t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">the Festival of</span></div>
+  <div id="cap3" class="clip cap" data-start="3.320" data-duration="1.140" data-track-index="1" style=""><span class="ct" id="cap3t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">Light, let&#x27;s remember</span></div>
+  <div id="cap4" class="clip cap" data-start="4.460" data-duration="1.120" data-track-index="1" style=""><span class="ct" id="cap4t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">that knowledge dispels</span></div>
+  <div id="cap5" class="clip cap" data-start="5.580" data-duration="1.060" data-track-index="1" style=""><span class="ct" id="cap5t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">darkness just like</span></div>
+  <div id="cap6" class="clip cap" data-start="6.640" data-duration="0.860" data-track-index="1" style=""><span class="ct" id="cap6t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">lamps brighten our</span></div>
+  <div id="cap7" class="clip cap" data-start="7.500" data-duration="0.340" data-track-index="1" style=""><span class="ct" id="cap7t" style="font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)">homes.</span></div>
+</div>
+<script>
+const tl = gsap.timeline({paused:true});
+tl.from("#ov0i",{x:-80,opacity:0,duration:0.4,ease:"power3.out"},0.000);
+tl.from("#cap0t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},0.000);
+tl.from("#cap1t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},1.320);
+tl.from("#cap2t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},2.640);
+tl.from("#cap3t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},3.320);
+tl.from("#cap4t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},4.460);
+tl.from("#cap5t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},5.580);
+tl.from("#cap6t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},6.640);
+tl.from("#cap7t",{"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"},7.500);
+window.__timelines = window.__timelines || {};
+window.__timelines["edit"] = tl;
+</script></body></html>

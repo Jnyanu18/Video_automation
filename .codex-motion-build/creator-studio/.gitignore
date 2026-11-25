@@ -1,0 +1,43 @@
+# Dependencies, caches and temp
+node_modules/
+.cache/
+__pycache__/
+*.pyc
+remotion/out/
+research/_study/
+
+# Secrets never go in the repo
+.env
+.env.*
+
+# Footage, renders and generated media stay out: the repo tracks the system, not the videos.
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4a
+*.mp3
+*.wav
+*.aac
+*.flac
+*.zip
+videos/**/work/
+videos/**/out/
+videos/**/raw/
+videos/**/broll/
+videos/**/frames/
+experiments/**/*.png
+experiments/**/*.jpg
+
+# The CC0 sound library is small and reused by every video
+!videos/_sfx/cc0/*.wav
+videos/**/*.png
+videos/**/*.jpg
+**/.hyperframes/artifacts/
+**/.hyperframes/preview/
+
+# The upload queue and agency finals are copies of what videos/ holds; only their READMEs are tracked
+publish/**
+!publish/README.md
+agency/videos/**
+!agency/videos/README.md

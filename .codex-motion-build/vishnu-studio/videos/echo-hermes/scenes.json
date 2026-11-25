@@ -1,0 +1,22 @@
+[
+ {
+  "scene": "echo",
+  "at": "you can turn",
+  "bg": "#0d0d10",
+  "section": "Keynote worlds: the drawer Echo, the repo, Hey Hermes, the Show screen, the switches, the model check, the drawer again",
+  "mark": [],
+  "props": {
+   "look": "dev", "captions": "none", "stageScale": 1.0, "stageLift": 0, "slug": "echo-hermes",
+   "parts": {
+    "yours": "into your own", "free": "completely free",
+    "b2": "its called", "stars": "500 stars",
+    "b3": "say hey", "alexa": "instead of alexa", "memory": "memory and personality", "persona": "personality",
+    "b4": "got an echo", "heard": "what it heard", "tools": "the tools", "answer": "the answer", "camera": "through the camera",
+    "b5": "you choose", "web": "web search", "home": "smart home", "code": "coding by",
+    "b6": "only some", "check": "check your",
+    "b7": "then that echo", "jarvis": "a jarvis",
+    "b8": "comment echo"
+   }
+  }
+ }
+]

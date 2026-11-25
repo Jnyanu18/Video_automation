@@ -1,0 +1,402 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "visual": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 45
+        },
+        "background": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "foreground": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "primary": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "secondary": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "surface": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "muted": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "fontFamily": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "fontAssetId": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+        },
+        "logoAssetId": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        }
+      },
+      "required": [
+        "name",
+        "background",
+        "foreground",
+        "primary",
+        "secondary",
+        "surface",
+        "muted",
+        "fontFamily",
+        "radius"
+      ],
+      "additionalProperties": false
+    },
+    "tone": {
+      "type": "string",
+      "default": "Clear and concise"
+    },
+    "language": {
+      "type": "string",
+      "default": "en"
+    },
+    "website": {
+      "type": "string",
+      "default": ""
+    },
+    "cta": {
+      "type": "string",
+      "default": "Learn more"
+    },
+    "voice": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "const": "elevenlabs"
+        },
+        "voiceId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "provider",
+        "voiceId"
+      ],
+      "additionalProperties": true
+    },
+    "strategy": {
+      "type": "object",
+      "properties": {
+        "objective": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "objective": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "audience": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "cta": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "website": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "durationSeconds": {
+          "type": "number",
+          "minimum": 3,
+          "maximum": 180
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "landscape",
+            "portrait",
+            "square"
+          ]
+        },
+        "fps": {
+          "type": "number",
+          "enum": [
+            24,
+            25,
+            30,
+            60
+          ]
+        },
+        "spokenLanguage": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 30
+        },
+        "onScreenLanguage": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 30
+        },
+        "narration": {
+          "type": "boolean"
+        },
+        "voiceId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tone": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "energy": {
+          "type": "string",
+          "enum": [
+            "restrained",
+            "balanced",
+            "punchy"
+          ]
+        },
+        "primaryRef": {
+          "type": "string",
+          "enum": [
+            "R01",
+            "R02",
+            "R03",
+            "R04",
+            "R05",
+            "R06",
+            "R07",
+            "R08",
+            "R09",
+            "R10",
+            "R11"
+          ]
+        },
+        "secondaryRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "R01",
+              "R02",
+              "R03",
+              "R04",
+              "R05",
+              "R06",
+              "R07",
+              "R08",
+              "R09",
+              "R10",
+              "R11"
+            ]
+          },
+          "maxItems": 2
+        },
+        "allowOrbit": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 45
+        },
+        "primary": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "secondary": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "background": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "foreground": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "surface": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "muted": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "fontFamily": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "fontAssetId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 80
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "logoAssetId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 80
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        }
+      },
+      "additionalProperties": false
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "lockedFields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "objective",
+              "audience",
+              "message",
+              "cta",
+              "website",
+              "durationSeconds",
+              "format",
+              "fps",
+              "spokenLanguage",
+              "onScreenLanguage",
+              "narration",
+              "voiceId",
+              "tone",
+              "energy",
+              "primaryRef",
+              "secondaryRefs",
+              "allowOrbit",
+              "name",
+              "primary",
+              "secondary",
+              "background",
+              "foreground",
+              "surface",
+              "muted",
+              "fontFamily",
+              "fontAssetId",
+              "logoAssetId",
+              "radius"
+            ]
+          },
+          "default": []
+        },
+        "approvedMetricValues": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    },
+    "logoVariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string"
+          },
+          "forBackground": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark",
+              "any"
+            ]
+          }
+        },
+        "required": [
+          "assetId",
+          "forBackground"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "id",
+    "revision",
+    "name",
+    "visual"
+  ],
+  "additionalProperties": true,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

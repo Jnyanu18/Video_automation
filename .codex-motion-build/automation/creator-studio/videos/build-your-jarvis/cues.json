@@ -1,0 +1,86 @@
+[
+  {
+    "id": "01-thing",
+    "start": 0.0,
+    "end": 4.379,
+    "words": "you can build",
+    "desc": ""
+  },
+  {
+    "id": "02-thing",
+    "start": 4.379,
+    "end": 7.484,
+    "words": "one",
+    "desc": ""
+  },
+  {
+    "id": "03-thing",
+    "start": 7.484,
+    "end": 11.957,
+    "words": "two",
+    "desc": ""
+  },
+  {
+    "id": "04-thing",
+    "start": 11.957,
+    "end": 16.587,
+    "words": "three",
+    "desc": ""
+  },
+  {
+    "id": "05-thing",
+    "start": 16.587,
+    "end": 20.569,
+    "words": "four",
+    "desc": ""
+  },
+  {
+    "id": "06-thing",
+    "start": 20.569,
+    "end": 24.064,
+    "words": "five",
+    "desc": ""
+  },
+  {
+    "id": "07-thing",
+    "start": 24.064,
+    "end": 29.02,
+    "words": "six",
+    "desc": ""
+  },
+  {
+    "id": "08-thing",
+    "start": 29.02,
+    "end": 31.788,
+    "words": "seven",
+    "desc": ""
+  },
+  {
+    "id": "09-thing",
+    "start": 31.788,
+    "end": 34.307,
+    "words": "eight",
+    "desc": ""
+  },
+  {
+    "id": "10-thing",
+    "start": 34.307,
+    "end": 36.928,
+    "words": "nine",
+    "desc": ""
+  },
+  {
+    "id": "11-thing",
+    "start": 36.928,
+    "end": 44.827,
+    "words": "and ten",
+    "desc": ""
+  },
+  {
+    "id": "12-end",
+    "start": 44.827,
+    "end": 48.777,
+    "words": "comment",
+    "desc": ""
+  }
+]

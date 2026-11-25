@@ -1,0 +1,146 @@
+{
+ "name": "einstein-box-a-less-tv-more-brain",
+ "brand": {
+  "font": "Nunito",
+  "accent": "#ff5a5f",
+  "accent_light": "#d81d24",
+  "light": "#fff3e3",
+  "dark": "#1a0a0b",
+  "navy": "#5a1014",
+  "ink_dark": "#fff6e8",
+  "ink_light": "#1c1417"
+ },
+ "voice": "neerja",
+ "rate": "+3%",
+ "music": {
+  "style": "chill",
+  "volume": 0.22,
+  "seed": 21
+ },
+ "scenes": [
+  {
+   "kind": "kinetic",
+   "theme": "dark",
+   "words": [
+    "Less",
+    "TV.",
+    "More",
+    "brain."
+   ],
+   "accent": [
+    3
+   ],
+   "say": "Less TV. More brain.",
+   "duration": 3.0,
+   "sfx": [
+    {
+     "name": "thud",
+     "at": 0.3,
+     "volume": 0.6
+    },
+    {
+     "name": "thud",
+     "at": 1.2,
+     "volume": 0.6
+    }
+   ]
+  },
+  {
+   "kind": "photos",
+   "theme": "light",
+   "title": "A new *world* every month",
+   "images": [
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_Month1.png",
+     "label": "Plant world"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_Month2.png",
+     "label": "Places around me"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month3.png",
+     "label": "Bugs and beetles"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month4.png",
+     "label": "Dinosaur world"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month5.png",
+     "label": "Birds"
+    },
+    {
+     "src": "J:/ai editor/clients/einstein-box/assets/3yrs_month6.png",
+     "label": "The human body"
+    }
+   ],
+   "say": "Every month, your child gets a box with two books and three learning activities. Plants, dinosaurs, birds, even the human body."
+  },
+  {
+   "kind": "versus2",
+   "theme": "dark",
+   "old": {
+    "tag": "Other boxes",
+    "items": [
+     "Craft focused",
+     "Books not important",
+     "Just keeps kids busy"
+    ]
+   },
+   "new": {
+    "tag": "Einstein Box",
+    "items": [
+     "Learning and creativity",
+     "A love for books",
+     "IQ enhancing activities"
+    ]
+   },
+   "new_at_word": "Einstein",
+   "say": "Other boxes keep kids busy. Einstein Box builds a love for books, and activities that grow their mind.",
+   "sfx": [
+    {
+     "name": "chime",
+     "at": 4.0,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "headline",
+   "theme": "light",
+   "lines": [
+    "No more searching",
+    "for new stuff",
+    "*every month.*"
+   ],
+   "size": 104,
+   "sub": "A parent review on einsteinbox.in",
+   "say": "As one parent put it: no more searching for new stuff every month. Super convenient, and high quality."
+  },
+  {
+   "kind": "cta",
+   "theme": "dark",
+   "lines": [
+    "Invest in your",
+    "child's *mind.*"
+   ],
+   "button": "See the offer",
+   "url": "einsteinbox.in",
+   "sub": "India's #1 Early Learning Program",
+   "say": "Invest in your child's mind. Start with Einstein Box.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.2,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 2.0,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

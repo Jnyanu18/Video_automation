@@ -1,0 +1,13 @@
+[
+  {"scene": "byox", "at": "the most", "bg": "#14151a", "section": "one take: chart, repo, guides, resume, interview, comment", "mark": ["build"],
+   "poses": [{"on": "most", "pose": "point-up"}, {"on": "isn't", "pose": "shrug"}, {"on": "it's called", "pose": "wow"}, {"on": "here's why", "pose": "present"},
+     {"on": "you use", "pose": "point-up"}, {"on": "build each", "pose": "cheer"}, {"on": "a to do", "pose": "shrug"}, {"on": "i built", "pose": "wink"},
+     {"on": "interviewers", "pose": "think"}, {"on": "explain", "pose": "cheer"}, {"on": "comment", "pose": "wave"}, {"on": "send", "pose": "wink"}],
+   "props": {"look": "dev", "stageScale": 1.0, "stageLift": 60, "slug": "build-your-own-x",
+     "parts": {"react": "react", "linux": "linux", "python": "python", "reveal": "it's called", "x": "own x",
+       "tour": "here's why", "count": "over half", "one": "have",
+       "tiles": "you use", "git": "git", "docker": "docker", "db": "databases", "guide": "this repo", "built": "build each", "scratch": "scratch",
+       "resume": "a to do", "copies": "everyone", "mine": "i built", "strike": "doesn't",
+       "chat": "and it's exactly", "ask": "interviewers", "dots": "because", "answer": "now you", "ok": "explain",
+       "comment": "comment", "kw": "build and", "send": "send"}}}
+]

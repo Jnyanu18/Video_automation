@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=360, height=640"/>
+<script src="vendor/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:360px;height:640px;overflow:hidden;background:#000;font-family:sans-serif}
+#stage{position:relative;width:360px;height:640px;overflow:hidden}
+#main{position:absolute;left:0;top:0;width:360px;height:640px;z-index:0}
+.ov-full{position:absolute;inset:0;z-index:5;overflow:hidden}
+.ov-title{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 40.0px}
+.ov-lt{position:absolute;left:36.7px;bottom:166px;z-index:6}
+.ov-gfx{position:absolute;inset:36.7px;z-index:6;display:flex;align-items:center;justify-content:center}
+.tt{color:#fff;font-weight:800;font-size:24.0px;text-shadow:0 4px 18px rgba(0,0,0,.8)}
+.sub{color:#eee;font-weight:500;font-size:12.7px;margin-top:2.7px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.lt{background:rgba(0,0,0,.6);border-left:2.7px solid #ff7a00;padding:5.3px 9.3px}
+.lt .tt{font-size:14.7px}
+.cap{position:absolute;left:0;right:0;bottom:77px;z-index:10;text-align:center;padding:0 36.7px}
+.ct{display:inline-block;font-size:21.3px;line-height:1.2;word-spacing:.1em}
+.w{display:inline-block;transform-origin:50% 70%;margin:0 .06em}
+
+.ov-dia{position:absolute;left:14.7px;right:14.7px;top:58%;height:21%;z-index:6}
+.dg{width:100%;height:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:6.0px;
+  padding:7.3px 8.7px;background:rgba(12,17,30,.86);border:0.7px solid rgba(255,255,255,.16);border-radius:8.7px;
+  color:#fff;font-weight:700;text-align:center;box-shadow:0 3.3px 13.3px rgba(0,0,0,.5)}
+.dg-col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4.0px;flex:1 1 0;min-width:0}
+.dg-node{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3.3px;padding:5.3px 2.7px;
+  border-radius:6.0px;background:rgba(255,255,255,.1);font-size:9.7px;line-height:1.15}
+.dg-num{width:14.7px;height:14.7px;border-radius:50%;background:#ffd400;color:#111;display:flex;align-items:center;justify-content:center;font-size:8.7px}
+.dg-ring{position:absolute;inset:-4px;border:1.3px solid #ffd400;border-radius:7.3px;box-shadow:0 0 7.3px #ffd400;opacity:0;pointer-events:none}
+.dg-arrow{flex:none;width:11.3px;height:11.3px}
+.dg-tag{padding:1.3px 5.3px;border-radius:3.3px;font-size:8.7px;letter-spacing:.06em;color:#111}
+.dg-txt{font-size:9.7px;line-height:1.15}
+.dg-meter{width:88%;height:6.0px;background:rgba(255,255,255,.14);border-radius:3.3px;overflow:hidden}
+.dg-fill{height:100%;border-radius:3.3px}
+.dg-vs{flex:none;font-size:8.7px;color:rgba(255,255,255,.6)}
+.dg-big{font-size:32.0px;line-height:1;color:#ffd400;font-weight:800}
+.dg-cap{font-size:9.7px;line-height:1.15;color:#fff}
+.dg-users{display:flex;gap:2.7px}
+.dg-box{padding:4.0px 8.7px;border-radius:5.3px;background:rgba(255,255,255,.12);font-size:11.3px}
+.dg-box.acc{background:#ffd400;color:#111}
+.dg-row{display:flex;align-items:center;justify-content:center;gap:4.7px;width:100%}
+.dg-grid{display:grid;grid-template-columns:repeat(4,11.3px);gap:2.7px}
+.dg-cell{width:11.3px;height:8.7px;border-radius:2.0px;background:rgba(255,255,255,.32)}
+.dg-bubble{padding:4.7px 8.0px;border-radius:7.3px 7.3px 7.3px 2.0px;background:#5aa9ff;color:#fff;font-size:10.3px}
+
+</style></head><body>
+<div id="stage" data-composition-id="edit" data-start="0" data-duration="8.230" data-width="360" data-height="640" data-fps="24">
+  <video id="main" class="clip" data-start="0" data-duration="8.230" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
+  <div id="ov0" class="clip ov-dia" data-start="0.000" data-duration="3.580" data-track-index="1" style=""><div class="dg" id="ov0p"><svg viewBox="0 0 1000 400" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="overflow:visible" font-family="inherit"><g id="ov0_mov" data-el="mov" data-type="icon" style="transform-box:fill-box;transform-origin:50% 50%"><g id="ov0_mov_p" style="transform-box:fill-box;transform-origin:50% 50%"><g transform="translate(90.0 160.0) scale(3.333)" fill="none" stroke="#5aa9ff" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></g></g></g><g id="ov0_arr" data-el="arr" data-type="line" style="transform-box:fill-box;transform-origin:50% 50%"><g id="ov0_arr_p" style="transform-box:fill-box;transform-origin:50% 50%"><path id="ov0_arr_ln" d="M220.0 200.0 L400.0 200.0" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 9"/><path id="ov0_arr_ah" d="M382.0 208.7 L400.0 200.0 L382.0 191.3" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></g><g id="ov0_cam" data-el="cam" data-type="icon" style="transform-box:fill-box;transform-origin:50% 50%"><g id="ov0_cam_p" style="transform-box:fill-box;transform-origin:50% 50%"><g transform="translate(430.0 160.0) scale(3.333)" fill="none" stroke="#ffffff" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></g></g></g><g id="ov0_box" data-el="box" data-type="box" style="transform-box:fill-box;transform-origin:50% 50%"><g id="ov0_box_p" style="transform-box:fill-box;transform-origin:50% 50%"><rect x="570.0" y="150.0" width="360.0" height="100.0" rx="16" fill="#ff5d5d"/><text x="750.0" y="200.0" text-anchor="middle" dominant-baseline="central" font-size="24" font-weight="700" fill="#111111">Warning Stance</text></g></g><g id="ov0_badge" data-el="badge" data-type="badge" style="transform-box:fill-box;transform-origin:50% 50%"><g id="ov0_badge_p" style="transform-box:fill-box;transform-origin:50% 50%"><rect x="704.0" y="283.0" width="92.0" height="34.0" rx="17.0" fill="#ffd400"/><text x="750.0" y="300.0" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="800" fill="#111111">ALERT</text></g></g></svg></div></div>
+  <div id="ov1" class="clip ov-title" data-start="6.215" data-duration="2.000" data-track-index="1" style="inset:auto;left:20.0px;right:20.0px;top:30.0%;transform:translateY(-50%);"><div class="ti" id="ov1i"><div class="tt" style="font-size:17.3px;background:rgba(0,0,0,.6);padding:.25em .6em;border-radius:.3em;display:inline-block">Save this reel</div></div></div>
+  <div id="cap0" class="clip cap" data-start="0.000" data-duration="3.580" data-track-index="1" style=""><span class="ct" id="cap0t" style="font-weight:800;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase"><span class="w" id="cap0w0">Warning</span> <span class="w" id="cap0w1">the</span> <span class="w" id="cap0w2">stance</span> <span class="w" id="cap0w3">in</span> <span class="w" id="cap0w4">this</span> <span class="w" id="cap0w5">movie</span></span></div>
+</div>
+<script>
+gsap.defaults({lazy:false});  // frame capture reads the page right after a seek: no deferred writes
+const tl = gsap.timeline({paused:true});
+tl.from("#ov0p",{opacity:0,y:15.3,duration:0.35,ease:"power3.out"},0.000);
+tl.fromTo("#ov0p",{opacity:1,y:0},{opacity:0,y:10.0,duration:0.25,ease:"power2.in"},3.280);
+tl.fromTo("#ov0_mov",{opacity:0,scale:0.6},{opacity:1,scale:1,duration:0.45,ease:"back.out(1.8)"},0.200);
+tl.fromTo("#ov0_arr_ln",{strokeDasharray:180.0,strokeDashoffset:180.0},{strokeDashoffset:0,duration:0.6,ease:"power2.inOut"},0.700);
+tl.fromTo("#ov0_arr_ah",{opacity:0},{opacity:1,duration:0.2},1.210);
+tl.fromTo("#ov0_cam",{opacity:0,scale:0.6},{opacity:1,scale:1,duration:0.45,ease:"back.out(1.8)"},1.100);
+tl.fromTo("#ov0_box",{opacity:0,x:70},{opacity:1,x:0,duration:0.45,ease:"power3.out"},1.600);
+tl.fromTo("#ov0_badge",{opacity:0,scale:0.6},{opacity:1,scale:1,duration:0.45,ease:"back.out(1.8)"},2.200);
+tl.fromTo("#ov0_badge_p",{scale:1},{scale:1.16,duration:0.23,yoyo:true,repeat:1,ease:"power1.inOut"},2.700);
+tl.from("#ov1i",{y:13,opacity:0,duration:0.4,ease:"power3.out"},6.215);
+tl.from("#cap0t",{"opacity": 0, "y": 10, "duration": 0.12, "ease": "power2.out"},0.000);
+tl.to("#cap0w0",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},0.000);
+tl.to("#cap0w0",{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"},1.260);
+tl.to("#cap0w1",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},1.260);
+tl.to("#cap0w1",{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"},1.920);
+tl.to("#cap0w2",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},1.920);
+tl.to("#cap0w2",{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"},2.520);
+tl.to("#cap0w3",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},2.520);
+tl.to("#cap0w3",{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"},2.600);
+tl.to("#cap0w4",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},2.600);
+tl.to("#cap0w4",{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"},2.820);
+tl.to("#cap0w5",{color:"#ffd400",scale:1.08,duration:0.06,ease:"power2.out"},2.820);
+tl.to("#cap0w5",{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"},3.580);
+window.__timelines = window.__timelines || {};
+window.__timelines["edit"] = tl;
+</script></body></html>

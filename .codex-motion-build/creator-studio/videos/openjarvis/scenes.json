@@ -1,0 +1,9 @@
+[
+  {"scene": "jarvis", "at": "you can", "bg": "#0d0e12", "section": "one take: the install, the repo, the morning briefing, the laptop, save, comment", "mark": ["guide"],
+   "poses": [{"on": "you can", "pose": "point-left"}],
+   "props": {"look": "dev", "stageScale": 1.0, "stageLift": 60, "slug": "openjarvis", "theme": "dark",
+     "parts": {"one": "one single", "run": "command", "repo": "it's called", "stanford": "stanford", "stars": "over", "free": "completely",
+       "brief": "every morning", "inbox": "inbox", "cal": "calendar", "news": "news", "talks": "talks you", "chief": "chief of",
+       "local": "the ai", "machine": "machine", "sub": "subscription", "rent": "nothing to",
+       "save": "save this", "comment": "comment", "kw": "guide", "send": "send"}}}
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "hook",
+    "start": 0.0,
+    "end": 7.46,
+    "words": "you know",
+    "desc": "Headline: \"It can do the thing. You just can't find where.\" with \"can't find where\" on gold.",
+    "chapter": "Can't find the button"
+  },
+  {
+    "id": "built",
+    "start": 7.46,
+    "end": 9.18,
+    "words": "that's why I built Verb",
+    "desc": "Dark ground. Headline: \"So I built Verb.\" with \"Verb\" on gold.",
+    "chapter": "What Verb is"
+  },
+  {
+    "id": "ask",
+    "start": 9.18,
+    "end": 18.6,
+    "words": "you add it to your product",
+    "desc": "A window titled \"Your app\" with a chat box. The request \"move my Friday meeting to Monday\" types in on \"move\"."
+  },
+  {
+    "id": "does",
+    "start": 18.6,
+    "end": 24.04,
+    "words": "and verb actually does it",
+    "desc": "The same window: under the request, \"Done. Your Friday meeting is now on Monday.\" Avatar holds the tick."
+  },
+  {
+    "id": "limits",
+    "start": 24.04,
+    "end": 27.64,
+    "words": "it can't do anything",
+    "desc": "Headline: \"Only what that user could already do.\" with \"already\" on gold."
+  },
+  {
+    "id": "asks",
+    "start": 27.64,
+    "end": 36.92,
+    "words": "and if it's about to change something",
+    "desc": "The window becomes the approval card: \"Move your Friday meeting to Monday?\" with Approve (gold) and Cancel."
+  },
+  {
+    "id": "setup",
+    "start": 36.92,
+    "end": 47.14,
+    "words": "setting it up",
+    "desc": "A window with three lines, each landing on its words: \"1. your coding agent reads your app\", \"2. writes verb.md: what Verb may do\", \"3. paste one line of code\".",
+    "chapter": "How you get it"
+  },
+  {
+    "id": "free",
+    "start": 47.14,
+    "end": 53.96,
+    "words": "it's free right now",
+    "desc": "Dark ground. Headline: \"Free while I launch.\" with \"Free\" on gold. Under it, smaller: \"Already running in production for a real company.\"",
+    "chapter": "Try it"
+  },
+  {
+    "id": "question",
+    "start": 53.96,
+    "end": 61.5,
+    "words": "so I'm curious",
+    "desc": "Headline: \"If your users could just ask your product for one thing, what would it be?\" with \"one thing\" on gold. \"Tell me in the comments.\" Small \"askverb.com\" under it.",
+    "chapter": "Your turn"
+  }
+]

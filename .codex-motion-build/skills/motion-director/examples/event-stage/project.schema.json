@@ -1,0 +1,398 @@
+{
+  "$ref": "#/definitions/EventStageProject",
+  "definitions": {
+    "EventStageProject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "revision": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "skillVersion": {
+          "type": "string",
+          "const": "2.1.0"
+        },
+        "status": {
+          "type": "string",
+          "const": "review-copy"
+        },
+        "fictionalBrand": {
+          "type": "boolean"
+        },
+        "brand": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "tagline": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "width": {
+          "type": "number",
+          "const": 1080
+        },
+        "height": {
+          "type": "number",
+          "const": 1920
+        },
+        "fps": {
+          "type": "number",
+          "const": 60
+        },
+        "durationInFrames": {
+          "type": "number",
+          "const": 900
+        },
+        "palette": {
+          "type": "object",
+          "properties": {
+            "orange": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "white": {
+              "$ref": "#/definitions/EventStageProject/properties/palette/properties/orange"
+            },
+            "black": {
+              "$ref": "#/definitions/EventStageProject/properties/palette/properties/orange"
+            }
+          },
+          "required": [
+            "orange",
+            "white",
+            "black"
+          ],
+          "additionalProperties": false
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "floorY": {
+              "type": "number",
+              "minimum": 1200,
+              "maximum": 1400
+            },
+            "ballDiameter": {
+              "type": "number",
+              "minimum": 60,
+              "maximum": 120
+            },
+            "fallStartY": {
+              "type": "number",
+              "minimum": 650,
+              "maximum": 950
+            },
+            "contactX": {
+              "type": "number",
+              "const": 540
+            }
+          },
+          "required": [
+            "floorY",
+            "ballDiameter",
+            "fallStartY",
+            "contactX"
+          ],
+          "additionalProperties": false
+        },
+        "assets": {
+          "type": "object",
+          "properties": {
+            "logo": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?!\\/)(?!.*\\.\\.)[a-zA-Z0-9_. /-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "grain": {
+              "$ref": "#/definitions/EventStageProject/properties/assets/properties/logo/anyOf/0"
+            },
+            "audio": {
+              "$ref": "#/definitions/EventStageProject/properties/assets/properties/logo/anyOf/0"
+            }
+          },
+          "required": [
+            "logo",
+            "grain",
+            "audio"
+          ],
+          "additionalProperties": false
+        },
+        "references": {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "string",
+              "const": "R03"
+            },
+            "secondary": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "R02",
+                  "R10"
+                ]
+              },
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "primary",
+            "secondary"
+          ],
+          "additionalProperties": false
+        },
+        "audio": {
+          "type": "object",
+          "properties": {
+            "bpm": {
+              "type": "number",
+              "const": 120
+            },
+            "beatPhaseFrame": {
+              "type": "number",
+              "const": 0
+            },
+            "narration": {
+              "type": "string",
+              "const": "none"
+            },
+            "source": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "bpm",
+            "beatPhaseFrame",
+            "narration",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "from": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 899
+              },
+              "durationInFrames": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "headline": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 18
+                },
+                "minItems": 1,
+                "maxItems": 3
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+              }
+            },
+            "required": [
+              "id",
+              "from",
+              "durationInFrames",
+              "headline",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "enum": [
+                  "spark-contact",
+                  "stage-unfold",
+                  "stage-arrival",
+                  "lights",
+                  "energy",
+                  "action",
+                  "detail-burst",
+                  "detail-lock",
+                  "moment-pullback",
+                  "moment-lock",
+                  "brand-cover",
+                  "logo-arrival",
+                  "final-settle"
+                ]
+              },
+              "frame": {
+                "$ref": "#/definitions/EventStageProject/properties/scenes/items/properties/from"
+              },
+              "sound": {
+                "type": "string",
+                "enum": [
+                  "impact",
+                  "tick",
+                  "whoosh-impact",
+                  "whoosh",
+                  "tail"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "frame",
+              "sound"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 13,
+          "maxItems": 13
+        },
+        "copy": {
+          "type": "object",
+          "properties": {
+            "passTitle": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 18
+            },
+            "passSubtitle": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 18
+            },
+            "passFooter": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 55
+            },
+            "passBadge": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20
+            },
+            "stageTitle": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 18
+            },
+            "stageStatus": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 35
+            },
+            "hudTagline": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36
+            },
+            "sparkLine": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 70
+            },
+            "buildLine": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 70
+            },
+            "detailLine": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 70
+            },
+            "detailLabels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 18
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "cta": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            }
+          },
+          "required": [
+            "passTitle",
+            "passSubtitle",
+            "passFooter",
+            "passBadge",
+            "stageTitle",
+            "stageStatus",
+            "hudTagline",
+            "sparkLine",
+            "buildLine",
+            "detailLine",
+            "detailLabels",
+            "cta"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "skillVersion",
+        "status",
+        "fictionalBrand",
+        "brand",
+        "category",
+        "tagline",
+        "width",
+        "height",
+        "fps",
+        "durationInFrames",
+        "palette",
+        "geometry",
+        "assets",
+        "references",
+        "audio",
+        "scenes",
+        "events",
+        "copy"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

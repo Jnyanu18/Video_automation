@@ -1,0 +1,7 @@
+﻿git : error: RPC failed; curl 55 Send failure: Connection was aborted
+At line:1 char:321
++ ... ; cd "j:\ai editor"; git push -u origin longform/phase-3 2>&1 | Tee-O ...
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: RPC fail...ion was aborted:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

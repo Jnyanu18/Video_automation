@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "id": "flux-launch-portrait",
+  "revision": 1,
+  "title": "Flux: an editable launch study",
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "durationInFrames": 1080
+  },
+  "brand": {
+    "name": "Flux",
+    "background": "#F5F4EF",
+    "foreground": "#14151B",
+    "primary": "#4B47F5",
+    "secondary": "#FA6944",
+    "surface": "#FFFFFF",
+    "muted": "#646571",
+    "fontFamily": "DejaVu Sans",
+    "radius": 28,
+    "fontAssetId": "demo-font"
+  },
+  "style": {
+    "primaryRef": "R08",
+    "secondaryRefs": [
+      "R03",
+      "R01"
+    ],
+    "energy": "balanced"
+  },
+  "assets": [
+    {
+      "id": "click",
+      "kind": "audio",
+      "src": "audio/click.wav",
+      "durationInFrames": 5
+    },
+    {
+      "id": "pop",
+      "kind": "audio",
+      "src": "audio/pop.wav",
+      "durationInFrames": 10
+    },
+    {
+      "id": "whoosh",
+      "kind": "audio",
+      "src": "audio/whoosh.wav",
+      "durationInFrames": 20
+    },
+    {
+      "id": "demo-font",
+      "kind": "font",
+      "src": "assets/DejaVuSans.ttf"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "from": 0,
+      "durationInFrames": 120,
+      "kind": "type",
+      "refs": [
+        "R03"
+      ],
+      "headline": "Your ideas. In motion.",
+      "transitionIn": {
+        "type": "cut",
+        "durationInFrames": 0
+      },
+      "entryFrames": 24,
+      "treatment": "stagger",
+      "emphasis": "motion."
+    },
+    {
+      "id": "build",
+      "from": 120,
+      "durationInFrames": 210,
+      "kind": "ui",
+      "refs": [
+        "R08"
+      ],
+      "headline": "Start with one prompt.",
+      "transitionIn": {
+        "type": "iris",
+        "durationInFrames": 18
+      },
+      "entryFrames": 24,
+      "template": "input",
+      "label": "Your creative brief",
+      "value": "A bold launch, made for our brand",
+      "steps": [
+        "Brand kit applied",
+        "Scenes ready to edit",
+        "Preview before export"
+      ]
+    },
+    {
+      "id": "choose",
+      "from": 330,
+      "durationInFrames": 180,
+      "kind": "gallery",
+      "refs": [
+        "R08"
+      ],
+      "headline": "One brand. Every scene.",
+      "transitionIn": {
+        "type": "push",
+        "durationInFrames": 18
+      },
+      "entryFrames": 24,
+      "cards": [
+        {
+          "title": "Typography"
+        },
+        {
+          "title": "Product"
+        },
+        {
+          "title": "Motion"
+        }
+      ]
+    },
+    {
+      "id": "proof",
+      "from": 510,
+      "durationInFrames": 180,
+      "kind": "metric",
+      "refs": [
+        "R01"
+      ],
+      "headline": "Make the story count.",
+      "transitionIn": {
+        "type": "cut",
+        "durationInFrames": 0
+      },
+      "entryFrames": 24,
+      "label": "Illustrative metric \u2014 replace with verified data",
+      "value": 12840,
+      "prefix": "",
+      "suffix": "",
+      "decimals": 0
+    },
+    {
+      "id": "connect",
+      "from": 690,
+      "durationInFrames": 150,
+      "kind": "orbit",
+      "refs": [
+        "R01"
+      ],
+      "headline": "Everything, connected.",
+      "transitionIn": {
+        "type": "iris",
+        "durationInFrames": 18
+      },
+      "entryFrames": 24,
+      "particleCount": 180
+    },
+    {
+      "id": "close",
+      "from": 840,
+      "durationInFrames": 240,
+      "kind": "cta",
+      "refs": [
+        "R08"
+      ],
+      "headline": "Make your next move.",
+      "transitionIn": {
+        "type": "push",
+        "durationInFrames": 18
+      },
+      "entryFrames": 24,
+      "buttonLabel": "Create your story",
+      "website": "your-domain.example",
+      "subheadline": "Preview it. Refine it. Make it yours."
+    }
+  ],
+  "audio": {
+    "voiceover": {
+      "status": "none",
+      "text": "",
+      "from": 0,
+      "durationInFrames": 0
+    },
+    "cues": [
+      {
+        "id": "cue-1",
+        "assetId": "pop",
+        "from": 12,
+        "durationInFrames": 10,
+        "gain": 0.55,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-2",
+        "assetId": "whoosh",
+        "from": 115,
+        "durationInFrames": 20,
+        "gain": 0.45,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-3",
+        "assetId": "click",
+        "from": 215,
+        "durationInFrames": 5,
+        "gain": 0.55,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-4",
+        "assetId": "pop",
+        "from": 338,
+        "durationInFrames": 10,
+        "gain": 0.55,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-5",
+        "assetId": "click",
+        "from": 516,
+        "durationInFrames": 5,
+        "gain": 0.55,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-6",
+        "assetId": "whoosh",
+        "from": 685,
+        "durationInFrames": 20,
+        "gain": 0.45,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-7",
+        "assetId": "whoosh",
+        "from": 835,
+        "durationInFrames": 20,
+        "gain": 0.45,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      },
+      {
+        "id": "cue-8",
+        "assetId": "pop",
+        "from": 895,
+        "durationInFrames": 10,
+        "gain": 0.55,
+        "fadeInFrames": 0,
+        "fadeOutFrames": 2,
+        "role": "sfx"
+      }
+    ]
+  }
+}

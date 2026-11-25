@@ -1,0 +1,56 @@
+name: wedding-full
+description: Comprehensive feature-length wedding documentary film preserving the full ceremony, speeches, and celebrations.
+target_duration: 900
+beats:
+  - id: morning_prep
+    must_have: []
+    duration: [60, 120]
+    search: ["getting ready", "makeup", "dress", "prep", "details", "rings"]
+    transition: crossfade
+  - id: guests_arrival
+    must_have: [guests]
+    duration: [45, 90]
+    search: ["guests arriving", "venue", "welcome", "lobby", "courtyard"]
+    transition: cut
+  - id: ceremony_full
+    must_have: [ceremony, speech]
+    duration: [180, 300]
+    search: ["ceremony", "vows", "readings", "exchange of rings", "kiss", "pronouncement"]
+    prefer: speech_whole
+    transition: cut
+  - id: photo_session
+    must_have: [two_people]
+    duration: [60, 120]
+    search: ["photos", "portraits", "family photos", "bridal party", "couple"]
+    transition: crossfade
+  - id: cocktail_hour
+    must_have: [guests]
+    duration: [60, 90]
+    search: ["cocktails", "mingling", "drinks", "guests talking", "smiles"]
+    transition: cut
+  - id: reception_and_dinner
+    must_have: []
+    duration: [60, 120]
+    search: ["reception", "dinner", "tables", "decor", "food", "toasts"]
+    transition: cut
+  - id: full_speeches
+    must_have: [speech]
+    duration: [120, 240]
+    search: ["speeches", "toasts", "laughter", "applause", "toastmaster"]
+    prefer: speech_whole
+    transition: cut
+  - id: dances
+    must_have: [two_people]
+    duration: [60, 120]
+    search: ["first dance", "parent dances", "father daughter dance", "mother son dance"]
+    transition: crossfade
+  - id: open_floor_party
+    must_have: [guests]
+    duration: [90, 180]
+    search: ["party", "dancing", "fun", "celebration", "dance floor"]
+    transition: cut
+  - id: grand_exit
+    must_have: [guests]
+    duration: [30, 60]
+    search: ["grand exit", "sparklers", "car", "farewell", "goodbye"]
+    transition: dip_to_black

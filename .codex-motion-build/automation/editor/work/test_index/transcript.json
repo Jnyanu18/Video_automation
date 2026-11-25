@@ -1,0 +1,359 @@
+{
+  "video": "J:\\ai editor\\automation\\editor\\services\\api\\.data\\projects\\1007131c-9001-4654-beaf-2c8e8da4bb3f\\work\\final_cut.mp4",
+  "backend": "faster-whisper",
+  "status": "ok",
+  "language": "es",
+  "words": [
+    {
+      "word": "como",
+      "start": 0.0,
+      "end": 0.14
+    },
+    {
+      "word": "lo",
+      "start": 0.14,
+      "end": 0.26
+    },
+    {
+      "word": "que",
+      "start": 0.26,
+      "end": 0.42
+    },
+    {
+      "word": "est\u00e1",
+      "start": 0.42,
+      "end": 0.56
+    },
+    {
+      "word": "en",
+      "start": 0.56,
+      "end": 0.64
+    },
+    {
+      "word": "el",
+      "start": 0.64,
+      "end": 0.74
+    },
+    {
+      "word": "momento.",
+      "start": 0.74,
+      "end": 0.94
+    },
+    {
+      "word": "Ahora,",
+      "start": 3.82,
+      "end": 4.38
+    },
+    {
+      "word": "vamos",
+      "start": 4.56,
+      "end": 4.86
+    },
+    {
+      "word": "a",
+      "start": 4.86,
+      "end": 5.06
+    },
+    {
+      "word": "hacer",
+      "start": 5.06,
+      "end": 5.06
+    },
+    {
+      "word": "un",
+      "start": 5.06,
+      "end": 5.28
+    },
+    {
+      "word": "venta",
+      "start": 5.28,
+      "end": 5.56
+    },
+    {
+      "word": "de",
+      "start": 5.56,
+      "end": 5.8
+    },
+    {
+      "word": "trubo.",
+      "start": 5.8,
+      "end": 6.22
+    },
+    {
+      "word": "Y",
+      "start": 8.26,
+      "end": 8.82
+    },
+    {
+      "word": "ahora,",
+      "start": 8.82,
+      "end": 9.1
+    },
+    {
+      "word": "vamos",
+      "start": 9.38,
+      "end": 9.58
+    },
+    {
+      "word": "a",
+      "start": 9.58,
+      "end": 9.76
+    },
+    {
+      "word": "hacer",
+      "start": 9.76,
+      "end": 10.26
+    },
+    {
+      "word": "un",
+      "start": 10.26,
+      "end": 10.66
+    },
+    {
+      "word": "venta",
+      "start": 10.66,
+      "end": 10.66
+    },
+    {
+      "word": "de",
+      "start": 10.66,
+      "end": 11.2
+    },
+    {
+      "word": "trubo.",
+      "start": 11.2,
+      "end": 11.2
+    },
+    {
+      "word": "Y",
+      "start": 13.04,
+      "end": 13.6
+    },
+    {
+      "word": "vamos",
+      "start": 13.6,
+      "end": 13.84
+    },
+    {
+      "word": "a",
+      "start": 13.84,
+      "end": 14.22
+    },
+    {
+      "word": "hacer",
+      "start": 14.22,
+      "end": 14.22
+    },
+    {
+      "word": "un",
+      "start": 14.22,
+      "end": 14.7
+    },
+    {
+      "word": "venta",
+      "start": 14.7,
+      "end": 14.76
+    },
+    {
+      "word": "de",
+      "start": 14.76,
+      "end": 14.76
+    },
+    {
+      "word": "trubo.",
+      "start": 14.76,
+      "end": 14.76
+    }
+  ],
+  "segments": [
+    {
+      "text": "como lo que est\u00e1 en el momento.",
+      "start": 0.0,
+      "end": 0.94,
+      "words": [
+        {
+          "word": "como",
+          "start": 0.0,
+          "end": 0.14
+        },
+        {
+          "word": "lo",
+          "start": 0.14,
+          "end": 0.26
+        },
+        {
+          "word": "que",
+          "start": 0.26,
+          "end": 0.42
+        },
+        {
+          "word": "est\u00e1",
+          "start": 0.42,
+          "end": 0.56
+        },
+        {
+          "word": "en",
+          "start": 0.56,
+          "end": 0.64
+        },
+        {
+          "word": "el",
+          "start": 0.64,
+          "end": 0.74
+        },
+        {
+          "word": "momento.",
+          "start": 0.74,
+          "end": 0.94
+        }
+      ]
+    },
+    {
+      "text": "Ahora, vamos a hacer un venta de trubo.",
+      "start": 3.82,
+      "end": 6.22,
+      "words": [
+        {
+          "word": "Ahora,",
+          "start": 3.82,
+          "end": 4.38
+        },
+        {
+          "word": "vamos",
+          "start": 4.56,
+          "end": 4.86
+        },
+        {
+          "word": "a",
+          "start": 4.86,
+          "end": 5.06
+        },
+        {
+          "word": "hacer",
+          "start": 5.06,
+          "end": 5.06
+        },
+        {
+          "word": "un",
+          "start": 5.06,
+          "end": 5.28
+        },
+        {
+          "word": "venta",
+          "start": 5.28,
+          "end": 5.56
+        },
+        {
+          "word": "de",
+          "start": 5.56,
+          "end": 5.8
+        },
+        {
+          "word": "trubo.",
+          "start": 5.8,
+          "end": 6.22
+        }
+      ]
+    },
+    {
+      "text": "Y ahora, vamos a hacer un venta de trubo.",
+      "start": 8.26,
+      "end": 11.2,
+      "words": [
+        {
+          "word": "Y",
+          "start": 8.26,
+          "end": 8.82
+        },
+        {
+          "word": "ahora,",
+          "start": 8.82,
+          "end": 9.1
+        },
+        {
+          "word": "vamos",
+          "start": 9.38,
+          "end": 9.58
+        },
+        {
+          "word": "a",
+          "start": 9.58,
+          "end": 9.76
+        },
+        {
+          "word": "hacer",
+          "start": 9.76,
+          "end": 10.26
+        },
+        {
+          "word": "un",
+          "start": 10.26,
+          "end": 10.66
+        },
+        {
+          "word": "venta",
+          "start": 10.66,
+          "end": 10.66
+        },
+        {
+          "word": "de",
+          "start": 10.66,
+          "end": 11.2
+        },
+        {
+          "word": "trubo.",
+          "start": 11.2,
+          "end": 11.2
+        }
+      ]
+    },
+    {
+      "text": "Y vamos a hacer un venta de trubo.",
+      "start": 13.04,
+      "end": 14.76,
+      "words": [
+        {
+          "word": "Y",
+          "start": 13.04,
+          "end": 13.6
+        },
+        {
+          "word": "vamos",
+          "start": 13.6,
+          "end": 13.84
+        },
+        {
+          "word": "a",
+          "start": 13.84,
+          "end": 14.22
+        },
+        {
+          "word": "hacer",
+          "start": 14.22,
+          "end": 14.22
+        },
+        {
+          "word": "un",
+          "start": 14.22,
+          "end": 14.7
+        },
+        {
+          "word": "venta",
+          "start": 14.7,
+          "end": 14.76
+        },
+        {
+          "word": "de",
+          "start": 14.76,
+          "end": 14.76
+        },
+        {
+          "word": "trubo.",
+          "start": 14.76,
+          "end": 14.76
+        }
+      ]
+    }
+  ],
+  "text": "como lo que est\u00e1 en el momento. Ahora, vamos a hacer un venta de trubo. Y ahora, vamos a hacer un venta de trubo. Y vamos a hacer un venta de trubo."
+}

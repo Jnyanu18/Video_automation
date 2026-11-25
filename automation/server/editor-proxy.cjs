@@ -22,20 +22,36 @@ function createEditorProxy(cfg, fetchImpl) {
     const userId = session && session.uid;
     if (!USER_ID_RE.test(String(userId || ''))) throw new HttpError(401, 'UNAUTHENTICATED', 'Sign in to continue');
     let body;
+    const audioUpload = method === 'POST' && url.pathname === '/api/editor/agent/audio';
     if (WITH_BODY.has(method)) {
-      const raw = await readJson(req, 262144);
-      // A staged upload is referenced by id; only the server knows where it lives on disk - inside this
-      // account's own upload folder, so an id belonging to another account resolves to a path that is not there.
-      if (raw && typeof raw.uploadId === 'string' && /^[a-f0-9]{32}$/.test(raw.uploadId)) {
-        raw.video_path = path.join(cfg.uploadDir, 'users', userId, raw.uploadId + '.mp4');
+      if (audioUpload) {
+        const chunks = [];
+        let size = 0;
+        for await (const chunk of req) {
+          size += chunk.length;
+          if (size > 50 * 1024 * 1024) throw new HttpError(413, 'FILE_TOO_LARGE', 'Audio must be under 50 MB');
+          chunks.push(chunk);
+        }
+        body = Buffer.concat(chunks);
+        if (!size) throw new HttpError(400, 'EMPTY_FILE', 'Choose an audio file');
+      } else {
+        const raw = await readJson(req, 262144);
+        // A staged upload is referenced by id; only the server knows where it lives on disk - inside this
+        // account's own upload folder, so an id belonging to another account resolves to a path that is not there.
+        if (raw && typeof raw.uploadId === 'string' && /^[a-f0-9]{32}$/.test(raw.uploadId)) {
+          raw.video_path = path.join(cfg.uploadDir, 'users', userId, raw.uploadId + '.mp4');
+        }
+        body = JSON.stringify(raw);
       }
-      body = JSON.stringify(raw);
     }
     let upstream;
     try {
       upstream = await f(base + url.pathname + (url.search || ''), {
         method: method === 'HEAD' ? 'GET' : method,
-        headers: Object.assign({ 'x-studio-user': userId }, body !== undefined ? { 'content-type': 'application/json' } : {}),
+        headers: Object.assign({ 'x-studio-user': userId }, body !== undefined ? {
+          'content-type': audioUpload ? String(req.headers['content-type'] || 'application/octet-stream') : 'application/json',
+          ...(audioUpload ? { 'x-file-name': String(req.headers['x-file-name'] || '') } : {}),
+        } : {}),
         body,
         signal: AbortSignal.timeout(cfg.editorTimeoutMs || 120000),
       });

@@ -1,0 +1,49 @@
+[
+  {
+    "id": "hook",
+    "start": 0.0,
+    "end": 7.58,
+    "words": "day twelve of trying",
+    "desc": "Tag \"Day 12 of 30\". Headline: \"I did the worst thing a founder can do\", the last words on gold.",
+    "chapter": "The worst thing a founder can do"
+  },
+  {
+    "id": "feature",
+    "start": 7.58,
+    "end": 19.78,
+    "words": "I spent the whole day",
+    "desc": "A window: the branch feat/workspace-access, lines appearing: invites, roles, account sharing.",
+    "chapter": "Building instead of selling"
+  },
+  {
+    "id": "missed",
+    "start": 19.78,
+    "end": 25.64,
+    "words": "and I was so deep",
+    "desc": "Dark ground. Headline: \"I missed a booked call.\""
+  },
+  {
+    "id": "numbers",
+    "start": 25.64,
+    "end": 40.92,
+    "words": "meanwhile the one thing",
+    "desc": "Dark ground. Four numbers count up: 140 invited, 9 connected, 0 replies, 0 paying (gold).",
+    "chapter": "The numbers"
+  },
+  {
+    "id": "lesson",
+    "start": 40.92,
+    "end": 52.02,
+    "words": "so here is the lesson",
+    "desc": "Headline: \"If nobody uses it, another feature won't fix it.\" Then \"Distribution is the job.\" Avatar holds the tick.",
+    "chapter": "The lesson"
+  },
+  {
+    "id": "tomorrow",
+    "start": 52.02,
+    "end": 61.56,
+    "words": "tomorrow no features",
+    "desc": "Tag \"Day 13\". Headline with the question, \"hiding in the product\" on gold.",
+    "chapter": "Tomorrow"
+  }
+]

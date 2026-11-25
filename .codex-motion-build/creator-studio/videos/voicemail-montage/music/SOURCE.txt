@@ -1,0 +1,1 @@
+Source: ElevenLabs Music API (composition plan in plan.json), made 2026-10-24 on Vishnu's Pro plan key (commercial use allowed under the Eleven Music terms).

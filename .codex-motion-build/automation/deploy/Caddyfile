@@ -1,0 +1,38 @@
+# Caddy gets and renews the TLS certificate automatically. HTTPS is not optional here:
+# the session cookie is issued with the Secure flag, and browsers drop Secure cookies
+# over plain HTTP, so sign-in silently fails without a certificate.
+
+{$SITE_HOST} {
+	encode zstd gzip
+
+	# Everything -- the SPA, the API, the upload endpoints -- is one origin.
+	# That is what keeps the SameSite=Strict session cookie working with no code change.
+	reverse_proxy dashboard:8787 {
+		# A render can take minutes; the default 30s read timeout would cut the poll.
+		transport http {
+			read_timeout 10m
+			write_timeout 10m
+		}
+	}
+
+	# Video uploads. MAX_UPLOAD_MB in the app enforces the real limit; this is a
+	# cheap outer guard so an oversized body is refused before it reaches Node.
+	request_body {
+		max_size 250MB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "same-origin"
+		-Server
+	}
+
+	log {
+		output file /data/access.log {
+			roll_size 10MB
+			roll_keep 5
+		}
+	}
+}

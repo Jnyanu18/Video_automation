@@ -1,0 +1,80 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\70ca3fea655db32dc61e3d7d1682ffea.mp4",
+  "duration": 64.617,
+  "threshold": 0.3,
+  "cuts": [
+    5.333,
+    7.6,
+    16.667,
+    19.2,
+    28.133,
+    30.533,
+    34.133,
+    35.4,
+    47.7,
+    49.1,
+    61.967
+  ],
+  "scenes": [
+    {
+      "index": 0,
+      "start": 0.0,
+      "end": 5.333
+    },
+    {
+      "index": 1,
+      "start": 5.333,
+      "end": 7.6
+    },
+    {
+      "index": 2,
+      "start": 7.6,
+      "end": 16.667
+    },
+    {
+      "index": 3,
+      "start": 16.667,
+      "end": 19.2
+    },
+    {
+      "index": 4,
+      "start": 19.2,
+      "end": 28.133
+    },
+    {
+      "index": 5,
+      "start": 28.133,
+      "end": 30.533
+    },
+    {
+      "index": 6,
+      "start": 30.533,
+      "end": 34.133
+    },
+    {
+      "index": 7,
+      "start": 34.133,
+      "end": 35.4
+    },
+    {
+      "index": 8,
+      "start": 35.4,
+      "end": 47.7
+    },
+    {
+      "index": 9,
+      "start": 47.7,
+      "end": 49.1
+    },
+    {
+      "index": 10,
+      "start": 49.1,
+      "end": 61.967
+    },
+    {
+      "index": 11,
+      "start": 61.967,
+      "end": 64.617
+    }
+  ]
+}

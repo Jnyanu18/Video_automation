@@ -1,0 +1,68 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "modern minimal electronic",
+  "clean and warm",
+  "sparse, leaves room for voices",
+  "soft drums",
+  "100 bpm"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody in the vocal range",
+  "horror",
+  "aggressive EDM"
+ ],
+ "sections": [
+  {
+   "section_name": "Hook: the first voicemail",
+   "positive_local_styles": ["quiet tension", "single muted pluck", "soft ticking like a phone line"],
+   "negative_local_styles": ["drums", "bass"],
+   "duration_ms": 3500,
+   "lines": []
+  },
+  {
+   "section_name": "Voicemail after voicemail",
+   "positive_local_styles": ["ticking pulse grows", "muted plucks repeat with small variations", "slightly impatient"],
+   "negative_local_styles": ["full drums"],
+   "duration_ms": 9400,
+   "lines": []
+  },
+  {
+   "section_name": "And again",
+   "positive_local_styles": ["a notch more tension", "low pad enters", "light kick on the beat"],
+   "negative_local_styles": [],
+   "duration_ms": 4100,
+   "lines": []
+  },
+  {
+   "section_name": "57 percent and the problem",
+   "positive_local_styles": ["soft impact at the start", "deeper pad", "thoughtful, a little heavy", "thins out to almost nothing at the end"],
+   "negative_local_styles": ["busy drums"],
+   "duration_ms": 11100,
+   "lines": []
+  },
+  {
+   "section_name": "An AI picks up",
+   "positive_local_styles": ["bright warm turn", "confident light electronic pulse", "airy synth chords", "optimistic"],
+   "negative_local_styles": ["tension"],
+   "duration_ms": 26900,
+   "lines": []
+  },
+  {
+   "section_name": "The booking",
+   "positive_local_styles": ["steady easy groove", "light percussion", "gentle lift halfway", "stays under the voices"],
+   "negative_local_styles": ["loud drops"],
+   "duration_ms": 40100,
+   "lines": []
+  },
+  {
+   "section_name": "Booked and the end card",
+   "positive_local_styles": ["small uplifting swell at the start", "satisfying resolution", "one clean final chord then silence"],
+   "negative_local_styles": [],
+   "duration_ms": 24300,
+   "lines": []
+  }
+ ]
+}

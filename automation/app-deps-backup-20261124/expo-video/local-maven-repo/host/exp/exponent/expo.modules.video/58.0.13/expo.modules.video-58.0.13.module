@@ -1,0 +1,161 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "host.exp.exponent",
+    "module": "expo.modules.video",
+    "version": "58.0.13",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "expo.modules.video-58.0.13.aar",
+          "url": "expo.modules.video-58.0.13.aar",
+          "size": 671320,
+          "sha512": "dc660bc233f0077dd864f1cbc5e62390ca8fb66caa8c4fa0f33965f3183774b0f9d2ef4a09032d8be060e1f1f7a076b82e3c7dd44d0d4d013ebcfb779f39b669",
+          "sha256": "c1d50800d93f5e2a415eaac13a42b10d708658eda5d46e3a715bf901460f9422",
+          "sha1": "ff60a42dd1f406209f429c2736551d96734864a4",
+          "md5": "df9d8d252375a7c5e04d1174d0a75cc4"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "2.2.10"
+          }
+        },
+        {
+          "group": "org.jetbrains",
+          "module": "annotations",
+          "version": {
+            "requires": "23.0.0"
+          }
+        },
+        {
+          "group": "com.facebook.react",
+          "module": "react-android"
+        },
+        {
+          "group": "androidx.media3",
+          "module": "media3-session",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.media3",
+          "module": "media3-exoplayer",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.media3",
+          "module": "media3-exoplayer-dash",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.media3",
+          "module": "media3-exoplayer-hls",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.media3",
+          "module": "media3-ui",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.media3",
+          "module": "media3-datasource-okhttp",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.fragment",
+          "module": "fragment",
+          "version": {
+            "requires": "1.8.9"
+          }
+        },
+        {
+          "group": "androidx.fragment",
+          "module": "fragment-ktx",
+          "version": {
+            "requires": "1.8.9"
+          }
+        },
+        {
+          "group": "io.github.expo.pika",
+          "module": "pika-api",
+          "version": {
+            "requires": "1.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.video-58.0.13.aar",
+          "url": "expo.modules.video-58.0.13.aar",
+          "size": 671320,
+          "sha512": "dc660bc233f0077dd864f1cbc5e62390ca8fb66caa8c4fa0f33965f3183774b0f9d2ef4a09032d8be060e1f1f7a076b82e3c7dd44d0d4d013ebcfb779f39b669",
+          "sha256": "c1d50800d93f5e2a415eaac13a42b10d708658eda5d46e3a715bf901460f9422",
+          "sha1": "ff60a42dd1f406209f429c2736551d96734864a4",
+          "md5": "df9d8d252375a7c5e04d1174d0a75cc4"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "expo.modules.video-58.0.13-sources.jar",
+          "url": "expo.modules.video-58.0.13-sources.jar",
+          "size": 84140,
+          "sha512": "01212628b9ce195d897e07df16fa7cdc5bcf2e411859478acda021feed610763589607856f053da93d15af69913a68e92186b1324cd8ff5724d33289b0edf4fd",
+          "sha256": "e7b5614db1a6ad3f34ebd19f4876575570284857a2f630de3d8c44341deb4ea8",
+          "sha1": "c808563f886650500cea20d41275ec0af166257f",
+          "md5": "4123f7543a036039ff727415b41a8fb1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1016 @@
+{
+  "version": 1,
+  "historyId": "2f6fe254-8752-4889-a781-f97caa15334f",
+  "currentRevision": "80531a1a-b777-4883-b03f-4f4f25b1271a",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\1b\\1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060"
+    },
+    "CLAUDE.md": {
+      "hash": "1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\1b\\1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060"
+    },
+    "assets/sfx/ding.wav": {
+      "hash": "97c823dc8ef1fb6dab5599f5b8b8aee5ec2dfa4c9d987151e64d6c5a5f87adbe",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\97\\97c823dc8ef1fb6dab5599f5b8b8aee5ec2dfa4c9d987151e64d6c5a5f87adbe"
+    },
+    "assets/sfx/pop.wav": {
+      "hash": "fdfe3ad5e5beb131560ccde45ac5849ea92cdc6770672d5cfcd25f98eb5ac08e",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\fd\\fdfe3ad5e5beb131560ccde45ac5849ea92cdc6770672d5cfcd25f98eb5ac08e"
+    },
+    "assets/sfx/switch.wav": {
+      "hash": "0d07c6daac595425c820d92966bbc35cbd6590f4bde8a59199743b9bf45da77e",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\0d\\0d07c6daac595425c820d92966bbc35cbd6590f4bde8a59199743b9bf45da77e"
+    },
+    "assets/sfx/whoosh.wav": {
+      "hash": "d98f010fa5f03fd3f4f77418f8ba6a962d36e63357265772771c4ac69c1a63a7",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d9\\d98f010fa5f03fd3f4f77418f8ba6a962d36e63357265772771c4ac69c1a63a7"
+    },
+    "compositions/help.html": {
+      "hash": "eef6bdcc6fb4d4c5f185a04c9aa2113e5f42ad4d9335b2753dcb50c99d859231",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\ee\\eef6bdcc6fb4d4c5f185a04c9aa2113e5f42ad4d9335b2753dcb50c99d859231"
+    },
+    "compositions/intro.html": {
+      "hash": "d096dcde0c87491dbc5eb98aca376118c315515de5727f77e4fa918a911a666c",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d0\\d096dcde0c87491dbc5eb98aca376118c315515de5727f77e4fa918a911a666c"
+    },
+    "compositions/phone.html": {
+      "hash": "d35e4ec00f051f545edec2772ea0c0140be941d6b80d664f51bfd4650106d6c3",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d3\\d35e4ec00f051f545edec2772ea0c0140be941d6b80d664f51bfd4650106d6c3"
+    },
+    "compositions/who.html": {
+      "hash": "d201488f191c38f2ae2d9fe505e3ea4aa420fb9d9fd6eff7c06fd872a948074b",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d2\\d201488f191c38f2ae2d9fe505e3ea4aa420fb9d9fd6eff7c06fd872a948074b"
+    },
+    "compositions/why.html": {
+      "hash": "8c59152218aecf59f25aba53a42451c312319aea0a80aa9df24532e595879000",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\8c\\8c59152218aecf59f25aba53a42451c312319aea0a80aa9df24532e595879000"
+    },
+    "compositions/wifi.html": {
+      "hash": "ebe6383d397ecfcf097c96c0e86de9c4f19628d0efb4ceb70c57bb2063e3eb59",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\eb\\ebe6383d397ecfcf097c96c0e86de9c4f19628d0efb4ceb70c57bb2063e3eb59"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "fd47823d4b599d539e718ea562c9c456715360e1a744503da00f23878284c0ad",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\fd\\fd47823d4b599d539e718ea562c9c456715360e1a744503da00f23878284c0ad"
+    },
+    "meta.json": {
+      "hash": "5e56df2b722442296153b43d006de2462aa4d87cd11eb5f288ccea7ff04488c9",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\5e\\5e56df2b722442296153b43d006de2462aa4d87cd11eb5f288ccea7ff04488c9"
+    },
+    "package.json": {
+      "hash": "a10bf3b4578ea020a32c471c8f707899d61a11d01849cb2e811e9701bfb6d604",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\a1\\a10bf3b4578ea020a32c471c8f707899d61a11d01849cb2e811e9701bfb6d604"
+    },
+    "assets/talk.mp4": {
+      "hash": "251fd9f0c7a8360cdbec521aba1d6346e0a0e83648a8923c87bbb80b2076afa7",
+      "content": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\25\\251fd9f0c7a8360cdbec521aba1d6346e0a0e83648a8923c87bbb80b2076afa7"
+    }
+  },
+  "revisions": {
+    "9802f773-81a3-4216-912a-d97069271d80": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792929706785,
+      "endedAt": 1792929706791,
+      "files": {
+        "assets/talk.mp4": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\da\\da1575cbc771544c940fc5d63193d467ba063283648192365e3efd800f3b8f69",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\0e\\0eb3805dbc6ca31d68a93214c51caa123726c473c23045f5e335e10078086457"
+        }
+      }
+    },
+    "1dc18500-95b7-4bcb-8a2e-cefc2c3d4979": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930059724,
+      "endedAt": 1792930059729,
+      "files": {
+        "assets/talk.mp4": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\0e\\0eb3805dbc6ca31d68a93214c51caa123726c473c23045f5e335e10078086457",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\39\\3965e60303fe9f7e65da40ee7729f9c8118fd72055ad85dd3f9d8c35b4215f77"
+        }
+      }
+    },
+    "469dc5cc-43d5-47a7-b8ac-a187174490b8": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930073969,
+      "endedAt": 1792930074023,
+      "files": {
+        "assets/talk.mp4": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\39\\3965e60303fe9f7e65da40ee7729f9c8118fd72055ad85dd3f9d8c35b4215f77",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\b7\\b725b56b5ef9def2c1daea7f0261351f1871edbfa63cd1ab85ba2f81741e2746"
+        }
+      }
+    },
+    "61f255e1-b01b-42e8-b213-d03bc96e6019": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930089143,
+      "endedAt": 1792930089148,
+      "files": {
+        "assets/talk.mp4": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\b7\\b725b56b5ef9def2c1daea7f0261351f1871edbfa63cd1ab85ba2f81741e2746",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\b0\\b0e5c735d5635e71ba54f712fa49061c1e4df00d6645a9a02c5d61f2abe3c40a"
+        }
+      }
+    },
+    "d80a8b85-b081-4018-989a-c23c017aebbb": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930187972,
+      "endedAt": 1792930188464,
+      "files": {
+        "assets/talk.mp4": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\b0\\b0e5c735d5635e71ba54f712fa49061c1e4df00d6645a9a02c5d61f2abe3c40a",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\25\\251fd9f0c7a8360cdbec521aba1d6346e0a0e83648a8923c87bbb80b2076afa7"
+        }
+      }
+    },
+    "600fdfb5-15d0-4f50-9e25-1110e1ce46aa": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930270187,
+      "endedAt": 1792930271487,
+      "files": {
+        "compositions/help.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\63\\63eacf55e7cd2fdd9d30e829db66bcef2adb187d4b83ad7079552e7ece712f1d",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\01\\01c7ad76966c021b66b559f6cc535abd6cb27a385804a34bcd801327733577a1"
+        },
+        "compositions/intro.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\9e\\9e3456c5155974b2e732c03858b9194b50de3f72545eb5363e1e8e46f19ba786",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\46\\46de5a72f709c1c2081b7e0360cbfcaf4679158ec8fd5c8fadc040df66c9001e"
+        },
+        "compositions/phone.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\74\\74e6c0e280dcf776e7ec1ebefd5f4357f10f651c56ada9dd90cba3de59b4c53f",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\cc\\cce20e17ec2959541d7cc51d8d9dae782190a45b8ba4bbcc01a650371f0f37e5"
+        },
+        "compositions/who.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\99\\99df7dcb09b33d11a0deb72f9e5bf1ff279db7a4403a3bbcd2473ff6682fcc1f",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\e7\\e7cdbfc241559bfc4dc5c43a1ad04896f4f24f608e914641e04f62a507dbb91f"
+        },
+        "compositions/why.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\04\\04c64208a7e1534c71a488aa636f4e428f9dfec5a79c995a121aa887707df179",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\fd\\fd62da591e2465352c51f723a1676298ab387a6db2634b24fda340b25b525058"
+        },
+        "compositions/wifi.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\7c\\7cec7c2f1bf54e8b5db1cdb33fd113ff4811d6bbe4d5ded1f165e1906ebe9784",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\66\\663047caf6647c50ecdb4fed8445f5bcad6699b5b626bfdc65a769f91a39fdd6"
+        },
+        "index.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\27\\27abe4a74bcd50ae3a6049c912c3a976e744c11c9c44cb9a9466db74005194e2",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\3b\\3bdc3103c455485799df9fea1269d2b6f013a6ed2b1a55dbd23576ef503b2c87"
+        }
+      }
+    },
+    "accdd967-10a4-4cdb-8c49-bbf335844101": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930350784,
+      "endedAt": 1792930350857,
+      "files": {
+        "compositions/wifi.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\66\\663047caf6647c50ecdb4fed8445f5bcad6699b5b626bfdc65a769f91a39fdd6",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\5e\\5ed33fb4d4b2425652277c33f30c32dab2781a146ef251e49aab42f11e9fd9fa"
+        }
+      }
+    },
+    "b1c7b430-d302-41c9-9e77-d1f20c3bcfd5": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930466582,
+      "endedAt": 1792930466623,
+      "files": {
+        "compositions/help.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\01\\01c7ad76966c021b66b559f6cc535abd6cb27a385804a34bcd801327733577a1",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\dc\\dc7f6f9f84319827643850dc36ac5c7ab50d56ef7dc498483cfaabf95ceb2178"
+        }
+      }
+    },
+    "80531a1a-b777-4883-b03f-4f4f25b1271a": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792930511395,
+      "endedAt": 1792930512458,
+      "files": {
+        "compositions/help.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\dc\\dc7f6f9f84319827643850dc36ac5c7ab50d56ef7dc498483cfaabf95ceb2178",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\ee\\eef6bdcc6fb4d4c5f185a04c9aa2113e5f42ad4d9335b2753dcb50c99d859231"
+        },
+        "compositions/intro.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\46\\46de5a72f709c1c2081b7e0360cbfcaf4679158ec8fd5c8fadc040df66c9001e",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d0\\d096dcde0c87491dbc5eb98aca376118c315515de5727f77e4fa918a911a666c"
+        },
+        "compositions/phone.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\cc\\cce20e17ec2959541d7cc51d8d9dae782190a45b8ba4bbcc01a650371f0f37e5",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d3\\d35e4ec00f051f545edec2772ea0c0140be941d6b80d664f51bfd4650106d6c3"
+        },
+        "compositions/who.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\e7\\e7cdbfc241559bfc4dc5c43a1ad04896f4f24f608e914641e04f62a507dbb91f",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\d2\\d201488f191c38f2ae2d9fe505e3ea4aa420fb9d9fd6eff7c06fd872a948074b"
+        },
+        "compositions/why.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\fd\\fd62da591e2465352c51f723a1676298ab387a6db2634b24fda340b25b525058",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\8c\\8c59152218aecf59f25aba53a42451c312319aea0a80aa9df24532e595879000"
+        },
+        "compositions/wifi.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\5e\\5ed33fb4d4b2425652277c33f30c32dab2781a146ef251e49aab42f11e9fd9fa",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\eb\\ebe6383d397ecfcf097c96c0e86de9c4f19628d0efb4ceb70c57bb2063e3eb59"
+        },
+        "index.html": {
+          "before": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\3b\\3bdc3103c455485799df9fea1269d2b6f013a6ed2b1a55dbd23576ef503b2c87",
+          "after": "C:\\Users\\Dell\\.cache\\hyperframes\\history\\2f6fe254-8752-4889-a781-f97caa15334f\\blobs\\fd\\fd47823d4b599d539e718ea562c9c456715360e1a744503da00f23878284c0ad"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "600fdfb5-15d0-4f50-9e25-1110e1ce46aa",
+      "id": "e1f76d75-28b3-4f48-8a34-ab1831470e70"
+    },
+    "revisions": {
+      "d80a8b85-b081-4018-989a-c23c017aebbb": [
+        {
+          "id": "eedb03e9-c920-4f30-8fdd-2e7c31077d11",
+          "scope": "project",
+          "report": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\checks\\eedb03e9-c920-4f30-8fdd-2e7c31077d11.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792930248206,
+          "contentHash": "cbf1f817bc91fc13b32aaf7d6ac284bf8833da0453db4c5708ab5b4dce7835d1",
+          "revision": "d80a8b85-b081-4018-989a-c23c017aebbb",
+          "inputFingerprint": "902c8a7db00da1aaf8cf1ab6b5efffe2456d914b0a313a02d3b3717016435de0",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "600fdfb5-15d0-4f50-9e25-1110e1ce46aa": [
+        {
+          "id": "e1f76d75-28b3-4f48-8a34-ab1831470e70",
+          "scope": "project",
+          "report": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\checks\\e1f76d75-28b3-4f48-8a34-ab1831470e70.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792930332330,
+          "contentHash": "9989f053240873878aed4ba933679df99c72ac689e5cea2187c216e159f2e42c",
+          "revision": "600fdfb5-15d0-4f50-9e25-1110e1ce46aa",
+          "inputFingerprint": "c78a56133d67f209723f49768c99145a9ba249bae3f028154db7ffc87866826e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "1f2323e4-4735-4653-9bab-8f22bdd7899c",
+        "scope": "project",
+        "report": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\checks\\1f2323e4-4735-4653-9bab-8f22bdd7899c.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792929862163,
+        "contentHash": "cbf1f817bc91fc13b32aaf7d6ac284bf8833da0453db4c5708ab5b4dce7835d1",
+        "revision": null,
+        "inputFingerprint": "c6cb3ff17af6c4309b5b878362175a05b1f64ba48453d193c33172583435a5d0",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "id": "cd86c74e-f074-4079-8f3e-648a9e269d0b",
+        "scope": "project",
+        "report": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\checks\\cd86c74e-f074-4079-8f3e-648a9e269d0b.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792930152684,
+        "contentHash": "cbf1f817bc91fc13b32aaf7d6ac284bf8833da0453db4c5708ab5b4dce7835d1",
+        "revision": null,
+        "inputFingerprint": "902c8a7db00da1aaf8cf1ab6b5efffe2456d914b0a313a02d3b3717016435de0",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": {
+      "revision": "b1c7b430-d302-41c9-9e77-d1f20c3bcfd5",
+      "id": "dfbc3a72-26be-4651-9ade-df6c37d40a5b-2"
+    },
+    "revisions": {
+      "accdd967-10a4-4cdb-8c49-bbf335844101": [
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-0",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-00-at-3.2s.png",
+          "time": 3.2,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417983,
+          "contentHash": "357fec90395f7eb1b6f0d859c901b1b8ea250bae2f668fea05e7935ff7df9ce8",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-1",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-01-at-18.5s.png",
+          "time": 18.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417983,
+          "contentHash": "61a3375c124fcc9849b6c94f777efc43990074604a6b8e349b106167e43ce5c1",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-2",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-02-at-25.8s.png",
+          "time": 25.8,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417984,
+          "contentHash": "fb950198e91c0c7312b4bc63c4ae57d9bab1743dd4e28488c668a4f1f1a058ec",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-3",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-03-at-44.5s.png",
+          "time": 44.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417984,
+          "contentHash": "90f031f11882f9dab77be689b7e05eea31e34920b99ff16e4f0f2cf1337a75c2",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-4",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-04-at-53.5s.png",
+          "time": 53.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417984,
+          "contentHash": "7e90dfcb22345cb36509b80888b5faab9a1124ee25ea098ddb352b19541aecf0",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-5",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-05-at-72.5s.png",
+          "time": 72.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417984,
+          "contentHash": "611afdfb7c22e353e5efd1023c40894a18cd21122cb8334452cc8a74273e9759",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-6",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-06-at-88.5s.png",
+          "time": 88.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417985,
+          "contentHash": "8d46769faed4d2d01405ac728bee84c6b0c916e891bc8053cad6fedca78fc40f",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-7",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-07-at-104.5s.png",
+          "time": 104.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417985,
+          "contentHash": "5732bf8ff30facc0e17055074e431649902300806b1d0b65325545f7cd7e8a35",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-8",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-08-at-123.5s.png",
+          "time": 123.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417986,
+          "contentHash": "f928f9b7cdef5ed385c2902b0ca9136c48624b5634bbf90a07d94a8c2ae2746d",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-9",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-09-at-130.8s.png",
+          "time": 130.8,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417987,
+          "contentHash": "cee6c1c8fc9a6de8f9b2ab8fbe199d14a2ccd0169816bda16e9ad52f4258d183",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-10",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-10-at-165s.png",
+          "time": 165,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417988,
+          "contentHash": "a90eb07066e979125adc7f8ed05d9da8dde0c00994d72b924e2cfc8cd599334a",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-11",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-11-at-200.6s.png",
+          "time": 200.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417988,
+          "contentHash": "9a54c4cb6cf4e9ae47cc0a554996e2f1bb388d9d153c9d0f6bcec684c42c1079",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-12",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-12-at-215.6s.png",
+          "time": 215.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417989,
+          "contentHash": "a7a5a8c94a8af5ed5892c77a54e582607ae132a83d9961adaec20d5885b49030",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-13",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-13-at-240s.png",
+          "time": 240,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417990,
+          "contentHash": "53e147ad39bb765ee60802ab91e62e92ab5fb65d0d1a97896b6c4cf58073f59d",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-14",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-14-at-270.5s.png",
+          "time": 270.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417991,
+          "contentHash": "a3fc12cab02434e27a2bea80ec1eae80658ac19bd274dc4f360013a7bfc12506",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-15",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-15-at-304s.png",
+          "time": 304,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417991,
+          "contentHash": "e40e4fc69ae201d5fcdcc07116e4c4c49ffcd8e4701193305661005562d32826",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-16",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-16-at-320.5s.png",
+          "time": 320.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417992,
+          "contentHash": "f3fddc4f6367be7ca982cedb8e2ffb604ebc38ad2cb67cae1aed8b808cd8070b",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-17",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-17-at-328.5s.png",
+          "time": 328.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417993,
+          "contentHash": "176e431f2649cd040bce90c5a3e34975960e47ec7d7d9621814fb8742a500526",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-18",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-18-at-388.5s.png",
+          "time": 388.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417994,
+          "contentHash": "73b95cf07fa6b343fa30f19850c7bfce17a35d7104281e96ceca6856269c775c",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-19",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-19-at-442.5s.png",
+          "time": 442.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417995,
+          "contentHash": "b26483a3ccc5e94498a029b7ec24300a88a1aa913e942ec8170b556928997369",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-20",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-20-at-464s.png",
+          "time": 464,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417996,
+          "contentHash": "088f0dc24b365c2258a482b1398daefacd9b1290d8ea1ab22d001ae407cae9db",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-21",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-21-at-478.5s.png",
+          "time": 478.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417997,
+          "contentHash": "526ef2f52710ca813638fe958c609fb474b2ce638de28cac2c34c9b75887e5e1",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-22",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-22-at-503.5s.png",
+          "time": 503.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930417999,
+          "contentHash": "8ca8f4c43ca461dfbeebb3b41437bbaba1d5f0146e133dc27bcfc505d267d4c9",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-23",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-23-at-512.6s.png",
+          "time": 512.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930418000,
+          "contentHash": "498917f68748a897f5980d8e2cb431aa098a880079be282c24472f68f12d82c5",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-24",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-24-at-541.5s.png",
+          "time": 541.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930418002,
+          "contentHash": "bc4da87d260bcb7893fe76eb28da88339a9994be7f0bf4209091416c631db52d",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-25",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-25-at-575.5s.png",
+          "time": 575.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930418004,
+          "contentHash": "ce7f4c585ff09eef1cd9d29b75fd94d7ae6f80c3a25eabd45a6aac30871cf703",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-26",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-26-at-594s.png",
+          "time": 594,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930418006,
+          "contentHash": "61c7d74987fd484f1a265ffa53bd305ed97050b1df3d9f4a335a93f71795ef58",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "643996f9-9d10-4108-820a-58be38437503-27",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\d35f698d-4b91-4267-bd00-daf0abef5431\\frame-27-at-580.545s.png",
+          "time": 580.545,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930418008,
+          "contentHash": "ee01d170bdb12f838caf6e4a1e78742fc026a55a343e7791b4f0c99d5a56dfac",
+          "revision": "accdd967-10a4-4cdb-8c49-bbf335844101",
+          "inputFingerprint": "4c70870125535e40cd0e627a22a3f37ecf5b8256efa95d53c3244ebcc4f43a1b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "b1c7b430-d302-41c9-9e77-d1f20c3bcfd5": [
+        {
+          "scope": "full",
+          "id": "dfbc3a72-26be-4651-9ade-df6c37d40a5b-0",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\1e9bc2b5-3e33-479a-8305-40a4eaf6de38\\frame-00-at-519.5s.png",
+          "time": 519.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930483578,
+          "contentHash": "e74bb20aca5ba7ee62ef1ab3ca42df7a7c07b656456945babd749a36a1049ff6",
+          "revision": "b1c7b430-d302-41c9-9e77-d1f20c3bcfd5",
+          "inputFingerprint": "7562f9b5b5824c47022c1de4f0d41bbef1a70c3edb1148c48168dfbf50c3c48f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "dfbc3a72-26be-4651-9ade-df6c37d40a5b-1",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\1e9bc2b5-3e33-479a-8305-40a4eaf6de38\\frame-01-at-541.5s.png",
+          "time": 541.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930483581,
+          "contentHash": "322ecd081925f7e881fe1ae8f1a49d2cd7f39260269e95eab552d847d8500614",
+          "revision": "b1c7b430-d302-41c9-9e77-d1f20c3bcfd5",
+          "inputFingerprint": "7562f9b5b5824c47022c1de4f0d41bbef1a70c3edb1148c48168dfbf50c3c48f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "dfbc3a72-26be-4651-9ade-df6c37d40a5b-2",
+          "image": "D:\\studio\\videos\\livesafe-founder-cut\\hf\\.hyperframes\\artifacts\\snapshots\\1e9bc2b5-3e33-479a-8305-40a4eaf6de38\\frame-02-at-580.545s.png",
+          "time": 580.545,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792930483583,
+          "contentHash": "ee01d170bdb12f838caf6e4a1e78742fc026a55a343e7791b4f0c99d5a56dfac",
+          "revision": "b1c7b430-d302-41c9-9e77-d1f20c3bcfd5",
+          "inputFingerprint": "7562f9b5b5824c47022c1de4f0d41bbef1a70c3edb1148c48168dfbf50c3c48f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": []
+  }
+}

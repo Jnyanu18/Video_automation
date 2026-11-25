@@ -1,0 +1,181 @@
+{
+ "name": "rockcastle-b-launch-in-six-weeks",
+ "brand": {
+  "font": "Montserrat",
+  "accent": "#ff9a1f",
+  "accent_light": "#b85a00",
+  "light": "#faf6f0",
+  "dark": "#0b0b0b",
+  "navy": "#2f1c06",
+  "ink_dark": "#faf6f0",
+  "ink_light": "#141414"
+ },
+ "voice": "neerja",
+ "rate": "+14%",
+ "music": {
+  "style": "pulse",
+  "volume": 0.2,
+  "seed": 13
+ },
+ "scenes": [
+  {
+   "kind": "kinetic",
+   "theme": "light",
+   "words": [
+    "Launch",
+    "in",
+    "six weeks?"
+   ],
+   "accent": [
+    2
+   ],
+   "say": "Launch in six weeks?",
+   "duration": 3.0,
+   "sfx": [
+    {
+     "name": "boing",
+     "at": 1.5,
+     "volume": 0.45
+    }
+   ]
+  },
+  {
+   "kind": "chat",
+   "theme": "light",
+   "title": "Brand manager and Rockcastle",
+   "messages": [
+    {
+     "from": "user",
+     "text": "Launch in six weeks. Can you handle it?",
+     "at": 0.6
+    },
+    {
+     "from": "agent",
+     "text": "From planning to execution. Yes.",
+     "at": 3.2
+    },
+    {
+     "from": "user",
+     "text": "Even the space design?",
+     "at": 5.2
+    },
+    {
+     "from": "agent",
+     "text": "Design, build, show day. All of it.",
+     "at": 6.6
+    }
+   ],
+   "say": "Launch in six weeks. Can you handle it? From planning to execution. Yes. Even the space design? Design, build, show day. All of it.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 0.6
+    },
+    {
+     "name": "pop",
+     "at": 3.2
+    },
+    {
+     "name": "pop",
+     "at": 5.2
+    },
+    {
+     "name": "ding",
+     "at": 6.6,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "flow",
+   "theme": "dark",
+   "title": "One team. *Four* steps.",
+   "nodes": [
+    {
+     "icon": "1",
+     "label": "Plan"
+    },
+    {
+     "icon": "2",
+     "label": "Design"
+    },
+    {
+     "icon": "3",
+     "label": "Build"
+    },
+    {
+     "icon": "4",
+     "label": "Execute"
+    }
+   ],
+   "say": "Plan. Design. Build. Execute. One team, start to finish.",
+   "sfx": [
+    {
+     "name": "pop",
+     "at": 1.0
+    },
+    {
+     "name": "pop",
+     "at": 2.0
+    },
+    {
+     "name": "pop",
+     "at": 3.0
+    },
+    {
+     "name": "ding",
+     "at": 4.0,
+     "volume": 0.4
+    }
+   ]
+  },
+  {
+   "kind": "clips",
+   "theme": "dark",
+   "title": "Show day",
+   "duration": 6.0,
+   "clips": [
+    {
+     "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+     "start": 97.1,
+     "label": "The crowd"
+    },
+    {
+     "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+     "start": 70.0,
+     "label": "The detail"
+    },
+    {
+     "src": "J:/ai editor/clients/rockcastle/assets/rockcastle.mp4",
+     "start": 167.4,
+     "label": "The team"
+    }
+   ],
+   "say": "And on show day, we are right there with you."
+  },
+  {
+   "kind": "cta",
+   "theme": "light",
+   "lines": [
+    "Your event.",
+    "*Our* team."
+   ],
+   "button": "Let's talk",
+   "url": "rockcastle.in",
+   "sub": "Corporate and social events, Delhi and Mumbai",
+   "say": "Your event. Our team. Rockcastle.",
+   "sfx": [
+    {
+     "name": "stamp",
+     "at": 1.1,
+     "volume": 0.6
+    },
+    {
+     "name": "sparkle",
+     "at": 1.8,
+     "volume": 0.35
+    }
+   ]
+  }
+ ]
+}

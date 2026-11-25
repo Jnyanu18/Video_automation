@@ -1,0 +1,26 @@
+[
+ {
+  "scene": "rea",
+  "at": "paying",
+  "bg": "#0d0d10",
+  "section": "REA, reverse engineer anything: 37's system, a world per chapter; the $20 app, the repo, the lock, binary, decode, rebuild, local",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "reverse-anything",
+   "parts": {
+    "hand": "hand it", "apart": "apart", "build": "build you",
+    "b2": "its a free", "short": "short for", "over": "over", "stars": "stars on",
+    "b3": "but the company", "how": "so how",
+    "b4": "every app", "inside": "code inside", "turned": "turned into", "chip": "your chip", "noise": "to you",
+    "b5": "rea gives", "back": "back into", "open": "open the", "check": "check the", "save": "save the",
+    "b6": "claude works", "blueprint": "a blueprint", "same": "the same",
+    "b7": "it runs", "works": "works with",
+    "b8": "comment rea", "guide": "setup guide"
+   }
+  }
+ }
+]

@@ -37,7 +37,7 @@ STYLE_REF = "creative_director"
 SYNC_PATHS = ("/api/editor/storyboard", "/api/editor/overview", "/api/editor/media", "/api/editor/analytics",
               "/api/editor/versions", "/api/editor/activity", "/api/editor/agent/jobs")
 BRIEF_KEYS = ("kind", "format", "duration", "title", "prompt", "clips", "assets", "reference_url",
-              "reference_video_id", "reference_video_path", "direction")
+              "reference_video_id", "reference_video_path", "audio_path", "direction")
 
 
 class ReviseRequest(BaseModel):

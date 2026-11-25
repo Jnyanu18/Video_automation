@@ -1,0 +1,1 @@
+Source: ElevenLabs Music API (composition plan music/plan.json), paid-plan key; commercial use under the Eleven Music terms.

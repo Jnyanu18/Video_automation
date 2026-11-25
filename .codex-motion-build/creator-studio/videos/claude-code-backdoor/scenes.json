@@ -1,0 +1,81 @@
+[
+ {
+  "scene": "backdoor",
+  "at": "do you",
+  "bg": "#14151a",
+  "section": "one take: extension, update, key, data, installs, fix, comment",
+  "mark": [],
+  "poses": [
+   {
+    "on": "check your",
+    "pose": "point-left"
+   },
+   {
+    "on": "poisoned",
+    "pose": "shock"
+   },
+   {
+    "on": "version 2",
+    "pose": "facepalm"
+   },
+   {
+    "on": "it hid",
+    "pose": "point-left"
+   },
+   {
+    "on": "set itself",
+    "pose": "think"
+   },
+   {
+    "on": "sent out",
+    "pose": "shock"
+   },
+   {
+    "on": "up to",
+    "pose": "wow"
+   },
+   {
+    "on": "clean",
+    "pose": "cheer"
+   },
+   {
+    "on": "update to",
+    "pose": "point-left"
+   },
+   {
+    "on": "rotate",
+    "pose": "wink"
+   }
+  ],
+  "props": {
+   "look": "dev",
+   "ava": "side",
+   "stageScale": 1.0,
+   "stageLift": 60,
+   "slug": "claude-code-backdoor",
+   "parts": {
+    "check": "check your",
+    "date": "october",
+    "market": "cursor's",
+    "poison": "poisoned",
+    "real": "real",
+    "ver": "version 2",
+    "hid": "it hid",
+    "key": "ssh",
+    "name": "called",
+    "startup": "set itself",
+    "send": "sent out",
+    "user": "username",
+    "git": "git",
+    "api": "api",
+    "crowd": "up to",
+    "clean": "the vs",
+    "verdict": "clean",
+    "fix": "cursor or",
+    "update": "update to",
+    "del": "delete",
+    "rotate": "rotate"
+   }
+  }
+ }
+]

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "users": [
+    {
+      "id": "udb4ebb0325d51651",
+      "email": "jnyan8784@gmail.com",
+      "name": "Jnyan",
+      "password_hash": "scrypt$16384$8$1$e52a395789c99f028dd0bc4d10007420$ded6729381bfcebfb445091e616d4c0478fe274949cc728fabc5b960eda67b0c4d743cd9641f3ac8bfca6875b0e4f82a56f1d61c6c24c0f265307f8853476643",
+      "created_at": "2026-11-19T10:36:00.180Z"
+    },
+    {
+      "id": "u8795acf7e362226b",
+      "email": "demo@example.com",
+      "name": "Demo User",
+      "password_hash": "scrypt$16384$8$1$e52a395789c99f028dd0bc4d10007420$ded6729381bfcebfb445091e616d4c0478fe274949cc728fabc5b960eda67b0c4d743cd9641f3ac8bfca6875b0e4f82a56f1d61c6c24c0f265307f8853476643",
+      "created_at": "2026-11-21T05:58:52.048Z"
+    }
+  ]
+}

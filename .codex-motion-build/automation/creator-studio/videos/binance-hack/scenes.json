@@ -1,0 +1,13 @@
+[
+  {"scene": "binance", "at": "the largest", "bg": "#f3f1ec", "section": "one take: clock, drain, fifty keys, laptop, record, freeze, clock", "mark": [],
+   "poses": [{"on": "largest", "pose": "point-left"}, {"on": "three minutes", "pose": "shock"}, {"on": "someone", "pose": "point-left"}, {"on": "gone", "pose": "facepalm"},
+     {"on": "the attacker", "pose": "think"}, {"on": "only one", "pose": "wow"}, {"on": "hacked", "pose": "shock"}, {"on": "estimates", "pose": "point-left"},
+     {"on": "nothing comes", "pose": "wow"}, {"on": "then tether", "pose": "present"}, {"on": "stayed free", "pose": "shrug"}, {"on": "history's biggest", "pose": "point-left"}],
+   "props": {"look": "dev", "ava": "side", "stageScale": 1.0, "stageLift": 60, "slug": "binance-hack",
+     "parts": {"minutes": "three minutes", "date": "yesterday", "wallet": "someone", "drained": "drained", "pays": "pays out", "gone": "gone",
+       "tx": "the attacker", "fifty": "50", "one": "only one", "fit": "fit",
+       "laptop": "binance thinks", "hacked": "hacked", "just": "just one",
+       "est": "estimates", "est6": "$6", "bybit": "bybit's", "close": "nothing comes",
+       "freeze": "then tether", "tether": "tether", "circle": "circle", "froze": "froze", "free": "stayed free",
+       "end": "history's biggest"}}}
+]

@@ -1,0 +1,1 @@
+Made with a stand-in voice. Do not publish. Set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID and run speak.py again.

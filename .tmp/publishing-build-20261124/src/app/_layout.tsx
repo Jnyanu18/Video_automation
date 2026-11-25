@@ -1,0 +1,100 @@
+import React, { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import { Slot, useRouter, useSegments } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold,
+} from '@expo-google-fonts/inter';
+import { T } from '../components/ui';
+import { AuthProvider, useAuth } from '../state/auth';
+import { LiveProvider } from '../state/live';
+import { ToastProvider } from '../state/toast';
+import { DevModeProvider } from '../state/devMode';
+import { useTheme } from '../theme';
+
+function Gate() {
+  const { status } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+  const { colors } = useTheme();
+  const onLogin = segments[0] === 'login';
+  const [timeoutMsg, setTimeoutMsg] = React.useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeoutMsg(true), 2000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (status === 'signedOut' && !onLogin) router.replace('/login');
+    if (status === 'signedIn' && onLogin) router.replace('/');
+  }, [status, onLogin, router]);
+
+  if (status === 'loading') {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bg, gap: 16 }}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        {timeoutMsg && <T muted>Connecting to server...</T>}
+      </View>
+    );
+  }
+  return <Slot />;
+}
+
+export default function RootLayout() {
+  const { isDark, colors } = useTheme();
+  useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.style.backgroundColor = colors.bg;
+      document.body.style.color = colors.text;
+      if (!document.getElementById('growthos-google-fonts')) {
+        const link = document.createElement('link');
+        link.id = 'growthos-google-fonts';
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap';
+        document.head.appendChild(link);
+      }
+      if (!document.getElementById('growthos-global-styles')) {
+        const style = document.createElement('style');
+        style.id = 'growthos-global-styles';
+        style.innerHTML = `
+          ::-webkit-scrollbar { width: 7px; height: 7px; }
+          ::-webkit-scrollbar-track { background: rgba(12, 14, 17, 0.6); }
+          ::-webkit-scrollbar-thumb { background: #252930; border-radius: 4px; }
+          ::-webkit-scrollbar-thumb:hover { background: #3a404c; }
+          ::selection { background: rgba(255, 90, 31, 0.35); color: #ffffff; }
+          body, input, textarea, button {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+          @keyframes pulseGlow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(1.2); }
+          }
+          .pulse-dot { animation: pulseGlow 2.4s infinite ease-in-out; }
+        `;
+        document.head.appendChild(style);
+      }
+    }
+  }, [colors.bg, colors.text]);
+
+  return (
+    <SafeAreaProvider>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <AuthProvider>
+        <LiveProvider>
+          <DevModeProvider>
+            <ToastProvider>
+              <View style={{ flex: 1, backgroundColor: colors.bg }}>
+                <Gate />
+              </View>
+            </ToastProvider>
+          </DevModeProvider>
+        </LiveProvider>
+      </AuthProvider>
+    </SafeAreaProvider>
+  );
+}

@@ -1,0 +1,30 @@
+[
+ {
+  "scene": "bla",
+  "at": "rea",
+  "bg": "#0d0d10",
+  "section": "BLA, the counter to REA: 41's world flipped; the bounce, last time, the student, the lie, the traps, the chase, the proof",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "bla-shield",
+   "parts": {
+    "anymore": "anymore",
+    "b2": "you know", "pull": "pull apart",
+    "b3": "a college", "beat": "beat it",
+    "b4": "and his", "block": "block the", "lies": "it lies",
+    "b5": "its called",
+    "b6": "point it", "fake": "fake passwords", "decoy": "decoy code", "dead": "dead ends", "look": "look exactly",
+    "b7": "so the", "chases": "chases", "hits": "hits its", "burns": "burns",
+    "b8": "he ran",
+    "b9": "10 kinds", "walls": "10 walls",
+    "b10": "3000 stars", "weeks": "2 weeks",
+    "b11": "and your", "same": "exact same",
+    "b12": "comment bla", "setup": "the setup"
+   }
+  }
+ }
+]

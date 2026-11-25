@@ -1,0 +1,1 @@
+{"version":3,"sources":["NativeVideoView.ts"],"sourcesContent":[null],"names":["requireNativeView","Platform","defaultViewName","OS","NativeTextureVideoView"],"mappings":"AAAA,SAASA,iBAAiB,QAAQ,OAAO;AACzC,SAASC,QAAQ,QAAQ,eAAe;AAExC,MAAMC,kBAAkBD,SAASE,EAAE,KAAK,YAAY,qBAAqB;AAEzE,eAAeH,kBAAkB,aAAaE,iBAAiB;AAC/D,OAAO,MAAME,yBACXH,SAASE,EAAE,KAAK,YAAYH,kBAAkB,aAAa,sBAAsB,KAAK"}

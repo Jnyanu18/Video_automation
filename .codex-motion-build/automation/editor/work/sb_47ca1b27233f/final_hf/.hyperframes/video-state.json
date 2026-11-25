@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "historyId": "1447e82f-51e5-4bb7-9c4c-68a4b6290811",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "index.html": {
+      "hash": "faef4151cfa7ee4b70b5e820cd59572afebe4bac07b523fd3f4b73a6aa9f3000",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\1447e82f-51e5-4bb7-9c4c-68a4b6290811\\blobs\\fa\\faef4151cfa7ee4b70b5e820cd59572afebe4bac07b523fd3f4b73a6aa9f3000"
+    },
+    "meta.json": {
+      "hash": "a7f5f31219ee544c4265b68dc7a14e65ba7d31837673e467b324ab0c179332f5",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\1447e82f-51e5-4bb7-9c4c-68a4b6290811\\blobs\\a7\\a7f5f31219ee544c4265b68dc7a14e65ba7d31837673e467b324ab0c179332f5"
+    },
+    "vendor/gsap.min.js": {
+      "hash": "92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\1447e82f-51e5-4bb7-9c4c-68a4b6290811\\blobs\\92\\92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+    },
+    "cut.mp4": {
+      "hash": "2ceb0d92d2d30a52f5ad0a8f16cca56c714ffb9c5ad1a58c54346bbf5724a3ef",
+      "content": "C:\\Users\\jnyan\\.cache\\hyperframes\\history\\1447e82f-51e5-4bb7-9c4c-68a4b6290811\\blobs\\2c\\2ceb0d92d2d30a52f5ad0a8f16cca56c714ffb9c5ad1a58c54346bbf5724a3ef"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "8df65bc8-a4aa-4ed8-9ff3-2722d52fba9e",
+      "completedAt": 1794130430158,
+      "output": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\sb_47ca1b27233f\\final.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}

@@ -1,0 +1,156 @@
+[
+ {
+  "id": "hook-clock",
+  "start": 0,
+  "end": 4.71,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "alone",
+  "start": 4.71,
+  "end": 6.43,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "dev-chat",
+  "start": 6.43,
+  "end": 10.22,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "worried",
+  "start": 10.22,
+  "end": 12.02,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "checkout",
+  "start": 12.02,
+  "end": 15.38,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "declined",
+  "start": 15.38,
+  "end": 16.29,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "retry",
+  "start": 16.29,
+  "end": 21.97,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "battery",
+  "start": 21.97,
+  "end": 27.57,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "annoyed",
+  "start": 27.57,
+  "end": 29.14,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "the-note",
+  "start": 29.14,
+  "end": 37.35,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "deleted",
+  "start": 37.35,
+  "end": 39.08,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "smile",
+  "start": 39.08,
+  "end": 46.81,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "midnight",
+  "start": 46.81,
+  "end": 47.69,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "black",
+  "start": 47.69,
+  "end": 52.05,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "phone-lights",
+  "start": 52.05,
+  "end": 55.74,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "approved",
+  "start": 55.74,
+  "end": 61.44,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "shock",
+  "start": 61.44,
+  "end": 63.64,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "choices",
+  "start": 63.64,
+  "end": 69.53,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "nine-hours",
+  "start": 69.53,
+  "end": 70.98,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "what-would-you-do",
+  "start": 70.98,
+  "end": 76.09,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "dawn-team",
+  "start": 76.09,
+  "end": 80.09,
+  "words": "",
+  "desc": ""
+ },
+ {
+  "id": "end-card",
+  "start": 80.09,
+  "end": 83.96000000000001,
+  "words": "",
+  "desc": ""
+ }
+]

@@ -1,0 +1,1 @@
+{"version":3,"sources":["VideoAirPlayButton.ios.tsx"],"sourcesContent":[null],"names":["NativeVideoAirPlayButton","VideoAirPlayButton","props","style","minWidth","minHeight"],"mappings":";AAAA,OAAOA,8BAA8B,iCAAiC;AAGtE,eAAe,SAASC,mBAAmBC,KAA8B;IACvE,qBACE,KAACF;QAA0B,GAAGE,KAAK;QAAEC,OAAO;YAAC;gBAAEC,UAAU;gBAAIC,WAAW;YAAG;YAAGH,MAAMC,KAAK;SAAC;;AAE9F"}

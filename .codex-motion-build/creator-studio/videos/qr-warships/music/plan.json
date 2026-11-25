@@ -1,0 +1,114 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "modern cinematic electronic",
+  "trailer energy",
+  "punchy and polished",
+  "120 bpm"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lo-fi",
+  "sad",
+  "lead melody in the vocal range"
+ ],
+ "sections": [
+  {
+   "section_name": "Curious tall tale",
+   "positive_local_styles": [
+    "mysterious and curious",
+    "playful pizzicato plucks",
+    "soft ticking like a clock",
+    "light, sparse, intriguing"
+   ],
+   "negative_local_styles": [
+    "drums",
+    "bass",
+    "loud"
+   ],
+   "duration_ms": 6140,
+   "lines": []
+  },
+  {
+   "section_name": "Enemy drones",
+   "positive_local_styles": [
+    "suspense",
+    "deep sub-bass enters",
+    "low pulsing synth",
+    "dark and tense",
+    "building"
+   ],
+   "negative_local_styles": [
+    "full drums",
+    "bright"
+   ],
+   "duration_ms": 4340,
+   "lines": []
+  },
+  {
+   "section_name": "The scan",
+   "positive_local_styles": [
+    "slow quiet riser under a voice",
+    "ticking speeds up",
+    "filter slowly opening",
+    "restrained, leaves room for narration",
+    "cuts to silence in the last half second"
+   ],
+   "negative_local_styles": [
+    "release",
+    "melody",
+    "loud",
+    "crash"
+   ],
+   "duration_ms": 5520,
+   "lines": []
+  },
+  {
+   "section_name": "Boom: Auralion Labs (the drop lands on the first beat)",
+   "positive_local_styles": [
+    "huge drop on the first beat",
+    "high energy",
+    "punchy driving drums",
+    "driving bass",
+    "bright confident synth hook",
+    "uplifting and modern"
+   ],
+   "negative_local_styles": [
+    "dark",
+    "slow"
+   ],
+   "duration_ms": 15320,
+   "lines": []
+  },
+  {
+   "section_name": "The offer",
+   "positive_local_styles": [
+    "keeps the energy",
+    "extra lift",
+    "claps",
+    "bigger synth chords",
+    "triumphant"
+   ],
+   "negative_local_styles": [
+    "breakdown",
+    "quiet"
+   ],
+   "duration_ms": 5620,
+   "lines": []
+  },
+  {
+   "section_name": "End",
+   "positive_local_styles": [
+    "one big final hit",
+    "clean ring-out",
+    "satisfying ending"
+   ],
+   "negative_local_styles": [
+    "new ideas"
+   ],
+   "duration_ms": 3200,
+   "lines": []
+  }
+ ]
+}

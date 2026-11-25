@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { width: 100%; height: 100%; position: relative; }
+      #cam { position: absolute; inset: 0; transform-origin: 50% 38%; }
+      #talk { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-k9hb" id="root" data-composition-id="main" data-start="0" data-duration="598.5" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-ftaq" id="cam">
+        <video data-hf-id="hf-1h11" id="talk" class="clip" src="assets/talk.mp4" data-start="0" data-duration="598.5" data-has-audio="true" data-track-index="1"></video>
+      </div>
+      <div data-hf-id="hf-f86t" id="intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="27.73" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:10"></div>
+      <div data-hf-id="hf-eqht" id="why" data-composition-id="why" data-composition-src="compositions/why.html" data-start="27.73" data-duration="49.82" data-track-index="3" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:10"></div>
+      <div data-hf-id="hf-evee" id="who" data-composition-id="who" data-composition-src="compositions/who.html" data-start="77.55" data-duration="124.54" data-track-index="4" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:10"></div>
+      <div data-hf-id="hf-b2di" id="phone" data-composition-id="phone" data-composition-src="compositions/phone.html" data-start="202.09" data-duration="138.37" data-track-index="5" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:10"></div>
+      <div data-hf-id="hf-w5pu" id="wifi" data-composition-id="wifi" data-composition-src="compositions/wifi.html" data-start="340.46" data-duration="143.26" data-track-index="6" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:10"></div>
+      <div data-hf-id="hf-bvgz" id="help" data-composition-id="help" data-composition-src="compositions/help.html" data-start="483.72" data-duration="114.78" data-track-index="7" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index:10"></div>
+      <audio data-hf-id="hf-1n3v" id="sfx0" class="clip" src="assets/sfx/whoosh.wav" data-start="0.8" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-p6z7" id="sfx1" class="clip" src="assets/sfx/whoosh.wav" data-start="15.62" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-y3zi" id="sfx2" class="clip" src="assets/sfx/whoosh.wav" data-start="21.95" data-duration="0.15" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-i60p" id="sfx3" class="clip" src="assets/sfx/switch.wav" data-start="22.25" data-duration="0.33" data-volume="0.25" data-track-index="23"></audio>
+      <audio data-hf-id="hf-v2tl" id="sfx4" class="clip" src="assets/sfx/pop.wav" data-start="24.65" data-duration="0.12" data-volume="0.3" data-track-index="20"></audio>
+      <audio data-hf-id="hf-0mjj" id="sfx5" class="clip" src="assets/sfx/whoosh.wav" data-start="40.02" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-chgo" id="sfx6" class="clip" src="assets/sfx/whoosh.wav" data-start="48.7" data-duration="0.15" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-ater" id="sfx7" class="clip" src="assets/sfx/pop.wav" data-start="51.5" data-duration="0.12" data-volume="0.3" data-track-index="23"></audio>
+      <audio data-hf-id="hf-g6qb" id="sfx8" class="clip" src="assets/sfx/whoosh.wav" data-start="66.75" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-gh1t" id="sfx9" class="clip" src="assets/sfx/whoosh.wav" data-start="84.08" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-kw3q" id="sfx10" class="clip" src="assets/sfx/whoosh.wav" data-start="96.83" data-duration="0.15" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-vhto" id="sfx11" class="clip" src="assets/sfx/pop.wav" data-start="97.43" data-duration="0.12" data-volume="0.3" data-track-index="23"></audio>
+      <audio data-hf-id="hf-mq4w" id="sfx12" class="clip" src="assets/sfx/pop.wav" data-start="101.49" data-duration="0.12" data-volume="0.3" data-track-index="20"></audio>
+      <audio data-hf-id="hf-aml9" id="sfx13" class="clip" src="assets/sfx/whoosh.wav" data-start="118.98" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-n8la" id="sfx14" class="clip" src="assets/sfx/whoosh.wav" data-start="126.12" data-duration="0.15" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-uzon" id="sfx15" class="clip" src="assets/sfx/pop.wav" data-start="129.42" data-duration="0.12" data-volume="0.3" data-track-index="23"></audio>
+      <audio data-hf-id="hf-ksw6" id="sfx16" class="clip" src="assets/sfx/whoosh.wav" data-start="139.49" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-bd0i" id="sfx17" class="clip" src="assets/sfx/switch.wav" data-start="142.31" data-duration="0.33" data-volume="0.25" data-track-index="21"></audio>
+      <audio data-hf-id="hf-hld9" id="sfx18" class="clip" src="assets/sfx/pop.wav" data-start="155.85" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+      <audio data-hf-id="hf-uzjh" id="sfx19" class="clip" src="assets/sfx/pop.wav" data-start="160.03" data-duration="0.12" data-volume="0.3" data-track-index="23"></audio>
+      <audio data-hf-id="hf-9gl1" id="sfx20" class="clip" src="assets/sfx/pop.wav" data-start="162.59" data-duration="0.12" data-volume="0.3" data-track-index="20"></audio>
+      <audio data-hf-id="hf-mmyi" id="sfx21" class="clip" src="assets/sfx/whoosh.wav" data-start="174.49" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-rzj8" id="sfx22" class="clip" src="assets/sfx/ding.wav" data-start="190.55" data-duration="1.4" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-vllb" id="sfx23" class="clip" src="assets/sfx/ding.wav" data-start="199.37" data-duration="1.4" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-5r9y" id="sfx24" class="clip" src="assets/sfx/whoosh.wav" data-start="212.0" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-t1qy" id="sfx25" class="clip" src="assets/sfx/whoosh.wav" data-start="219.67" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-sbi7" id="sfx26" class="clip" src="assets/sfx/switch.wav" data-start="237.07" data-duration="0.33" data-volume="0.25" data-track-index="22"></audio>
+      <audio data-hf-id="hf-ehq1" id="sfx27" class="clip" src="assets/sfx/whoosh.wav" data-start="259.4" data-duration="0.15" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-ztze" id="sfx28" class="clip" src="assets/sfx/ding.wav" data-start="267.98" data-duration="1.4" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-3zqd" id="sfx29" class="clip" src="assets/sfx/whoosh.wav" data-start="289.72" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-w4hl" id="sfx30" class="clip" src="assets/sfx/pop.wav" data-start="301.08" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+      <audio data-hf-id="hf-vqmb" id="sfx31" class="clip" src="assets/sfx/whoosh.wav" data-start="306.91" data-duration="0.15" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-k55f" id="sfx32" class="clip" src="assets/sfx/pop.wav" data-start="312.91" data-duration="0.12" data-volume="0.3" data-track-index="20"></audio>
+      <audio data-hf-id="hf-dpfb" id="sfx33" class="clip" src="assets/sfx/pop.wav" data-start="314.99" data-duration="0.12" data-volume="0.3" data-track-index="21"></audio>
+      <audio data-hf-id="hf-tcs2" id="sfx34" class="clip" src="assets/sfx/pop.wav" data-start="317.75" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+      <audio data-hf-id="hf-4hd7" id="sfx35" class="clip" src="assets/sfx/whoosh.wav" data-start="324.2" data-duration="0.15" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-nyp1" id="sfx36" class="clip" src="assets/sfx/ding.wav" data-start="324.8" data-duration="1.4" data-volume="0.18" data-track-index="20"></audio>
+      <audio data-hf-id="hf-m2or" id="sfx37" class="clip" src="assets/sfx/ding.wav" data-start="325.3" data-duration="1.4" data-volume="0.18" data-track-index="21"></audio>
+      <audio data-hf-id="hf-we84" id="sfx38" class="clip" src="assets/sfx/ding.wav" data-start="325.8" data-duration="1.4" data-volume="0.18" data-track-index="22"></audio>
+      <audio data-hf-id="hf-zkcg" id="sfx39" class="clip" src="assets/sfx/ding.wav" data-start="326.3" data-duration="1.4" data-volume="0.18" data-track-index="23"></audio>
+      <audio data-hf-id="hf-sed3" id="sfx40" class="clip" src="assets/sfx/whoosh.wav" data-start="344.43" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-dh6b" id="sfx41" class="clip" src="assets/sfx/pop.wav" data-start="346.39" data-duration="0.12" data-volume="0.3" data-track-index="21"></audio>
+      <audio data-hf-id="hf-axzr" id="sfx42" class="clip" src="assets/sfx/pop.wav" data-start="348.17" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+      <audio data-hf-id="hf-oic6" id="sfx43" class="clip" src="assets/sfx/pop.wav" data-start="349.75" data-duration="0.12" data-volume="0.3" data-track-index="23"></audio>
+      <audio data-hf-id="hf-b16a" id="sfx44" class="clip" src="assets/sfx/ding.wav" data-start="362.85" data-duration="1.4" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-3lr5" id="sfx45" class="clip" src="assets/sfx/pop.wav" data-start="370.15" data-duration="0.12" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-a7dx" id="sfx46" class="clip" src="assets/sfx/pop.wav" data-start="377.83" data-duration="0.12" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-7bpj" id="sfx47" class="clip" src="assets/sfx/switch.wav" data-start="385.29" data-duration="0.33" data-volume="0.25" data-track-index="23"></audio>
+      <audio data-hf-id="hf-8a0n" id="sfx48" class="clip" src="assets/sfx/whoosh.wav" data-start="409.78" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-dcbp" id="sfx49" class="clip" src="assets/sfx/ding.wav" data-start="426.36" data-duration="1.4" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-ell9" id="sfx50" class="clip" src="assets/sfx/ding.wav" data-start="440.06" data-duration="1.4" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-dj14" id="sfx51" class="clip" src="assets/sfx/whoosh.wav" data-start="446.0" data-duration="0.15" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-rzyp" id="sfx52" class="clip" src="assets/sfx/switch.wav" data-start="456.27" data-duration="0.33" data-volume="0.25" data-track-index="20"></audio>
+      <audio data-hf-id="hf-o6cg" id="sfx53" class="clip" src="assets/sfx/pop.wav" data-start="461.15" data-duration="0.12" data-volume="0.3" data-track-index="21"></audio>
+      <audio data-hf-id="hf-rezn" id="sfx54" class="clip" src="assets/sfx/whoosh.wav" data-start="468.16" data-duration="0.15" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-9l48" id="sfx55" class="clip" src="assets/sfx/pop.wav" data-start="474.88" data-duration="0.12" data-volume="0.3" data-track-index="23"></audio>
+      <audio data-hf-id="hf-ht28" id="sfx56" class="clip" src="assets/sfx/whoosh.wav" data-start="494.81" data-duration="0.15" data-volume="0.22" data-track-index="20"></audio>
+      <audio data-hf-id="hf-zvhj" id="sfx57" class="clip" src="assets/sfx/pop.wav" data-start="496.21" data-duration="0.12" data-volume="0.3" data-track-index="21"></audio>
+      <audio data-hf-id="hf-nuk9" id="sfx58" class="clip" src="assets/sfx/pop.wav" data-start="498.41" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+      <audio data-hf-id="hf-vddm" id="sfx59" class="clip" src="assets/sfx/whoosh.wav" data-start="507.31" data-duration="0.15" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-d7ah" id="sfx60" class="clip" src="assets/sfx/pop.wav" data-start="507.61" data-duration="0.12" data-volume="0.3" data-track-index="20"></audio>
+      <audio data-hf-id="hf-q00f" id="sfx61" class="clip" src="assets/sfx/pop.wav" data-start="508.51" data-duration="0.12" data-volume="0.3" data-track-index="21"></audio>
+      <audio data-hf-id="hf-010c" id="sfx62" class="clip" src="assets/sfx/pop.wav" data-start="510.15" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+      <audio data-hf-id="hf-a187" id="sfx63" class="clip" src="assets/sfx/whoosh.wav" data-start="518.15" data-duration="0.15" data-volume="0.22" data-track-index="23"></audio>
+      <audio data-hf-id="hf-0usu" id="sfx64" class="clip" src="assets/sfx/switch.wav" data-start="518.35" data-duration="0.33" data-volume="0.25" data-track-index="20"></audio>
+      <audio data-hf-id="hf-a9pu" id="sfx65" class="clip" src="assets/sfx/pop.wav" data-start="538.53" data-duration="0.12" data-volume="0.3" data-track-index="21"></audio>
+      <audio data-hf-id="hf-8cym" id="sfx66" class="clip" src="assets/sfx/whoosh.wav" data-start="565.9" data-duration="0.15" data-volume="0.22" data-track-index="22"></audio>
+      <audio data-hf-id="hf-quih" id="sfx67" class="clip" src="assets/sfx/switch.wav" data-start="566.2" data-duration="0.33" data-volume="0.25" data-track-index="23"></audio>
+      <audio data-hf-id="hf-j6dz" id="sfx68" class="clip" src="assets/sfx/pop.wav" data-start="569.36" data-duration="0.12" data-volume="0.25" data-track-index="20"></audio>
+      <audio data-hf-id="hf-ocy0" id="sfx69" class="clip" src="assets/sfx/pop.wav" data-start="569.91" data-duration="0.12" data-volume="0.25" data-track-index="21"></audio>
+      <audio data-hf-id="hf-45tp" id="sfx70" class="clip" src="assets/sfx/pop.wav" data-start="570.46" data-duration="0.12" data-volume="0.25" data-track-index="22"></audio>
+      <audio data-hf-id="hf-ai85" id="sfx71" class="clip" src="assets/sfx/pop.wav" data-start="571.01" data-duration="0.12" data-volume="0.25" data-track-index="23"></audio>
+      <audio data-hf-id="hf-42bh" id="sfx72" class="clip" src="assets/sfx/pop.wav" data-start="571.56" data-duration="0.12" data-volume="0.25" data-track-index="20"></audio>
+      <audio data-hf-id="hf-26jr" id="sfx73" class="clip" src="assets/sfx/whoosh.wav" data-start="584.6" data-duration="0.15" data-volume="0.22" data-track-index="21"></audio>
+      <audio data-hf-id="hf-bnlp" id="sfx74" class="clip" src="assets/sfx/pop.wav" data-start="591.94" data-duration="0.12" data-volume="0.3" data-track-index="22"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#cam",{scale:1},0.0);
+      tl.set("#cam",{scale:1.1},2.65);
+      tl.set("#cam",{scale:1},17.14);
+      tl.set("#cam",{scale:1.1},27.73);
+      tl.set("#cam",{scale:1},65.9);
+      tl.set("#cam",{scale:1.1},77.55);
+      tl.set("#cam",{scale:1},91.38);
+      tl.set("#cam",{scale:1.1},111.17);
+      tl.set("#cam",{scale:1},138.04);
+      tl.set("#cam",{scale:1.1},173.1);
+      tl.set("#cam",{scale:1},202.09);
+      tl.set("#cam",{scale:1.1},218.02);
+      tl.set("#cam",{scale:1},257.59);
+      tl.set("#cam",{scale:1.1},302.84);
+      tl.set("#cam",{scale:1},340.46);
+      tl.set("#cam",{scale:1.1},386.93);
+      tl.set("#cam",{scale:1},444.74);
+      tl.set("#cam",{scale:1.1},462.41);
+      tl.set("#cam",{scale:1},483.72);
+      tl.set("#cam",{scale:1.1},514.25);
+      tl.set("#cam",{scale:1},557.83);
+      tl.set("#cam",{scale:1.1},597.86);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

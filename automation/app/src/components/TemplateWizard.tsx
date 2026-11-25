@@ -32,9 +32,9 @@ const DEFAULT_CONFIG: TemplateConfig = {
   name: 'Viral Social Shorts',
   aspectRatio: '9:16',
   captionStyle: 'karaoke',
-  brandColor: '#6C4CF0',
+  brandColor: '#FF5A1F',
   brandAccent: '#FF5A1F',
-  watermark: '@growthos',
+  watermark: '@ailo',
   showWatermark: true,
   autoPunchZoom: true,
   autoSFX: true,
@@ -261,7 +261,7 @@ export function TemplateWizard({
                           styles.swatchTile,
                           {
                             borderColor: selected ? colors.primary : colors.border,
-                            backgroundColor: selected ? 'rgba(108, 76, 240, 0.04)' : '#FFFFFF',
+                            backgroundColor: selected ? 'rgba(255, 90, 31, 0.04)' : '#FFFFFF',
                           },
                           hovered && !selected && { borderColor: colors.borderLight, backgroundColor: colors.surfaceAlt },
                           pressed && { opacity: 0.9 },
@@ -282,7 +282,7 @@ export function TemplateWizard({
                                 width: opt.ratioW,
                                 height: opt.ratioH,
                                 borderColor: selected ? colors.primary : colors.textMuted,
-                                backgroundColor: selected ? 'rgba(108, 76, 240, 0.15)' : '#F1F5F9',
+                                backgroundColor: selected ? 'rgba(255, 90, 31, 0.15)' : '#F1F5F9',
                               },
                             ]}
                           >
@@ -384,7 +384,7 @@ export function TemplateWizard({
                           styles.swatchTile,
                           {
                             borderColor: selected ? colors.primary : colors.border,
-                            backgroundColor: selected ? 'rgba(108, 76, 240, 0.04)' : '#FFFFFF',
+                            backgroundColor: selected ? 'rgba(255, 90, 31, 0.04)' : '#FFFFFF',
                           },
                           hovered && !selected && { borderColor: colors.borderLight, backgroundColor: colors.surfaceAlt },
                           pressed && { opacity: 0.9 },
@@ -453,7 +453,7 @@ export function TemplateWizard({
                   </T>
                   <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
                     {[
-                      { name: 'GrowthOS Purple', primary: '#6C4CF0', accent: '#FF5A1F' },
+                      { name: 'AILO Orange', primary: '#FF5A1F', accent: '#FF5A1F' },
                       { name: 'Emerald Peak', primary: '#059669', accent: '#10B981' },
                       { name: 'Midnight Navy', primary: '#1E293B', accent: '#3B82F6' },
                       { name: 'Crimson Surge', primary: '#E11D48', accent: '#F59E0B' },
@@ -467,7 +467,7 @@ export function TemplateWizard({
                             styles.palettePill,
                             {
                               borderColor: isChosen ? colors.primary : colors.border,
-                              backgroundColor: isChosen ? 'rgba(108, 76, 240, 0.08)' : '#FFFFFF',
+                              backgroundColor: isChosen ? 'rgba(255, 90, 31, 0.08)' : '#FFFFFF',
                             },
                             pressed && { opacity: 0.8 },
                           ]}
@@ -688,7 +688,7 @@ export function TemplateWizard({
                   pressed && { opacity: 0.9 },
                   Platform.OS === 'web' && ({
                     cursor: 'pointer',
-                    boxShadow: '0 2px 8px rgba(108, 76, 240, 0.3)',
+                    boxShadow: '0 2px 8px rgba(255, 90, 31, 0.3)',
                   } as any),
                 ]}
               >

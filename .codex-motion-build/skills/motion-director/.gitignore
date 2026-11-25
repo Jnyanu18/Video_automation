@@ -1,0 +1,6 @@
+**/node_modules/
+**/.bundle*/
+**/out/
+**/.env*
+**/smoke-output/
+*.mp4

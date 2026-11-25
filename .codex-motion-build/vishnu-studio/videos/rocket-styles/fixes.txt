@@ -1,0 +1,1 @@
+﻿Display fixes in words.json (2026-11-05, second take, ending 'Comment CLAUDE for the skills'): 10 -> Ten, cutout -> cut-out, Clawed -> CLAUDE. The voice says them right; only Whisper's spelling was wrong.

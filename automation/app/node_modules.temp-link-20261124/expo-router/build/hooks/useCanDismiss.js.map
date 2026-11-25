@@ -1,0 +1,1 @@
+{"version":3,"sources":["hooks/useCanDismiss.ts"],"sourcesContent":[null],"names":["useCanDismiss","canDismiss","use","CanDismissContext","undefined","Error"],"mappings":"AAAA;;;;;+BAqBgBA;;;eAAAA;;;;yBAnBI;;;;;;mCAEc;AAiB3B,SAASA;IACd,MAAMC,aAAaC,IAAAA,YAAG,EAACC,oCAAiB;IACxC,IAAIF,eAAeG,WAAW;QAC5B,MAAM,IAAIC,MACR;IAEJ;IACA,OAAOJ;AACT"}

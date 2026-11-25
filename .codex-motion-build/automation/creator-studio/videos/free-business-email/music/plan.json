@@ -1,0 +1,13 @@
+{
+ "positive_global_styles": ["instrumental", "light plucky electronic", "soft marimba", "curious and upbeat", "sparse, leaves room for a voice", "112 bpm"],
+ "negative_global_styles": ["vocals", "singing", "lead melody in the vocal range", "aggressive EDM", "horror"],
+ "sections": [
+  {"section_name": "Hook: a business email for zero dollars", "positive_local_styles": ["bright pluck hit on the downbeat", "playful marimba", "light claps"], "negative_local_styles": ["heavy drums"], "duration_ms": 6450, "lines": []},
+  {"section_name": "Why it matters", "positive_local_styles": ["steady soft groove", "warm bass"], "negative_local_styles": [], "duration_ms": 5950, "lines": []},
+  {"section_name": "The catch: the hidden plan", "positive_local_styles": ["a little mystery", "muted plucks", "tiptoe rhythm", "minor colour"], "negative_local_styles": ["full drums"], "duration_ms": 10910, "lines": []},
+  {"section_name": "The trick: the door opens", "positive_local_styles": ["brightens", "major lift", "shimmer"], "negative_local_styles": [], "duration_ms": 5950, "lines": []},
+  {"section_name": "Five steps", "positive_local_styles": ["confident groove", "light kick on the beat", "marimba arpeggio"], "negative_local_styles": [], "duration_ms": 11660, "lines": []},
+  {"section_name": "Two things to know", "positive_local_styles": ["groove settles", "lighter"], "negative_local_styles": [], "duration_ms": 9680, "lines": []},
+  {"section_name": "The ask", "positive_local_styles": ["small build", "final bright hit", "clean ending"], "negative_local_styles": [], "duration_ms": 4330, "lines": []}
+ ]
+}

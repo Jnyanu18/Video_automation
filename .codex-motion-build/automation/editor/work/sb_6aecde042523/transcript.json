@@ -1,0 +1,1156 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\26e3f704ad3b41d4f692f192852045af.mp4",
+  "backend": "faster-whisper",
+  "status": "ok",
+  "language": "en",
+  "words": [
+    {
+      "word": "Stop",
+      "start": 0.0,
+      "end": 0.3
+    },
+    {
+      "word": "paying",
+      "start": 0.3,
+      "end": 0.58
+    },
+    {
+      "word": "monthly",
+      "start": 0.58,
+      "end": 0.96
+    },
+    {
+      "word": "for",
+      "start": 0.96,
+      "end": 1.18
+    },
+    {
+      "word": "a",
+      "start": 1.18,
+      "end": 1.26
+    },
+    {
+      "word": "trading",
+      "start": 1.26,
+      "end": 1.52
+    },
+    {
+      "word": "bot.",
+      "start": 1.52,
+      "end": 1.76
+    },
+    {
+      "word": "Build",
+      "start": 2.1,
+      "end": 2.2
+    },
+    {
+      "word": "your",
+      "start": 2.2,
+      "end": 2.42
+    },
+    {
+      "word": "own",
+      "start": 2.42,
+      "end": 2.64
+    },
+    {
+      "word": "with",
+      "start": 2.64,
+      "end": 2.84
+    },
+    {
+      "word": "these",
+      "start": 2.84,
+      "end": 3.02
+    },
+    {
+      "word": "five",
+      "start": 3.02,
+      "end": 3.42
+    },
+    {
+      "word": "free",
+      "start": 3.42,
+      "end": 3.78
+    },
+    {
+      "word": "GitHub",
+      "start": 3.78,
+      "end": 4.04
+    },
+    {
+      "word": "repos.",
+      "start": 4.04,
+      "end": 4.46
+    },
+    {
+      "word": "One,",
+      "start": 4.84,
+      "end": 4.96
+    },
+    {
+      "word": "freak",
+      "start": 5.56,
+      "end": 5.56
+    },
+    {
+      "word": "trade.",
+      "start": 5.56,
+      "end": 5.8
+    },
+    {
+      "word": "A",
+      "start": 6.16,
+      "end": 6.22
+    },
+    {
+      "word": "full",
+      "start": 6.22,
+      "end": 6.46
+    },
+    {
+      "word": "crypto",
+      "start": 6.46,
+      "end": 6.78
+    },
+    {
+      "word": "bot",
+      "start": 6.78,
+      "end": 7.02
+    },
+    {
+      "word": "ready",
+      "start": 7.02,
+      "end": 7.32
+    },
+    {
+      "word": "to",
+      "start": 7.32,
+      "end": 7.46
+    },
+    {
+      "word": "run",
+      "start": 7.46,
+      "end": 7.62
+    },
+    {
+      "word": "with",
+      "start": 7.62,
+      "end": 7.86
+    },
+    {
+      "word": "over",
+      "start": 7.86,
+      "end": 8.0
+    },
+    {
+      "word": "55",
+      "start": 8.0,
+      "end": 8.42
+    },
+    {
+      "word": ",000",
+      "start": 8.42,
+      "end": 8.98
+    },
+    {
+      "word": "stars.",
+      "start": 8.98,
+      "end": 9.22
+    },
+    {
+      "word": "Two,",
+      "start": 9.7,
+      "end": 9.84
+    },
+    {
+      "word": "backtestin",
+      "start": 10.32,
+      "end": 10.74
+    },
+    {
+      "word": ".py.",
+      "start": 10.74,
+      "end": 11.2
+    },
+    {
+      "word": "Test",
+      "start": 11.66,
+      "end": 11.78
+    },
+    {
+      "word": "his",
+      "start": 11.78,
+      "end": 11.92
+    },
+    {
+      "word": "strategy",
+      "start": 11.92,
+      "end": 12.16
+    },
+    {
+      "word": "idea",
+      "start": 12.16,
+      "end": 12.52
+    },
+    {
+      "word": "in",
+      "start": 12.52,
+      "end": 12.7
+    },
+    {
+      "word": "a",
+      "start": 12.7,
+      "end": 12.78
+    },
+    {
+      "word": "few",
+      "start": 12.78,
+      "end": 12.98
+    },
+    {
+      "word": "lines",
+      "start": 12.98,
+      "end": 13.16
+    },
+    {
+      "word": "of",
+      "start": 13.16,
+      "end": 13.32
+    },
+    {
+      "word": "Python.",
+      "start": 13.32,
+      "end": 13.52
+    },
+    {
+      "word": "Three,",
+      "start": 13.96,
+      "end": 14.14
+    },
+    {
+      "word": "vector",
+      "start": 14.64,
+      "end": 14.82
+    },
+    {
+      "word": "BT.",
+      "start": 14.82,
+      "end": 15.06
+    },
+    {
+      "word": "Test",
+      "start": 15.56,
+      "end": 15.7
+    },
+    {
+      "word": "thousands",
+      "start": 15.7,
+      "end": 16.16
+    },
+    {
+      "word": "of",
+      "start": 16.16,
+      "end": 16.34
+    },
+    {
+      "word": "variations",
+      "start": 16.34,
+      "end": 16.68
+    },
+    {
+      "word": "at",
+      "start": 16.68,
+      "end": 16.96
+    },
+    {
+      "word": "once.",
+      "start": 16.96,
+      "end": 17.18
+    },
+    {
+      "word": "Four,",
+      "start": 17.64,
+      "end": 17.94
+    },
+    {
+      "word": "leap,",
+      "start": 18.42,
+      "end": 18.48
+    },
+    {
+      "word": "the",
+      "start": 18.86,
+      "end": 18.94
+    },
+    {
+      "word": "open",
+      "start": 18.94,
+      "end": 19.14
+    },
+    {
+      "word": "source",
+      "start": 19.14,
+      "end": 19.3
+    },
+    {
+      "word": "engine",
+      "start": 19.3,
+      "end": 19.6
+    },
+    {
+      "word": "behind",
+      "start": 19.6,
+      "end": 19.9
+    },
+    {
+      "word": "QuantConnect.",
+      "start": 19.9,
+      "end": 20.46
+    },
+    {
+      "word": "Stocks,",
+      "start": 20.78,
+      "end": 21.18
+    },
+    {
+      "word": "features,",
+      "start": 21.26,
+      "end": 21.44
+    },
+    {
+      "word": "and",
+      "start": 21.7,
+      "end": 21.78
+    },
+    {
+      "word": "options",
+      "start": 21.78,
+      "end": 22.1
+    },
+    {
+      "word": "from",
+      "start": 22.1,
+      "end": 22.44
+    },
+    {
+      "word": "backtest",
+      "start": 22.44,
+      "end": 22.86
+    },
+    {
+      "word": "to",
+      "start": 22.86,
+      "end": 23.1
+    },
+    {
+      "word": "live.",
+      "start": 23.1,
+      "end": 23.28
+    },
+    {
+      "word": "Five,",
+      "start": 23.72,
+      "end": 23.88
+    },
+    {
+      "word": "Nautilus",
+      "start": 24.32,
+      "end": 24.6
+    },
+    {
+      "word": "Trader.",
+      "start": 24.6,
+      "end": 24.86
+    },
+    {
+      "word": "A",
+      "start": 25.16,
+      "end": 25.22
+    },
+    {
+      "word": "production",
+      "start": 25.22,
+      "end": 25.5
+    },
+    {
+      "word": "-grade",
+      "start": 25.5,
+      "end": 25.82
+    },
+    {
+      "word": "trading",
+      "start": 25.82,
+      "end": 26.12
+    },
+    {
+      "word": "engine",
+      "start": 26.12,
+      "end": 26.34
+    },
+    {
+      "word": "built",
+      "start": 26.34,
+      "end": 26.6
+    },
+    {
+      "word": "in",
+      "start": 26.6,
+      "end": 26.84
+    },
+    {
+      "word": "Rust.",
+      "start": 26.84,
+      "end": 27.04
+    },
+    {
+      "word": "One",
+      "start": 27.56,
+      "end": 27.68
+    },
+    {
+      "word": "warning,",
+      "start": 27.68,
+      "end": 27.94
+    },
+    {
+      "word": "a",
+      "start": 28.24,
+      "end": 28.28
+    },
+    {
+      "word": "good",
+      "start": 28.28,
+      "end": 28.38
+    },
+    {
+      "word": "backtest",
+      "start": 28.38,
+      "end": 28.76
+    },
+    {
+      "word": "is",
+      "start": 28.76,
+      "end": 29.02
+    },
+    {
+      "word": "not",
+      "start": 29.02,
+      "end": 29.26
+    },
+    {
+      "word": "a",
+      "start": 29.26,
+      "end": 29.38
+    },
+    {
+      "word": "profit.",
+      "start": 29.38,
+      "end": 29.72
+    },
+    {
+      "word": "Paper",
+      "start": 29.72,
+      "end": 30.28
+    },
+    {
+      "word": "trade",
+      "start": 30.28,
+      "end": 30.54
+    },
+    {
+      "word": "first.",
+      "start": 30.54,
+      "end": 30.9
+    },
+    {
+      "word": "One",
+      "start": 31.26,
+      "end": 31.46
+    },
+    {
+      "word": "off",
+      "start": 31.46,
+      "end": 31.58
+    },
+    {
+      "word": "five",
+      "start": 31.58,
+      "end": 31.74
+    },
+    {
+      "word": "links,",
+      "start": 31.74,
+      "end": 31.98
+    },
+    {
+      "word": "comment,",
+      "start": 32.2,
+      "end": 32.52
+    },
+    {
+      "word": "munch,",
+      "start": 32.66,
+      "end": 32.82
+    },
+    {
+      "word": "and",
+      "start": 32.98,
+      "end": 33.0
+    },
+    {
+      "word": "we'll",
+      "start": 33.0,
+      "end": 33.12
+    },
+    {
+      "word": "send",
+      "start": 33.12,
+      "end": 33.28
+    },
+    {
+      "word": "him",
+      "start": 33.28,
+      "end": 33.38
+    },
+    {
+      "word": "to",
+      "start": 33.38,
+      "end": 33.48
+    },
+    {
+      "word": "you.",
+      "start": 33.48,
+      "end": 33.62
+    }
+  ],
+  "segments": [
+    {
+      "text": "Stop paying monthly for a trading bot.",
+      "start": 0.0,
+      "end": 1.76,
+      "words": [
+        {
+          "word": "Stop",
+          "start": 0.0,
+          "end": 0.3
+        },
+        {
+          "word": "paying",
+          "start": 0.3,
+          "end": 0.58
+        },
+        {
+          "word": "monthly",
+          "start": 0.58,
+          "end": 0.96
+        },
+        {
+          "word": "for",
+          "start": 0.96,
+          "end": 1.18
+        },
+        {
+          "word": "a",
+          "start": 1.18,
+          "end": 1.26
+        },
+        {
+          "word": "trading",
+          "start": 1.26,
+          "end": 1.52
+        },
+        {
+          "word": "bot.",
+          "start": 1.52,
+          "end": 1.76
+        }
+      ]
+    },
+    {
+      "text": "Build your own with these five free GitHub repos.",
+      "start": 2.1,
+      "end": 4.46,
+      "words": [
+        {
+          "word": "Build",
+          "start": 2.1,
+          "end": 2.2
+        },
+        {
+          "word": "your",
+          "start": 2.2,
+          "end": 2.42
+        },
+        {
+          "word": "own",
+          "start": 2.42,
+          "end": 2.64
+        },
+        {
+          "word": "with",
+          "start": 2.64,
+          "end": 2.84
+        },
+        {
+          "word": "these",
+          "start": 2.84,
+          "end": 3.02
+        },
+        {
+          "word": "five",
+          "start": 3.02,
+          "end": 3.42
+        },
+        {
+          "word": "free",
+          "start": 3.42,
+          "end": 3.78
+        },
+        {
+          "word": "GitHub",
+          "start": 3.78,
+          "end": 4.04
+        },
+        {
+          "word": "repos.",
+          "start": 4.04,
+          "end": 4.46
+        }
+      ]
+    },
+    {
+      "text": "One, freak trade.",
+      "start": 4.84,
+      "end": 5.8,
+      "words": [
+        {
+          "word": "One,",
+          "start": 4.84,
+          "end": 4.96
+        },
+        {
+          "word": "freak",
+          "start": 5.56,
+          "end": 5.56
+        },
+        {
+          "word": "trade.",
+          "start": 5.56,
+          "end": 5.8
+        }
+      ]
+    },
+    {
+      "text": "A full crypto bot ready to run with over 55 ,000 stars.",
+      "start": 6.16,
+      "end": 9.22,
+      "words": [
+        {
+          "word": "A",
+          "start": 6.16,
+          "end": 6.22
+        },
+        {
+          "word": "full",
+          "start": 6.22,
+          "end": 6.46
+        },
+        {
+          "word": "crypto",
+          "start": 6.46,
+          "end": 6.78
+        },
+        {
+          "word": "bot",
+          "start": 6.78,
+          "end": 7.02
+        },
+        {
+          "word": "ready",
+          "start": 7.02,
+          "end": 7.32
+        },
+        {
+          "word": "to",
+          "start": 7.32,
+          "end": 7.46
+        },
+        {
+          "word": "run",
+          "start": 7.46,
+          "end": 7.62
+        },
+        {
+          "word": "with",
+          "start": 7.62,
+          "end": 7.86
+        },
+        {
+          "word": "over",
+          "start": 7.86,
+          "end": 8.0
+        },
+        {
+          "word": "55",
+          "start": 8.0,
+          "end": 8.42
+        },
+        {
+          "word": ",000",
+          "start": 8.42,
+          "end": 8.98
+        },
+        {
+          "word": "stars.",
+          "start": 8.98,
+          "end": 9.22
+        }
+      ]
+    },
+    {
+      "text": "Two, backtestin .py.",
+      "start": 9.7,
+      "end": 11.2,
+      "words": [
+        {
+          "word": "Two,",
+          "start": 9.7,
+          "end": 9.84
+        },
+        {
+          "word": "backtestin",
+          "start": 10.32,
+          "end": 10.74
+        },
+        {
+          "word": ".py.",
+          "start": 10.74,
+          "end": 11.2
+        }
+      ]
+    },
+    {
+      "text": "Test his strategy idea in a few lines of Python.",
+      "start": 11.66,
+      "end": 13.52,
+      "words": [
+        {
+          "word": "Test",
+          "start": 11.66,
+          "end": 11.78
+        },
+        {
+          "word": "his",
+          "start": 11.78,
+          "end": 11.92
+        },
+        {
+          "word": "strategy",
+          "start": 11.92,
+          "end": 12.16
+        },
+        {
+          "word": "idea",
+          "start": 12.16,
+          "end": 12.52
+        },
+        {
+          "word": "in",
+          "start": 12.52,
+          "end": 12.7
+        },
+        {
+          "word": "a",
+          "start": 12.7,
+          "end": 12.78
+        },
+        {
+          "word": "few",
+          "start": 12.78,
+          "end": 12.98
+        },
+        {
+          "word": "lines",
+          "start": 12.98,
+          "end": 13.16
+        },
+        {
+          "word": "of",
+          "start": 13.16,
+          "end": 13.32
+        },
+        {
+          "word": "Python.",
+          "start": 13.32,
+          "end": 13.52
+        }
+      ]
+    },
+    {
+      "text": "Three, vector BT.",
+      "start": 13.96,
+      "end": 15.06,
+      "words": [
+        {
+          "word": "Three,",
+          "start": 13.96,
+          "end": 14.14
+        },
+        {
+          "word": "vector",
+          "start": 14.64,
+          "end": 14.82
+        },
+        {
+          "word": "BT.",
+          "start": 14.82,
+          "end": 15.06
+        }
+      ]
+    },
+    {
+      "text": "Test thousands of variations at once.",
+      "start": 15.56,
+      "end": 17.18,
+      "words": [
+        {
+          "word": "Test",
+          "start": 15.56,
+          "end": 15.7
+        },
+        {
+          "word": "thousands",
+          "start": 15.7,
+          "end": 16.16
+        },
+        {
+          "word": "of",
+          "start": 16.16,
+          "end": 16.34
+        },
+        {
+          "word": "variations",
+          "start": 16.34,
+          "end": 16.68
+        },
+        {
+          "word": "at",
+          "start": 16.68,
+          "end": 16.96
+        },
+        {
+          "word": "once.",
+          "start": 16.96,
+          "end": 17.18
+        }
+      ]
+    },
+    {
+      "text": "Four, leap, the open source engine behind QuantConnect.",
+      "start": 17.64,
+      "end": 20.46,
+      "words": [
+        {
+          "word": "Four,",
+          "start": 17.64,
+          "end": 17.94
+        },
+        {
+          "word": "leap,",
+          "start": 18.42,
+          "end": 18.48
+        },
+        {
+          "word": "the",
+          "start": 18.86,
+          "end": 18.94
+        },
+        {
+          "word": "open",
+          "start": 18.94,
+          "end": 19.14
+        },
+        {
+          "word": "source",
+          "start": 19.14,
+          "end": 19.3
+        },
+        {
+          "word": "engine",
+          "start": 19.3,
+          "end": 19.6
+        },
+        {
+          "word": "behind",
+          "start": 19.6,
+          "end": 19.9
+        },
+        {
+          "word": "QuantConnect.",
+          "start": 19.9,
+          "end": 20.46
+        }
+      ]
+    },
+    {
+      "text": "Stocks, features, and options from backtest to live.",
+      "start": 20.78,
+      "end": 23.28,
+      "words": [
+        {
+          "word": "Stocks,",
+          "start": 20.78,
+          "end": 21.18
+        },
+        {
+          "word": "features,",
+          "start": 21.26,
+          "end": 21.44
+        },
+        {
+          "word": "and",
+          "start": 21.7,
+          "end": 21.78
+        },
+        {
+          "word": "options",
+          "start": 21.78,
+          "end": 22.1
+        },
+        {
+          "word": "from",
+          "start": 22.1,
+          "end": 22.44
+        },
+        {
+          "word": "backtest",
+          "start": 22.44,
+          "end": 22.86
+        },
+        {
+          "word": "to",
+          "start": 22.86,
+          "end": 23.1
+        },
+        {
+          "word": "live.",
+          "start": 23.1,
+          "end": 23.28
+        }
+      ]
+    },
+    {
+      "text": "Five, Nautilus Trader.",
+      "start": 23.72,
+      "end": 24.86,
+      "words": [
+        {
+          "word": "Five,",
+          "start": 23.72,
+          "end": 23.88
+        },
+        {
+          "word": "Nautilus",
+          "start": 24.32,
+          "end": 24.6
+        },
+        {
+          "word": "Trader.",
+          "start": 24.6,
+          "end": 24.86
+        }
+      ]
+    },
+    {
+      "text": "A production -grade trading engine built in Rust.",
+      "start": 25.16,
+      "end": 27.04,
+      "words": [
+        {
+          "word": "A",
+          "start": 25.16,
+          "end": 25.22
+        },
+        {
+          "word": "production",
+          "start": 25.22,
+          "end": 25.5
+        },
+        {
+          "word": "-grade",
+          "start": 25.5,
+          "end": 25.82
+        },
+        {
+          "word": "trading",
+          "start": 25.82,
+          "end": 26.12
+        },
+        {
+          "word": "engine",
+          "start": 26.12,
+          "end": 26.34
+        },
+        {
+          "word": "built",
+          "start": 26.34,
+          "end": 26.6
+        },
+        {
+          "word": "in",
+          "start": 26.6,
+          "end": 26.84
+        },
+        {
+          "word": "Rust.",
+          "start": 26.84,
+          "end": 27.04
+        }
+      ]
+    },
+    {
+      "text": "One warning, a good backtest is not a profit.",
+      "start": 27.56,
+      "end": 29.72,
+      "words": [
+        {
+          "word": "One",
+          "start": 27.56,
+          "end": 27.68
+        },
+        {
+          "word": "warning,",
+          "start": 27.68,
+          "end": 27.94
+        },
+        {
+          "word": "a",
+          "start": 28.24,
+          "end": 28.28
+        },
+        {
+          "word": "good",
+          "start": 28.28,
+          "end": 28.38
+        },
+        {
+          "word": "backtest",
+          "start": 28.38,
+          "end": 28.76
+        },
+        {
+          "word": "is",
+          "start": 28.76,
+          "end": 29.02
+        },
+        {
+          "word": "not",
+          "start": 29.02,
+          "end": 29.26
+        },
+        {
+          "word": "a",
+          "start": 29.26,
+          "end": 29.38
+        },
+        {
+          "word": "profit.",
+          "start": 29.38,
+          "end": 29.72
+        }
+      ]
+    },
+    {
+      "text": "Paper trade first.",
+      "start": 29.72,
+      "end": 30.9,
+      "words": [
+        {
+          "word": "Paper",
+          "start": 29.72,
+          "end": 30.28
+        },
+        {
+          "word": "trade",
+          "start": 30.28,
+          "end": 30.54
+        },
+        {
+          "word": "first.",
+          "start": 30.54,
+          "end": 30.9
+        }
+      ]
+    },
+    {
+      "text": "One off five links, comment, munch, and we'll send him to you.",
+      "start": 31.26,
+      "end": 33.62,
+      "words": [
+        {
+          "word": "One",
+          "start": 31.26,
+          "end": 31.46
+        },
+        {
+          "word": "off",
+          "start": 31.46,
+          "end": 31.58
+        },
+        {
+          "word": "five",
+          "start": 31.58,
+          "end": 31.74
+        },
+        {
+          "word": "links,",
+          "start": 31.74,
+          "end": 31.98
+        },
+        {
+          "word": "comment,",
+          "start": 32.2,
+          "end": 32.52
+        },
+        {
+          "word": "munch,",
+          "start": 32.66,
+          "end": 32.82
+        },
+        {
+          "word": "and",
+          "start": 32.98,
+          "end": 33.0
+        },
+        {
+          "word": "we'll",
+          "start": 33.0,
+          "end": 33.12
+        },
+        {
+          "word": "send",
+          "start": 33.12,
+          "end": 33.28
+        },
+        {
+          "word": "him",
+          "start": 33.28,
+          "end": 33.38
+        },
+        {
+          "word": "to",
+          "start": 33.38,
+          "end": 33.48
+        },
+        {
+          "word": "you.",
+          "start": 33.48,
+          "end": 33.62
+        }
+      ]
+    }
+  ],
+  "text": "Stop paying monthly for a trading bot. Build your own with these five free GitHub repos. One, freak trade. A full crypto bot ready to run with over 55 ,000 stars. Two, backtestin .py. Test his strategy idea in a few lines of Python. Three, vector BT. Test thousands of variations at once. Four, leap, the open source engine behind QuantConnect. Stocks, features, and options from backtest to live. Five, Nautilus Trader. A production -grade trading engine built in Rust. One warning, a good backtest is not a profit. Paper trade first. One off five links, comment, munch, and we'll send him to you."
+}

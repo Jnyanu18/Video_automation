@@ -1,0 +1,131 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "host.exp.exponent",
+    "module": "expo.modules.documentpicker",
+    "version": "58.0.4",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "commons-io",
+          "module": "commons-io",
+          "version": {
+            "requires": "2.6"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.documentpicker-58.0.4.aar",
+          "url": "expo.modules.documentpicker-58.0.4.aar",
+          "size": 29783,
+          "sha512": "6dc61c1cae463b566c57c7dec2b55a1dde61450ef27c3b02ea111e9b10647557750dc1b9428f22eebe04df0dcf66587554a167027cd45e1d56a52b98fb84329c",
+          "sha256": "d3ff701205e6100d3ce6e779075fa28e18c541c2a7537505f026a4544b77a1e1",
+          "sha1": "e9af88976ec325b6ad24c18463d1b63c17cd0d80",
+          "md5": "5936c7f65185f091f62ea7ad4003885b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "2.2.10"
+          }
+        },
+        {
+          "group": "org.jetbrains",
+          "module": "annotations",
+          "version": {
+            "requires": "23.0.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "commons-io",
+          "module": "commons-io",
+          "version": {
+            "requires": "2.6"
+          }
+        },
+        {
+          "group": "io.github.expo.pika",
+          "module": "pika-api",
+          "version": {
+            "requires": "1.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.documentpicker-58.0.4.aar",
+          "url": "expo.modules.documentpicker-58.0.4.aar",
+          "size": 29783,
+          "sha512": "6dc61c1cae463b566c57c7dec2b55a1dde61450ef27c3b02ea111e9b10647557750dc1b9428f22eebe04df0dcf66587554a167027cd45e1d56a52b98fb84329c",
+          "sha256": "d3ff701205e6100d3ce6e779075fa28e18c541c2a7537505f026a4544b77a1e1",
+          "sha1": "e9af88976ec325b6ad24c18463d1b63c17cd0d80",
+          "md5": "5936c7f65185f091f62ea7ad4003885b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "expo.modules.documentpicker-58.0.4-sources.jar",
+          "url": "expo.modules.documentpicker-58.0.4-sources.jar",
+          "size": 4324,
+          "sha512": "13289ee90317967a54dd461ffc6f326537094576bae8eed25ede7cb3e4b2ca2025fbc601ae301b97ac6c26675be30c4c3d90b6adcd16a17dddf87ae4fc9c8999",
+          "sha256": "70fadf0e0398db0337d08dd8c0926a2313fd86824a4fc642509a20fdfaf26afd",
+          "sha1": "0da81d8b6d80cf7bfa03e6e2961ea06c1c8fae51",
+          "md5": "2a9532c05972648562920b2f481265ab"
+        }
+      ]
+    }
+  ]
+}

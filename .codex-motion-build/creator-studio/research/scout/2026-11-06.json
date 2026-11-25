@@ -1,0 +1,659 @@
+[
+  {
+    "id": "cC06MNabpLA",
+    "title": "ChatGPT Photo Trick: Recreate Any Pinterest Photo With Your Face",
+    "channel": "Pruthvi Mehta",
+    "channel_url": "https://www.youtube.com/channel/UCNuVxUVNiioGbSUlSdM1qcw",
+    "uploader_id": "@ca.pruthvimehta",
+    "channel_follower_count": 1040,
+    "view_count": 258971,
+    "like_count": 6975,
+    "comment_count": 28,
+    "timestamp": 1793373971,
+    "duration": 37,
+    "description": "Recreate any Pinterest photo with your own face using a ChatGPT JSON prompt. Same lighting, colors, camera angle and pose, without changing your face or hairstyle.\n\nHow to do it:\n\nUpload a Pinterest photo to ChatGPT and ask: “Describe this photo’s lighting, color, camera angle, pose, outfit and background in JSON format.”\nCopy the JSON.\nOpen a new chat, upload your selfie, paste the JSON and say: “Based on this JSON, create a photo of me. Do not change my face or hairstyle.”\n\nWhat is a JSON prompt?\nA JSON prompt is a structured description of a photo that AI can follow exactly, instead of gues",
+    "read_at": 1793988525.8684611,
+    "age": 7.115913622376543,
+    "source": "watch: Pruthvi Mehta",
+    "median": 1400.0,
+    "multiple": 184.9792857142857,
+    "per_day": 36393.2186002997,
+    "like_rate": 0.02693351765255569,
+    "script": [
+      [
+        3.799,
+        "Open Pinterest, find a photo you really like."
+      ],
+      [
+        6.599,
+        "Now, upload it to ChatGPT and say this, \"Describe this photo's lighting, color, camera angle,"
+      ],
+      [
+        11.96,
+        "pose in a JSON format.\" Now, copy this JSON format, open a new chat, add your selfie, and"
+      ],
+      [
+        17.559,
+        "paste this JSON format and say this, \"Based on this JSON format, create a photo of me, but do"
+      ],
+      [
+        22.68,
+        "not change my face and hairstyle.\" And that's it."
+      ],
+      [
+        25.52,
+        "Now, your photo in the same angle, same lighting, same pose is ready."
+      ],
+      [
+        29.319,
+        "And you can try this for any cinematic photos or studio style portraits as well."
+      ],
+      [
+        33.599,
+        "Comment photo and I'll send you the full guide."
+      ],
+      [
+        35.72,
+        "Bye-bye."
+      ]
+    ],
+    "hook": "Open Pinterest, find a photo you really like.",
+    "formula": "unclassified"
+  },
+  {
+    "id": "JbF8nyjYcLA",
+    "title": "How to Edit Videos with Claude Code (No Editing Skills Needed)",
+    "channel": "Pruthvi Mehta",
+    "channel_url": "https://www.youtube.com/channel/UCNuVxUVNiioGbSUlSdM1qcw",
+    "uploader_id": "@ca.pruthvimehta",
+    "channel_follower_count": 1040,
+    "view_count": 39764,
+    "like_count": 911,
+    "comment_count": 336,
+    "timestamp": 1793279526,
+    "duration": 63,
+    "description": "Learn how to edit Instagram Reels and YouTube Shorts with Claude Code, Anthropic’s AI coding agent. You don’t need any editing skills. Drop in your raw clips, and Claude edits the video in about 15 to 20 minutes.\n\nGet the full setup and prompt: https://claude.ai/artifact/TDRNxs7vgjpGhAtqSXPxms#windows\n\nHow to edit videos with Claude Code (4 steps)\n\nInstall Claude Code on your Mac or Windows laptop. It runs on your computer, not in a browser tab.\nPaste the setup prompt. Claude installs the editing tools by itself.\nCreate a “Video Editor” folder with 3 subfolders: Raw, References, Render.\nGive C",
+    "read_at": 1793988049.5728066,
+    "age": 8.209027048302469,
+    "source": "claude code",
+    "median": 1400.0,
+    "multiple": 28.402857142857144,
+    "per_day": 4843.935799702686,
+    "like_rate": 0.022910170003017805,
+    "script": [
+      [
+        0.1,
+        "Claude can now edit your Instagram Reels."
+      ],
+      [
+        2.342,
+        "But how does this work?"
+      ],
+      [
+        3.667,
+        "Let me show you."
+      ],
+      [
+        4.759,
+        "First, you need Claude Code."
+      ],
+      [
+        6.679,
+        "And you don't run this in a browser."
+      ],
+      [
+        8.773,
+        "You need to download and run it on your Mac or Windows."
+      ],
+      [
+        11.868,
+        "Second, go into Claude and install all these tools."
+      ],
+      [
+        15.348,
+        "Just give this prompt and Claude will install them itself."
+      ],
+      [
+        18.402,
+        "If you want the links for this, comment \"link\"."
+      ],
+      [
+        20.822,
+        "Okay?"
+      ],
+      [
+        21.36,
+        "Third, now go to your PC and create a folder named \"Video Editor\"."
+      ],
+      [
+        26.161,
+        "Inside this, there will be three subfolders."
+      ],
+      [
+        28.126,
+        "The first is \"Raw\" ."
+      ],
+      [
+        29.13,
+        "In this, you need to keep your raw clips."
+      ],
+      [
+        31.404,
+        "The second is \"References\"."
+      ],
+      [
+        32.92,
+        "In this, you can download and keep your old reels or your favorite creator's reels."
+      ],
+      [
+        37.981,
+        "And the third is \"Render\"."
+      ],
+      [
+        39.519,
+        "When Claude edits your videos, it will save them here."
+      ],
+      [
+        43.26,
+        "Fourth, now go into Claude Code and give it access to this folder."
+      ],
+      [
+        47.099,
+        "And in just 15-20 minutes, your video will be edited and ready."
+      ],
+      [
+        50.679,
+        "And if you want any changes, just tell Claude in simple words."
+      ],
+      [
+        55.259,
+        "And Claude will make those changes for you as well."
+      ],
+      [
+        57.819,
+        "If you want the full setup, then comment \"link \" and I will send it to you."
+      ]
+    ],
+    "hook": "Claude can now edit your Instagram Reels. But how does this work?",
+    "formula": "unclassified"
+  },
+  {
+    "id": "IkU65R8yOvo",
+    "title": "ChatGPT Diwali Selfie Trick: Festive Photo Prompts | ChatGPT Diwali Prompts:",
+    "channel": "Pruthvi Mehta",
+    "channel_url": "https://www.youtube.com/channel/UCNuVxUVNiioGbSUlSdM1qcw",
+    "uploader_id": "@ca.pruthvimehta",
+    "channel_follower_count": 1040,
+    "view_count": 37570,
+    "like_count": 1213,
+    "comment_count": 38,
+    "timestamp": 1793881964,
+    "duration": 23,
+    "description": "Turn your selfie into festive Diwali portraits with ChatGPT using short prompts like /diwali queen, /diwali rangoli, /diwali lantern and /diya glow. \n\nGet the full prompt pack: https://docs.google.com/document/d/1hWJ-UNacvsvLNnxEubiKBr7U80iKz4RtYAsAE0z8FE0/edit?usp=sharing\n\n\nStep by step\n1. Open ChatGPT and upload a clear selfie.\n2. Type one prompt: /diwali queen, /diwali rangoli, /diwali lantern or /diya glow.\n3. Send it and review the result. Generate it again if you want a different look.\n4. Save the image you like.\n\nWhat is a Diwali selfie prompt?\nIt is a short instruction that asks the AI",
+    "read_at": 1793988520.2532506,
+    "age": 1.2363650112654323,
+    "source": "watch: Pruthvi Mehta",
+    "median": 1400.0,
+    "multiple": 26.835714285714285,
+    "per_day": 30387.466207529375,
+    "like_rate": 0.03228639872238488,
+    "script": [
+      [
+        0.179,
+        "A ChatGPT Diwali trick every girl should know."
+      ],
+      [
+        4.219,
+        "Just go to ChatGPT, add your selfie, add /DiwaliQueen, and you'll get this."
+      ],
+      [
+        9.489,
+        "Add/DiwaliRangoli and you'll get this."
+      ],
+      [
+        12.429,
+        "Add/DiwaliLantern and you'll get this."
+      ],
+      [
+        15.443,
+        "Add/DiGlow and you'll get this, and I have 20 more such prompts."
+      ],
+      [
+        20.223,
+        "Comment \" Diwali\" and I will send them to you."
+      ],
+      [
+        22.245,
+        "Bye-bye."
+      ]
+    ],
+    "hook": "A ChatGPT Diwali trick every girl should know.",
+    "formula": "unclassified"
+  },
+  {
+    "id": "nsorPDaz5F4",
+    "title": "Run Claude Code for FREE with This GitHub Tool 🤯🔥",
+    "channel": "CharlixAI",
+    "channel_url": "https://www.youtube.com/channel/UCEHteb-etSr1qNDz5_FK5zQ",
+    "uploader_id": "@CharliAlexx",
+    "channel_follower_count": 221,
+    "view_count": 41625,
+    "like_count": 535,
+    "comment_count": 232,
+    "timestamp": 1792924578,
+    "duration": 33,
+    "description": "🤯 What if you could use Claude Code with free AI models instead of paying for every API request?\n\nMeet FreeLLM API, an open-source tool that connects Claude Code to a pool of available free AI models from multiple providers.\n\n🔥 Here’s what it offers:\n\n* Access to models from multiple AI providers\n* Automatic switching when supported rate limits are reached\n* A way to experiment with AI coding while reducing API costs\n\n💬 Comment FREE if you want to explore this tool!\n\n📲 Follow @charlix.ai on Instagram for more AI tools, coding hacks, and tutorials.\n\n⚠️ Free usage depends on provider limits, mod",
+    "read_at": 1793987586.1143188,
+    "age": 12.317221492746913,
+    "source": "claude code",
+    "median": 3200,
+    "multiple": 13.0078125,
+    "per_day": 3379.4147506814897,
+    "like_rate": 0.012852852852852852,
+    "script": [
+      [
+        0,
+        "You can now run Claude code for free with unlimited usage."
+      ],
+      [
+        2.96,
+        "Thanks to this AI tool on GitHub."
+      ],
+      [
+        4.44,
+        "Billions of free AI tokens are available every month through a single repo with access to models"
+      ],
+      [
+        8.68,
+        "from providers like OpenAI, Google Gemini, Grok, Kimmy, Qwen, and more."
+      ],
+      [
+        12.88,
+        "Here's the trick."
+      ],
+      [
+        13.52,
+        "It runs a small server that speaks the same API language as Claude."
+      ],
+      [
+        16.6,
+        "So, Claude code can send requests through it, which routes them to available free models instead."
+      ],
+      [
+        20.96,
+        "And when one model hits its rate limit, it can switch to another available model."
+      ],
+      [
+        24.64,
+        "It's called free LLM API."
+      ],
+      [
+        26.44,
+        "And the setup is surprisingly simple."
+      ],
+      [
+        28.12,
+        "Want to try it yourself?"
+      ],
+      [
+        29.12,
+        "Comment free and follow me for more AI tools and workflows."
+      ]
+    ],
+    "hook": "You can now run Claude code for free with unlimited usage. Thanks to this AI tool on GitHub.",
+    "formula": "unclassified"
+  },
+  {
+    "id": "IojwuF-6FpA",
+    "title": "How to Run Claude Code for Free",
+    "channel": "Rakhul Karthick",
+    "channel_url": "https://www.youtube.com/channel/UCsTIVwCd-S9Jt0RIe0m914w",
+    "uploader_id": "@RakhulKarthick",
+    "channel_follower_count": 1140,
+    "view_count": 19883,
+    "like_count": 247,
+    "comment_count": 22,
+    "timestamp": 1793103339,
+    "duration": 72,
+    "description": "You can run the real Claude Code without a $20 plan.\n\nClaude Code is just the app. The AI model behind it is the brain.\nOllama is a free app with over 180,000 stars on GitHub, and it lets you swap that brain for a free one.\n\nOne switch in the Ollama app connects them.\nOne setting is easy to miss. On my 16 GB Mac, Ollama only lets a model read about 4,000 tokens at once. Raise it to 64K in Ollama's settings.\n\nI built a timer app and a habit tracker this way.\n\nThere are 2 more free options, OpenCode and FreeLLMAPI. The full video sets up all 3, and every command and prompt is in my free newslett",
+    "read_at": 1793987611.7565358,
+    "age": 10.248228437191358,
+    "source": "claude code",
+    "median": 1550.0,
+    "multiple": 12.827741935483871,
+    "per_day": 1940.140202948985,
+    "like_rate": 0.012422672634914249,
+    "script": [
+      [
+        0,
+        "So, you can now run real Claude code for free on your own computer or on free Claude models."
+      ],
+      [
+        6.52,
+        "The tool is called Ollama, a free app with over 180,000 stars on GitHub."
+      ],
+      [
+        11.52,
+        "Normally, Claude code needs a paid plan from about $20 a month, and the AI model behind it"
+      ],
+      [
+        16.92,
+        "is the brain."
+      ],
+      [
+        17.64,
+        "Ollama lets you to swap that brain for a free one."
+      ],
+      [
+        20.52,
+        "So, you connect to Claude code to Ollama, which is one switch in Ollama app."
+      ],
+      [
+        25.72,
+        "That's the one setting, and that's easy to miss, though."
+      ],
+      [
+        28.44,
+        "By default, Ollama only lets a model to read about 4,000 tokens at once, which is far too little"
+      ],
+      [
+        34.52,
+        "for a Claude code."
+      ],
+      [
+        35.48,
+        "So, you need to raise it to about 64K in Ollama setting."
+      ],
+      [
+        39.4,
+        "Firstly, I built a small app called Focus, which is a timer app, and then I built a habit"
+      ],
+      [
+        45.68,
+        "tracker called Streaks with one of the Ollama's Claude models."
+      ],
+      [
+        49.72,
+        "There is also a second free option called Open Code, which is a different coding app with"
+      ],
+      [
+        54.52,
+        "about 200,000 stars on GitHub."
+      ],
+      [
+        56.64,
+        "It's the same kind of shop as Claude code."
+      ],
+      [
+        59.12,
+        "Right now, it comes with free models built in, so there's nothing to connect."
+      ],
+      [
+        63.2,
+        "The third option is called Free LM API, and I show how to set up all three in a full video."
+      ],
+      [
+        69.08,
+        "So, the link is in the description."
+      ],
+      [
+        70.56,
+        "Go check it out."
+      ]
+    ],
+    "hook": "So, you can now run real Claude code for free on your own computer or on free Claude models.",
+    "formula": "unclassified"
+  },
+  {
+    "id": "bUr6r1jrlNg",
+    "title": "How to Edit Videos with Claude AI in 7 Easy Steps 🤯",
+    "channel": "CharlixAI",
+    "channel_url": "https://www.youtube.com/channel/UCEHteb-etSr1qNDz5_FK5zQ",
+    "uploader_id": "@CharliAlexx",
+    "channel_follower_count": 221,
+    "view_count": 37789,
+    "like_count": 476,
+    "comment_count": 73,
+    "timestamp": 1792787434,
+    "duration": 33,
+    "description": "Want to edit videos with Claude AI? 🎬🤯\n\nDiscover how to use Claude to simplify your video editing workflow in just 7 steps!\n\n✅ Describe how you want your video edited\n✅ Add a reference video for inspiration\n✅ Upload your footage, images, and audio\n✅ Let Claude work from your instructions\n✅ Refine the edits with simple follow-up prompts\n\nWhether you’re a content creator, YouTuber, or entrepreneur, AI-powered editing can help streamline your content creation workflow.\n\n🚀 Want the tools, prompts, and complete setup guide? Subscribe and stay tuned for more AI tutorials\n\n📲 Follow us on Instagram fo",
+    "read_at": 1793987666.5059626,
+    "age": 13.90453630756173,
+    "source": "claude ai",
+    "median": 3200,
+    "multiple": 11.8090625,
+    "per_day": 2717.7461487478113,
+    "like_rate": 0.012596258170367037,
+    "script": [
+      [
+        0,
+        "How to edit a video with Claude?"
+      ],
+      [
+        1.48,
+        "It's stupidly easy."
+      ],
+      [
+        2.48,
+        "Only seven steps."
+      ],
+      [
+        3.56,
+        "One, open Claude, obviously."
+      ],
+      [
+        5.32,
+        "Two, tell it how you want the video edited."
+      ],
+      [
+        7.04,
+        "Just write a prompt."
+      ],
+      [
+        7.88,
+        "Three, got a reference video you like?"
+      ],
+      [
+        9.48,
+        "Cool, add that, too."
+      ],
+      [
+        10.6,
+        "Four, throw in your footage, images, sounds, whatever you wanted to use."
+      ],
+      [
+        14.4,
+        "Five, upload the whole thing to Claude."
+      ],
+      [
+        16.4,
+        "Six, tell Claude to edit it based on your prompt and reference."
+      ],
+      [
+        19.64,
+        "Seven, and that's basically it."
+      ],
+      [
+        21.2,
+        "Go grab a coffee and let Claude work."
+      ],
+      [
+        23.08,
+        "Want to change something?"
+      ],
+      [
+        24.04,
+        "Tell it to fix it."
+      ],
+      [
+        24.92,
+        "You really don't need to burn yourself out editing content anymore."
+      ],
+      [
+        27.56,
+        "And yes, you can actually turn videos like this into income."
+      ],
+      [
+        30.36,
+        "Comment video and I'll show you how."
+      ]
+    ],
+    "hook": "How to edit a video with Claude? It's stupidly easy. Only seven steps.",
+    "formula": "The Verbatim Question"
+  },
+  {
+    "id": "ezCmuRCAVXY",
+    "title": "Claude Code + Blender = Insane 3D Renders",
+    "channel": "Nate Herk | AI Automation",
+    "channel_url": "https://www.youtube.com/channel/UC2ojq-nuP8ceeHqiroeKhBA",
+    "uploader_id": "@nateherk",
+    "channel_follower_count": 1110000,
+    "view_count": 205197,
+    "like_count": 3685,
+    "comment_count": 978,
+    "timestamp": 1792518726,
+    "duration": 31,
+    "description": "",
+    "read_at": 1793987682.247498,
+    "age": 17.014582603858024,
+    "source": "claude code",
+    "median": 25000.0,
+    "multiple": 8.20788,
+    "per_day": 12060.066636807886,
+    "like_rate": 0.017958352217625016,
+    "script": [
+      [
+        0,
+        "What if I told you that I made this 3D animation without ever opening Blender?"
+      ],
+      [
+        3.279,
+        "And no, this isn't from an AI video model like VEO or SeaDance."
+      ],
+      [
+        6.119,
+        "Claude 3 Opus 5.5 wrote the whole thing as code."
+      ],
+      [
+        8.72,
+        "It built the After Effects interface as a webpage."
+      ],
+      [
+        10.76,
+        "It wrote a Python script that builds a 3D scene in Blender."
+      ],
+      [
+        13.319,
+        "It animated this little guy hopping across the buttons, and it even made the music and every"
+      ],
+      [
+        17.159,
+        "single sound effect from scratch."
+      ],
+      [
+        18.879,
+        "Then, Blender rendered all 360 frames on my GPU in about 15 minutes, and FFmpeg stitched them"
+      ],
+      [
+        24.479,
+        "into the video that you're watching right now."
+      ],
+      [
+        26.2,
+        "So, if you want the full guide with the setup and the exact prompt to just paste into Claude,"
+      ],
+      [
+        29.559,
+        "comment Blender and I'll send you the link."
+      ]
+    ],
+    "hook": "What if I told you that I made this 3D animation without ever opening Blender?",
+    "formula": "The Verbatim Question"
+  },
+  {
+    "id": "Ax8fV6Lluzc",
+    "title": "/anatomy: interactive explainers built by Claude",
+    "channel": "Rakhul Karthick",
+    "channel_url": "https://www.youtube.com/channel/UCsTIVwCd-S9Jt0RIe0m914w",
+    "uploader_id": "@RakhulKarthick",
+    "channel_follower_count": 1140,
+    "view_count": 11686,
+    "like_count": 275,
+    "comment_count": 16,
+    "timestamp": 1793451618,
+    "duration": 41,
+    "description": "Comment ANATOMY and I'll DM you the skill.\n\nClaude can now explain any idea by building a little machine you can play with.\n\nIt's a free skill called Anatomy.\nIt got over 18,000 stars in 2 weeks.\n\nType /anatomy and the idea you want explained.\nLike how a rate limiter works.\n\nClaude invents a real object whose moving parts act out that idea.\nIt builds it from dozens of small, shaded parts.\nMove your mouse over it and watch it work.\n\nBefore it hands it over, Claude zooms in on every joint to check its own work.\n\nRakhul\n\n#claudecode #claude #aitools #learning #softwareengineering",
+    "read_at": 1793988523.4096816,
+    "age": 6.217221492746914,
+    "source": "watch: Rakhul Karthick",
+    "median": 1550.0,
+    "multiple": 7.539354838709677,
+    "per_day": 1879.6177703549777,
+    "like_rate": 0.023532431969878486,
+    "script": [
+      [
+        0,
+        "Claude can now explain any idea by building a little machine that you can actually play with."
+      ],
+      [
+        5.32,
+        "It's a free skill called anatomy and it has just got over 18,000 stars in just 2 weeks."
+      ],
+      [
+        10.88,
+        "You type {slash} anatomy and the idea you want explained."
+      ],
+      [
+        14.8,
+        "For example, you can ask how a rate limiter works."
+      ],
+      [
+        18.0,
+        "Claude invents a real object whose moving parts act out that idea."
+      ],
+      [
+        22.32,
+        "Then it builds that object from dozens of small and shaded parts."
+      ],
+      [
+        26.0,
+        "Just move your mouse over it and watch how it works."
+      ],
+      [
+        29.0,
+        "Beforehand, it over Claude actually zooms in on every joint to check its own work."
+      ],
+      [
+        34.48,
+        "You get a page that opens in any browser."
+      ],
+      [
+        37.24,
+        "If you want it, just comment anatomy below and send you the"
+      ]
+    ],
+    "hook": "Claude can now explain any idea by building a little machine that you can actually play with.",
+    "formula": "unclassified"
+  },
+  {
+    "id": "svZWnyA_rYc",
+    "title": "Claude Code With Free AI Models (Up to 7B Tokens/Month)",
+    "channel": "Eric Tech",
+    "channel_url": "https://www.youtube.com/channel/UCOXRjenlq9PmlTqd_JhAbMQ",
+    "uploader_id": "@EricWTech",
+    "channel_follower_count": 92700,
+    "view_count": 24435,
+    "like_count": 646,
+    "comment_count": 71,
+    "timestamp": 1793551832,
+    "duration": 46,
+    "description": "Use free AI models with Claude Code through FreeLLMAPI. The full video walks through the setup and provider limits.\n\nFull setup video: https://youtu.be/exkQTYOm47c\nFree API resource list: https://github.com/mnfst/awesome-free-llm-apis\nFreeLLMAPI router: https://github.com/tashfeenahmed/freellmapi\n\nEach provider has its own free limits and model choices.\n\n#ClaudeCode #AIBuilder #OpenSource",
+    "read_at": 1793987622.684007,
+    "age": 5.0573372334876545,
+    "source": "claude code",
+    "median": 7600.0,
+    "multiple": 3.2151315789473682,
+    "per_day": 4831.593953869885,
+    "like_rate": 0.026437487210967874
+  }
+]

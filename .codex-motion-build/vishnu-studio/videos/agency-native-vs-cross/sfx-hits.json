@@ -1,0 +1,117 @@
+[
+ {
+  "t": 0.96,
+  "sound": "whoosh",
+  "gain": 0.42
+ },
+ {
+  "t": 0.96,
+  "sound": "subdrop",
+  "gain": 0.3
+ },
+ {
+  "t": 2.02,
+  "sound": "keypress",
+  "gain": 0.15
+ },
+ {
+  "t": 3.69,
+  "sound": "pop",
+  "gain": 0.21
+ },
+ {
+  "t": 6.83,
+  "sound": "stamp",
+  "gain": 0.38
+ },
+ {
+  "t": 7.85,
+  "sound": "swish",
+  "gain": 0.24
+ },
+ {
+  "t": 9.2,
+  "sound": "pop",
+  "gain": 0.24
+ },
+ {
+  "t": 10.18,
+  "sound": "pop",
+  "gain": 0.24
+ },
+ {
+  "t": 12.79,
+  "sound": "chime",
+  "gain": 0.21
+ },
+ {
+  "t": 15.0,
+  "sound": "whoosh",
+  "gain": 0.24
+ },
+ {
+  "t": 17.08,
+  "sound": "pop",
+  "gain": 0.24
+ },
+ {
+  "t": 18.8,
+  "sound": "shutter",
+  "gain": 0.27
+ },
+ {
+  "t": 20.39,
+  "sound": "click",
+  "gain": 0.24
+ },
+ {
+  "t": 21.29,
+  "sound": "click",
+  "gain": 0.21
+ },
+ {
+  "t": 21.97,
+  "sound": "click",
+  "gain": 0.21
+ },
+ {
+  "t": 22.69,
+  "sound": "click",
+  "gain": 0.21
+ },
+ {
+  "t": 23.39,
+  "sound": "click",
+  "gain": 0.21
+ },
+ {
+  "t": 24.77,
+  "sound": "stamp",
+  "gain": 0.42
+ },
+ {
+  "t": 25.81,
+  "sound": "whoosh",
+  "gain": 0.21
+ },
+ {
+  "t": 28.11,
+  "sound": "stamp",
+  "gain": 0.42
+ },
+ {
+  "t": 28.11,
+  "sound": "subdrop",
+  "gain": 0.3
+ },
+ {
+  "t": 29.23,
+  "sound": "pop",
+  "gain": 0.27
+ },
+ {
+  "t": 32.15,
+  "sound": "chime",
+  "gain": 0.18
+ }
+]

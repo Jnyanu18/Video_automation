@@ -30,6 +30,7 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
       { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
       { href: '/timeline', label: 'Timeline Editor', icon: 'sliders' },
       { href: '/motion', label: 'Motion Graphics', icon: 'zap' },
+      { href: '/video-generation', label: 'AI Video Generation', icon: 'video' },
     ],
   },
   {
@@ -42,8 +43,10 @@ export const BASE_NAV_SECTIONS: NavSection[] = [
   {
     title: 'DISTRIBUTION',
     items: [
-      { href: '/publishing', label: 'Calendar & Queue', icon: 'calendar' },
+      { href: '/calendar', label: 'Content Calendar', icon: 'calendar' },
+      { href: '/publishing', label: 'Publishing & Accounts', icon: 'send' },
       { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
+      { href: '/campaigns', label: 'Campaigns', icon: 'megaphone' },
       { href: '/settings', label: 'Settings', icon: 'settings' },
     ],
   },
@@ -84,8 +87,11 @@ export function ChoppityIconRail() {
     { href: '/storyboard', label: 'Storyboard', icon: 'layers' },
     { href: '/timeline', label: 'Timeline', icon: 'sliders' },
     { href: '/motion', label: 'Motion Films', icon: 'zap' },
-    { href: '/publishing', label: 'Calendar', icon: 'calendar' },
+    { href: '/video-generation', label: 'AI Video Generation', icon: 'video' },
+    { href: '/calendar', label: 'Calendar', icon: 'calendar' },
+    { href: '/publishing', label: 'Publishing', icon: 'send' },
     { href: '/analytics', label: 'Analytics', icon: 'bar-chart' },
+    { href: '/campaigns', label: 'Campaigns', icon: 'megaphone' },
   ];
 
   const bottomRailItems: { label: string; icon: IconName; href?: string; action?: () => void }[] = [
@@ -114,7 +120,7 @@ export function ChoppityIconRail() {
               style={({ pressed, hovered }: any) => [
                 styles.railItem,
                 expanded && styles.railItemExpanded,
-                on && { backgroundColor: 'rgba(108, 76, 240, 0.12)' },
+                on && { backgroundColor: 'rgba(255, 90, 31, 0.12)' },
                 !on && hovered && { backgroundColor: colors.surfaceAlt },
                 pressed && { opacity: 0.8 },
                 Platform.OS === 'web' && ({
@@ -166,7 +172,7 @@ export function ChoppityIconRail() {
               style={({ pressed, hovered }: any) => [
                 styles.railItem,
                 expanded && styles.railItemExpanded,
-                on && { backgroundColor: 'rgba(108, 76, 240, 0.12)' },
+                on && { backgroundColor: 'rgba(255, 90, 31, 0.12)' },
                 !on && hovered && { backgroundColor: colors.surfaceAlt },
                 pressed && { opacity: 0.8 },
                 Platform.OS === 'web' && ({
@@ -239,6 +245,7 @@ export function ChoppityHeader() {
     { label: 'Storyboard', href: '/storyboard' },
     { label: 'Timeline', href: '/timeline' },
     { label: 'Motion Films', href: '/motion' },
+    { label: 'AI Video Generation', href: '/video-generation' },
   ];
 
   return (
@@ -250,7 +257,7 @@ export function ChoppityHeader() {
         </View>
         <View style={{ gap: 1 }}>
           <T variant="h3" style={{ fontSize: 15, fontWeight: '700', letterSpacing: -0.3 }}>
-            GROWTHOS
+            AILO EDITOR
           </T>
           <T variant="mono" style={{ fontSize: 9, color: colors.primary, letterSpacing: 1.2, fontWeight: '600' }}>
             STUDIO
@@ -311,7 +318,7 @@ export function ChoppityHeader() {
             Platform.OS === 'web' && ({
               cursor: 'pointer',
               transition: 'all 140ms ease',
-              boxShadow: '0 2px 6px rgba(108, 76, 240, 0.28)',
+              boxShadow: '0 2px 6px rgba(255, 90, 31, 0.28)',
             } as any),
           ]}
         >
@@ -341,7 +348,7 @@ export function ChoppityHeader() {
             Platform.OS === 'web' && ({
               cursor: 'pointer',
               transition: 'transform 140ms ease',
-              boxShadow: '0 2px 6px rgba(108, 76, 240, 0.3)',
+              boxShadow: '0 2px 6px rgba(255, 90, 31, 0.3)',
             } as any),
           ]}
         >
@@ -368,7 +375,8 @@ export function BottomNav() {
     { href: '/', label: 'Clipper', icon: 'folder' as const },
     { href: '/storyboard', label: 'Storyboard', icon: 'layers' as const },
     { href: '/timeline', label: 'Timeline', icon: 'sliders' as const },
-    { href: '/publishing', label: 'Publish', icon: 'calendar' as const },
+    { href: '/calendar', label: 'Calendar', icon: 'calendar' as const },
+    { href: '/publishing', label: 'Publish', icon: 'send' as const },
     { href: '/settings', label: 'Settings', icon: 'settings' as const },
   ];
 

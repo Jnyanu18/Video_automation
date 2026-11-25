@@ -1,0 +1,4 @@
+action,category,kind,bytes,files,path,reason
+MOVE,SCRATCH,dir,2139942,40,ailo-ad-1,"user requested removal of ailo-ad-1"
+MOVE,SCRATCH,dir,1708738,42,ailo-ad-2,"user requested removal of ailo-ad-2"
+MOVE,SCRATCH,dir,8815710,65,ailo-ad-3,"user requested removal of ailo-ad-3"

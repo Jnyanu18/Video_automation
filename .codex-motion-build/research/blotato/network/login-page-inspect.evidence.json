@@ -1,0 +1,4064 @@
+{
+  "evidence_id": "ev_a0b393110a8a415f72671834b36e450e287bf069e5796eb88a451b08675f3b47",
+  "subject": null,
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.web-page-inspection",
+  "operation": "inspect_web_page",
+  "parameters": {
+    "cdp_endpoint": "http://127.0.0.1:9222",
+    "allowed_origins": [
+      "https://my.blotato.com"
+    ],
+    "target_id": "5C9F311B63F57F3B357740689FF09BF3",
+    "observation_ms": 1500,
+    "include_accessibility_text": true,
+    "include_console_text": false,
+    "include_json_body_shapes": false,
+    "include_websocket_shapes": false,
+    "include_storage_keys": true,
+    "include_storage_fingerprints": false,
+    "include_script_sources": false
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "browser": {
+      "product": "Chrome/156.0.8078.80",
+      "protocol_version": "1.3",
+      "revision": "537.36 (@fb096c0011f9d50f0a264a9376420cdea9c421e3)",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+      "js_version": "15.6.75.27"
+    },
+    "target": {
+      "target_id": "5C9F311B63F57F3B357740689FF09BF3",
+      "type": "page",
+      "title": "Blotato",
+      "url": "https://my.blotato.com/login",
+      "origin": "https://my.blotato.com",
+      "attached": null
+    },
+    "capture_window": {
+      "started_at": "2026-11-03T08:56:05.667Z",
+      "ended_at": "2026-11-03T08:56:07.430Z",
+      "observation_ms": 1500
+    },
+    "completeness": {
+      "status": "policy_filtered",
+      "conditions": [
+        "attach_limited",
+        "policy_filtered"
+      ],
+      "policy_filtered_sections": [
+        "console_text",
+        "json_body_shapes",
+        "metadata",
+        "resources",
+        "script_sources",
+        "scripts",
+        "websocket_shapes"
+      ],
+      "attach_limited_sections": [
+        "console_events",
+        "metadata",
+        "network_requests",
+        "websocket_connections",
+        "websocket_frames",
+        "workers"
+      ],
+      "truncated_sections": [],
+      "unavailable_sections": [],
+      "excluded": [
+        {
+          "section": "console_text",
+          "reason": "not_approved",
+          "count": null
+        },
+        {
+          "section": "json_body_shapes",
+          "reason": "not_approved",
+          "count": null
+        },
+        {
+          "section": "metadata",
+          "reason": "disallowed_origin",
+          "count": 20
+        },
+        {
+          "section": "resources",
+          "reason": "disallowed_origin",
+          "count": 12
+        },
+        {
+          "section": "script_sources",
+          "reason": "not_approved",
+          "count": 35
+        },
+        {
+          "section": "scripts",
+          "reason": "disallowed_origin",
+          "count": 13
+        },
+        {
+          "section": "scripts",
+          "reason": "unattributed_origin",
+          "count": 2
+        },
+        {
+          "section": "websocket_shapes",
+          "reason": "not_approved",
+          "count": null
+        }
+      ],
+      "dropped_events": {
+        "scripts": 0,
+        "network_requests": 0,
+        "console_events": 0,
+        "websocket_connections": 0,
+        "websocket_frames": 0,
+        "webmcp_tools": 0,
+        "timeline_events": 0,
+        "total": 0
+      }
+    },
+    "frames": [
+      {
+        "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+        "parent_frame_id": null,
+        "url": "https://my.blotato.com/login",
+        "origin": "https://my.blotato.com"
+      }
+    ],
+    "dom": {
+      "total_nodes": 184,
+      "nodes": [
+        {
+          "index": 0,
+          "parent_index": -1,
+          "node_type": 9,
+          "node_name": "#document",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 1,
+          "parent_index": 0,
+          "node_type": 10,
+          "node_name": "html",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 2,
+          "parent_index": 0,
+          "node_type": 1,
+          "node_name": "HTML",
+          "node_value_length": 0,
+          "attribute_names": [
+            "lang",
+            "data-mantine-color-scheme"
+          ]
+        },
+        {
+          "index": 3,
+          "parent_index": 2,
+          "node_type": 1,
+          "node_name": "HEAD",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 4,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "charset"
+          ]
+        },
+        {
+          "index": 5,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "name",
+            "content"
+          ]
+        },
+        {
+          "index": 6,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "name",
+            "content"
+          ]
+        },
+        {
+          "index": 7,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "data-precedence"
+          ]
+        },
+        {
+          "index": 8,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "data-precedence"
+          ]
+        },
+        {
+          "index": 9,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "data-precedence"
+          ]
+        },
+        {
+          "index": 10,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "data-precedence"
+          ]
+        },
+        {
+          "index": 11,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "data-precedence"
+          ]
+        },
+        {
+          "index": 12,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "as",
+            "fetchpriority",
+            "href"
+          ]
+        },
+        {
+          "index": 13,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 14,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "async",
+            "src"
+          ]
+        },
+        {
+          "index": 15,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 16,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 17,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 18,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 19,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 20,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 21,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 22,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 23,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 24,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 25,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 26,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 27,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 28,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 29,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 30,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 31,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 32,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 33,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 34,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 35,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 36,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 37,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 38,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 39,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 40,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 41,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 42,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 43,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 44,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 45,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 46,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 47,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async"
+          ]
+        },
+        {
+          "index": 48,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "as"
+          ]
+        },
+        {
+          "index": 49,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "as"
+          ]
+        },
+        {
+          "index": 50,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "as"
+          ]
+        },
+        {
+          "index": 51,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 52,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 53,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 54,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 55,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 56,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 57,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 58,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 59,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 60,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "type",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 61,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "type",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 62,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "type",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 63,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "type",
+            "sizes",
+            "href"
+          ]
+        },
+        {
+          "index": 64,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "type",
+            "href"
+          ]
+        },
+        {
+          "index": 65,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "type",
+            "href"
+          ]
+        },
+        {
+          "index": 66,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href"
+          ]
+        },
+        {
+          "index": 67,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "rel",
+            "href",
+            "crossorigin"
+          ]
+        },
+        {
+          "index": 68,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "name",
+            "content"
+          ]
+        },
+        {
+          "index": 69,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "name",
+            "content"
+          ]
+        },
+        {
+          "index": 70,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "name",
+            "content"
+          ]
+        },
+        {
+          "index": 71,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "TITLE",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 72,
+          "parent_index": 71,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 7,
+          "attribute_names": []
+        },
+        {
+          "index": 73,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "META",
+          "node_value_length": 0,
+          "attribute_names": [
+            "name",
+            "content"
+          ]
+        },
+        {
+          "index": 74,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "data-mantine-script"
+          ]
+        },
+        {
+          "index": 75,
+          "parent_index": 74,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 462,
+          "attribute_names": []
+        },
+        {
+          "index": 76,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "LINK",
+          "node_value_length": 0,
+          "attribute_names": [
+            "href",
+            "rel"
+          ]
+        },
+        {
+          "index": 77,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "NOSCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 78,
+          "parent_index": 77,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 140,
+          "attribute_names": []
+        },
+        {
+          "index": 79,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "nomodule"
+          ]
+        },
+        {
+          "index": 80,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src"
+          ]
+        },
+        {
+          "index": 81,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "async",
+            "src"
+          ]
+        },
+        {
+          "index": 82,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "async",
+            "src"
+          ]
+        },
+        {
+          "index": 83,
+          "parent_index": 3,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "async",
+            "src"
+          ]
+        },
+        {
+          "index": 84,
+          "parent_index": 2,
+          "node_type": 1,
+          "node_name": "BODY",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 85,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "hidden"
+          ]
+        },
+        {
+          "index": 86,
+          "parent_index": 85,
+          "node_type": 8,
+          "node_name": "#comment",
+          "node_value_length": 1,
+          "attribute_names": []
+        },
+        {
+          "index": 87,
+          "parent_index": 85,
+          "node_type": 8,
+          "node_name": "#comment",
+          "node_value_length": 2,
+          "attribute_names": []
+        },
+        {
+          "index": 88,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "STYLE",
+          "node_value_length": 0,
+          "attribute_names": [
+            "data-mantine-styles"
+          ]
+        },
+        {
+          "index": 89,
+          "parent_index": 88,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 52420,
+          "attribute_names": []
+        },
+        {
+          "index": 90,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "STYLE",
+          "node_value_length": 0,
+          "attribute_names": [
+            "data-mantine-styles"
+          ]
+        },
+        {
+          "index": 91,
+          "parent_index": 90,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 815,
+          "attribute_names": []
+        },
+        {
+          "index": 92,
+          "parent_index": 84,
+          "node_type": 8,
+          "node_name": "#comment",
+          "node_value_length": 1,
+          "attribute_names": []
+        },
+        {
+          "index": 93,
+          "parent_index": 84,
+          "node_type": 8,
+          "node_name": "#comment",
+          "node_value_length": 2,
+          "attribute_names": []
+        },
+        {
+          "index": 94,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class"
+          ]
+        },
+        {
+          "index": 95,
+          "parent_index": 94,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class",
+            "data-with-border"
+          ]
+        },
+        {
+          "index": 96,
+          "parent_index": 95,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class"
+          ]
+        },
+        {
+          "index": 97,
+          "parent_index": 96,
+          "node_type": 1,
+          "node_name": "H1",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class",
+            "data-order"
+          ]
+        },
+        {
+          "index": 98,
+          "parent_index": 97,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 19,
+          "attribute_names": []
+        },
+        {
+          "index": 99,
+          "parent_index": 96,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class"
+          ]
+        },
+        {
+          "index": 100,
+          "parent_index": 99,
+          "node_type": 1,
+          "node_name": "IMG",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class",
+            "src",
+            "width",
+            "height",
+            "alt"
+          ]
+        },
+        {
+          "index": 101,
+          "parent_index": 96,
+          "node_type": 1,
+          "node_name": "FORM",
+          "node_value_length": 0,
+          "attribute_names": [
+            "data-gtm-form-interact-id"
+          ]
+        },
+        {
+          "index": 102,
+          "parent_index": 101,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class"
+          ]
+        },
+        {
+          "index": 103,
+          "parent_index": 102,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class"
+          ]
+        },
+        {
+          "index": 104,
+          "parent_index": 103,
+          "node_type": 1,
+          "node_name": "LABEL",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-required",
+            "for",
+            "id"
+          ]
+        },
+        {
+          "index": 105,
+          "parent_index": 104,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 5,
+          "attribute_names": []
+        },
+        {
+          "index": 106,
+          "parent_index": 104,
+          "node_type": 1,
+          "node_name": "SPAN",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "aria-hidden"
+          ]
+        },
+        {
+          "index": 107,
+          "parent_index": 106,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 2,
+          "attribute_names": []
+        },
+        {
+          "index": 108,
+          "parent_index": 103,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-variant"
+          ]
+        },
+        {
+          "index": 109,
+          "parent_index": 108,
+          "node_type": 1,
+          "node_name": "INPUT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-variant",
+            "placeholder",
+            "type",
+            "required",
+            "aria-invalid",
+            "id",
+            "value",
+            "data-gtm-form-interact-field-id"
+          ]
+        },
+        {
+          "index": 110,
+          "parent_index": 102,
+          "node_type": 1,
+          "node_name": "BUTTON",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style",
+            "class",
+            "data-block",
+            "type"
+          ]
+        },
+        {
+          "index": 111,
+          "parent_index": 110,
+          "node_type": 1,
+          "node_name": "::before",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 112,
+          "parent_index": 110,
+          "node_type": 1,
+          "node_name": "SPAN",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class"
+          ]
+        },
+        {
+          "index": 113,
+          "parent_index": 112,
+          "node_type": 1,
+          "node_name": "SPAN",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class"
+          ]
+        },
+        {
+          "index": 114,
+          "parent_index": 113,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 25,
+          "attribute_names": []
+        },
+        {
+          "index": 115,
+          "parent_index": 84,
+          "node_type": 8,
+          "node_name": "#comment",
+          "node_value_length": 1,
+          "attribute_names": []
+        },
+        {
+          "index": 116,
+          "parent_index": 84,
+          "node_type": 8,
+          "node_name": "#comment",
+          "node_value_length": 2,
+          "attribute_names": []
+        },
+        {
+          "index": 117,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "crossorigin",
+            "src"
+          ]
+        },
+        {
+          "index": 118,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "crossorigin",
+            "src"
+          ]
+        },
+        {
+          "index": 119,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "crossorigin",
+            "src"
+          ]
+        },
+        {
+          "index": 120,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "crossorigin",
+            "src"
+          ]
+        },
+        {
+          "index": 121,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "type",
+            "crossorigin",
+            "src"
+          ]
+        },
+        {
+          "index": 122,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "id",
+            "async"
+          ]
+        },
+        {
+          "index": 123,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 124,
+          "parent_index": 123,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 43,
+          "attribute_names": []
+        },
+        {
+          "index": 125,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 126,
+          "parent_index": 125,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 2245,
+          "attribute_names": []
+        },
+        {
+          "index": 127,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 128,
+          "parent_index": 127,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 675,
+          "attribute_names": []
+        },
+        {
+          "index": 129,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 130,
+          "parent_index": 129,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 963,
+          "attribute_names": []
+        },
+        {
+          "index": 131,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 132,
+          "parent_index": 131,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 953,
+          "attribute_names": []
+        },
+        {
+          "index": 133,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 134,
+          "parent_index": 133,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 967,
+          "attribute_names": []
+        },
+        {
+          "index": 135,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 136,
+          "parent_index": 135,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 51,
+          "attribute_names": []
+        },
+        {
+          "index": 137,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 138,
+          "parent_index": 137,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 972,
+          "attribute_names": []
+        },
+        {
+          "index": 139,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 140,
+          "parent_index": 139,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 961,
+          "attribute_names": []
+        },
+        {
+          "index": 141,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 142,
+          "parent_index": 141,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 962,
+          "attribute_names": []
+        },
+        {
+          "index": 143,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 144,
+          "parent_index": 143,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 2243,
+          "attribute_names": []
+        },
+        {
+          "index": 145,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 146,
+          "parent_index": 145,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 2243,
+          "attribute_names": []
+        },
+        {
+          "index": 147,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 148,
+          "parent_index": 147,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 1110,
+          "attribute_names": []
+        },
+        {
+          "index": 149,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 150,
+          "parent_index": 149,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 6030,
+          "attribute_names": []
+        },
+        {
+          "index": 151,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 152,
+          "parent_index": 151,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 512,
+          "attribute_names": []
+        },
+        {
+          "index": 153,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 154,
+          "parent_index": 153,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 1503,
+          "attribute_names": []
+        },
+        {
+          "index": 155,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 156,
+          "parent_index": 155,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 1992,
+          "attribute_names": []
+        },
+        {
+          "index": 157,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "data-portal"
+          ]
+        },
+        {
+          "index": 158,
+          "parent_index": 157,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-position",
+            "style"
+          ]
+        },
+        {
+          "index": 159,
+          "parent_index": 158,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 160,
+          "parent_index": 157,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-position",
+            "style"
+          ]
+        },
+        {
+          "index": 161,
+          "parent_index": 160,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 162,
+          "parent_index": 157,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-position",
+            "style"
+          ]
+        },
+        {
+          "index": 163,
+          "parent_index": 162,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 164,
+          "parent_index": 157,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-position",
+            "style"
+          ]
+        },
+        {
+          "index": 165,
+          "parent_index": 164,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 166,
+          "parent_index": 157,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-position",
+            "style"
+          ]
+        },
+        {
+          "index": 167,
+          "parent_index": 166,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 168,
+          "parent_index": 157,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "data-position",
+            "style"
+          ]
+        },
+        {
+          "index": 169,
+          "parent_index": 168,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 170,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "data-portal"
+          ]
+        },
+        {
+          "index": 171,
+          "parent_index": 170,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": []
+        },
+        {
+          "index": 172,
+          "parent_index": 171,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "class",
+            "style"
+          ]
+        },
+        {
+          "index": 173,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "async",
+            "data-tolt",
+            "data-nscript"
+          ]
+        },
+        {
+          "index": 174,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "id",
+            "data-nscript"
+          ]
+        },
+        {
+          "index": 175,
+          "parent_index": 174,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 477,
+          "attribute_names": []
+        },
+        {
+          "index": 176,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "data-nscript"
+          ]
+        },
+        {
+          "index": 177,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "id",
+            "data-nscript"
+          ]
+        },
+        {
+          "index": 178,
+          "parent_index": 177,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 174,
+          "attribute_names": []
+        },
+        {
+          "index": 179,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "id",
+            "data-nscript"
+          ]
+        },
+        {
+          "index": 180,
+          "parent_index": 179,
+          "node_type": 3,
+          "node_name": "#text",
+          "node_value_length": 155,
+          "attribute_names": []
+        },
+        {
+          "index": 181,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "SCRIPT",
+          "node_value_length": 0,
+          "attribute_names": [
+            "src",
+            "id",
+            "data-ntpc",
+            "data-nscript"
+          ]
+        },
+        {
+          "index": 182,
+          "parent_index": 84,
+          "node_type": 1,
+          "node_name": "NEXT-ROUTE-ANNOUNCER",
+          "node_value_length": 0,
+          "attribute_names": [
+            "style"
+          ]
+        },
+        {
+          "index": 183,
+          "parent_index": 182,
+          "node_type": 1,
+          "node_name": "DIV",
+          "node_value_length": 0,
+          "attribute_names": [
+            "aria-live",
+            "id",
+            "role",
+            "style"
+          ]
+        }
+      ]
+    },
+    "accessibility": {
+      "total_nodes": 48,
+      "text_capture": {
+        "status": "included",
+        "retained_bytes": 222,
+        "excluded_fields": 0
+      },
+      "nodes": [
+        {
+          "node_id": "1",
+          "parent_id": null,
+          "role": "RootWebArea",
+          "name": "Blotato",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "focusable",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node_id": "114",
+          "parent_id": "1",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "196",
+          "parent_id": "114",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "206",
+          "parent_id": "196",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "207",
+          "parent_id": "206",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "208",
+          "parent_id": "207",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "5",
+          "parent_id": "208",
+          "role": "heading",
+          "name": "Sign In to Blotato.",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "level",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "node_id": "209",
+          "parent_id": "208",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "7",
+          "parent_id": "209",
+          "role": "image",
+          "name": "Blotato logo",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "2",
+          "parent_id": "208",
+          "role": "form",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "260",
+          "parent_id": "196",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "267",
+          "parent_id": "196",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "279",
+          "parent_id": "196",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "6",
+          "parent_id": "5",
+          "role": "StaticText",
+          "name": "Sign In to Blotato.",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "210",
+          "parent_id": "2",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "211",
+          "parent_id": "210",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "212",
+          "parent_id": "211",
+          "role": "LabelText",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "214",
+          "parent_id": "211",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "11",
+          "parent_id": "210",
+          "role": "button",
+          "name": "Log in with one-time code",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "focusable",
+              "value": true
+            },
+            {
+              "name": "invalid",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "node_id": "13",
+          "parent_id": "260",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "14",
+          "parent_id": "260",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "15",
+          "parent_id": "260",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "16",
+          "parent_id": "260",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "17",
+          "parent_id": "260",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "18",
+          "parent_id": "260",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "268",
+          "parent_id": "267",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "269",
+          "parent_id": "268",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "280",
+          "parent_id": "279",
+          "role": "alert",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "atomic",
+              "value": true
+            },
+            {
+              "name": "live",
+              "value": "assertive"
+            }
+          ]
+        },
+        {
+          "node_id": "-1000000002",
+          "parent_id": "6",
+          "role": "InlineTextBox",
+          "name": "Sign In to Blotato.",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "8",
+          "parent_id": "212",
+          "role": "StaticText",
+          "name": "Email",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "213",
+          "parent_id": "212",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "9",
+          "parent_id": "213",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "3",
+          "parent_id": "214",
+          "role": "textbox",
+          "name": "Email",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "editable",
+              "value": "plaintext"
+            },
+            {
+              "name": "focusable",
+              "value": true
+            },
+            {
+              "name": "invalid",
+              "value": "false"
+            },
+            {
+              "name": "multiline",
+              "value": false
+            },
+            {
+              "name": "readonly",
+              "value": false
+            },
+            {
+              "name": "required",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node_id": "216",
+          "parent_id": "11",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "217",
+          "parent_id": "216",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "12",
+          "parent_id": "217",
+          "role": "StaticText",
+          "name": "Log in with one-time code",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "261",
+          "parent_id": "13",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "262",
+          "parent_id": "14",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "263",
+          "parent_id": "15",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "264",
+          "parent_id": "16",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "265",
+          "parent_id": "17",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "266",
+          "parent_id": "18",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "-1000000003",
+          "parent_id": "8",
+          "role": "InlineTextBox",
+          "name": "Email",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "281",
+          "parent_id": "3",
+          "role": "none",
+          "name": null,
+          "description": null,
+          "ignored": true,
+          "states": []
+        },
+        {
+          "node_id": "4",
+          "parent_id": "3",
+          "role": "generic",
+          "name": "",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "editable",
+              "value": "plaintext"
+            }
+          ]
+        },
+        {
+          "node_id": "-1000000005",
+          "parent_id": "12",
+          "role": "InlineTextBox",
+          "name": "Log in with one-time code",
+          "description": null,
+          "ignored": false,
+          "states": []
+        },
+        {
+          "node_id": "282",
+          "parent_id": "4",
+          "role": "StaticText",
+          "name": "<email>",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "editable",
+              "value": "plaintext"
+            }
+          ]
+        },
+        {
+          "node_id": "-1000000004",
+          "parent_id": "282",
+          "role": "InlineTextBox",
+          "name": "<email>",
+          "description": null,
+          "ignored": false,
+          "states": [
+            {
+              "name": "editable",
+              "value": "plaintext"
+            }
+          ]
+        }
+      ]
+    },
+    "scripts": {
+      "total": 35,
+      "items": [
+        {
+          "script_key": "scr_02b920f140c4ed1010bced8e4f2f0e60fa47997443e4d8f3be013c621b23f893",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/4356-adbcb551d260c64b.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "18c22944ed3efe0917d949075c76cf41580ba93c908814695e989ac2bbf5db53",
+          "length": 15587,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_5d6f6c1432327c4d4c9b5dd8278037aea84ce54784eb856cb9a0d35fd61b1554"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_1cd27e02d18344ee100be7ad96738ed7eee17739ffb47f8774a89947c6ea3079",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/ef3d1a43-2b4a3928e39b581d.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "90acf9cc0b7b3a59325db553b51ea02599e978d4a984c28a055e9b6b2f9dcdc5",
+          "length": 3742,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_19db64667a67780d1728bd8b3c03523223729294e48ab2c25a1bed6bc8eed087"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_1fddccc6642cec0b0c75d1a79bb4528254fec2607285d4134d790169fff319da",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/8415-1b2dc436cf3247c5.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "c586f679927ee75ba68fc82951f7fba903df084bbcb3fa1040484a235ce89e3b",
+          "length": 9478,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_7213f9b08854b6507c2d04344b9d74c13320e55b170288254b91b703d2074b3f"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_249b80ecbfc732cdff95ac4379f3ce3c6ec6ab3002556f4fb4936f5739bbef1e",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/8609-eeadd1c8acc4bd17.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "54add7408f59e4161ac5f5c6b6da9dd713de2396d7e2251ed47692c555d1173c",
+          "length": 20119,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_c1263cfe69edb1546e14189f66022c3cbbd22277144a728c40e36da149171a41"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_266b9a4338b0f0678939df7ece9173109bd4cc3068361aaefe70b8fabe77ce3d",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/1987-a67b2c60cac41a2b.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "fead6ca138a1115d3d49636e6e00cbd7a92c8bb96f7de36a605ba177ee1566da",
+          "length": 18577,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_ece4179416f00e1f468ff6daa8e9fc04f06ce64c505f57c1d635806edcd5144b"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_279a36845b4bc5458a13c867902ae58a71ad7efb08481f76d4945773ff880f24",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/7163-9f202ae803e1a88d.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "1c0e29a6c927abf9efd87f2606b762ec676066d80af78d21ac3b6a49f3acf52a",
+          "length": 15130,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_6f6cc947abcae33d2a0218c341bcea713fe11fc0d6f7fdfceb5979b6c5441784"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_2884d83507ad9c5a66def8cb71bfea431940cde772c4168999e7c4745854c097",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/1612-1dc5627160fee03c.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "e4ef5a206eabed44e16fdf09b623961979c876c51bdf968eb6628a8c4b37390e",
+          "length": 10235,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_d1c0a9eab85037b307481f7468fbcaf25b120a9beeb234a3f59a05d860faeb2f"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_35ec3d693451f718709819b147a45834edde83f4f49b81fa517e7224d8ede713",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/9795-7096dbe5a1dabb5b.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "233cb091f4f779697272151c989f9c588d3aee33d535dc03c587907c14848c80",
+          "length": 13104,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_cd8323d1d183e886f2fd99080ec5ddf8a0b215f1c07c1da4d48e1d1241abdb4f"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_3792cf75775540d985a888ddf342c9d6e08d208a5359c3911221ca99df33ce97",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/807-84b7fd48581bce66.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "3def2bacef6540ad6f9990098187f5613f244ef1855c97eff387eeb3df760220",
+          "length": 23747,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_b4db109ac6ccdeafe5a879d36d9246b7a8553b90e2601e29890121bbb1488d7b"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_3c3df45633c9997a0a5c88372cd0c4f68ee99e76da50f85f730402472f79616f",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/6332-6ea21540daee7d92.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "4c4143812ad83a9c09010c141fd11aacaec012fe35ccdd2610fcbe4a5554cf1f",
+          "length": 201850,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_64201f774c1b2c6a525a26c0e65443a845fec9b9863f23255535a74821986884"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_418089dcba1df3a3a2915a447db441c96405757d6d13ba3bc64db353e93e76dc",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/7902-c980e7af84a778d5.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "76b74bb47ca02119e87a229831db72411ce0522145c59fd8ba4f01bad2e2e614",
+          "length": 7681,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_0c592ee010083eab6ce58e9883fc00524028dfbb83a048e8bccad81d2eca730b"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_4a92d267071281947104f9fb205fbdd16663140d9de3cfcb13face4280a03d57",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/8355-a8350fba7b46ab39.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "4328669045e7a503d332ead19a89864d0cec5b884fc9da2f3b647daea68630f2",
+          "length": 40292,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_edfdde22c7237a70abd92bb59c11a6f8bd82d5a76b472004376ae948b74aa0ec"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_5921e09e50eb31455661ec147300a5bc2169c4ae68b7bf099fa493cc16ff028b",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/5219-02da974a2d6a00dc.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "dfccb78a04688fe46f6bf1a2001caa307a4fb76ec9f888139ced62da95ee980c",
+          "length": 7531,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_0610184cf01e6c2f99fb04412411d553edb61a28393c309cfe4c052b4930dbd5"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_59ede4f871a450d33eac011a9e5e7c7bd2a0368b687f5d4416102b1e9e5a7ac8",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/webpack-ec5a8957af91d58d.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "8cc7d6a768181e29edf9dcef8fb14cd50806b01e3cc88b06c6ab540922e480c1",
+          "length": 4235,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_39bca47945a813fab175f696764de5f17abfdc67856e8a419be7f81c3703476d"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_6b0244b24516ba71ef6ece05052b22f0b43f5918f241ddaa10ede987a340a3ca",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/8bb4d8db-aaf7767335084d14.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "3bc4beebecf95161e5288781cc9b696d7614dce4b1d478b179e1a6d53d6f843e",
+          "length": 16331,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_9ed01b931e20f49dbfd72ed6f832e5a4b99f42d0ff050278c611e1367a3b7786"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_6c49eca69c9fc68bd588eab570ad6b2e3d6d87d30571fea024ad8abb029f5566",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/6258-2de1ed876731e755.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "1dd4660b2956e78e2d359e53fb4009a51be6f4ef0ef97b145d0dc8c3ac0e01fe",
+          "length": 14782,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_cf3c68ab48af626c875bf48dc866ea5967a924c98aec8bfa23e6adf469c1afc5"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_6e258ac8a0a02e2980f509cb7ac5f574dbd8c58e39d437f6b61b3164992ec6f1",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/layout-5a495a1ba72c576a.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "931b66279ea44c4793ac81146eb2ade498113c7f65315022e348fb18fb280428",
+          "length": 3537,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_60546ba572acef4054a633bbdb2e96e108273336def9c71399808a6c244f4dff"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_6f6cc653986b757a139ee4779f3d94b5caddde50ce122d4241cf4f481d65dc42",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/6316-2bcdb052010ec06c.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "62826d0dcf835bf6b76d2d74f04d787549e3c5e9e7a8e4398c192a2c8deef621",
+          "length": 59925,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_a0d964fd39c81f5b1d859ed2b8b440718837fa334a4452eec283232e189aa325"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_71ed6fc71bbb3103fbd4a4088b03e1f633e0827e2f42a9aae0f017781244be66",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/7027-90771e02ff0a731c.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "e8e66d3f1d880b5cbcbd2f93766971df9c8e0d7d5887ce07701945c9bef0a350",
+          "length": 13179,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_5788cfc6c0c11dc8750e76075618c9081442a09df05185e4e438b1ba5478f207"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_72e118767f0dff3d29f88ffe3828cff4fef4fd4abaf40eb3bd9394ea835fdaec",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/login/page-5af6937c6aa1189a.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "f7e82ccd371fdeb8cd81246b3fce05daeef1638bd43ec00f2febcf6bc462d8e7",
+          "length": 4575,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_a043829eb14924f984c780fcdc6d6f365a1db5e321bcfd3bda9899def33b159b"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_7b1a4a6a14488012fc35f13594aaf0ff79db1656677c92f101173b2efa799af1",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/108-815193fcaa3589c8.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "4f44934feb864f06dc0b7e8ef720f502e31882d023f1ebe4258c297ca93cb5f2",
+          "length": 29628,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_43cf2e88b270b2e80c47cbbf2ad7398ddbd91a4da182e1bcdebde1866e6549ff"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_82a7638b7ae1357638d90669ebc45d212a1940237a710bcbe15b209521530ee1",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/87c73c54-dd8d81ac9604067c.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "7afc888897c7fd966a59ab776e12ab02703256ba55240e30c176b6784b6cf9b6",
+          "length": 173023,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_11c06931c326e488f33a29ef9a3f6c05ee881a0bdfef702ff807859879fee309"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_884188c2fdc14bce26d4c5823c09f4a7afed4a65c62bc78ff3bcf2688517f797",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/18-ae8587bda1f855c7.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "18cb5a321fa1ebea9c3f53cb737c91a1cad317e53d83f3dfe145b8993b464d7f",
+          "length": 172576,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_4c4d056b727304af3d14d14a0f0be35c85602b755e9a1aca2d0bebca72c1efef"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_976acf45d5d95022fd7ce498d9fa4bb366aea9a38ba21b98ebbb616ca7dcd1e1",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/cd24890f-260c1a6f3c1216c8.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "1961dd9dd88fcb5d5880fa7f28d48cf188c7c8551d35ad9c2904e6bc18c6b188",
+          "length": 179421,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_0d336476007ce265c5e3ca5304830ac5e3286fe08b9a33525b91e04a58892a8d"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_ab36d2cce0546f84092aede5cb16536025b4ba2e48af51176a92e8f3d1b3e32d",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/497-da68cf6a3de0d9d0.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "d330c21a7a99cbcb55aa552314a69b897f76754a6256cf289ed219c1c41a6d99",
+          "length": 17946,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_327d40e3d38bf7b63163d6cf0398188f3fc5a66370546d90fdf003627b5c4070"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_ae6667ef51a380819a70b6135df0c00204dee97bf33200a3ad4071afda6e672c",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/main-app-52eeb162d6743c4f.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "d740001bbed8142efb517113eba524e79b42aba84131b0054af7971422ed17a2",
+          "length": 842,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_a787e2c2c43087e80a08e3feb435194726c34cc0edf288eaa3db0f1b0a7f8ce9"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_b2ffdc5c0981bd6e7e26c15ee51108774fa30cef31fa7b29761c8bb9af5adb23",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/4219-f8d793125f39bdda.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "6078af7b405932f831f3efc455b5cab6c13029bf5385b7c369d3fc78cce218b1",
+          "length": 9150,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_dacdb007abba1fa92dabbb89da52ab109f873785f19dd4dffa6a1af53a08c5fa"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_b9b76d72db086a31de4a8082eb4f7863860981e0c5b73a83b3eea3da35db9bfd",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/app/layout-ab30be20a4e4ef3a.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "f59fc4f89972987efe505b0b4ff1909d9ba281ac25561e441f9237a4a2d80e59",
+          "length": 1693,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_03c1a9a42500dbf44e0d62aff905de2a718a474bf75a11359c46f31d7d9dfeca"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_c36d92c5cb90f84c845ad6a24193802488ec138113033ce00ac666c60fb9c5b1",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/4680-d6853c3b6bb7adeb.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "6a59f08cc8e4123c25c15c7f49282cc6ee411bbda8dd1183e5a270aa68aae55f",
+          "length": 31282,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_10e2ab861750f6d52bff5679f9349864a4b0163657dc87b33d2fa0d52ff98363"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_d0465b08ab0fbdaf969b4ac52256d7b9f76f63b9f20448b83fc79b319851c06d",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/2536-de0d990f803aa05f.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "2f6d6ac557f9774d594106dfa862085497d4630b0c12f7272057b6d1988b3b60",
+          "length": 22595,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_76f79082758974ce3fa89a683da45c46a40fdff49fba39a1ffa9bae19b8b4dcb"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_e1793c3a40dce61b7eac3e32ea63e81e472add231b8ef0ec18aa3f97c576c61b",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/292-32a4343b098b04af.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "8b44bd20cec26fb24d4d1cf7105fb9ef4b94f9929a0855074b169e24d03ee2b7",
+          "length": 173503,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_f795f5569226adb0dc39694be1d23677e89c2881231c72255a7c22b057aa953c"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_f054c2a0663a27bc0813124c50856d179df1ad73d6051c4dd8317b6135f12fdd",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/4161-d3bd355003bec045.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "0f14266dd37de04a37044f8f5f21ca2f70de6b0e74cc57906b29e4602360fe6b",
+          "length": 93890,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_2d7c7058358f959b7ff227a7cc37c143f79657060ce4ae860dbe904222e57e55"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_f276677e7b437434c67ca88409b8d2fc7419a9fba4370f1912e05016aba5ceae",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/5305-c9f9cacab6216c55.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "ffa7bd9cbe1fcced5d971fcc74895fe151cac4ef855f615ea81adc566a28ccde",
+          "length": 10801,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_29373fa6129a65ded8231a777893275ca90e9c25df7ad44b53f7dd5673237ffc"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_f2917bc359ce87be669b2d65b15b173d94ef0cc1d03e5611899dc49d25c14d5c",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/539.b5b9a8f2c184319f.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "f82afb5da187c50b949b97d54ddba192f4b39773fb3aaf557cf56153b2b44935",
+          "length": 4720,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_ec3990ba2fbe9d3c6d5fd6a412062e09da64aedc34743e669b938b3e83d75e20"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        },
+        {
+          "script_key": "scr_fc90e09dbe85ede3a1284bcdb919fd666c9ebeb9aedc9e2acd0dc546b79b2403",
+          "frame_id": "5C9F311B63F57F3B357740689FF09BF3",
+          "url": "https://my.blotato.com/_next/static/chunks/8543-547ea536a970eba9.js",
+          "origin": "https://my.blotato.com",
+          "cdp_hash": "7c98aba85cbecc947345e06abc0d43de1367e75662f8055259f181fbca312c4e",
+          "length": 60072,
+          "is_module": false,
+          "language": "JavaScript",
+          "source_map_url": null,
+          "resource_reconciliation": {
+            "status": "exact",
+            "resource_key": "res_c3aa28439eaa959de012f4dc167a2d9df4d829190451887387f35acebad681ae"
+          },
+          "source": {
+            "included": false,
+            "reason": "source capture was not selected"
+          }
+        }
+      ]
+    },
+    "resources": [
+      {
+        "resource_key": "res_03c1a9a42500dbf44e0d62aff905de2a718a474bf75a11359c46f31d7d9dfeca",
+        "url": "https://my.blotato.com/_next/static/chunks/app/layout-ab30be20a4e4ef3a.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 1693
+      },
+      {
+        "resource_key": "res_0610184cf01e6c2f99fb04412411d553edb61a28393c309cfe4c052b4930dbd5",
+        "url": "https://my.blotato.com/_next/static/chunks/5219-02da974a2d6a00dc.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 7531
+      },
+      {
+        "resource_key": "res_0c592ee010083eab6ce58e9883fc00524028dfbb83a048e8bccad81d2eca730b",
+        "url": "https://my.blotato.com/_next/static/chunks/7902-c980e7af84a778d5.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 7681
+      },
+      {
+        "resource_key": "res_0d336476007ce265c5e3ca5304830ac5e3286fe08b9a33525b91e04a58892a8d",
+        "url": "https://my.blotato.com/_next/static/chunks/cd24890f-260c1a6f3c1216c8.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 179421
+      },
+      {
+        "resource_key": "res_10e2ab861750f6d52bff5679f9349864a4b0163657dc87b33d2fa0d52ff98363",
+        "url": "https://my.blotato.com/_next/static/chunks/4680-d6853c3b6bb7adeb.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 31284
+      },
+      {
+        "resource_key": "res_11c06931c326e488f33a29ef9a3f6c05ee881a0bdfef702ff807859879fee309",
+        "url": "https://my.blotato.com/_next/static/chunks/87c73c54-dd8d81ac9604067c.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 173023
+      },
+      {
+        "resource_key": "res_19db64667a67780d1728bd8b3c03523223729294e48ab2c25a1bed6bc8eed087",
+        "url": "https://my.blotato.com/_next/static/chunks/ef3d1a43-2b4a3928e39b581d.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 3742
+      },
+      {
+        "resource_key": "res_29373fa6129a65ded8231a777893275ca90e9c25df7ad44b53f7dd5673237ffc",
+        "url": "https://my.blotato.com/_next/static/chunks/5305-c9f9cacab6216c55.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 10801
+      },
+      {
+        "resource_key": "res_2d7c7058358f959b7ff227a7cc37c143f79657060ce4ae860dbe904222e57e55",
+        "url": "https://my.blotato.com/_next/static/chunks/4161-d3bd355003bec045.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 93890
+      },
+      {
+        "resource_key": "res_327d40e3d38bf7b63163d6cf0398188f3fc5a66370546d90fdf003627b5c4070",
+        "url": "https://my.blotato.com/_next/static/chunks/497-da68cf6a3de0d9d0.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 17946
+      },
+      {
+        "resource_key": "res_39bca47945a813fab175f696764de5f17abfdc67856e8a419be7f81c3703476d",
+        "url": "https://my.blotato.com/_next/static/chunks/webpack-ec5a8957af91d58d.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 4235
+      },
+      {
+        "resource_key": "res_43cf2e88b270b2e80c47cbbf2ad7398ddbd91a4da182e1bcdebde1866e6549ff",
+        "url": "https://my.blotato.com/_next/static/chunks/108-815193fcaa3589c8.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 29628
+      },
+      {
+        "resource_key": "res_43f1934ce7e28dc64166b587aa8ff0f714c233f9034805a5565cf4ecad9b4112",
+        "url": "https://my.blotato.com/_next/static/css/3e340d8426b8a7ea.css",
+        "origin": "https://my.blotato.com",
+        "type": "Stylesheet",
+        "mime_type": "text/css",
+        "content_size": 19015
+      },
+      {
+        "resource_key": "res_4c4d056b727304af3d14d14a0f0be35c85602b755e9a1aca2d0bebca72c1efef",
+        "url": "https://my.blotato.com/_next/static/chunks/18-ae8587bda1f855c7.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 172576
+      },
+      {
+        "resource_key": "res_5788cfc6c0c11dc8750e76075618c9081442a09df05185e4e438b1ba5478f207",
+        "url": "https://my.blotato.com/_next/static/chunks/7027-90771e02ff0a731c.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 13179
+      },
+      {
+        "resource_key": "res_5d6f6c1432327c4d4c9b5dd8278037aea84ce54784eb856cb9a0d35fd61b1554",
+        "url": "https://my.blotato.com/_next/static/chunks/4356-adbcb551d260c64b.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 15587
+      },
+      {
+        "resource_key": "res_60546ba572acef4054a633bbdb2e96e108273336def9c71399808a6c244f4dff",
+        "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/layout-5a495a1ba72c576a.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 3537
+      },
+      {
+        "resource_key": "res_64201f774c1b2c6a525a26c0e65443a845fec9b9863f23255535a74821986884",
+        "url": "https://my.blotato.com/_next/static/chunks/6332-6ea21540daee7d92.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 201850
+      },
+      {
+        "resource_key": "res_6f6cc947abcae33d2a0218c341bcea713fe11fc0d6f7fdfceb5979b6c5441784",
+        "url": "https://my.blotato.com/_next/static/chunks/7163-9f202ae803e1a88d.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 15130
+      },
+      {
+        "resource_key": "res_7213f9b08854b6507c2d04344b9d74c13320e55b170288254b91b703d2074b3f",
+        "url": "https://my.blotato.com/_next/static/chunks/8415-1b2dc436cf3247c5.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 9478
+      },
+      {
+        "resource_key": "res_74120adfa3f68d4aa29bb91a4e0c5f89b1f196758f49e2870244b8315c6101f2",
+        "url": "https://my.blotato.com/_next/static/css/16bb8b71dbdb6de9.css",
+        "origin": "https://my.blotato.com",
+        "type": "Stylesheet",
+        "mime_type": "text/css",
+        "content_size": 198258
+      },
+      {
+        "resource_key": "res_76f79082758974ce3fa89a683da45c46a40fdff49fba39a1ffa9bae19b8b4dcb",
+        "url": "https://my.blotato.com/_next/static/chunks/2536-de0d990f803aa05f.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 22595
+      },
+      {
+        "resource_key": "res_890415f7d44c7c3c553cdd79b5f7ccd6fe459b99fd44d2f697fb75f1efd287ad",
+        "url": "https://my.blotato.com/_next/static/css/43f57c4dba2f8ea3.css",
+        "origin": "https://my.blotato.com",
+        "type": "Stylesheet",
+        "mime_type": "text/css",
+        "content_size": 683
+      },
+      {
+        "resource_key": "res_9ed01b931e20f49dbfd72ed6f832e5a4b99f42d0ff050278c611e1367a3b7786",
+        "url": "https://my.blotato.com/_next/static/chunks/8bb4d8db-aaf7767335084d14.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 16331
+      },
+      {
+        "resource_key": "res_a043829eb14924f984c780fcdc6d6f365a1db5e321bcfd3bda9899def33b159b",
+        "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/login/page-5af6937c6aa1189a.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 4575
+      },
+      {
+        "resource_key": "res_a0d964fd39c81f5b1d859ed2b8b440718837fa334a4452eec283232e189aa325",
+        "url": "https://my.blotato.com/_next/static/chunks/6316-2bcdb052010ec06c.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 59925
+      },
+      {
+        "resource_key": "res_a787e2c2c43087e80a08e3feb435194726c34cc0edf288eaa3db0f1b0a7f8ce9",
+        "url": "https://my.blotato.com/_next/static/chunks/main-app-52eeb162d6743c4f.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 842
+      },
+      {
+        "resource_key": "res_b0c7c97a5271bb84832791b36fa1a694df24e907a69b0a667780efc0523785dd",
+        "url": "https://my.blotato.com/_next/static/css/bb783198c2bb9898.css",
+        "origin": "https://my.blotato.com",
+        "type": "Stylesheet",
+        "mime_type": "text/css",
+        "content_size": 23099
+      },
+      {
+        "resource_key": "res_b4db109ac6ccdeafe5a879d36d9246b7a8553b90e2601e29890121bbb1488d7b",
+        "url": "https://my.blotato.com/_next/static/chunks/807-84b7fd48581bce66.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 23749
+      },
+      {
+        "resource_key": "res_c1263cfe69edb1546e14189f66022c3cbbd22277144a728c40e36da149171a41",
+        "url": "https://my.blotato.com/_next/static/chunks/8609-eeadd1c8acc4bd17.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 20119
+      },
+      {
+        "resource_key": "res_c3aa28439eaa959de012f4dc167a2d9df4d829190451887387f35acebad681ae",
+        "url": "https://my.blotato.com/_next/static/chunks/8543-547ea536a970eba9.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 60072
+      },
+      {
+        "resource_key": "res_cd8323d1d183e886f2fd99080ec5ddf8a0b215f1c07c1da4d48e1d1241abdb4f",
+        "url": "https://my.blotato.com/_next/static/chunks/9795-7096dbe5a1dabb5b.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 13104
+      },
+      {
+        "resource_key": "res_cf3c68ab48af626c875bf48dc866ea5967a924c98aec8bfa23e6adf469c1afc5",
+        "url": "https://my.blotato.com/_next/static/chunks/6258-2de1ed876731e755.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 14782
+      },
+      {
+        "resource_key": "res_d1c0a9eab85037b307481f7468fbcaf25b120a9beeb234a3f59a05d860faeb2f",
+        "url": "https://my.blotato.com/_next/static/chunks/1612-1dc5627160fee03c.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 10235
+      },
+      {
+        "resource_key": "res_dacdb007abba1fa92dabbb89da52ab109f873785f19dd4dffa6a1af53a08c5fa",
+        "url": "https://my.blotato.com/_next/static/chunks/4219-f8d793125f39bdda.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 9150
+      },
+      {
+        "resource_key": "res_de8b6f964a434ce6859896578e15e0b3f17fcfe96e038423c4d026249d951bff",
+        "url": "https://my.blotato.com/_next/static/css/df5db3751778daa8.css",
+        "origin": "https://my.blotato.com",
+        "type": "Stylesheet",
+        "mime_type": "text/css",
+        "content_size": 5317
+      },
+      {
+        "resource_key": "res_ec3990ba2fbe9d3c6d5fd6a412062e09da64aedc34743e669b938b3e83d75e20",
+        "url": "https://my.blotato.com/_next/static/chunks/539.b5b9a8f2c184319f.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 4720
+      },
+      {
+        "resource_key": "res_ece4179416f00e1f468ff6daa8e9fc04f06ce64c505f57c1d635806edcd5144b",
+        "url": "https://my.blotato.com/_next/static/chunks/1987-a67b2c60cac41a2b.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 18577
+      },
+      {
+        "resource_key": "res_edfdde22c7237a70abd92bb59c11a6f8bd82d5a76b472004376ae948b74aa0ec",
+        "url": "https://my.blotato.com/_next/static/chunks/8355-a8350fba7b46ab39.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 40292
+      },
+      {
+        "resource_key": "res_f022fd0a8eadc7df13ba5b008f98ffd637b41cb83d52d0dd3253047e0c537d59",
+        "url": "https://my.blotato.com/manatee-logo.png",
+        "origin": "https://my.blotato.com",
+        "type": "Image",
+        "mime_type": "image/png",
+        "content_size": 502027
+      },
+      {
+        "resource_key": "res_f795f5569226adb0dc39694be1d23677e89c2881231c72255a7c22b057aa953c",
+        "url": "https://my.blotato.com/_next/static/chunks/292-32a4343b098b04af.js",
+        "origin": "https://my.blotato.com",
+        "type": "Script",
+        "mime_type": "application/javascript",
+        "content_size": 173503
+      }
+    ],
+    "network": {
+      "requests": [],
+      "websocket_connections": [],
+      "coverage_started_at": "2026-11-03T08:56:05.851Z",
+      "prior_activity_available": false
+    },
+    "console": {
+      "events": [],
+      "coverage_started_at": "2026-11-03T08:56:05.670Z",
+      "prior_activity_available": false
+    },
+    "workers": [],
+    "metadata": {
+      "responses": [],
+      "dom_urls": [
+        {
+          "node_index": 7,
+          "attribute": "href",
+          "url": "https://my.blotato.com/_next/static/css/df5db3751778daa8.css",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 8,
+          "attribute": "href",
+          "url": "https://my.blotato.com/_next/static/css/16bb8b71dbdb6de9.css",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 9,
+          "attribute": "href",
+          "url": "https://my.blotato.com/_next/static/css/3e340d8426b8a7ea.css",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 10,
+          "attribute": "href",
+          "url": "https://my.blotato.com/_next/static/css/bb783198c2bb9898.css",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 11,
+          "attribute": "href",
+          "url": "https://my.blotato.com/_next/static/css/43f57c4dba2f8ea3.css",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 12,
+          "attribute": "href",
+          "url": "https://my.blotato.com/_next/static/chunks/webpack-ec5a8957af91d58d.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 13,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 14,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 15,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/87c73c54-dd8d81ac9604067c.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 16,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/cd24890f-260c1a6f3c1216c8.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 17,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/18-ae8587bda1f855c7.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 18,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/main-app-52eeb162d6743c4f.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 19,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/ef3d1a43-2b4a3928e39b581d.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 20,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/4680-d6853c3b6bb7adeb.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 21,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/8415-1b2dc436cf3247c5.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 22,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/6316-2bcdb052010ec06c.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 23,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/292-32a4343b098b04af.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 24,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/4161-d3bd355003bec045.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 25,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/9795-7096dbe5a1dabb5b.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 26,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/8609-eeadd1c8acc4bd17.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 27,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/6332-6ea21540daee7d92.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 28,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/app/layout-ab30be20a4e4ef3a.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 29,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/8bb4d8db-aaf7767335084d14.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 30,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/1612-1dc5627160fee03c.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 31,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/7027-90771e02ff0a731c.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 32,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/108-815193fcaa3589c8.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 33,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/497-da68cf6a3de0d9d0.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 34,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/4356-adbcb551d260c64b.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 35,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/4219-f8d793125f39bdda.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 36,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/7163-9f202ae803e1a88d.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 37,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/2536-de0d990f803aa05f.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 38,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/7902-c980e7af84a778d5.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 39,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/5305-c9f9cacab6216c55.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 40,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/5219-02da974a2d6a00dc.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 41,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/8543-547ea536a970eba9.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 42,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/1987-a67b2c60cac41a2b.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 43,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/8355-a8350fba7b46ab39.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 44,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/layout-5a495a1ba72c576a.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 45,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/6258-2de1ed876731e755.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 46,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/807-84b7fd48581bce66.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 47,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/app/(logged-out)/login/page-5af6937c6aa1189a.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 48,
+          "attribute": "href",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 49,
+          "attribute": "href",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 50,
+          "attribute": "href",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 51,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-57x57.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 52,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-60x60.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 53,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-72x72.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 54,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-76x76.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 55,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-114x114.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 56,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-120x120.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 57,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-144x144.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 58,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-152x152.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 59,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-180x180.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 60,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-16x16.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 61,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-32x32.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 62,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-96x96.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 63,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon-192x192.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 64,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon.ico",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 65,
+          "attribute": "href",
+          "url": "https://my.blotato.com/favicon.ico",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 66,
+          "attribute": "href",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 67,
+          "attribute": "href",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 76,
+          "attribute": "href",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 79,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 80,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 81,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 82,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 83,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 100,
+          "attribute": "src",
+          "url": "https://my.blotato.com/manatee-logo.png",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 117,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 118,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 119,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 120,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 121,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 122,
+          "attribute": "src",
+          "url": "https://my.blotato.com/_next/static/chunks/webpack-ec5a8957af91d58d.js",
+          "destination_scope": "approved"
+        },
+        {
+          "node_index": 173,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 176,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        },
+        {
+          "node_index": 181,
+          "attribute": "src",
+          "url": null,
+          "destination_scope": "outside_policy"
+        }
+      ],
+      "agent_hints": [],
+      "excluded_dom_urls": 20,
+      "headers_allowlisted": true
+    },
+    "storage": {
+      "origin": "https://my.blotato.com",
+      "usage_bytes": 0,
+      "quota_bytes": 306632350924,
+      "local_storage_keys": [
+        "lastExternalReferrer",
+        "_gcl_ls",
+        "lastExternalReferrerTime",
+        "ph_phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf_posthog"
+      ],
+      "session_storage_keys": [
+        "ph_phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf_primary_window_exists",
+        "ph_phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf_posthog",
+        "ph_phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf_window_id"
+      ],
+      "indexed_db_names": [],
+      "cache_names": [],
+      "content_fingerprints": [],
+      "fingerprint_algorithm": "sha256",
+      "fingerprints_complete": false,
+      "values_redacted": true
+    },
+    "limitations": [
+      "Observation starts when REA attaches; prior network and console activity is unavailable.",
+      "Worker targets are a final inventory snapshot, not worker-session observation. Their attached flag describes any debugging client; this page-session collector does not observe worker network, console, or script events, and short-lived workers may be absent from the snapshot.",
+      "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+      "Source maps are reported only as declarative URLs and are not fetched.",
+      "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+      "CDP discovery omitted the target attachment state; attached is reported as unknown."
+    ]
+  },
+  "confidence": "observed",
+  "authority": "external-service",
+  "environment": {
+    "id": "Chrome/156.0.8078.80@537.36 (@fb096c0011f9d50f0a264a9376420cdea9c421e3)",
+    "platform": "unknown",
+    "architecture": "unknown",
+    "isolation": "none"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Worker targets are a final inventory snapshot, not worker-session observation. Their attached flag describes any debugging client; this page-session collector does not observe worker network, console, or script events, and short-lived workers may be absent from the snapshot.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Browser host platform and architecture were not observed."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

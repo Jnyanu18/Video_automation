@@ -1,0 +1,102 @@
+# syntax=docker/dockerfile:1.7
+#
+# The editor engine (FastAPI + ffmpeg + HyperFrames renderer).
+# Build context is automation/ :   docker build -f deploy/Dockerfile.engine .
+# Builds natively on linux/arm64 (Oracle Ampere A1) and linux/amd64.
+#
+# This image is never published to the host. The engine has no auth of its own --
+# it trusts the X-Studio-User header that the dashboard sets -- so it stays on the
+# compose-internal network. See deploy/README.md.
+
+FROM node:22-bookworm-slim AS node_src
+
+FROM python:3.12-slim-bookworm
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# ffmpeg: 126 call sites in the engine. fonts: burned-in captions.
+# The lib* list is what chrome-headless-shell needs to start at all.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ffmpeg ca-certificates curl \
+      fonts-dejavu-core fonts-liberation \
+      libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 \
+      libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2 \
+      libpango-1.0-0 libcairo2 \
+ && rm -rf /var/lib/apt/lists/*
+
+# Node from the official image. Debian bookworm ships Node 18, too old for the
+# HyperFrames CLI, and NodeSource adds a repo for no benefit over a file copy.
+COPY --from=node_src /usr/local/bin/node /usr/local/bin/node
+COPY --from=node_src /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+ && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+ && node --version && npm --version
+
+# chrome-headless-shell, on PATH at exactly the location services/render/render.py probes.
+# arm64 builds are published for chrome-headless-shell (plain Chromium has none).
+RUN npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path /opt/chrome \
+ && ln -s "$(find /opt/chrome -type f -name chrome-headless-shell | head -n1)" /usr/bin/chrome-headless-shell \
+ && chrome-headless-shell --version
+
+# The HyperFrames CLI, pinned and vendored where render.py actually looks:
+#   APP = Path(services/render/render.py).parents[2] / "app"
+# render.py lives at /app/editor/services/render/, so parents[2] is /app/editor and APP is
+# /app/editor/app -- NOT /app/app. Put it anywhere else and render.py silently falls back to
+# `npx hyperframes`, which needs a live npm fetch on every render.
+# Installed before `COPY editor` so this layer caches: COPY merges into the directory and
+# node_modules is excluded by .dockerignore, so the install survives the copy.
+WORKDIR /app/editor/app
+RUN npm init -y >/dev/null \
+ && npm install --no-audit --no-fund hyperframes@0.9.72 \
+ && test -x node_modules/.bin/hyperframes
+
+# Python deps from the lockfile, never the floating >= requirements.txt.
+COPY editor/requirements.lock.txt /tmp/requirements.lock.txt
+RUN pip install -r /tmp/requirements.lock.txt
+
+# Bake the whisper weights into the image. Downloading them on first request makes
+# the first client's job look broken for several minutes.
+ENV HF_HOME=/opt/models
+RUN python -c "from faster_whisper import WhisperModel; WhisperModel('base', compute_type='int8')" \
+ && du -sh /opt/models
+
+COPY editor /app/editor
+# studio/workflows.py reads the workflow JSON from <automation>/n8n, which is /app/n8n here.
+# A missing directory does not raise - Path.glob just yields nothing - so without this the
+# automation hub silently lists zero workflows. Read-only, 7 files.
+COPY n8n/*.json /app/n8n/
+
+# Ask render.py itself where it will look for the CLI, and fail the build if it is not there.
+# A wrong APP path costs nothing at build time and silently degrades every render at runtime.
+RUN cd /app/editor && python -c "\
+import sys; from pathlib import Path; \
+app = Path('services/render/render.py').resolve().parents[2] / 'app'; \
+cli = app / 'node_modules' / '.bin' / 'hyperframes'; \
+sys.exit(0) if cli.exists() else sys.exit('BUILD FAILED: render.py resolves APP=%s but %s is missing' % (app, cli))"
+
+# The 41 CC0 one-shots must be in the image: a missing sfx dir raises FileNotFoundError
+# that kills auto-edit, recipes and posts. Fail the build rather than ship without them.
+RUN test "$(ls -1 /app/editor/assets/sfx/*.wav 2>/dev/null | wc -l)" -ge 40 \
+ || (echo 'BUILD FAILED: editor/assets/sfx is missing the CC0 wavs' >&2 && exit 1)
+
+# Run unprivileged. /data is the only writable path and compose mounts a volume there.
+RUN useradd --create-home --uid 10001 engine \
+ && mkdir -p /data && chown -R engine:engine /data /app
+USER engine
+
+WORKDIR /app/editor
+ENV EDITOR_HOST=0.0.0.0 \
+    EDITOR_PORT=8793 \
+    EDITOR_SFX_DIR=/app/editor/assets/sfx \
+    EDITOR_USERS_DIR=/data/users \
+    EDITOR_UPLOADS_DIR=/data/storage
+
+EXPOSE 8793
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+  CMD curl -fsS http://127.0.0.1:8793/healthz || exit 1
+
+# One process only: studio_state.json is guarded by an in-process lock, so two
+# uvicorn workers would silently lose each other's writes.
+CMD ["python", "api_server.py"]

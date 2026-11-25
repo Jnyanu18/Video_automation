@@ -34,15 +34,12 @@ export default function AIStudio() {
   const [mode, setMode] = useState<Mode>('revise');
   const [input, setInput] = useState('');
   const [msgs, setMsgs] = useState<Record<string, Msg[]>>({});
-  const [styles_, setStyles] = useState<any>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const waitingSince = useRef<number | null>(null);
   const [refs, setRefs] = useState('');
   const [styleName, setStyleName] = useState('');
   const [learn, setLearn] = useState<{ status: 'running' | 'done' | 'failed'; message: string; error?: string; style?: string; learned_from?: number } | null>(null);
-
-  useEffect(() => { editor.styles().then(setStyles).catch(() => undefined); }, []);
 
   const push = (id: string, m: Msg) => setMsgs((cur) => ({ ...cur, [id]: [...(cur[id] ?? []), m] }));
 
@@ -79,9 +76,6 @@ export default function AIStudio() {
 
   if (loading) return <Page title="AI Studio"><Skeleton height={300} /></Page>;
   if (error && !list) return <Page title="AI Studio"><ErrorState message={error} onRetry={reload} /></Page>;
-
-  const presets = styles_ ? Object.values(styles_.presets) as any[] : [];
-  const custom = styles_ ? Object.values(styles_.custom) as any[] : [];
 
   return (
     <Page title="Video Editor" subtitle="Watch the cut, direct changes with AI, and fine-tune scenes">
@@ -170,24 +164,12 @@ export default function AIStudio() {
                 if (!j) return;
                 setLearn(j);
                 if (j.status === 'running') setTimeout(tick, 2000);
-                else if (j.status === 'done') editor.styles().then(setStyles).catch(() => undefined);
               };
               setTimeout(tick, 1500);
             } catch (e) { setErr(errorText(e)); }
           }} />
       </Card>
 
-      <SectionTitle title="Style presets" />
-      <T muted>A style sets pacing, pause length, caption look and loudness for a new edit.</T>
-      <Row style={{ alignItems: 'stretch' }}>
-        {[...presets, ...custom].map((p) => (
-          <Card key={p.name} style={{ flexGrow: 1, flexBasis: 240, minWidth: 220 }}>
-            <T variant="h3">{p.name}</T>
-            <T variant="small" muted style={{ marginVertical: 4 }}>{p.description}</T>
-            <Button label="Use for a new edit" small icon="plus" onPress={() => router.push({ pathname: '/new', params: { style: p.name } })} />
-          </Card>
-        ))}
-      </Row>
     </Page>
   );
 }

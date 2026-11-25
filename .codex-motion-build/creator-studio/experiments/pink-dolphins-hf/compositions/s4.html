@@ -1,0 +1,20 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #s4-stage { position: absolute; inset: 0; }
+    #s4-stage .layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    #s4-stage .dol { position: absolute; left: -400px; top: -160px; overflow: visible; }
+    
+  </style>
+  <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
+    <div id="s4-stage" class="clip" data-start="0" data-duration="6.42" data-layout-allow-overlap data-layout-allow-overflow>
+      <svg class='layer' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><rect width='1080' height='1920' fill='#33402f'/><rect width='1080' height='700' fill='#5f7a4e' opacity='0.5'/><rect x='90' y='300' width='70' height='1620' fill='#2a1d18'/><rect x='330' y='300' width='90' height='1620' fill='#2a1d18'/><rect x='600' y='300' width='60' height='1620' fill='#2a1d18'/><rect x='830' y='300' width='100' height='1620' fill='#2a1d18'/></svg><svg id='s4-a' class='dol' viewBox='-400 -160 720 320' width='720' height='320' style=''><defs><linearGradient id="s4-d-g" gradientUnits="userSpaceOnUse" x1="0" y1="-86" x2="0" y2="76"><stop id="s4-d-gt" offset="0" stop-color="#df5f8b"/><stop id="s4-d-gb" offset="1" stop-color="#ffc3d4"/></linearGradient></defs><g id="s4-d"><g id="s4-d-fl"><path d="M -278 0 C -318 -48, -348 -70, -378 -76 C -362 -36, -348 -12, -334 0 C -348 12, -362 36, -378 76 C -348 70, -318 48, -278 0 Z" fill="url(#s4-d-g)"/></g><path d="M -30 -77 C -70 -104, -118 -100, -150 -62 Z" fill="url(#s4-d-g)"/><path d="M 300 10 C 262 2, 205 -4, 172 -14 C 152 -70, 92 -86, 40 -80 C -40 -75, -150 -52, -240 -16 C -260 -9, -275 -6, -287 -5 L -287 5 C -262 18, -150 58, -40 70 C 60 76, 140 52, 180 26 C 220 22, 268 22, 300 14 Z" fill="url(#s4-d-g)"/><ellipse cx="108" cy="-54" rx="56" ry="17" fill="#fff" opacity="0.16"/><path d="M 60 46 C 40 110, -10 142, -48 138 C -32 100, -4 70, 18 52 Z" fill="url(#s4-d-g)"/><circle cx="150" cy="-18" r="6" fill="#1a1013"/><path d="M 298 13 C 260 16, 225 18, 190 20" stroke="#2a1b22" stroke-opacity="0.35" stroke-width="3" fill="none"/></g></svg><svg class='layer' viewBox='0 0 1080 1920' xmlns='http://www.w3.org/2000/svg'><rect id='s4-w' y='0' width='1080' height='1920' fill='#6b4b3a' opacity='0.72'/><rect id='s4-line' y='0' width='1080' height='6' fill='#ffe3ec' opacity='0.5'/></svg>
+      <div id='s4-t' style='position:absolute;top:240px;width:100%;text-align:center;font-family: "Playfair Display", serif; font-weight: 700; color: #fff4e6;font-size:96px'>every rainy season</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s4-w", {y: 1700}, {y: 520, duration: 3.6, ease: "power2.inOut"}, 0.3);tl.fromTo("#s4-line", {y: 1700}, {y: 520, duration: 3.6, ease: "power2.inOut"}, 0.3);tl.fromTo("#s4-t", {opacity: 0, filter: "blur(10px)", scale: 1.06}, {opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.35, ease: "expo.out"}, 0.2);tl.to("#s4-t", {opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in"}, 2.4);tl.fromTo("#s4-a", {x: -380, y: 1300, scale: 0.8, transformOrigin: "400px 160px", rotation: 0}, {x: 230, y: 1150, rotation: -10, scale: 0.8, transformOrigin: "400px 160px", duration: 1.8, ease: "sine.inOut"}, 2.6);tl.to("#s4-a", {x: 720, y: 1350, rotation: 12, transformOrigin: "400px 160px", duration: 1.8, ease: "sine.inOut"}, 4.4);tl.set("#s4-a", {opacity: 1}, 0);tl.fromTo("#s4-d-fl", {rotation: -12, svgOrigin: "-280 0"}, {rotation: 12, svgOrigin: "-280 0", duration: 0.36, ease: "sine.inOut", yoyo: true, repeat: 17}, 0);
+    window.__timelines["s4"] = tl;
+  </script>
+</template>

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "01-amount",
+    "start": 0.0,
+    "end": 5.636,
+    "words": "i studied",
+    "desc": ""
+  },
+  {
+    "id": "02-door",
+    "start": 5.636,
+    "end": 9.296,
+    "words": "stay to the end",
+    "desc": ""
+  },
+  {
+    "id": "03-checklist",
+    "start": 9.296,
+    "end": 14.684,
+    "words": "the founders'",
+    "desc": ""
+  },
+  {
+    "id": "04-ruling",
+    "start": 14.684,
+    "end": 23.641,
+    "words": "but money did",
+    "desc": ""
+  },
+  {
+    "id": "05-amount",
+    "start": 23.641,
+    "end": 26.953,
+    "words": "4 in 5",
+    "desc": ""
+  },
+  {
+    "id": "06-ruling",
+    "start": 26.953,
+    "end": 33.273,
+    "words": "and the length",
+    "desc": ""
+  },
+  {
+    "id": "07-chat",
+    "start": 33.273,
+    "end": 39.664,
+    "words": "here's the free",
+    "desc": ""
+  },
+  {
+    "id": "08-end",
+    "start": 39.664,
+    "end": 43.454,
+    "words": "comment,",
+    "desc": ""
+  }
+]

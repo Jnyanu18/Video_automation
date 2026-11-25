@@ -1,0 +1,69 @@
+<template>
+  <style>
+#root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #fff; }
+.card { position: absolute; background: rgba(15,16,22,.80); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  border-radius: 24px; border: 1px solid rgba(255,255,255,.10); box-shadow: 0 30px 70px -24px rgba(0,0,0,.7);
+  padding: 30px 36px 32px; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 24px; letter-spacing: .14em; text-transform: uppercase;
+  color: #FF8AD8; display: flex; align-items: center; gap: 12px; }
+.dot { width: 11px; height: 11px; border-radius: 6px; background: #E03FB4; box-shadow: 0 0 14px #E03FB4; }
+.title { font-family: Poppins, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.12; letter-spacing: -.02em; margin-top: 14px; }
+.sub { font-size: 28px; line-height: 1.35; color: rgba(255,255,255,.72); margin-top: 12px; }
+.big { font-family: Poppins, sans-serif; font-weight: 700; font-size: 128px; line-height: 1; letter-spacing: -.04em; margin-top: 10px; }
+.big small { font-size: 64px; color: #FF8AD8; margin-left: 6px; }
+.accent { color: #FF8AD8; } .good { color: #3DDC84; } .bad { color: #FF6B6B; }
+.rows { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+.row { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 500; }
+.mark { width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800; flex: none; }
+.mark.ok { background: #3DDC84; color: #08130c; } .mark.no { background: #FF6B6B; color: #1a0707; }
+.mark.mid { background: #FFB547; color: #1d1203; } .mark.idle { background: rgba(255,255,255,.12); }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.chip { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  padding: 10px 22px; font-size: 28px; font-weight: 600; }
+.steps { display: flex; gap: 14px; margin-top: 22px; }
+.step { flex: 1; background: rgba(255,255,255,.07); border-radius: 18px; padding: 18px 20px; }
+.step b { display: block; font-family: Poppins, sans-serif; font-size: 40px; color: #FF8AD8; }
+.step span { font-size: 28px; font-weight: 600; line-height: 1.2; }
+.bar { height: 18px; border-radius: 9px; background: rgba(255,255,255,.12); margin-top: 18px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; border-radius: 9px; background: linear-gradient(90deg, #E03FB4, #ff9ad9); transform-origin: left center; }
+.quote { font-family: Poppins, sans-serif; font-weight: 600; font-size: 52px; line-height: 1.12; letter-spacing: -.02em; }
+.quote .w { display: inline-block; margin-right: .26em; }
+.who { font-size: 26px; color: rgba(255,255,255,.6); margin-top: 16px; font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; }
+.tag { position: absolute; left: 192px; top: 108px; display: flex; align-items: center; gap: 14px; background: rgba(15,16,22,.72);
+  backdrop-filter: blur(16px); border-radius: 999px; padding: 12px 24px 12px 16px; border: 1px solid rgba(255,255,255,.10); }
+.tag .n { font-family: 'JetBrains Mono', monospace; font-size: 24px; background: #A3127F; border-radius: 999px; padding: 4px 12px; font-weight: 700; }
+.tag .l { font-family: Poppins, sans-serif; font-weight: 600; font-size: 28px; }
+.tag .pips { display: flex; gap: 6px; margin-left: 6px; }
+.tag .pips i { width: 22px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.22); }
+.tag .pips i.on { background: #E03FB4; }
+</style>
+  <div data-hf-id="hf-50pb" id="root" data-composition-id="why" data-width="1920" data-height="1080" data-layout-allow-overlap>
+    <div data-hf-id="hf-lwgg" id="why-tag" class="clip" data-start="0" data-duration="49.82" data-track-index="0"><div data-hf-id="hf-glef" id="why-tag-c" class="tag"><span data-hf-id="hf-kp5a" class="n">01</span><span data-hf-id="hf-m7lu" class="l">Why it matters</span><span data-hf-id="hf-3qgn" class="pips"><i data-hf-id="hf-l5u7" class="on"></i><i data-hf-id="hf-gd9w" class=""></i><i data-hf-id="hf-x6bw" class=""></i><i data-hf-id="hf-vzet" class=""></i><i data-hf-id="hf-wdpu" class=""></i></span></div></div>
+    <div data-hf-id="hf-25sk" id="why-everywhere" class="clip" data-start="12.29" data-duration="7.0" data-track-index="2"><div data-hf-id="hf-4fuo" id="why-everywhere-c" class="card" style="left:192px;top:320px;width:640px"><div data-hf-id="hf-d9i1" class="eyebrow"><span data-hf-id="hf-9gry" class="dot"></span>Nihar says</div><div data-hf-id="hf-hxss" class="quote"><span data-hf-id="hf-etxw" id="why-everywhere-q-w0" class="w">Your</span> <span data-hf-id="hf-xepy" id="why-everywhere-q-w1" class="w">phone</span> <span data-hf-id="hf-znk9" id="why-everywhere-q-w2" class="w">signal</span> <span data-hf-id="hf-xfn8" id="why-everywhere-q-w3" class="w">is</span> <span data-hf-id="hf-ospz" id="why-everywhere-q-w4" class="w">going</span> <span data-hf-id="hf-flxj" id="why-everywhere-q-w5" class="w">to</span> <span data-hf-id="hf-e2ok" id="why-everywhere-q-w6" class="w">be</span> <span data-hf-id="hf-zx44" id="why-everywhere-q-w7" class="w">everywhere.</span></div></div></div>
+    <div data-hf-id="hf-va27" id="why-lifestyle" class="clip" data-start="20.97" data-duration="7.7" data-track-index="3"><div data-hf-id="hf-ldig" id="why-lifestyle-c" class="card" style="left:192px;top:320px;width:580px"><div data-hf-id="hf-fdhb" class="eyebrow"><span data-hf-id="hf-zcc2" class="dot"></span>The catch</div><div data-hf-id="hf-0o25" class="title">A lifestyle choice</div><div data-hf-id="hf-4wym" id="why-life2" class="sub">adopted without knowing what it can do to us</div></div></div>
+    <div data-hf-id="hf-29zg" id="why-prox" class="clip" data-start="39.02" data-duration="10.15" data-track-index="1"><div data-hf-id="hf-mq5t" id="why-prox-c" class="card" style="left:192px;top:320px;width:620px"><div data-hf-id="hf-wv4g" class="eyebrow"><span data-hf-id="hf-zqn3" class="dot"></span>What really hurts</div><div data-hf-id="hf-01s1" class="big" style="font-size:96px">Proximity</div><div data-hf-id="hf-urql" class="sub">The closer you are to the signal, the more it matters.</div><div data-hf-id="hf-ufsv" class="bar"><i data-hf-id="hf-zf0g" id="why-proxbar"></i></div></div></div>
+  </div>
+  <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#why-tag-c",{opacity:0,y:-20},{opacity:1,y:0,duration:0.5,ease:"expo.out"},0.2);
+      tl.fromTo("#why-everywhere-q-w0",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.44);
+      tl.fromTo("#why-everywhere-q-w1",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.51);
+      tl.fromTo("#why-everywhere-q-w2",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.58);
+      tl.fromTo("#why-everywhere-q-w3",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.65);
+      tl.fromTo("#why-everywhere-q-w4",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.72);
+      tl.fromTo("#why-everywhere-q-w5",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.79);
+      tl.fromTo("#why-everywhere-q-w6",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.86);
+      tl.fromTo("#why-everywhere-q-w7",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power4.out"},12.93);
+      tl.fromTo("#why-everywhere-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},12.29);
+      tl.to("#why-everywhere-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},18.93);
+      tl.fromTo("#why-lifestyle-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},20.97);
+      tl.to("#why-lifestyle-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},28.31);
+      tl.fromTo("#why-life2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},23.77);
+      tl.fromTo("#why-prox-c",{opacity:0,scale:0.86,filter:"blur(8px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.55,ease:"back.out(1.5)"},39.02);
+      tl.to("#why-prox-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},48.81);
+      tl.fromTo("#why-proxbar",{scaleX:0.08},{scaleX:1,duration:2.2,ease:"power2.inOut"},40.42);
+      tl.to("#why-tag-c",{opacity:0,y:-12,duration:0.3,ease:"power2.in"},49.42);
+      window.__timelines["why"] = tl;
+  </script>
+</template>

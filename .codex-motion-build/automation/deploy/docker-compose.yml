@@ -1,0 +1,79 @@
+# Production stack. Run from automation/ :  docker compose -f deploy/docker-compose.yml up -d --build
+#
+# Three services, one public port surface (Caddy: 80/443). The engine is deliberately
+# NOT published: it has no authentication of its own and trusts the X-Studio-User
+# header, so anything that can reach port 8793 can read every account.
+
+name: ai-editor
+
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data      # holds the Let's Encrypt cert and account key
+      - caddy_config:/config
+    environment:
+      # The hostname Caddy gets a certificate for, e.g. yourapp.duckdns.org
+      SITE_HOST: ${SITE_HOST:?set SITE_HOST in deploy/.env}
+    depends_on:
+      dashboard:
+        condition: service_healthy
+
+  dashboard:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.dashboard
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "8787"
+      WEB_DIR: /app/web/dist
+      UPLOAD_DIR: /data/storage
+      EDITOR_URL: http://engine:8793
+      EDITOR_USERS_DIR: /data/users
+      EDITOR_UPLOADS_DIR: /data/storage
+      # Caddy terminates TLS and forwards X-Forwarded-For; login throttling needs this.
+      TRUST_PROXY: "true"
+      COOKIE_SECURE: "true"
+    volumes:
+      - app_data:/data
+    expose:
+      - "8787"
+    depends_on:
+      engine:
+        condition: service_healthy
+
+  engine:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.engine
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      EDITOR_HOST: 0.0.0.0
+      EDITOR_PORT: "8793"
+      EDITOR_USERS_DIR: /data/users
+      EDITOR_UPLOADS_DIR: /data/storage
+      EDITOR_SFX_DIR: /app/editor/assets/sfx
+      # AVE is optional and degrades gracefully; unset means "unavailable", not a crash.
+      EDITOR_AVE_ROOT: ${EDITOR_AVE_ROOT:-}
+    volumes:
+      - app_data:/data
+    # NO ports: section. This is load-bearing, not an oversight.
+    expose:
+      - "8793"
+    # Rendering is CPU-bound; leave a core for Caddy, Node and the OS.
+    cpus: ${ENGINE_CPUS:-3.0}
+    mem_limit: ${ENGINE_MEM:-12g}
+
+volumes:
+  app_data:       # per-account state, renders and uploads -- this is what to back up
+  caddy_data:
+  caddy_config:

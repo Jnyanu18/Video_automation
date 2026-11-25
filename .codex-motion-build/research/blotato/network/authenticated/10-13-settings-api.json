@@ -1,0 +1,235 @@
+{
+ "requested": "/settings/api",
+ "url": "https://my.blotato.com/settings/api",
+ "title": "Blotato",
+ "headings": [
+  "Settings",
+  "Blotato API Key",
+  "Choose where you'll use Blotato",
+  "Claude.ai Web",
+  "Claude Desktop / Claude Cowork",
+  "Claude Code (Terminal)",
+  "Other MCP Clients (Terminal, Antigravity, Cursor, Replit Agent, etc.)",
+  "n8n (Workflow Automation)",
+  "External API Keys"
+ ],
+ "links": [
+  {
+   "t": "Overview",
+   "h": "/overview"
+  },
+  {
+   "t": "Calendar",
+   "h": "/calendar"
+  },
+  {
+   "t": "Analytics",
+   "h": "/analytics"
+  },
+  {
+   "t": "Posts",
+   "h": "/posts"
+  },
+  {
+   "t": "Logs",
+   "h": "/logs"
+  },
+  {
+   "t": "Videos",
+   "h": "/videos"
+  },
+  {
+   "t": "Inbox",
+   "h": "/inbox"
+  },
+  {
+   "t": "DM automations",
+   "h": "/dm-automations"
+  },
+  {
+   "t": "Accounts",
+   "h": "/accounts"
+  },
+  {
+   "t": "Settings",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "My Brand",
+   "h": "/settings/brand"
+  },
+  {
+   "t": "API",
+   "h": "/settings/api"
+  },
+  {
+   "t": "Profile",
+   "h": "/settings/profile"
+  },
+  {
+   "t": "Billing",
+   "h": "/settings/billing"
+  },
+  {
+   "t": "API Quickstart",
+   "h": "https://help.blotato.com/api/start"
+  },
+  {
+   "t": "Automation Templates",
+   "h": "https://help.blotato.com/api/templates"
+  }
+ ],
+ "buttons": [
+  "Switch to Content Studio",
+  "Tools",
+  "Upgrade & Generate API Key",
+  "Claude.ai Web",
+  "Claude Cowork",
+  "Claude Code",
+  "Replit",
+  "ChatGPT Work / Codex",
+  "Cursor",
+  "Antigravity",
+  "Hermes",
+  "OpenClaw",
+  "Other MCP Client",
+  "n8n",
+  "Make",
+  "My own app or code",
+  "Save"
+ ],
+ "inputs": [
+  {
+   "tag": "input",
+   "type": "password",
+   "ph": "",
+   "aria": ""
+  }
+ ],
+ "tables": 0,
+ "text": "Blotato\nDeveloper Platform\nSwitch to Content Studio\nPLATFORM\nOverview\nCalendar\nAnalytics\nPosts\nLogs\nVideos\nInbox\nDM automations\nAccounts\nTools\nSettings\nSettings\nMy Brand\nAPI\nProfile\nBilling\nBlotato API Key\nGenerating an API key ends your free trial immediately and charges your card today. During your free trial, you can access ALL blotato features except the API - this is to prevent spam/abuse of users spamming low-quality content.\nUpgrade & Generate API Key\nAPI Quickstart\nAutomation Templates\nChoose where you'll use Blotato\n\nPick your AI tool - we'll make the setup simple.\n\n✦ ONE-CLICK SIGN-IN\n\nClaude.ai Web\nClaude Cowork\nClaude Code\nReplit\n\n🔑 COPY YOUR API KEY\n\nChatGPT Work / Codex\nCursor\nAntigravity\nHermes\nOpenClaw\nOther MCP Client\nn8n\nMake\nMy own app or code\n👆\n\nPick your tool to see the setup wizard\n\nClaude.ai Web\n\n1. Go to Settings > Connectors > Add Custom Connector\n\n2. Name: Blotato\n\n3. URL: https://mcp.blotato.com/mcp\n\n4. Press Connect and approve access\n\nClaude Desktop / Claude Cowork\n\n1. Go to Settings > Connectors > Add Custom Connector\n\n2. Name: Blotato\n\n3. URL: https://mcp.blotato.com/mcp\n\n4. Press Connect and approve access\n\nClaude Code (Terminal)\nOther MCP Clients (Terminal, Antigravity, Cursor, Replit Agent, etc.)\nn8n (Workflow Automation)\nExternal API Keys\nElevenlabs\n\nYou must provide an API key if you want to use custom voices.\n\nSave\n1",
+ "api": [
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774449320&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/web-vitals.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/dead-clicks-autocapture.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/posthog-recorder.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/array/phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf/config.js",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/static/surveys.js?v=1.360.0",
+   "type": "Script",
+   "status": 200,
+   "mime": "application/javascript"
+  },
+  {
+   "method": "GET",
+   "url": "https://geometry.blotato.com/api/surveys/?token=phc_G4LObYRIDsRhRb3BFP9hi7BHtbzRyy6WeXdzX4ReLdf&ip=0&_=1793774456572&ver=1.360.0",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/users/me",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/users/me",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "GET",
+   "url": "https://backend.blotato.com/v2/users/me",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/flags/?v=2&ip=0&_=1793774458319&ver=1.360.0&compression=base64",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/i/v0/e/?ip=0&_=1793774460322&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  },
+  {
+   "method": "POST",
+   "url": "https://geometry.blotato.com/s/?ip=0&_=1793774460328&ver=1.360.0&compression=gzip-js",
+   "type": "Fetch",
+   "status": 200,
+   "mime": "application/json"
+  }
+ ],
+ "blocked_non_get": [],
+ "websockets": [
+  "wss://backend.blotato.com/events",
+  "wss://nexus-websocket-a.intercom.io/pubsub/5-sgFjq7Wfb4EFZlcRV33KhlgcgY__l11Mllp5JWwtAqUjtCfO3zne-kEohTPCUtZPEEC8uIlUxJRRubEi_Fu5XY9bjUTEztMeJFWZ?X-Nexus-New-Client=true&X-Nexus-Version=0.21.0&user_role=user"
+ ],
+ "ws_frames": [
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName"
+   ],
+   "type": null
+  },
+  {
+   "dir": "out",
+   "keys": [
+    "eventName",
+    "nx.Topics"
+   ],
+   "type": null
+  }
+ ],
+ "screenshot": "10-13-settings-api.png"
+}

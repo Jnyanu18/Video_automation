@@ -7,13 +7,17 @@ import { spacing, useTheme } from '../theme';
 export function Page({
   title,
   subtitle,
+  actions,
   children,
   maxWidth,
+  contentGap,
 }: {
   title?: string;
   subtitle?: string;
+  actions?: React.ReactNode;
   children: React.ReactNode;
   maxWidth?: number | string;
+  contentGap?: number;
 }) {
   const { colors } = useTheme();
   return (
@@ -22,13 +26,17 @@ export function Page({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.content,
+          contentGap !== undefined ? { gap: contentGap } : null,
           maxWidth ? { maxWidth, alignSelf: 'center' } : null,
         ]}
       >
         {title ? (
-          <View style={{ marginBottom: spacing.xs, gap: 2 }}>
-            <T variant="h1" style={{ fontSize: 22, fontWeight: '700' }}>{title}</T>
-            {subtitle ? <T variant="small" muted>{subtitle}</T> : null}
+          <View style={styles.header}>
+            <View style={{ gap: 2 }}>
+              <T variant="h1" style={{ fontSize: 22, fontWeight: '700' }}>{title}</T>
+              {subtitle ? <T variant="small" muted>{subtitle}</T> : null}
+            </View>
+            {actions ? <View>{actions}</View> : null}
           </View>
         ) : null}
         {children}
@@ -43,6 +51,14 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     width: '100%',
     paddingBottom: spacing.xxl * 2,
+  },
+  header: {
+    marginBottom: spacing.xs,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
   },
 });
 

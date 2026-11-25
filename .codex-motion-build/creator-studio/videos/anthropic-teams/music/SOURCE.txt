@@ -1,0 +1,5 @@
+loop.wav: exactly 2 bars (125 frames, 4.1667 s at 30 fps) cut from videos/ghost-vs-substack/music/track-1.mp3 at 17.798 s
+(itself copied from videos/saas-for-zero/music/track-1.mp3: playful light electronic, plucky synth, soft claps, ~116 bpm;
+ElevenLabs Music, paid-plan key, commercial use under the Eleven Music terms). Bar length measured from the onset
+autocorrelation (4.155 s), stretched 0.28% to a whole number of frames, 15 ms crossfade at the seam so the end runs
+into the start. Made by Claude 2026-11-09; nothing new generated.

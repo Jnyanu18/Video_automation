@@ -1,0 +1,23 @@
+{
+  "id":"frame-studio-reel","revision":1,"skillVersion":"1.6","fictionalBrand":true,
+  "brand":"FRAME","descriptor":"STUDIO","category":"PORTRAIT & PRODUCT PHOTOGRAPHY","cta":"BOOK YOUR SESSION",
+  "width":1080,"height":1920,"fps":60,"durationInFrames":900,
+  "palette":{"black":"#0D0D0F","white":"#F4F1EA","blue":"#1649FF","orange":"#FF4D1C"},
+  "camera":{"perspective":1450,"origin":{"x":540,"y":1160}},
+  "assets":{"portrait":"hero.png","product":"stilllife.png","movement":"movement.png"},
+  "audio":"studio-score.wav",
+  "scenes":[
+    {"id":"alive","from":0,"durationInFrames":120,"headline":["LOOK","ALIVE."],"label":"01 / PORTRAITS"},
+    {"id":"contact-sheet","from":120,"durationInFrames":150,"headline":["PRESENCE.","IN EVERY FRAME."],"label":"02 / A NEW PERSPECTIVE"},
+    {"id":"macro","from":270,"durationInFrames":150,"headline":["GET","CLOSER."],"label":"03 / THE DETAILS"},
+    {"id":"product","from":420,"durationInFrames":150,"headline":["MAKE OBJECTS","SPEAK."],"label":"04 / STILL LIFE"},
+    {"id":"personality","from":570,"durationInFrames":150,"headline":["PEOPLE.","PRODUCTS.","PERSONALITY."],"label":"05 / CREATIVE ENERGY"},
+    {"id":"identity","from":720,"durationInFrames":180,"headline":["FRAME","STUDIO"],"label":"06 / YOUR NEXT FRAME"}
+  ],
+  "events":[
+    {"id":"hero-bloom","frame":16},{"id":"depth-burst","frame":120},{"id":"cards-settle","frame":144},
+    {"id":"select-contact","frame":282},{"id":"card-flip","frame":420},{"id":"product-lock","frame":450},
+    {"id":"type-accent","frame":570},{"id":"identity-impact","frame":720},{"id":"cta-lock","frame":762}
+  ],
+  "copy":{"header":"MAKE YOUR NEXT FRAME.","portraitLabel":"PORTRAITS / 01","productLabel":"PRODUCTS / 02","creativeLabel":"CREATIVE / 03","selection":"EXPLORE THE DETAILS","endline":"LET’S MAKE SOMETHING ICONIC.","portfolioNote":"PEOPLE. PRODUCTS. PERSONALITY."}
+}

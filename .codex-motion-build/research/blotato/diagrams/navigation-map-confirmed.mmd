@@ -1,0 +1,41 @@
+flowchart TD
+  L["/login (email OTP)"] --> APP["App shell (cookie session)"]
+  APP --> DEV["Developer Platform mode"]
+  APP --> CS["Content Studio mode"]
+  DEV <-->|"client-side toggle, no API call"| CS
+
+  DEV --> OV["/overview"]
+  DEV --> LG["/logs"]
+  CS --> AG["/agent (Post editor)"]
+  AG -.-> RM["/remix (legacy)"]
+
+  subgraph Shared
+    CAL["/calendar"]
+    AN["/analytics"]
+    PO["/posts"]
+    VID["/videos"] -->|redirect| VN["/videos/new"]
+    IN["/inbox"]
+    DM["/dm-automations"]
+    AC["/accounts"]
+  end
+  DEV --> Shared
+  CS --> Shared
+
+  subgraph Tools
+    INS["/inspiration"]
+    PR["/prompts"]
+    VC["/labs/viral-coach"]
+  end
+  DEV --> Tools
+  CS --> Tools
+
+  subgraph Settings
+    SP["/settings/profile"]
+    SB["/settings/brand"]
+    SA["/settings/api"]
+    SBL["/settings/billing"]
+  end
+  DEV --> SP
+  SP --- SB
+  SP --- SA
+  SP --- SBL

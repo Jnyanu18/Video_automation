@@ -1,0 +1,86 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "warm lo-fi hip hop with soft electric piano",
+  "founder vlog",
+  "sparse, leaves room for a voice",
+  "88 bpm"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody in the vocal range",
+  "aggressive",
+  "dark"
+ ],
+ "sections": [
+  {
+   "section_name": "Walk in",
+   "positive_local_styles": [
+    "curious",
+    "light plucks",
+    "soft kick enters"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 6480,
+   "lines": []
+  },
+  {
+   "section_name": "The pitch",
+   "positive_local_styles": [
+    "building confidence",
+    "steady beat",
+    "warm chords"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 9100,
+   "lines": []
+  },
+  {
+   "section_name": "The letter",
+   "positive_local_styles": [
+    "uplifting lift",
+    "brighter chords",
+    "small celebratory rise"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 9820,
+   "lines": []
+  },
+  {
+   "section_name": "The catch",
+   "positive_local_styles": [
+    "sudden soft drop",
+    "sparse piano only",
+    "bittersweet"
+   ],
+   "negative_local_styles": [
+    "drums"
+   ],
+   "duration_ms": 6740,
+   "lines": []
+  },
+  {
+   "section_name": "The advice",
+   "positive_local_styles": [
+    "thoughtful",
+    "beat returns gently",
+    "building slowly"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 12220,
+   "lines": []
+  },
+  {
+   "section_name": "Still going",
+   "positive_local_styles": [
+    "hopeful",
+    "full warm beat",
+    "resolves on a clean final chord"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 12540,
+   "lines": []
+  }
+ ]
+}

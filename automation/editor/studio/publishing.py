@@ -22,7 +22,6 @@ from .store import Store
 
 PLATFORMS = {
     "instagram": {"label": "Instagram Reels", "connector": "postiz-adapter"},
-    "tiktok": {"label": "TikTok", "connector": None},
     "youtube_shorts": {"label": "YouTube Shorts", "connector": None},
     "x": {"label": "X / Twitter", "connector": None},
 }

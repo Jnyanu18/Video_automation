@@ -1,0 +1,26 @@
+[
+ {
+  "scene": "stackzero",
+  "at": "part 1 got",
+  "bg": "#f4f2ee",
+  "section": "part 2 of the $0 startup: white keynote, a colour world per tool, Ledgerly grows a piece per chapter, the bill stays $0",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "saas-for-zero-2",
+   "parts": {
+    "views": "views so", "two": "heres part", "zero": "on 0", "real": "real product",
+    "b2": "first convex", "logic": "your logic", "updates": "updates by", "million": "a million",
+    "b3": "second better", "google": "google sign", "factor": "two factor", "open": "open source", "users": "users stay",
+    "b4": "third stripe", "nofee": "no monthly", "setup": "no setup", "pays": "customer pays",
+    "b5": "fourth sentry", "tell": "to tell", "five": "5000 errors",
+    "b6": "fifth uptime", "every5": "every five", "down": "goes down", "fifty": "50 monitors",
+    "b7": "add the stack", "still": "is still",
+    "b8": "comment stack", "both": "both parts"
+   }
+  }
+ }
+]

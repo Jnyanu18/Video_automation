@@ -1,0 +1,34 @@
+{
+  "media_id": "2211a5769b20",
+  "video_path": "J:\\ai editor\\raw footage\\yc\\speaker_source.mp4",
+  "duration": 60.992,
+  "resolution": "1076x1914",
+  "fps": 30.0,
+  "audio_stream": true,
+  "scenes_count": 1,
+  "silences_count": 0,
+  "total_speech_words": 187,
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "start": 0.0,
+      "end": 60.992,
+      "duration": 60.992,
+      "keyframe": "J:\\ai editor\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\acceptance_test\\footage_index\\keyframes\\kf_000_30.50s.jpg",
+      "transcript": "Here I see, I'm Vishnu, I'm ready to, and I'm the sole founder of Ascorp. I've built Trade palette and AI agent inside trading view and give it to more than 2600 users. Building that actually taught me that putting an AI inside a product is actually the easy part. The hard part is to trust that AI agent to actually do things for your users inside your product without breaking anything. Big companies like AWS and Google Cloud are building their own AI agents. Well, most of our companies cut Ascorp is the AI agent for them. The users just ask and verb shows them what it is going to change. And only after they say yes, it just goes ahead and does it. We're lives in September and so far. We have one live customer deployed in, deployed Ascorp into that product. So I'm betting heavily on the future where people will no longer click on anything to get inside a product. They're just open an agent and ask what they want to do and get things done. So looking forward to hear from you.",
+      "words_count": 187,
+      "visual_tags": [
+        "hook",
+        "introduction",
+        "product_demo",
+        "core_problem"
+      ],
+      "face_coverage": 1.0,
+      "camera": {
+        "framing": "Close-Up / Talking Head",
+        "face_detected": true,
+        "motion": "Steady / Static"
+      }
+    }
+  ]
+}

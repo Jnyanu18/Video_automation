@@ -1,0 +1,11 @@
+[
+  {"scene": "tickets", "at": "every how", "bg": "#f3f1ec", "section": "one take: the inbox, the pile, Jane in the app, the confirm, AskVerb, comment", "mark": ["link"],
+   "poses": [{"on": "every how", "pose": "point-left"}, {"on": "failing", "pose": "facepalm"}, {"on": "just leave", "pose": "sad"}, {"on": "late replies", "pose": "point-left"},
+     {"on": "adds up", "pose": "shock"}, {"on": "now picture", "pose": "think"}, {"on": "own way", "pose": "present"}, {"on": "then it", "pose": "wow"},
+     {"on": "one click", "pose": "point-left"}, {"on": "never", "pose": "cheer"}, {"on": "that's", "pose": "cheer"}, {"on": "comment", "pose": "wave"}],
+   "props": {"look": "dev", "ava": "side", "stageScale": 1.0, "stageLift": 60, "slug": "askverb-how-do-i",
+     "parts": {"leave": "just leave", "late": "late replies", "team": "pull your", "adds": "adds up",
+       "picture": "now picture", "ask": "inside your", "own": "own way", "guide": "own way", "work": "then it",
+       "guides": "it guides", "click": "one click", "never": "never",
+       "brand": "that's", "gives": "gives your", "hour": "under an", "free": "completely", "comment": "comment", "kw": "link", "guide2": "guide"}}}
+]

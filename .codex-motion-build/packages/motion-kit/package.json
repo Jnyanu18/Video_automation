@@ -1,0 +1,28 @@
+{
+  "name": "@ailo/motion-kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "audio": "python score.py",
+    "stills": "node render.mjs --stills",
+    "preview": "node render.mjs --preview",
+    "render": "node render.mjs",
+    "gate": "python gate.py"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.544",
+    "@remotion/motion-blur": "4.0.544",
+    "@remotion/renderer": "4.0.544",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.544"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/node": "24.19.2",
+    "typescript": "5.9.3"
+  }
+}

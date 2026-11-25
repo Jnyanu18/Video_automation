@@ -62,20 +62,6 @@ PRESET_STYLES = {
         },
         "pacing": {"avg_shot_length": 1.5, "cuts_per_minute": 40.0, "speech_wpm": 185},
     },
-    "math_aptitude_masterclass": {
-        "name": "math_aptitude_masterclass",
-        "description": "Engaging math/aptitude explainer: visual counting grids, animated formulas, synchronized step-by-step reveals, clean bottom typography, -15 LUFS.",
-        "edit_params": {
-            "max_pause": 0.35,
-            "target_shot_length": 3.0,
-            "caption_style": "clean-lower",
-            "caption_max_words": 5,
-            "caption_position": "bottom",
-            "output_aspect": "9:16",
-            "target_lufs": -15.0,
-        },
-        "pacing": {"avg_shot_length": 3.0, "cuts_per_minute": 20.0, "speech_wpm": 155},
-    },
     "fashion_luxury_editorial": {
         "name": "fashion_luxury_editorial",
         "description": "Luxury fashion & product showcase: elegant pacing (2.5-3.5s), subtle slow-motion, aesthetic serif typography, rich color grade, -16 LUFS.",
@@ -89,20 +75,6 @@ PRESET_STYLES = {
             "target_lufs": -16.0,
         },
         "pacing": {"avg_shot_length": 2.8, "cuts_per_minute": 21.4, "speech_wpm": 140},
-    },
-    "yc_product_presentation": {
-        "name": "yc_product_presentation",
-        "description": "Silicon Valley pitch style: dynamic split-screen (45% animated product UI/charts, 55% founder footage), context-aware transitions, keyword emphasis, -14 LUFS.",
-        "edit_params": {
-            "max_pause": 0.26,
-            "target_shot_length": 2.4,
-            "caption_style": "karaoke",
-            "caption_max_words": 4,
-            "caption_position": "bottom",
-            "output_aspect": "9:16",
-            "target_lufs": -14.0,
-        },
-        "pacing": {"avg_shot_length": 2.4, "cuts_per_minute": 25.0, "speech_wpm": 160},
     },
 }
 

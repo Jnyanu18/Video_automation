@@ -1,0 +1,35 @@
+name: birthday
+description: Upbeat birthday party highlight video capturing arrival, games, cake cutting, and gift opening.
+target_duration: 120
+beats:
+  - id: decorations_and_venue
+    must_have: []
+    duration: [10, 20]
+    search: ["balloons", "decorations", "birthday cake", "venue", "table setup", "banners"]
+    transition: cut
+  - id: guests_arriving
+    must_have: [guests]
+    duration: [15, 25]
+    search: ["friends arriving", "hugs", "greetings", "gifts", "welcome"]
+    transition: cut
+  - id: games_and_activities
+    must_have: [high_energy]
+    duration: [20, 35]
+    search: ["party games", "activities", "kids playing", "laughter", "fun", "celebration"]
+    transition: cut
+  - id: cake_cutting
+    must_have: [speech]
+    duration: [20, 35]
+    search: ["cake cutting", "blowing candles", "happy birthday song", "wishes", "cheering"]
+    prefer: speech_whole
+    transition: cut
+  - id: celebration_and_eating
+    must_have: []
+    duration: [15, 30]
+    search: ["eating cake", "food", "toasting", "cheers", "friends laughing"]
+    transition: cut
+  - id: opening_presents
+    must_have: []
+    duration: [15, 25]
+    search: ["opening presents", "gifts", "reactions", "hugs", "surprises"]
+    transition: dip_to_black

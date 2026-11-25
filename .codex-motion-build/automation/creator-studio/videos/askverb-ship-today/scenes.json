@@ -1,0 +1,11 @@
+[
+  {"scene": "ship", "at": "your users", "bg": "#f3f1ec", "section": "one take: users asking, the app, the confirm, five steps, stacks, comment", "mark": ["link"],
+   "poses": [{"on": "your users", "pose": "point-left"}, {"on": "ship one", "pose": "wow"}, {"on": "completely", "pose": "cheer"}, {"on": "picture", "pose": "think"},
+     {"on": "just does", "pose": "wow"}, {"on": "it finds", "pose": "point-left"}, {"on": "one click", "pose": "cheer"}, {"on": "go to", "pose": "point-left"},
+     {"on": "builds", "pose": "wink"}, {"on": "it works", "pose": "present"}, {"on": "that's", "pose": "cheer"}, {"on": "comment", "pose": "wave"}],
+   "props": {"look": "dev", "ava": "side", "stageScale": 1.0, "stageLift": 60, "slug": "askverb-ship-today",
+     "parts": {"today": "ship one", "free": "completely", "picture": "picture", "typing": "move every", "does": "just does",
+       "finds": "it finds", "asuser": "as that", "shows": "shows", "click": "one click",
+       "go": "go to", "sign": "sign in", "site": "add your", "domain": "connect your", "mcp": "verb mcp", "rest": "builds",
+       "stack": "it works", "hour": "under an", "brand": "that's", "comment": "comment", "kw": "link", "guide": "guide"}}}
+]

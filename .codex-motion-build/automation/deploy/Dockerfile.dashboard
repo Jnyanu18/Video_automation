@@ -1,0 +1,51 @@
+# syntax=docker/dockerfile:1.7
+#
+# The dashboard: the auth boundary, and the server that hands out the SPA.
+# Build context is automation/ :   docker build -f deploy/Dockerfile.dashboard .
+#
+# This is the only service Caddy talks to. It authenticates the browser, then
+# rebuilds each upstream request from scratch and sets X-Studio-User itself, so a
+# browser can never choose which account it reads (server/editor-proxy.cjs).
+
+# ---- stage 1: the Expo web export (the frontend) --------------------------------
+FROM node:22-bookworm-slim AS webbuild
+WORKDIR /build
+# Lockfile first so the dependency layer caches independently of app source.
+COPY app/package.json app/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY app ./
+# Same output as `npm run build:web`, written where the final stage expects it.
+RUN npx expo export --platform web --output-dir /build/dist \
+ && test -f /build/dist/index.html
+
+# ---- stage 2: the server ---------------------------------------------------------
+FROM node:22-bookworm-slim
+ENV NODE_ENV=production
+WORKDIR /app
+
+# The dashboard server has zero npm dependencies -- it is pure Node stdlib -- so
+# there is nothing to install here. Keep it that way.
+COPY package.json ./
+COPY server ./server
+# lib/ is not optional: server/config.cjs does require('../lib/core.js'). Without it the
+# container crash-loops on boot with MODULE_NOT_FOUND before it ever logs anything useful.
+COPY lib ./lib
+COPY adapters ./adapters
+COPY --from=webbuild /build/dist ./web/dist
+
+RUN useradd --create-home --uid 10002 dash \
+ && mkdir -p /data/storage \
+ && chown -R dash:dash /data /app
+USER dash
+
+ENV HOST=0.0.0.0 \
+    PORT=8787 \
+    WEB_DIR=/app/web/dist \
+    UPLOAD_DIR=/data/storage \
+    EDITOR_URL=http://engine:8793
+
+EXPOSE 8787
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:8787/api/session').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["node", "server/index.cjs"]

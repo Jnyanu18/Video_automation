@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "projectId": "event-studio-stage-study",
+  "projectRevision": 1,
+  "fps": 60,
+  "durationInFrames": 900,
+  "evidence": {
+    "mode": "component-sampled",
+    "sourceHash": "8e36ad5af9a7e654d80a00a38d0c0fca77f50373f10a0643127fab4aa9131147",
+    "notes": "Samples actual functions consumed by EventStageFilm. At cut−1 coverage uses the projected opaque hero polygon with zero corner radius/hidden internal content; at cut/cut+1 EventStageFilm uses the same opaque brand-color full-canvas identity backplane. This is not pixel inspection, playback, listening, font-fit measurement, approval or an artistic rating."
+  },
+  "requiredProbes": [
+    "contact",
+    "beat-word",
+    "cover"
+  ],
+  "contacts": [
+    {
+      "id": "spark-floor",
+      "frame": 30,
+      "space": "screen",
+      "objectBoundary": {
+        "x": 540,
+        "y": 1300
+      },
+      "surface": {
+        "x": 540,
+        "y": 1300
+      },
+      "tolerancePx": 0.5
+    }
+  ],
+  "beatWords": [
+    {
+      "id": "lights",
+      "beatFrame": 270,
+      "firstReadableFrame": 270,
+      "intentionalOffsetFrames": 0,
+      "toleranceFrames": 0
+    },
+    {
+      "id": "energy",
+      "beatFrame": 300,
+      "firstReadableFrame": 300,
+      "intentionalOffsetFrames": 0,
+      "toleranceFrames": 0
+    },
+    {
+      "id": "action",
+      "beatFrame": 330,
+      "firstReadableFrame": 330,
+      "intentionalOffsetFrames": 0,
+      "toleranceFrames": 0
+    }
+  ],
+  "covers": [
+    {
+      "id": "brand-cover",
+      "cutFrame": 750,
+      "samples": [
+        {
+          "frame": 749,
+          "coveredFraction": 1,
+          "outgoingForegroundAlpha": 0
+        },
+        {
+          "frame": 750,
+          "coveredFraction": 1,
+          "outgoingForegroundAlpha": 0
+        },
+        {
+          "frame": 751,
+          "coveredFraction": 1,
+          "outgoingForegroundAlpha": 0
+        }
+      ]
+    }
+  ],
+  "readableHolds": [
+    {
+      "sceneId": "identity",
+      "firstReadableFrame": 780,
+      "lastReadableFrame": 899,
+      "minimumFrames": 90
+    }
+  ],
+  "ending": {
+    "sceneId": "identity",
+    "firstReadableFrame": 780,
+    "lastReadableFrame": 899,
+    "minimumHoldFrames": 90
+  },
+  "shots": [
+    {
+      "sceneId": "spark",
+      "layout": "small-object-to-pass",
+      "typeMechanic": "spring-letters",
+      "focalAction": "floor-contact-to-pass"
+    },
+    {
+      "sceneId": "build",
+      "layout": "wide-perspective-stage",
+      "typeMechanic": "line-wipe",
+      "focalAction": "pass-unfolds-stage"
+    },
+    {
+      "sceneId": "showtime",
+      "layout": "macro-stage",
+      "typeMechanic": "whole-word-beat",
+      "focalAction": "lights-energy-action"
+    },
+    {
+      "sceneId": "details",
+      "layout": "left-hero-right-support",
+      "typeMechanic": "wipe-and-letter-response",
+      "focalAction": "supporting-card-burst"
+    },
+    {
+      "sceneId": "moment",
+      "layout": "regroup-then-cover",
+      "typeMechanic": "letters-and-scale-response",
+      "focalAction": "stage-cover"
+    },
+    {
+      "sceneId": "identity",
+      "layout": "quiet-brand-center",
+      "typeMechanic": "settled-identity",
+      "focalAction": "readable-brand-hold"
+    }
+  ],
+  "assets": [
+    {
+      "id": "logo",
+      "kind": "logo",
+      "status": "placeholder",
+      "requiredForFinal": false
+    },
+    {
+      "id": "original-score",
+      "kind": "audio",
+      "status": "original",
+      "requiredForFinal": true
+    }
+  ],
+  "checks": {
+    "typecheck": "passed",
+    "randomFrameRepeat": "passed",
+    "frameInspection": "pending",
+    "fullSpeedPlayback": "pending",
+    "audioListening": "pending"
+  },
+  "findings": []
+}

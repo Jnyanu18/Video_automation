@@ -1,0 +1,1 @@
+words.json: 'Quen'/'Quinn' -> 'Qwen', 'Astor' -> 'Astra', 'installing' -> 'and stalling' (script words), number fragments merged (0.016%, 7.9%, 48.1%, 3.5%), 'GPT -6' -> 'GPT-6' (2026-11-04). LISTEN to how the voice says Qwen and Astra.

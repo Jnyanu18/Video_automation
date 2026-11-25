@@ -1,0 +1,65 @@
+[
+  {
+    "id": "01-stamp",
+    "start": 0.0,
+    "end": 2.636,
+    "words": "your own",
+    "desc": "01 · the hook"
+  },
+  {
+    "id": "02-counter",
+    "start": 2.636,
+    "end": 6.451,
+    "words": "my reddit",
+    "desc": ""
+  },
+  {
+    "id": "03-inbox",
+    "start": 6.451,
+    "end": 12.398,
+    "words": "you at",
+    "desc": "02 · why it matters"
+  },
+  {
+    "id": "04-door",
+    "start": 12.398,
+    "end": 17.063,
+    "words": "zoho gives",
+    "desc": "03 · the catch"
+  },
+  {
+    "id": "05-pricing",
+    "start": 17.063,
+    "end": 23.314,
+    "words": "i signed",
+    "desc": ""
+  },
+  {
+    "id": "06-door",
+    "start": 23.314,
+    "end": 29.262,
+    "words": "the free plan lives",
+    "desc": "04 · the trick"
+  },
+  {
+    "id": "07-steps",
+    "start": 29.262,
+    "end": 40.924,
+    "words": "pick the free",
+    "desc": "05 · the way in"
+  },
+  {
+    "id": "08-facts",
+    "start": 40.924,
+    "end": 50.603,
+    "words": "two things",
+    "desc": "06 · two things to know"
+  },
+  {
+    "id": "09-end",
+    "start": 50.603,
+    "end": 54.928,
+    "words": "dm me",
+    "desc": "07 · the link"
+  }
+]

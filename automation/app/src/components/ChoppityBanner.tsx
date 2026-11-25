@@ -45,7 +45,7 @@ export function ChoppityBanner({ onAction }: { onAction?: () => void }) {
               cursor: 'pointer',
               transition: 'all 140ms ease',
               transform: pressed ? 'scale(0.97)' : hovered ? 'translateY(-1px)' : 'none',
-              boxShadow: '0 2px 6px rgba(108, 76, 240, 0.25)',
+              boxShadow: '0 2px 6px rgba(255, 90, 31, 0.25)',
             } as any),
           ]}
         >

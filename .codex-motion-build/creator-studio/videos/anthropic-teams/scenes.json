@@ -1,0 +1,4 @@
+[
+ { "scene": "antteams", "at": "start", "bg": "#f4f2ee", "section": "The loop: hook, Claude card with the teams orbiting, a prompt per two beats, read the caption", "mark": [],
+   "props": { "look": "dev", "captions": "none", "stageScale": 1.0, "stageLift": 0, "slug": "anthropic-teams" } }
+]

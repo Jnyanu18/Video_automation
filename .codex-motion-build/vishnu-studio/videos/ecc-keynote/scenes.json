@@ -1,0 +1,26 @@
+[
+ {
+  "scene": "eccnote",
+  "at": "one",
+  "bg": "#0d0d10",
+  "section": "ECC in the keynote system: the same script and voice as 44, our own look",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "ecc-keynote",
+   "parts": {
+    "turned": "turned", "team": "dev team", "free": "gave it",
+    "b2": "its called", "almost": "almost", "stars": "stars on",
+    "b3": "inside", "a71": "71 agents", "s314": "314 skills", "c98": "98 commands",
+    "b4": "a planner", "planner": "a planner", "architect": "an architect", "reviewer": "code reviewer", "security": "security checker", "all": "all working",
+    "b5": "its builder", "won": "won an",
+    "b6": "one command", "whole": "the whole",
+    "b7": "people are", "courses": "courses", "free2": "github for",
+    "b8": "comment github"
+   }
+  }
+ }
+]

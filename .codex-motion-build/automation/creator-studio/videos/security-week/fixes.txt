@@ -1,0 +1,13 @@
+# Spelling, from the transcript (2026-10-23)
+Nodejs => Node.js
+high -severity => high-severity
+poison => version
+voice and => version
+eModera => eMudhra
+ReelVis => Railway
+customers and environment => customers' environment
+# Caption corrections Vishnu asked for (2026-10-23): the audio stays, the caption says what is true
+users => attackers @9-13
+are out in the public => may be exposed
+railway => Railway
+8 => Eight @31-33

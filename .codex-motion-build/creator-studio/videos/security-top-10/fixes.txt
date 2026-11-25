@@ -1,0 +1,1 @@
+words.json: "57 ,000." -> "57,000.", "Skill Spectre." -> "SkillSpector." (the transcript's spelling; LISTEN to how the voice says it), "Anthropics'" -> "Anthropic's", "Mitre Attack" -> "MITRE ATT&CK", "multi -phase" -> "multi-phase", "from" -> "for" (2026-11-03)

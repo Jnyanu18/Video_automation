@@ -1,0 +1,1 @@
+﻿Display fixes in words.json (2026-11-06): goal, -> Goal,; comment -> Comment; guide, -> GUIDE,; copy + -paste -> copy-paste. Earshot: the [sighs] cue is heard (find 'a person sighing', z +4.8 strong); [laughs softly] and [chuckles] were not performed on line 6 (no match after a re-roll).

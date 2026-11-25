@@ -1,0 +1,1 @@
+track-1.mp3: copied from videos/build-your-jarvis/music/track-1.mp3 (the YC demo track, ElevenLabs Music made 2026-10-28), picked 2026-10-30 as the Jarvis 2 track; reused, nothing new generated.

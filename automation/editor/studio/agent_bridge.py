@@ -19,13 +19,16 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
+import subprocess
 import threading
 import time
 import uuid
 from pathlib import Path
+from urllib.parse import unquote
 from typing import Any, Dict, List, Optional
 
-from fastapi import HTTPException
+from fastapi import HTTPException, Request
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from studio import film_library
@@ -38,6 +41,7 @@ KINDS = ("motion", "edit", "event")
 FORMATS = ("9:16", "16:9", "1:1")
 MEDIA_EXT = {".mp4", ".mov", ".m4v", ".webm", ".mkv", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg",
              ".mp3", ".wav", ".m4a", ".aac", ".pdf"}
+AUDIO_EXT = {".mp3", ".wav", ".m4a", ".aac"}
 JOB_ID_RE = re.compile(r"^aj_[a-f0-9]{12}$")
 _lock = threading.Lock()
 
@@ -149,6 +153,7 @@ class AgentJobRequest(BaseModel):
     footage_paths: List[str] = Field(default_factory=list, max_length=40)  # files already in this account's media folders
     reference_url: Optional[str] = Field(None, max_length=500)
     reference_video_id: Optional[str] = None
+    audio_upload_id: Optional[str] = Field(None, pattern=r"^[a-f0-9]{32}$")
     direction: Dict[str, str] = Field(default_factory=dict)  # every other form field (goal, audience, feeling, CTA...)
 
 
@@ -162,6 +167,36 @@ def public_job(job: dict) -> dict:
 def register_agent_routes(app, user_id: Optional[str], uploads_dir: Optional[Path], roots: Optional[List[Path]] = None) -> None:
     owner = user_id or "local"
     media_roots = [Path(r).resolve() for r in (roots or [])]
+    audio_dir = QUEUE_DIR / "_audio" / owner
+
+    @app.post("/api/editor/agent/audio", status_code=201)
+    async def upload_agent_audio(request: Request):
+        name = Path(unquote(request.headers.get("x-file-name", "audio"))).name
+        ext = Path(name).suffix.lower()
+        if ext not in AUDIO_EXT:
+            raise HTTPException(400, "Choose an MP3, WAV, M4A, or AAC file.")
+        audio_dir.mkdir(parents=True, exist_ok=True)
+        audio_id = uuid.uuid4().hex
+        target = audio_dir / f"{audio_id}{ext}"
+        size = 0
+        try:
+            with target.open("xb") as out:
+                async for chunk in request.stream():
+                    size += len(chunk)
+                    if size > 50 * 1024 * 1024:
+                        raise HTTPException(413, "Audio must be under 50 MB.")
+                    out.write(chunk)
+            if not size:
+                raise HTTPException(400, "Choose an audio file.")
+            probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a:0", "-show_entries",
+                                    "stream=codec_type", "-of", "default=noprint_wrappers=1:nokey=1", str(target)],
+                                   capture_output=True, text=True, timeout=15)
+            if probe.returncode or "audio" not in probe.stdout:
+                raise HTTPException(422, "This file does not contain readable audio.")
+        except Exception:
+            target.unlink(missing_ok=True)
+            raise
+        return {"ok": True, "audio": {"id": audio_id, "file_name": name, "size_bytes": size}}
 
     def in_media_roots(value: str) -> Optional[Path]:
         try:
@@ -217,12 +252,24 @@ def register_agent_routes(app, user_id: Optional[str], uploads_dir: Optional[Pat
                 raise HTTPException(404, f"Reference video '{req.reference_video_id}' not found")
         if req.kind in ("edit", "event") and not clips and not assets and not ref:
             raise HTTPException(400, "Add the clips to edit (upload them or pick them from the library).")
+        source_audio = None
+        if req.audio_upload_id:
+            source_audio = next((p for ext in AUDIO_EXT if (p := audio_dir / f"{req.audio_upload_id}{ext}").is_file()), None)
+            if source_audio is None:
+                raise HTTPException(400, "The uploaded audio could not be found. Upload it again.")
         direction = {str(k)[:40]: str(v)[:300] for k, v in list(req.direction.items())[:20] if str(v).strip()}
-        job = {"id": "aj_" + uuid.uuid4().hex[:12], "user_id": owner, "status": "queued", "created_at": now(),
+        job_id = "aj_" + uuid.uuid4().hex[:12]
+        audio_path = None
+        if source_audio:
+            job_dir(job_id).mkdir(parents=True, exist_ok=True)
+            audio_path = job_dir(job_id) / f"custom_audio{source_audio.suffix}"
+            shutil.copy2(source_audio, audio_path)
+        job = {"id": job_id, "user_id": owner, "status": "queued", "created_at": now(),
                "prompt": req.prompt.strip(), "kind": req.kind, "format": req.format, "duration": req.duration,
                "title": (req.title or "").strip() or None, "clips": clips, "assets": assets,
                "reference_url": ref, "reference_video_id": req.reference_video_id,
                "reference_video_path": str(studio_reference) if studio_reference else None,
+               "audio_path": str(audio_path) if audio_path else None,
                "direction": direction,
                "updates": [{"t": now(), "text": "Brief received. Your film is in the production queue."}],
                "output": None, "error": None}

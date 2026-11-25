@@ -1,0 +1,57 @@
+{
+  "name": "expo-haptics",
+  "version": "58.0.7",
+  "description": "Provides access to the system's haptics engine on iOS, vibration effects on Android, and Web Vibration API on web.",
+  "keywords": [
+    "expo",
+    "expo-haptics",
+    "haptics",
+    "react-native"
+  ],
+  "homepage": "https://docs.expo.dev/versions/latest/sdk/haptics/",
+  "bugs": {
+    "url": "https://github.com/expo/expo/issues"
+  },
+  "license": "MIT",
+  "author": "650 Industries, Inc.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/expo/expo.git",
+    "directory": "packages/expo-haptics"
+  },
+  "sideEffects": false,
+  "main": "build/Haptics.js",
+  "types": "build/Haptics.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "expo-source": "./src/Haptics.ts",
+        "default": "./build/Haptics.d.ts"
+      },
+      "expo-source": "./src/Haptics.ts",
+      "default": "./build/Haptics.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@expo/internal-scripts": "58.0.3",
+    "expo": "58.0.13",
+    "expo-modules-cli": "0.3.0"
+  },
+  "peerDependencies": {
+    "expo": "*"
+  },
+  "scripts": {
+    "precompile-android": "et prebuild-android-package-for-publish",
+    "build": "expo-build src",
+    "clean": "expo-module clean",
+    "lint": "oxlint --config oxlint.config.mjs .",
+    "format": "expo-module format",
+    "swift:format": "../../scripts/swift-format.sh",
+    "swift:lint": "../../scripts/swift-format.sh --lint",
+    "depscheck": "expo-module depscheck",
+    "typecheck": "tsc -p tsconfig.json",
+    "generate-types": "expo-modules generate-types"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "video": "C:\\Users\\jnyan\\Downloads\\new project - marketing automatio\\new project - marketing automatio\\automation\\server\\storage\\70ca3fea655db32dc61e3d7d1682ffea.mp4",
+  "duration": 64.617,
+  "noise_db": -35,
+  "min_len": 0.3,
+  "silences": [],
+  "speech": [
+    {
+      "start": 0.0,
+      "end": 64.617
+    }
+  ],
+  "silence_total": 0
+}

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "hook",
+    "start": 0.0,
+    "end": 1.98,
+    "words": "this dolphin lives in a river",
+    "desc": "Dusk over a wide river, jungle silhouettes on both banks. A pink dolphin arcs out of the water."
+  },
+  {
+    "id": "pink",
+    "start": 1.98,
+    "end": 3.34,
+    "words": "it's pink",
+    "desc": "The dolphin hangs at the top of its arc and glows pink. Word: \"PINK\"."
+  },
+  {
+    "id": "born",
+    "start": 3.34,
+    "end": 5.7,
+    "words": "and it wasn't born that way",
+    "desc": "The pink drains out of it, top to tail, until it is grey. It splashes back in."
+  },
+  {
+    "id": "boto",
+    "start": 5.7,
+    "end": 8.84,
+    "words": "it's the amazon river dolphin",
+    "desc": "Underwater. The dolphin swims across. Label: \"Amazon river dolphin\", small kicker \"the boto\"."
+  },
+  {
+    "id": "calves",
+    "start": 8.84,
+    "end": 10.68,
+    "words": "calves are born gray",
+    "desc": "A small grey calf swims up beside it."
+  },
+  {
+    "id": "size",
+    "start": 10.68,
+    "end": 16.04,
+    "words": "the biggest males grow",
+    "desc": "The dolphin beside a standing human outline, a measuring line between them: \"2.5 m\"."
+  },
+  {
+    "id": "flood",
+    "start": 16.04,
+    "end": 22.46,
+    "words": "every rainy season",
+    "desc": "The water level rises up the tree trunks until the forest stands in the river. The dolphin weaves between trunks."
+  },
+  {
+    "id": "neck",
+    "start": 22.46,
+    "end": 29.58,
+    "words": "its neck bones",
+    "desc": "Close on the head: it turns sideways, an arc drawn from nose to nose. \"90°\"."
+  },
+  {
+    "id": "muddy",
+    "start": 29.58,
+    "end": 31.78,
+    "words": "the water is too muddy",
+    "desc": "The water clouds to brown; everything beyond the dolphin's nose fades out."
+  },
+  {
+    "id": "sonar",
+    "start": 31.78,
+    "end": 37.56,
+    "words": "so it hunts with sound",
+    "desc": "Rings pulse out from the forehead. One hits a hidden fish, which lights up as the echo comes back. \"80 clicks / second\"."
+  },
+  {
+    "id": "legend",
+    "start": 37.56,
+    "end": 40.52,
+    "words": "people on the river tell a story",
+    "desc": "Night falls. A full moon rises over the river; the water goes silver."
+  },
+  {
+    "id": "man",
+    "start": 40.52,
+    "end": 44.9,
+    "words": "at night",
+    "desc": "A man's silhouette stands on the bank where the ripples were."
+  },
+  {
+    "id": "gone",
+    "start": 44.9,
+    "end": 47.2,
+    "words": "by morning",
+    "desc": "Dawn light. The bank is empty; a single ripple spreads on the water."
+  },
+  {
+    "id": "why",
+    "start": 47.2,
+    "end": 49.4,
+    "words": "so why pink",
+    "desc": "Close on the dolphin, grey. Word: \"WHY PINK?\""
+  },
+  {
+    "id": "scars",
+    "start": 49.4,
+    "end": 55.68,
+    "words": "scars",
+    "desc": "Thin scratch lines appear across its skin and glow pink, one by one, until the whole body is pink. Word: \"SCARS\"."
+  },
+  {
+    "id": "males",
+    "start": 55.68,
+    "end": 59.0,
+    "words": "males fight the most",
+    "desc": "Two dolphins clash in a swirl of bubbles; the pinker one swims out of it."
+  },
+  {
+    "id": "endangered",
+    "start": 59.0,
+    "end": 64.38,
+    "words": "today the",
+    "desc": "A net drifts down and a dam wall rises across the river. Stamp: \"ENDANGERED\"."
+  },
+  {
+    "id": "end",
+    "start": 64.38,
+    "end": 67.48,
+    "words": "the pinkest ones",
+    "desc": "The net and wall fade. One pink dolphin swims toward a low sun."
+  }
+]

@@ -1,0 +1,53 @@
+Cleanup scan of J:\ai editor
+Generated 2026-11-18 21:13
+
+action   category          GB    files
+----------------------------------------
+MOVE     BUILD           8.06   505185
+MOVE     RENDER          0.83      340
+KEEP     SOURCE          0.80     1753
+REVIEW   VENDOR          0.54     5945
+REVIEW   DELIVERABLE     0.16       10
+REVIEW   UNSORTED        0.15     1105
+MOVE     REFERENCE       0.10      111
+KEEP     LINK            0.00        0
+----------------------------------------
+
+Reclaimable by MOVE : 8.99 GB
+Needs human REVIEW  : 0.84 GB
+
+Largest 30 movable / reviewable items:
+
+       2020 MB  MOVE   BUILD      new project - marketing automatio\new project - marketing automatio\automation\runtime\n8n\node_modules
+       1793 MB  MOVE   BUILD      vishnu-studio\node_modules
+        868 MB  MOVE   BUILD      reference-motion-director-v1.6\reference-motion-director\starter\node_modules
+        797 MB  MOVE   BUILD      motion-director\kit\node_modules
+        481 MB  MOVE   BUILD      ramayana-teaser\node_modules
+        480 MB  MOVE   BUILD      calmind-reel\node_modules
+        444 MB  MOVE   BUILD      new project - marketing automatio\new project - marketing automatio\automation\app\node_modules
+        406 MB  MOVE   BUILD      opus-motion-library\node_modules
+        367 MB  MOVE   BUILD      ailo-15s\node_modules
+        120 MB  MOVE   BUILD      new project - marketing automatio\new project - marketing automatio\automation\editor\app\node_modules
+         51 MB  MOVE   RENDER     new project - marketing automatio\new project - marketing automatio\automation\editor\work\sb_47ca1b27233f\final.mp4
+         48 MB  MOVE   BUILD      new project - marketing automatio\new project - marketing automatio\automation\runtime\n8n-data\.cache
+         47 MB  MOVE   BUILD      ramayana-teaser\.bundle
+         47 MB  MOVE   BUILD      calmind-reel\.bundle
+         46 MB  MOVE   BUILD      motion-director\kit\.bundle
+         45 MB  MOVE   BUILD      reference-motion-director-v1.6\reference-motion-director\starter\.bundle
+         41 MB  KEEP   SOURCE     new project - marketing automatio\new project - marketing automatio\automation\editor\services\api\.data\projects\e35c6104-91dc-4788-81ba-b5b320e6595c\uploads\Rock_Castle___Experiences_Un-Ltd.__localhost_3000__-_ROCK_CASTLE_HOY_-_Visual_Studio_Code_2026-10-09_01-35-04.mp4
+         41 MB  MOVE   RENDER     new project - marketing automatio\new project - marketing automatio\automation\editor\services\api\.data\projects\e35c6104-91dc-4788-81ba-b5b320e6595c\work\preview.mp4
+         39 MB  KEEP   SOURCE     clients\rockcastle\assets\rockcastle.mp4
+         35 MB  MOVE   RENDER     export\event\Dubai_Diamond_Conference_Aftermovie_1080x1920.mp4
+         34 MB  MOVE   BUILD      reel-studio-stack\02-effects-animation\airbnb__lottie-web\build
+         32 MB  KEEP   SOURCE     raw footage\video_track_30s.mp4
+         31 MB  MOVE   RENDER     new project - marketing automatio\new project - marketing automatio\automation\editor\work\sb_47ca1b27233f\final_cut.mp4
+         31 MB  MOVE   RENDER     new project - marketing automatio\new project - marketing automatio\automation\editor\work\sb_47ca1b27233f\final_hf\cut.mp4
+         26 MB  REVIEW DELIVERABLE calmind-reel\out\CALMIND_App_Launch_Reel.mp4
+         24 MB  MOVE   RENDER     export\ramayana_movie_ad_9x16.mp4
+         24 MB  REVIEW DELIVERABLE ramayana-movie-trailer\renders\ramayana_theatrical_teaser_9x16.mp4
+         21 MB  REVIEW DELIVERABLE ailo-editor-reel\renders\AILO_AI_Editor_Reel_v1.mp4
+         21 MB  MOVE   RENDER     export\ramayana_cinematic_teaser.mp4
+         21 MB  MOVE   RENDER     ramayana-teaser\out\film.mp4
+
+Nothing has been moved or deleted. Review manifest.csv, change any action
+you disagree with, then run:  python cleanup/apply.py

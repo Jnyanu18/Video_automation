@@ -1,0 +1,56 @@
+name: wedding-highlight
+description: Cinematic 3-4 minute highlight film capturing the emotional arc and key moments of a wedding.
+target_duration: 210
+beats:
+  - id: arrival
+    must_have: [exterior, guests]
+    duration: [15, 25]
+    search: ["arrival", "entrance", "guests arriving", "venue", "exterior"]
+    transition: cut
+  - id: ceremony_start
+    must_have: [ceremony]
+    duration: [15, 25]
+    search: ["processional", "aisle", "ceremony start", "altar", "walking down aisle"]
+    transition: cut
+  - id: vows
+    must_have: [speech, two_people]
+    duration: [30, 50]
+    search: ["vows", "ceremony", "ring", "promise", "i do", "speech"]
+    prefer: speech_whole
+    transition: cut
+  - id: ring_and_kiss
+    must_have: [two_people]
+    duration: [10, 20]
+    search: ["ring exchange", "first kiss", "pronouncement", "cheer", "applause"]
+    transition: cut
+  - id: portrait_session
+    must_have: [two_people]
+    duration: [20, 35]
+    search: ["portraits", "couple", "golden hour", "romantic walk", "stroll"]
+    transition: crossfade
+  - id: reception_entrance
+    must_have: [guests]
+    duration: [15, 25]
+    search: ["reception entrance", "grand entrance", "welcome", "cheering", "applause"]
+    transition: cut
+  - id: speeches
+    must_have: [speech]
+    duration: [25, 45]
+    search: ["speeches", "toast", "best man", "maid of honor", "father of the bride"]
+    prefer: speech_whole
+    transition: cut
+  - id: first_dance
+    must_have: [two_people]
+    duration: [20, 35]
+    search: ["first dance", "slow dance", "couple dance", "dancing"]
+    transition: crossfade
+  - id: party_montage
+    must_have: [high_energy]
+    duration: [25, 45]
+    search: ["dance floor", "dancing", "party", "celebration", "fun"]
+    transition: cut
+  - id: send_off
+    must_have: [guests]
+    duration: [10, 20]
+    search: ["sparkler exit", "send off", "farewell", "goodbye", "exit"]
+    transition: dip_to_black

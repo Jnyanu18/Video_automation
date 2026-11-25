@@ -1,0 +1,18 @@
+[
+ {
+  "scene": "rocket",
+  "at": "ten animation",
+  "bg": "#14151a",
+  "section": "one rocket launch, one take, ten styles; at the comment, all ten at once",
+  "mark": ["claude"],
+  "props": {
+   "look": "dev",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "rocket-styles",
+   "keyword": "CLAUDE",
+   "styles": ["pixel art", "chalkboard", "blueprint", "comic", "paper", "neon", "ink", "flat", "retro", "risograph"],
+   "parts": { "comment": "comment claude", "kw": "comment claude" }
+  }
+ }
+]

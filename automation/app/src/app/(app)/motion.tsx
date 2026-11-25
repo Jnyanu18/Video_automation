@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Screen } from '../../components/Screen';
 import { Icon } from '../../components/Icon';
 import { Banner, Button, Card, Field, Input, Picker, T } from '../../components/ui';
@@ -7,6 +7,7 @@ import { useWide } from '../../components/useWide';
 import { errorText, post } from '../../api/client';
 import { latestDirectorJob } from '../../components/DirectorJob';
 import { ProductionPanel } from '../../components/ProductionPanel';
+import { CustomAudio, type SelectedAudio } from '../../components/CustomAudio';
 import { useToast } from '../../state/toast';
 import { font, radius, spacing, useTheme } from '../../theme';
 
@@ -54,12 +55,7 @@ const RHYTHM_OPTIONS = [
   { value: 'Steady & confident', label: 'Steady & confident' },
 ];
 
-/**
- * Motion Graphics Studio:
- * A written brief becomes an animated motion reel.
- * Follows the 3-step studio workflow:
- * 01 Your brief -> 02 Creative direction -> 03 Review your film
- */
+/** Motion Graphics Studio: a written brief becomes an animated motion reel. */
 export default function MotionGraphics() {
   const toast = useToast();
   const { colors } = useTheme();
@@ -74,6 +70,8 @@ export default function MotionGraphics() {
   const [duration, setDuration] = useState('30 seconds');
   const [feeling, setFeeling] = useState('Cinematic & powerful');
   const [rhythm, setRhythm] = useState('Build slowly, finish strong');
+  const [customAudio, setCustomAudio] = useState<SelectedAudio | null>(null);
+  const [audioUploading, setAudioUploading] = useState(false);
 
   // Optional finishing lines
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -110,6 +108,9 @@ export default function MotionGraphics() {
   }, []);
 
   async function build() {
+    if (audioUploading) {
+      return setError('Wait for your audio upload to finish.');
+    }
     if (prompt.trim().length < 3) {
       return setError('Describe your idea first.');
     }
@@ -122,9 +123,11 @@ export default function MotionGraphics() {
           title: title.trim() || undefined,
           format: format.includes('16:9') ? '16:9' : format.includes('1:1') ? '1:1' : '9:16',
           duration: parseInt(duration, 10) || 30,
+          audio_upload_id: customAudio?.id,
           direction: { goal, audience, feeling, rhythm, button: button.trim(), url: url.trim(), tagline: tagline.trim() },
         });
         setJobId(r.job.id);
+        setCustomAudio(null);
       },
       'Brief sent. Your film is in production.'
     );
@@ -136,42 +139,11 @@ export default function MotionGraphics() {
 
   return (
     <Screen title="Motion Films" subtitle="Create original motion graphics from a creative brief.">
-      <View style={[styles.stepperContainer, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-        <View style={[styles.stepItem, styles.stepItemActive]}>
-          <View style={[styles.stepBadge, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.onPrimary }}>01</Text>
-          </View>
-          <Text style={[styles.stepLabel, { color: colors.text }]}>Your brief</Text>
-        </View>
-        <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
-        <View style={[styles.stepItem, { opacity: 0.6 }]}>
-          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>02</Text>
-          </View>
-          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Creative direction</Text>
-        </View>
-        <View style={[styles.stepConnector, { backgroundColor: colors.border }]} />
-        <View style={[styles.stepItem, { opacity: 0.6 }]}>
-          <View style={[styles.stepBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-            <Text style={{ fontFamily: font.bold, fontSize: 11, color: colors.textMuted }}>03</Text>
-          </View>
-          <Text style={[styles.stepLabel, { color: colors.textMuted }]}>Review your film</Text>
-        </View>
-      </View>
-
       {error ? <Banner tone="danger">{error}</Banner> : null}
       <View style={[styles.splitGrid, wide && styles.splitGridWide]}>
         <View style={styles.formCol}>
           <Card style={{ gap: spacing.lg }}>
-            <View style={styles.headerLine}>
-              <T variant="caption" color={colors.primary} style={styles.eyebrowTag}>STEP 01 — YOUR BRIEF</T>
-              <View style={[styles.pillBadge, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-                <Text style={[styles.pillBadgeText, { color: colors.textMuted }]}>ABOUT 2 MIN</Text>
-              </View>
-            </View>
-
             <View style={{ gap: 4 }}>
-              <T variant="h1" style={{ fontSize: 24, letterSpacing: -0.5 }}>What are we making?</T>
               <T muted style={{ fontSize: 13.5 }}>Describe the motion film you want your creative director to make.</T>
             </View>
 
@@ -187,6 +159,8 @@ export default function MotionGraphics() {
                 placeholder="Describe the motion graphics film you want to create..."
               />
             </Field>
+
+            <CustomAudio value={customAudio} onChange={setCustomAudio} onUploadingChange={setAudioUploading} />
 
             <View style={styles.selectorsGrid}>
               <View style={styles.selectorItem}>
@@ -258,42 +232,6 @@ export default function MotionGraphics() {
 }
 
 const styles = StyleSheet.create({
-  /* Stepper */
-  stepperContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderRadius: radius.lg,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    marginBottom: spacing.md,
-    gap: 16,
-  },
-  stepItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    cursor: 'pointer' as any,
-  },
-  stepItemActive: {},
-  stepBadge: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stepLabel: {
-    fontFamily: font.semibold,
-    fontSize: 13,
-  },
-  stepConnector: {
-    width: 24,
-    height: 1,
-  },
-
   /* Split Grid */
   splitGrid: {
     gap: spacing.xl,
@@ -309,30 +247,6 @@ const styles = StyleSheet.create({
   previewCol: {
     flex: 0.9,
     minWidth: 320,
-  },
-
-  headerLine: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  eyebrowTag: {
-    fontFamily: font.mono,
-    fontWeight: '700',
-    letterSpacing: 1,
-    fontSize: 11,
-  },
-  pillBadge: {
-    borderWidth: 1,
-    borderRadius: radius.pill,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-  },
-  pillBadgeText: {
-    fontFamily: font.mono,
-    fontSize: 10,
-    fontWeight: '600',
-    letterSpacing: 0.5,
   },
 
   /* Selectors Grid */

@@ -1,0 +1,81 @@
+{
+ "positive_global_styles": [
+  "instrumental",
+  "sparse, leaves room for a voice",
+  "playful light electronic",
+  "plucky synth",
+  "soft claps",
+  "116 bpm"
+ ],
+ "negative_global_styles": [
+  "vocals",
+  "singing",
+  "lead melody in the vocal range",
+  "aggressive EDM"
+ ],
+ "sections": [
+  {
+   "section_name": "01-amount",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4165,
+   "lines": []
+  },
+  {
+   "section_name": "02-terminal",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3000,
+   "lines": []
+  },
+  {
+   "section_name": "03-receipt",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3000,
+   "lines": []
+  },
+  {
+   "section_name": "04-warning",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 3000,
+   "lines": []
+  },
+  {
+   "section_name": "05-receipt",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 26892,
+   "lines": []
+  },
+  {
+   "section_name": "06-amount",
+   "positive_local_styles": [
+    "builds a little"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 5738,
+   "lines": []
+  },
+  {
+   "section_name": "07-end",
+   "positive_local_styles": [
+    "steady"
+   ],
+   "negative_local_styles": [],
+   "duration_ms": 4699,
+   "lines": []
+  }
+ ]
+}

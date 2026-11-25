@@ -1,0 +1,20 @@
+{
+  "note": "What kit/scout.py looks for. Edit freely: queries are YouTube searches (Shorts only), channels are YouTube handles to watch every run. Change the niche here, not in the code.",
+  "queries": [
+    "claude code",
+    "claude ai",
+    "ai agents",
+    "new ai tool",
+    "vibe coding",
+    "chatgpt tips"
+  ],
+  "channels": [
+    "@GregIsenberg"
+  ],
+  "max_age_days": 21,
+  "max_length_s": 90,
+  "min_views": 10000,
+  "per_query": 25,
+  "show": 12,
+  "transcripts": 8
+}

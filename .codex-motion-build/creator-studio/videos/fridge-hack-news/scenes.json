@@ -1,0 +1,110 @@
+[
+ {
+  "scene": "fridge",
+  "at": "hackers",
+  "bg": "#0d0e12",
+  "section": "one take with Ava: eight stations on one camera ride, real news pages and photos, each claim as the reports word it",
+  "mark": [
+   "fifty",
+   "boring",
+   "danfoss"
+  ],
+  "poses": [
+   {
+    "on": "hackers",
+    "pose": "shock"
+   },
+   {
+    "on": "stores threw",
+    "pose": "sad"
+   },
+   {
+    "on": "it began",
+    "pose": "think"
+   },
+   {
+    "on": "but on monday",
+    "pose": "shock"
+   },
+   {
+    "on": "the way in",
+    "pose": "point-left"
+   },
+   {
+    "on": "but the fridges",
+    "pose": "wow"
+   },
+   {
+    "on": "germany's cyber",
+    "pose": "point-up"
+   },
+   {
+    "on": "apple had",
+    "pose": "think"
+   },
+   {
+    "on": "then late sunday",
+    "pose": "shock"
+   },
+   {
+    "on": "russia's reached",
+    "pose": "wow"
+   },
+   {
+    "on": "nobody has claimed",
+    "pose": "shrug"
+   },
+   {
+    "on": "update your",
+    "pose": "point-up"
+   },
+   {
+    "on": "follow for",
+    "pose": "wave"
+   }
+  ],
+  "props": {
+   "stageScale": 1.0,
+   "stageLift": 70,
+   "slug": "fridge-hack-news",
+   "parts": {
+    "fifty": "fifty degrees",
+    "how": "how they",
+    "boring": "almost boring",
+    "threw": "threw the",
+    "fr": "it began",
+    "took": "took over",
+    "hundreds": "hundreds of",
+    "several": "several million",
+    "mon": "but on monday",
+    "again": "again in seven",
+    "way": "both times",
+    "both": "the way in",
+    "fridgesw": "fridge software",
+    "danfoss": "danfoss",
+    "hadnt": "hadn't updated",
+    "de": "but the fridges",
+    "germany": "germany's cyber",
+    "possibly": "possibly hacked",
+    "apple": "apple had",
+    "spyware": "about spyware",
+    "ua": "then late sunday",
+    "sunday": "late sunday",
+    "ukraine": "ukraine and",
+    "andrussia": "and russia",
+    "fake": "fake nuclear",
+    "reach": "russia's reached",
+    "link": "nobody has claimed",
+    "nobody": "claimed the fridge",
+    "shown": "nobody has shown",
+    "upd": "update your",
+    "follow": "follow for"
+   },
+   "top": 420,
+   "capSize": 80,
+   "lineTop": 140,
+   "avaSize": 540,
+   "avaTop": 1530
+  }
+ }
+]

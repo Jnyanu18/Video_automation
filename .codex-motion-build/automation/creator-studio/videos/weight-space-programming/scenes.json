@@ -1,0 +1,103 @@
+[
+ {
+  "scene": "wsp",
+  "at": "an ai just",
+  "bg": "#14151a",
+  "section": "one take with Ava: seven stations on one camera ride, the paper's own pictures",
+  "mark": [
+   "qwen",
+   "astra",
+   "0.016%"
+  ],
+  "poses": [
+   {
+    "on": "an ai",
+    "pose": "wow"
+   },
+   {
+    "on": "mit researchers",
+    "pose": "present"
+   },
+   {
+    "on": "astra found",
+    "pose": "think"
+   },
+   {
+    "on": "qwen kept",
+    "pose": "shock"
+   },
+   {
+    "on": "math score",
+    "pose": "cheer"
+   },
+   {
+    "on": "then a car",
+    "pose": "shrug"
+   },
+   {
+    "on": "astra fixed",
+    "pose": "point-up"
+   },
+   {
+    "on": "every time",
+    "pose": "cheer"
+   },
+   {
+    "on": "they call it",
+    "pose": "present"
+   },
+   {
+    "on": "it is early",
+    "pose": "shrug"
+   },
+   {
+    "on": "they think",
+    "pose": "think"
+   },
+   {
+    "on": "follow for",
+    "pose": "wave"
+   }
+  ],
+  "props": {
+   "stageScale": 1.0,
+   "stageLift": 60,
+   "slug": "weight-space-programming",
+   "parts": {
+    "hook": "an ai just",
+    "numbers": "the numbers",
+    "another": "another ai",
+    "rewriting": "rewriting the",
+    "mit": "mit researchers",
+    "astra1": "handed",
+    "raw": "raw weights",
+    "qwen": "called qwen",
+    "better": "better math",
+    "notrain": "no training",
+    "found": "astra found",
+    "loops": "in loops",
+    "traced": "traced them",
+    "edited": "edited",
+    "score": "math score",
+    "car": "then a car",
+    "reply": "one reply",
+    "tools": "no tools",
+    "edit35": "editing",
+    "every": "every time",
+    "name": "they call it",
+    "wsp": "weight space",
+    "early": "it is early",
+    "own": "own numbers",
+    "small": "small model",
+    "self": "they think",
+    "themselves": "improve themselves",
+    "improve": "improve themselves",
+    "follow": "follow for",
+    "models": "help models",
+    "oneday": "one day"
+   },
+   "look": "dev",
+   "ava": "side"
+  }
+ }
+]

@@ -1,0 +1,349 @@
+{
+  "video": "J:\\ai editor\\automation\\editor\\services\\api\\.data\\projects\\1007131c-9001-4654-beaf-2c8e8da4bb3f\\work\\final_cut.mp4",
+  "backend": "faster-whisper",
+  "status": "ok",
+  "language": "es",
+  "words": [
+    {
+      "word": "como",
+      "start": 0.0,
+      "end": 0.14
+    },
+    {
+      "word": "lo",
+      "start": 0.14,
+      "end": 0.26
+    },
+    {
+      "word": "que",
+      "start": 0.26,
+      "end": 0.42
+    },
+    {
+      "word": "est\u00e1",
+      "start": 0.42,
+      "end": 0.56
+    },
+    {
+      "word": "en",
+      "start": 0.56,
+      "end": 0.64
+    },
+    {
+      "word": "el",
+      "start": 0.64,
+      "end": 0.74
+    },
+    {
+      "word": "momento.",
+      "start": 0.74,
+      "end": 0.94
+    },
+    {
+      "word": "Ahora",
+      "start": 3.82,
+      "end": 4.38
+    },
+    {
+      "word": "vamos",
+      "start": 4.38,
+      "end": 4.82
+    },
+    {
+      "word": "a",
+      "start": 4.82,
+      "end": 5.04
+    },
+    {
+      "word": "hacer",
+      "start": 5.04,
+      "end": 5.04
+    },
+    {
+      "word": "un",
+      "start": 5.04,
+      "end": 5.26
+    },
+    {
+      "word": "venta",
+      "start": 5.26,
+      "end": 5.56
+    },
+    {
+      "word": "de",
+      "start": 5.56,
+      "end": 5.8
+    },
+    {
+      "word": "truble.",
+      "start": 5.8,
+      "end": 6.22
+    },
+    {
+      "word": "Y",
+      "start": 8.26,
+      "end": 8.82
+    },
+    {
+      "word": "ahora",
+      "start": 8.82,
+      "end": 9.1
+    },
+    {
+      "word": "s\u00ed,",
+      "start": 9.1,
+      "end": 9.44
+    },
+    {
+      "word": "vamos",
+      "start": 9.6,
+      "end": 9.86
+    },
+    {
+      "word": "a",
+      "start": 9.86,
+      "end": 10.1
+    },
+    {
+      "word": "hacer",
+      "start": 10.1,
+      "end": 10.3
+    },
+    {
+      "word": "un",
+      "start": 10.3,
+      "end": 10.92
+    },
+    {
+      "word": "venta",
+      "start": 10.92,
+      "end": 10.92
+    },
+    {
+      "word": "de",
+      "start": 10.92,
+      "end": 12.04
+    },
+    {
+      "word": "truble.",
+      "start": 12.04,
+      "end": 12.04
+    },
+    {
+      "word": "Y",
+      "start": 13.04,
+      "end": 13.6
+    },
+    {
+      "word": "vamos",
+      "start": 13.6,
+      "end": 13.84
+    },
+    {
+      "word": "a",
+      "start": 13.84,
+      "end": 14.22
+    },
+    {
+      "word": "hacer",
+      "start": 14.22,
+      "end": 14.22
+    },
+    {
+      "word": "un",
+      "start": 14.22,
+      "end": 14.6
+    },
+    {
+      "word": "vento.",
+      "start": 14.6,
+      "end": 14.6
+    }
+  ],
+  "segments": [
+    {
+      "text": "como lo que est\u00e1 en el momento.",
+      "start": 0.0,
+      "end": 0.94,
+      "words": [
+        {
+          "word": "como",
+          "start": 0.0,
+          "end": 0.14
+        },
+        {
+          "word": "lo",
+          "start": 0.14,
+          "end": 0.26
+        },
+        {
+          "word": "que",
+          "start": 0.26,
+          "end": 0.42
+        },
+        {
+          "word": "est\u00e1",
+          "start": 0.42,
+          "end": 0.56
+        },
+        {
+          "word": "en",
+          "start": 0.56,
+          "end": 0.64
+        },
+        {
+          "word": "el",
+          "start": 0.64,
+          "end": 0.74
+        },
+        {
+          "word": "momento.",
+          "start": 0.74,
+          "end": 0.94
+        }
+      ]
+    },
+    {
+      "text": "Ahora vamos a hacer un venta de truble.",
+      "start": 3.82,
+      "end": 6.22,
+      "words": [
+        {
+          "word": "Ahora",
+          "start": 3.82,
+          "end": 4.38
+        },
+        {
+          "word": "vamos",
+          "start": 4.38,
+          "end": 4.82
+        },
+        {
+          "word": "a",
+          "start": 4.82,
+          "end": 5.04
+        },
+        {
+          "word": "hacer",
+          "start": 5.04,
+          "end": 5.04
+        },
+        {
+          "word": "un",
+          "start": 5.04,
+          "end": 5.26
+        },
+        {
+          "word": "venta",
+          "start": 5.26,
+          "end": 5.56
+        },
+        {
+          "word": "de",
+          "start": 5.56,
+          "end": 5.8
+        },
+        {
+          "word": "truble.",
+          "start": 5.8,
+          "end": 6.22
+        }
+      ]
+    },
+    {
+      "text": "Y ahora s\u00ed, vamos a hacer un venta de truble.",
+      "start": 8.26,
+      "end": 12.04,
+      "words": [
+        {
+          "word": "Y",
+          "start": 8.26,
+          "end": 8.82
+        },
+        {
+          "word": "ahora",
+          "start": 8.82,
+          "end": 9.1
+        },
+        {
+          "word": "s\u00ed,",
+          "start": 9.1,
+          "end": 9.44
+        },
+        {
+          "word": "vamos",
+          "start": 9.6,
+          "end": 9.86
+        },
+        {
+          "word": "a",
+          "start": 9.86,
+          "end": 10.1
+        },
+        {
+          "word": "hacer",
+          "start": 10.1,
+          "end": 10.3
+        },
+        {
+          "word": "un",
+          "start": 10.3,
+          "end": 10.92
+        },
+        {
+          "word": "venta",
+          "start": 10.92,
+          "end": 10.92
+        },
+        {
+          "word": "de",
+          "start": 10.92,
+          "end": 12.04
+        },
+        {
+          "word": "truble.",
+          "start": 12.04,
+          "end": 12.04
+        }
+      ]
+    },
+    {
+      "text": "Y vamos a hacer un vento.",
+      "start": 13.04,
+      "end": 14.6,
+      "words": [
+        {
+          "word": "Y",
+          "start": 13.04,
+          "end": 13.6
+        },
+        {
+          "word": "vamos",
+          "start": 13.6,
+          "end": 13.84
+        },
+        {
+          "word": "a",
+          "start": 13.84,
+          "end": 14.22
+        },
+        {
+          "word": "hacer",
+          "start": 14.22,
+          "end": 14.22
+        },
+        {
+          "word": "un",
+          "start": 14.22,
+          "end": 14.6
+        },
+        {
+          "word": "vento.",
+          "start": 14.6,
+          "end": 14.6
+        }
+      ]
+    }
+  ],
+  "text": "como lo que est\u00e1 en el momento. Ahora vamos a hacer un venta de truble. Y ahora s\u00ed, vamos a hacer un venta de truble. Y vamos a hacer un vento."
+}

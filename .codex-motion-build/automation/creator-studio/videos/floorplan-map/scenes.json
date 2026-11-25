@@ -1,0 +1,36 @@
+[
+ {
+  "scene": "screenrec",
+  "at": "someone just",
+  "bg": "#14151a",
+  "section": "the real Floorplan demo, the camera following each part as it is named",
+  "mark": ["floorplan", "map"],
+  "props": {
+   "look": "dev",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "floorplan-map",
+   "src": "floorplan-map/raw/rec.mp4",
+   "vw": 1600,
+   "vh": 1000,
+   "credit": "Floorplan live demo · github.com/haydenschmitty/floorplan",
+   "keyword": "MAP",
+   "keywordAt": "comment map",
+   "noCursorShots": [1],
+   "clicks": [
+    { "rec": 12.15, "x": 800, "y": 492 },
+    { "rec": 18.35, "x": 540, "y": 378 },
+    { "rec": 23.95, "x": 1060, "y": 490 },
+    { "rec": 29.85, "x": 540, "y": 492 }
+   ],
+   "shots": [
+    { "rec": 11.3, "from": { "cx": 900, "cy": 540, "w": 560 }, "to": { "cx": 900, "cy": 585, "w": 480 } },
+    { "at": "its called", "rec": 1.0, "rate": 1.8, "from": { "cx": 250, "cy": 430, "w": 500 }, "to": { "cx": 250, "cy": 560, "w": 500 } },
+    { "at": "every part", "rec": 17.9, "move": 0.9, "from": { "cx": 600, "cy": 420, "w": 520 }, "to": { "cx": 1390, "cy": 400, "w": 440 } },
+    { "at": "and you can", "rec": 23.7, "from": { "cx": 935, "cy": 500, "w": 520 }, "to": { "cx": 935, "cy": 500, "w": 460 } },
+    { "at": "this is great", "rec": 29.3, "from": { "cx": 675, "cy": 530, "w": 470 }, "to": { "cx": 675, "cy": 530, "w": 540 } },
+    { "at": "comment map", "rec": 32.0, "rate": 0.5, "from": { "cx": 675, "cy": 530, "w": 540 }, "to": { "cx": 675, "cy": 530, "w": 580 } }
+   ]
+  }
+ }
+]

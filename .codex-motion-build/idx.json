@@ -1,0 +1,1107 @@
+{
+  "index_version": 2,
+  "project_id": "cuts",
+  "created_at": "2026-11-20T08:41:05.496844+00:00",
+  "source_dirs": [
+    "J:\\ai editor\\raw footage\\cuts"
+  ],
+  "media": [
+    {
+      "media_id": "m001",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_00.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 2.166667,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:01:24.088409",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m001.mp4",
+      "checksum": "1a28dafa97bdeb480c2e9b82b7fd41922e73e606371f2c31e2aebf17e6820007",
+      "error": null
+    },
+    {
+      "media_id": "m002",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_01.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 2.5,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:03:16.118720",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m002.mp4",
+      "checksum": "874b02824544044ca2cf02fae505e9e6a652c118d36e182a1cd7480b4d976340",
+      "error": null
+    },
+    {
+      "media_id": "m003",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_02.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 2.966667,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:04:00.255185",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m003.mp4",
+      "checksum": "434e4db1b1d3fe67b8d20929d6f2f83929408c9b23a6b078ff80ebb7fd06ee3a",
+      "error": null
+    },
+    {
+      "media_id": "m004",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_03.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 2.6,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:04:19.157094",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m004.mp4",
+      "checksum": "21fe5db33896edfe28ca0ec40625e25cf9dc7d280feba9155559994df4c1e799",
+      "error": null
+    },
+    {
+      "media_id": "m005",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_04.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 2.7,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:04:51.840439",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m005.mp4",
+      "checksum": "90df3edf83cdb13c1791010d2a31af9d624d589b6bc8f96cd1d5a487392c86e9",
+      "error": null
+    },
+    {
+      "media_id": "m006",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_05.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 3.2,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:05:11.502135",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m006.mp4",
+      "checksum": "94d885a40e52bc40941ec6cf1fc4fe3b46128d83f7590addd06ac59220643cda",
+      "error": null
+    },
+    {
+      "media_id": "m007",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_06.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 3.3,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:05:30.420678",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m007.mp4",
+      "checksum": "721476f00d02223551deff760e364bcac4b4fda0b0aceba962d2f24e03d9f0f2",
+      "error": null
+    },
+    {
+      "media_id": "m008",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_07.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 3.3,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:05:52.674004",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m008.mp4",
+      "checksum": "ae8945f80f618b0a23f70ae5da793bc8211e8c7ca98c6f46d488534b997f7a09",
+      "error": null
+    },
+    {
+      "media_id": "m009",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_08.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 3.366667,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:06:22.406454",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m009.mp4",
+      "checksum": "aab2d1362d18ae423934ac1e3ece3d8b48418a478f58637eaca139ef711d9b1a",
+      "error": null
+    },
+    {
+      "media_id": "m010",
+      "path": "J:\\ai editor\\raw footage\\cuts\\clip_09.mp4",
+      "camera_id": "CAM_DEFAULT",
+      "duration": 3.766667,
+      "fps": 30.0,
+      "width": 1080,
+      "height": 1920,
+      "codec": "h264",
+      "has_audio": false,
+      "start_wallclock": "2026-11-10T01:06:45.293594",
+      "proxy_path": "J:\\ai editor\\raw footage\\work\\proxies\\m010.mp4",
+      "checksum": "4234119a8321a6903c42209e543d93ebbb4808a273a1feef4355d492d5862cf7",
+      "error": null
+    }
+  ],
+  "sync_groups": [
+    {
+      "group_id": "g1",
+      "media_ids": [
+        "m001",
+        "m002",
+        "m003",
+        "m004",
+        "m005",
+        "m006",
+        "m007",
+        "m008",
+        "m009",
+        "m010"
+      ],
+      "offsets": {
+        "m001": 0.0,
+        "m002": 112.03,
+        "m003": 156.167,
+        "m004": 175.069,
+        "m005": 207.752,
+        "m006": 227.414,
+        "m007": 246.332,
+        "m008": 268.586,
+        "m009": 298.318,
+        "m010": 321.205
+      },
+      "method": "mtime",
+      "confidence": 0.55
+    }
+  ],
+  "shots": [
+    {
+      "shot_id": "s00001",
+      "media_id": "m001",
+      "start": 0.0,
+      "end": 1.36,
+      "motion": 0.5077,
+      "focus": 0.0371,
+      "exposure": 0.2638,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.0964,
+      "reject_reason": "out_of_focus"
+    },
+    {
+      "shot_id": "s00002",
+      "media_id": "m001",
+      "start": 1.36,
+      "end": 2.167,
+      "motion": 0.1732,
+      "focus": 0.0895,
+      "exposure": 0.6609,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1142,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00003",
+      "media_id": "m002",
+      "start": 0.0,
+      "end": 1.12,
+      "motion": 0.9145,
+      "focus": 0.8269,
+      "exposure": 0.6061,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1891,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00004",
+      "media_id": "m002",
+      "start": 1.12,
+      "end": 2.24,
+      "motion": 0.8863,
+      "focus": 0.7367,
+      "exposure": 0.5615,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1864,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00005",
+      "media_id": "m002",
+      "start": 2.24,
+      "end": 2.5,
+      "motion": 0.4195,
+      "focus": 0.721,
+      "exposure": 0.4313,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0316,
+      "keep_score": 0.2407,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00006",
+      "media_id": "m003",
+      "start": 0.0,
+      "end": 1.12,
+      "motion": 1.0,
+      "focus": 0.6005,
+      "exposure": 0.6282,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1484,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00007",
+      "media_id": "m003",
+      "start": 1.12,
+      "end": 2.16,
+      "motion": 0.8759,
+      "focus": 0.4982,
+      "exposure": 0.5178,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0316,
+      "keep_score": 0.1857,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00008",
+      "media_id": "m003",
+      "start": 2.16,
+      "end": 2.967,
+      "motion": 0.562,
+      "focus": 0.6223,
+      "exposure": 0.4546,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.205,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00009",
+      "media_id": "m004",
+      "start": 0.0,
+      "end": 2.32,
+      "motion": 0.6459,
+      "focus": 0.6559,
+      "exposure": 0.1537,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0257,
+      "keep_score": 0.5463,
+      "reject_reason": null
+    },
+    {
+      "shot_id": "s00010",
+      "media_id": "m004",
+      "start": 2.32,
+      "end": 2.6,
+      "motion": 0.1015,
+      "focus": 0.1114,
+      "exposure": 0.4607,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0273,
+      "keep_score": 0.1589,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00011",
+      "media_id": "m005",
+      "start": 0.0,
+      "end": 1.12,
+      "motion": 0.7912,
+      "focus": 0.6476,
+      "exposure": 0.325,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0165,
+      "keep_score": 0.1937,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00012",
+      "media_id": "m005",
+      "start": 1.12,
+      "end": 2.32,
+      "motion": 1.0,
+      "focus": 0.2313,
+      "exposure": 0.6123,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.0989,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00013",
+      "media_id": "m005",
+      "start": 2.32,
+      "end": 2.7,
+      "motion": 0.5182,
+      "focus": 0.5698,
+      "exposure": 0.3503,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.183,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00014",
+      "media_id": "m006",
+      "start": 0.0,
+      "end": 1.12,
+      "motion": 0.3439,
+      "focus": 0.4236,
+      "exposure": 0.2869,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1537,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00015",
+      "media_id": "m006",
+      "start": 1.12,
+      "end": 2.16,
+      "motion": 1.0,
+      "focus": 0.6336,
+      "exposure": 0.292,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0234,
+      "keep_score": 0.1659,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00016",
+      "media_id": "m006",
+      "start": 2.16,
+      "end": 3.12,
+      "motion": 0.5514,
+      "focus": 0.6361,
+      "exposure": 0.2316,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1757,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00017",
+      "media_id": "m006",
+      "start": 3.12,
+      "end": 3.2,
+      "motion": 0.2914,
+      "focus": 0.657,
+      "exposure": 0.2573,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1822,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00018",
+      "media_id": "m007",
+      "start": 0.0,
+      "end": 1.28,
+      "motion": 0.4365,
+      "focus": 0.0692,
+      "exposure": 0.3839,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1177,
+      "reject_reason": "out_of_focus"
+    },
+    {
+      "shot_id": "s00019",
+      "media_id": "m007",
+      "start": 1.28,
+      "end": 2.32,
+      "motion": 0.4862,
+      "focus": 0.6761,
+      "exposure": 0.2151,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.179,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00020",
+      "media_id": "m007",
+      "start": 2.32,
+      "end": 3.3,
+      "motion": 0.4871,
+      "focus": 0.3709,
+      "exposure": 0.6717,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1521,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00021",
+      "media_id": "m008",
+      "start": 0.0,
+      "end": 1.12,
+      "motion": 0.4143,
+      "focus": 0.4871,
+      "exposure": 0.3184,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.167,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00022",
+      "media_id": "m008",
+      "start": 1.12,
+      "end": 2.32,
+      "motion": 0.334,
+      "focus": 0.5075,
+      "exposure": 0.3637,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1762,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00023",
+      "media_id": "m008",
+      "start": 2.32,
+      "end": 3.3,
+      "motion": 0.7225,
+      "focus": 0.7359,
+      "exposure": 0.351,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1956,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00024",
+      "media_id": "m009",
+      "start": 0.0,
+      "end": 0.96,
+      "motion": 0.9583,
+      "focus": 0.3268,
+      "exposure": 0.4412,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.12,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00025",
+      "media_id": "m009",
+      "start": 0.96,
+      "end": 3.367,
+      "motion": 0.8919,
+      "focus": 0.7594,
+      "exposure": 0.2823,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0316,
+      "keep_score": 0.5491,
+      "reject_reason": null
+    },
+    {
+      "shot_id": "s00026",
+      "media_id": "m010",
+      "start": 0.0,
+      "end": 0.72,
+      "motion": 0.773,
+      "focus": 0.7631,
+      "exposure": 0.3569,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1936,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00027",
+      "media_id": "m010",
+      "start": 0.72,
+      "end": 2.32,
+      "motion": 1.0,
+      "focus": 0.5073,
+      "exposure": 0.2877,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1235,
+      "reject_reason": "out_of_focus"
+    },
+    {
+      "shot_id": "s00028",
+      "media_id": "m010",
+      "start": 2.32,
+      "end": 3.28,
+      "motion": 0.4293,
+      "focus": 0.4832,
+      "exposure": 0.361,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 0,
+      "face_area": 0.0,
+      "keep_score": 0.1724,
+      "reject_reason": "too_short"
+    },
+    {
+      "shot_id": "s00029",
+      "media_id": "m010",
+      "start": 3.28,
+      "end": 3.767,
+      "motion": 0.2336,
+      "focus": 0.2766,
+      "exposure": 0.2305,
+      "audio_rms": 0.0,
+      "audio_class": "silence",
+      "faces": 1,
+      "face_area": 0.0298,
+      "keep_score": 0.1501,
+      "reject_reason": "too_short"
+    }
+  ],
+  "moments": [
+    {
+      "moment_id": "mo0001",
+      "t_start": 0.0,
+      "t_end": 1.36,
+      "angles": [
+        {
+          "shot_id": "s00001",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.0964
+        }
+      ],
+      "keep_score": 0.0964,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0002",
+      "t_start": 1.36,
+      "t_end": 2.167,
+      "angles": [
+        {
+          "shot_id": "s00002",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1142
+        }
+      ],
+      "keep_score": 0.1142,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0003",
+      "t_start": 112.03,
+      "t_end": 113.15,
+      "angles": [
+        {
+          "shot_id": "s00003",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1891
+        }
+      ],
+      "keep_score": 0.1891,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0004",
+      "t_start": 113.15,
+      "t_end": 114.27,
+      "angles": [
+        {
+          "shot_id": "s00004",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1864
+        }
+      ],
+      "keep_score": 0.1864,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0005",
+      "t_start": 114.27,
+      "t_end": 114.53,
+      "angles": [
+        {
+          "shot_id": "s00005",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.2407
+        }
+      ],
+      "keep_score": 0.2407,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0006",
+      "t_start": 156.167,
+      "t_end": 157.287,
+      "angles": [
+        {
+          "shot_id": "s00006",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1484
+        }
+      ],
+      "keep_score": 0.1484,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0007",
+      "t_start": 157.287,
+      "t_end": 158.327,
+      "angles": [
+        {
+          "shot_id": "s00007",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1857
+        }
+      ],
+      "keep_score": 0.1857,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0008",
+      "t_start": 158.327,
+      "t_end": 159.134,
+      "angles": [
+        {
+          "shot_id": "s00008",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.205
+        }
+      ],
+      "keep_score": 0.205,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0009",
+      "t_start": 175.069,
+      "t_end": 177.389,
+      "angles": [
+        {
+          "shot_id": "s00009",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.5463
+        }
+      ],
+      "keep_score": 0.5463,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0010",
+      "t_start": 177.389,
+      "t_end": 177.669,
+      "angles": [
+        {
+          "shot_id": "s00010",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1589
+        }
+      ],
+      "keep_score": 0.1589,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0011",
+      "t_start": 207.752,
+      "t_end": 208.872,
+      "angles": [
+        {
+          "shot_id": "s00011",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1937
+        }
+      ],
+      "keep_score": 0.1937,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0012",
+      "t_start": 208.872,
+      "t_end": 210.072,
+      "angles": [
+        {
+          "shot_id": "s00012",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.0989
+        }
+      ],
+      "keep_score": 0.0989,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0013",
+      "t_start": 210.072,
+      "t_end": 210.452,
+      "angles": [
+        {
+          "shot_id": "s00013",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.183
+        }
+      ],
+      "keep_score": 0.183,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0014",
+      "t_start": 227.414,
+      "t_end": 228.534,
+      "angles": [
+        {
+          "shot_id": "s00014",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1537
+        }
+      ],
+      "keep_score": 0.1537,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0015",
+      "t_start": 228.534,
+      "t_end": 229.574,
+      "angles": [
+        {
+          "shot_id": "s00015",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1659
+        }
+      ],
+      "keep_score": 0.1659,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0016",
+      "t_start": 229.574,
+      "t_end": 230.534,
+      "angles": [
+        {
+          "shot_id": "s00016",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1757
+        }
+      ],
+      "keep_score": 0.1757,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0017",
+      "t_start": 230.534,
+      "t_end": 230.614,
+      "angles": [
+        {
+          "shot_id": "s00017",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1822
+        }
+      ],
+      "keep_score": 0.1822,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0018",
+      "t_start": 246.332,
+      "t_end": 247.612,
+      "angles": [
+        {
+          "shot_id": "s00018",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1177
+        }
+      ],
+      "keep_score": 0.1177,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0019",
+      "t_start": 247.612,
+      "t_end": 248.652,
+      "angles": [
+        {
+          "shot_id": "s00019",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.179
+        }
+      ],
+      "keep_score": 0.179,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0020",
+      "t_start": 248.652,
+      "t_end": 249.632,
+      "angles": [
+        {
+          "shot_id": "s00020",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1521
+        }
+      ],
+      "keep_score": 0.1521,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0021",
+      "t_start": 268.586,
+      "t_end": 269.706,
+      "angles": [
+        {
+          "shot_id": "s00021",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.167
+        }
+      ],
+      "keep_score": 0.167,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0022",
+      "t_start": 269.706,
+      "t_end": 270.906,
+      "angles": [
+        {
+          "shot_id": "s00022",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1762
+        }
+      ],
+      "keep_score": 0.1762,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0023",
+      "t_start": 270.906,
+      "t_end": 271.886,
+      "angles": [
+        {
+          "shot_id": "s00023",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1956
+        }
+      ],
+      "keep_score": 0.1956,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0024",
+      "t_start": 298.318,
+      "t_end": 299.278,
+      "angles": [
+        {
+          "shot_id": "s00024",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.12
+        }
+      ],
+      "keep_score": 0.12,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0025",
+      "t_start": 299.278,
+      "t_end": 301.685,
+      "angles": [
+        {
+          "shot_id": "s00025",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.5491
+        }
+      ],
+      "keep_score": 0.5491,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0026",
+      "t_start": 321.205,
+      "t_end": 321.925,
+      "angles": [
+        {
+          "shot_id": "s00026",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1936
+        }
+      ],
+      "keep_score": 0.1936,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0027",
+      "t_start": 321.925,
+      "t_end": 323.525,
+      "angles": [
+        {
+          "shot_id": "s00027",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1235
+        }
+      ],
+      "keep_score": 0.1235,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0028",
+      "t_start": 323.525,
+      "t_end": 324.485,
+      "angles": [
+        {
+          "shot_id": "s00028",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1724
+        }
+      ],
+      "keep_score": 0.1724,
+      "tags": [],
+      "description": null,
+      "speech": null
+    },
+    {
+      "moment_id": "mo0029",
+      "t_start": 324.485,
+      "t_end": 324.972,
+      "angles": [
+        {
+          "shot_id": "s00029",
+          "camera_id": "CAM_DEFAULT",
+          "quality": 0.1501
+        }
+      ],
+      "keep_score": 0.1501,
+      "tags": [],
+      "description": null,
+      "speech": null
+    }
+  ],
+  "speech": [],
+  "stats": {
+    "total_source_seconds": 29.87,
+    "media_count": 10,
+    "shots": 29,
+    "moments": 29,
+    "kept_seconds": 4.73,
+    "keep_ratio": 0.1583,
+    "proxy_seconds": 0.0,
+    "index_wall_seconds": 4.36,
+    "realtime_factor": 6.85,
+    "model_calls": 0
+  }
+}

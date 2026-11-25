@@ -1,0 +1,43 @@
+[
+ {
+  "scene": "oinbox",
+  "at": "email on your",
+  "bg": "#17181c",
+  "section": "Product-film, lifted: the team's bill, the logo, deploy and the real Domains card, mailboxes, the real provider cards, palette and undo, the ask",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "open-inbox",
+   "parts": {
+    "zero": "takes it to zero",
+    "b2": "its called",
+    "os": "open source",
+    "cf": "own cloudflare",
+    "free": "free plan",
+    "server": "no server",
+    "b3": "click deploy",
+    "token": "paste one",
+    "records": "mail records",
+    "b4": "add a mailbox",
+    "sup": "for support",
+    "sales": "for sales",
+    "team": "for everyone",
+    "seat": "per seat",
+    "zero2": "still zero",
+    "b5": "mail comes in",
+    "out": "goes out",
+    "resend": "like resend",
+    "brevo": "or brevo",
+    "limit": "free limit",
+    "next": "the next one",
+    "b6": "search filters",
+    "undo": "even",
+    "b7": "comment inbox",
+    "follow": "follow so"
+   }
+  }
+ }
+]

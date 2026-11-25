@@ -1,0 +1,190 @@
+{
+  "id": "event-studio-stage-study",
+  "revision": 1,
+  "skillVersion": "2.1.0",
+  "status": "review-copy",
+  "brand": "EVENT STUDIO",
+  "category": "EVENT MANAGEMENT",
+  "tagline": "Made for the moment.",
+  "width": 1080,
+  "height": 1920,
+  "fps": 60,
+  "durationInFrames": 900,
+  "palette": {
+    "orange": "#EF7D00",
+    "white": "#FFFEF7",
+    "black": "#101011"
+  },
+  "assets": {
+    "logo": null,
+    "grain": "grain.png",
+    "audio": "event-stage-score.wav"
+  },
+  "references": {
+    "primary": "R03",
+    "secondary": [
+      "R02",
+      "R10"
+    ]
+  },
+  "audio": {
+    "bpm": 120,
+    "beatPhaseFrame": 0,
+    "narration": "none",
+    "source": "Original synthesized score; no reference audio or samples"
+  },
+  "scenes": [
+    {
+      "id": "spark",
+      "from": 0,
+      "durationInFrames": 120,
+      "headline": [
+        "FIRST,",
+        "THE IDEA."
+      ],
+      "label": "THE IDEA"
+    },
+    {
+      "id": "build",
+      "from": 120,
+      "durationInFrames": 150,
+      "headline": [
+        "THEN,",
+        "THE BUILD."
+      ],
+      "label": "THE BUILD"
+    },
+    {
+      "id": "showtime",
+      "from": 270,
+      "durationInFrames": 150,
+      "headline": [
+        "LIGHTS.",
+        "ENERGY.",
+        "ACTION."
+      ],
+      "label": "SHOWTIME"
+    },
+    {
+      "id": "details",
+      "from": 420,
+      "durationInFrames": 150,
+      "headline": [
+        "EVERY",
+        "DETAIL."
+      ],
+      "label": "THE DETAILS"
+    },
+    {
+      "id": "moment",
+      "from": 570,
+      "durationInFrames": 180,
+      "headline": [
+        "ONE BIG",
+        "MOMENT."
+      ],
+      "label": "THE MOMENT"
+    },
+    {
+      "id": "identity",
+      "from": 750,
+      "durationInFrames": 150,
+      "headline": [
+        "EVENT STUDIO"
+      ],
+      "label": "MADE FOR THE MOMENT"
+    }
+  ],
+  "events": [
+    {
+      "id": "spark-contact",
+      "frame": 30,
+      "sound": "impact"
+    },
+    {
+      "id": "stage-unfold",
+      "frame": 120,
+      "sound": "tick"
+    },
+    {
+      "id": "stage-arrival",
+      "frame": 150,
+      "sound": "whoosh-impact"
+    },
+    {
+      "id": "lights",
+      "frame": 270,
+      "sound": "impact"
+    },
+    {
+      "id": "energy",
+      "frame": 300,
+      "sound": "tick"
+    },
+    {
+      "id": "action",
+      "frame": 330,
+      "sound": "impact"
+    },
+    {
+      "id": "detail-burst",
+      "frame": 420,
+      "sound": "whoosh-impact"
+    },
+    {
+      "id": "detail-lock",
+      "frame": 450,
+      "sound": "tick"
+    },
+    {
+      "id": "moment-pullback",
+      "frame": 570,
+      "sound": "whoosh-impact"
+    },
+    {
+      "id": "moment-lock",
+      "frame": 600,
+      "sound": "impact"
+    },
+    {
+      "id": "brand-cover",
+      "frame": 720,
+      "sound": "whoosh"
+    },
+    {
+      "id": "logo-arrival",
+      "frame": 750,
+      "sound": "impact"
+    },
+    {
+      "id": "final-settle",
+      "frame": 780,
+      "sound": "tail"
+    }
+  ],
+  "copy": {
+    "passTitle": "YOUR NEXT",
+    "passSubtitle": "BIG MOMENT",
+    "passFooter": "EVENT STUDIO / EVENT MANAGEMENT",
+    "detailLabels": [
+      "THE PLAN",
+      "THE SPACE",
+      "THE ENERGY"
+    ],
+    "cta": "LET\u2019S MAKE IT HAPPEN.",
+    "passBadge": "ALL ACCESS \u2197",
+    "stageTitle": "SHOWTIME",
+    "stageStatus": "LIVE / IN THE MOMENT",
+    "hudTagline": "MADE FOR THE MOMENT.",
+    "sparkLine": "EVENTS BEGIN WITH A SPARK.",
+    "buildLine": "FROM THE FIRST IDEA TO SHOWTIME.",
+    "detailLine": "THE PIECES. THE PEOPLE. THE MOMENT."
+  },
+  "fictionalBrand": true,
+  "geometry": {
+    "floorY": 1300,
+    "ballDiameter": 100,
+    "fallStartY": 790,
+    "contactX": 540
+  }
+}

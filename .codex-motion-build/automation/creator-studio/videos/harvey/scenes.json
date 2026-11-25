@@ -1,0 +1,13 @@
+[
+  {"scene": "harvey", "at": "this claude", "bg": "#0d0e12", "section": "one take with Ava: the customers counter, the brief, the sites, the email, the reply and approval, the plan, the dashboard, comment", "mark": ["harvey"],
+   "poses": [{"on": "this claude", "pose": "present"}, {"on": "you tell it", "pose": "point-left"}, {"on": "goes hunting", "pose": "wow"}, {"on": "say you sell", "pose": "think"},
+     {"on": "no booking", "pose": "wink"}, {"on": "then it writes", "pose": "point-left"}, {"on": "something real", "pose": "wow"}, {"on": "reads the replies", "pose": "think"},
+     {"on": "approve it", "pose": "cheer"}, {"on": "the craziest", "pose": "shock"}, {"on": "a dashboard", "pose": "present"}, {"on": "comment", "pose": "wave"}],
+   "props": {"stageScale": 1.0, "stageLift": 70, "slug": "harvey",
+     "parts": {"hunt": "goes hunting", "sell": "what you sell", "dream": "dream customer",
+       "tell": "you tell it", "web": "say you sell", "list": "online booking", "reads": "reads their", "flag": "no booking",
+       "email": "then it writes", "real": "something real", "diff": "every email",
+       "reply": "reads the replies", "draft": "drafts your answer", "hold": "nothing sends", "approve": "approve it",
+       "craziest": "the craziest", "plan": "claude plan", "bill": "no api",
+       "dash": "a dashboard", "comment": "comment", "kw": "harvey and", "send": "send you"}}}
+]

@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "designs": [
+    {
+      "id": "R01",
+      "name": "Dark analytics launch",
+      "bestFor": "A compact software launch connecting a concrete input to approved proof.",
+      "motion": "Shared anchors, tilted dashboards, radial networks and covering shapes connect UI states.",
+      "pace": "A focused demonstration builds into a short feature burst and settled CTA.",
+      "constraints": "Use verified metrics and approved assets; full dashboards and networks need custom components.",
+      "detail": "references/reference-atlas.md#r01"
+    },
+    {
+      "id": "R02",
+      "name": "Digital-to-physical journey",
+      "bestFor": "An image-led purchase journey across galleries, devices and a physical product.",
+      "motion": "One selected image persists through expanding layouts, cursor actions, device framing and a physical match.",
+      "pace": "Continuous state changes allow selection and purchase steps to settle before the closing recall.",
+      "constraints": "Physical footage and device artwork require approved assets; shorten the journey by removing steps.",
+      "detail": "references/reference-atlas.md#r02"
+    },
+    {
+      "id": "R03",
+      "name": "High-contrast kinetic principles",
+      "bestFor": "An experimental type reel or one forceful accent within a product film.",
+      "motion": "Weighted dots, outline words, compatible shapes, phase grids and cylindrical type lead to particle lettering.",
+      "pace": "Rapid graphic contrasts alternate with stable text anchors before a readable identity finish.",
+      "constraints": "Preserve the user's palette and message; cylindrical type and glyph particles require implemented custom effects.",
+      "detail": "references/reference-atlas.md#r03"
+    },
+    {
+      "id": "R04",
+      "name": "Patient milestone narrative",
+      "bestFor": "A longer launch story that combines product explanation, community and an approved milestone.",
+      "motion": "Depth galleries, terminal actions, rolling numbers and audience-word swaps share a restrained dark layout.",
+      "pace": "Patient phrase reveals, narrative pauses and extended proof holds support a longer story.",
+      "constraints": "The source is silent; do not infer sound synchronization or compress its full narrative into a short ad.",
+      "detail": "references/reference-atlas.md#r04"
+    },
+    {
+      "id": "R05",
+      "name": "Bright service explainer",
+      "bestFor": "A clear service advertisement with task feedback and image-led destinations.",
+      "motion": "A recurring travel motif links status cards, progress indicators, image expansions and a circle-to-logo transition.",
+      "pace": "Short statements lead through a fixed task anchor to a destination recap and readable close.",
+      "constraints": "Use approved illustrations, photography and destination claims while preserving the requested language.",
+      "detail": "references/reference-atlas.md#r05"
+    },
+    {
+      "id": "R06",
+      "name": "Creator workflow launch",
+      "bestFor": "A software workflow that turns one input into a selection of usable creative outputs.",
+      "motion": "Typed input opens a creator wall, ranked hooks and a reflective video ring before a selected device view.",
+      "pace": "A light introduction accelerates into output breadth, simplified proof and a quiet brand frame.",
+      "constraints": "Creator footage, video carousels and performance figures require approved assets, custom support and verified data.",
+      "detail": "references/reference-atlas.md#r06"
+    },
+    {
+      "id": "R07",
+      "name": "Rhythm and dimensional systems",
+      "bestFor": "A graphic reel exploring distinct rhythmic, spatial and procedural motion behaviors.",
+      "motion": "Misregistered type, rippling grids, a tubular knot, line terrain and coordinated dashboard motifs form contrasting chapters.",
+      "pace": "A countdown setup yields to compact technique chapters and a stable closing mark.",
+      "constraints": "Three-dimensional knots need a suitable renderer, and the source's loudness is not an output target.",
+      "detail": "references/reference-atlas.md#r07"
+    },
+    {
+      "id": "R08",
+      "name": "Continuous minimal UI",
+      "bestFor": "A restrained interface study built around causal interaction and one persistent shell.",
+      "motion": "A shared capsule expands and compresses through player, slider, switch, chart and command states.",
+      "pace": "Controlled expansions and delayed content reveals give each cursor action a clear response and settlement.",
+      "constraints": "The full chained study needs custom states; choose only the interactions that fit the duration and reading budget.",
+      "detail": "references/reference-atlas.md#r08"
+    },
+    {
+      "id": "R09",
+      "name": "Colorful mixed-technique reel",
+      "bestFor": "An experimental showcase linking typography, particles, liquid and radial compositions.",
+      "motion": "Stable word swaps bridge particle forms, shape morphs, liquid masks, concentric type rings and terrain fields.",
+      "pace": "Compact contrasting segments build toward a thumbnail recap and colorful identity finale.",
+      "constraints": "Keep liquid effects clear of copy, implement advanced techniques and inspect boundaries for unintended black gaps.",
+      "detail": "references/reference-atlas.md#r09"
+    },
+    {
+      "id": "R10",
+      "name": "Warm technical motion",
+      "bestFor": "A motion identity combining tactile anticipation, coherent particle changes and an elegant texture contrast.",
+      "motion": "Squash, tile pulses and glyph particles develop into point-set morphs, strip wipes and layered ribbon waves.",
+      "pace": "Energetic technical passages give way to a slower italic ribbon moment and settled wordmark.",
+      "constraints": "Particle correspondence and ribbon depth need custom geometry; a flat gradient cannot substitute for layered ribbons.",
+      "detail": "references/reference-atlas.md#r10"
+    },
+    {
+      "id": "R11",
+      "name": "Illustrated teaching walkthrough",
+      "bestFor": "An instructional product story that needs explicit steps, editable UI and a conceptual illustration.",
+      "motion": "A persistent step rail coordinates upload actions, script edits, staged drawings, captions and example galleries.",
+      "pace": "Longer teaching holds precede a breadth recap and an extended low-density CTA.",
+      "constraints": "Use approved illustration assets and measured narration timing; source claims and incomplete speech recognition are not reusable facts.",
+      "detail": "references/reference-atlas.md#r11"
+    }
+  ]
+}

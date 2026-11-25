@@ -1,0 +1,10 @@
+{
+  "platforms": ["apple", "android"],
+  "android": {
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.haptics",
+      "repository": "local-maven-repo"
+    }
+  }
+}

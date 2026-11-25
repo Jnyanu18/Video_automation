@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "sourceHash": "8e36ad5af9a7e654d80a00a38d0c0fca77f50373f10a0643127fab4aa9131147",
+  "frameOrder": [
+    132,
+    6,
+    330,
+    719,
+    780,
+    899,
+    132
+  ],
+  "hashes": [
+    {
+      "frame": 132,
+      "sha256": "88dd23af4fce137c839bde6986df18263293ebf72a30d8919fd0f86443328104"
+    },
+    {
+      "frame": 6,
+      "sha256": "0e19e7136bd32e97d224a727d604446ac63d69ab5e6ee9001db71347ff3ed6cb"
+    },
+    {
+      "frame": 330,
+      "sha256": "d86cd081cfb09697e8766fbd61d80640e118b16f6d6ce8412c628946a0f93ba3"
+    },
+    {
+      "frame": 719,
+      "sha256": "d5effaa860fdc6b056c8c1f29e75fe07d4df468d9fe56c05f4f9a8a03940634e"
+    },
+    {
+      "frame": 780,
+      "sha256": "d637a28d1ef2d4d2ef8e5a9097d6eb10700ee5fda0380e1781a06edd5dbdca46"
+    },
+    {
+      "frame": 899,
+      "sha256": "cfe6c06441e20012b6bc2d8bf0d9213eeeeb8f0d825bab3ba5ee121d4d69579f"
+    },
+    {
+      "frame": 132,
+      "sha256": "88dd23af4fce137c839bde6986df18263293ebf72a30d8919fd0f86443328104"
+    }
+  ]
+}

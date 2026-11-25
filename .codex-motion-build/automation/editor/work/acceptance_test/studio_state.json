@@ -1,0 +1,159 @@
+{
+ "storyboards": {
+  "sb_acceptance_01": {
+   "id": "sb_acceptance_01",
+   "title": "Director 2.0 YC Acceptance Demo",
+   "video_path": "J:\\ai editor\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\acceptance_test\\final_render_9x16.mp4",
+   "status": "approved",
+   "plan": {
+    "version": 3,
+    "source": {
+     "path": "J:\\ai editor\\raw footage\\yc\\speaker_source.mp4",
+     "duration": 60.992,
+     "width": 1076,
+     "height": 1914,
+     "fps": 30.0
+    },
+    "output": {
+     "width": 1080,
+     "height": 1920,
+     "fps": 30.0
+    },
+    "keep": [
+     {
+      "id": "k_1",
+      "start": 0.0,
+      "end": 60.992,
+      "name": "Scene 1: Here I see, I'm Vishnu, I"
+     }
+    ],
+    "captions": [
+     {
+      "start": 0.2,
+      "end": 2.2,
+      "text": "Stop building features"
+     },
+     {
+      "start": 2.3,
+      "end": 4.5,
+      "text": "Nobody asked for"
+     }
+    ],
+    "sfx": [
+     {
+      "id": "sfx_whoosh",
+      "name": "whoosh_fast.wav",
+      "at": 0.0,
+      "volume": 0.75
+     },
+     {
+      "id": "sfx_riser",
+      "name": "riser_tension.wav",
+      "at": 0.0,
+      "volume": 0.65
+     },
+     {
+      "id": "sfx_3",
+      "name": "whoosh_fast.wav",
+      "at": 0.0,
+      "volume": 0.85
+     }
+    ],
+    "zooms": [
+     {
+      "id": "z_hook",
+      "start": 0.0,
+      "end": 2.8,
+      "factor": 1.15,
+      "mode": "punch_in"
+     },
+     {
+      "id": "z_2",
+      "start": 0.0,
+      "end": 2.5,
+      "factor": 1.25,
+      "mode": "punch_in"
+     }
+    ],
+    "audio": {
+     "ducking_enabled": true,
+     "target_lufs": -14.0
+    },
+    "style_ref": "viral_hook_fast_pace",
+    "notes": "Director 2.0 cut for instagram_reels. Style: viral_hook_fast_pace. Highlight core product demonstration",
+    "approval": {
+     "approved": true,
+     "approver": "Lead Director",
+     "approved_at": 1794417873.3065999,
+     "fingerprint": "e374c3d70b90eb16",
+     "notes": "Final pre-render sign-off"
+    },
+    "updated_at": 1794417872.988044
+   },
+   "qa_report": {
+    "video_path": "J:\\ai editor\\new project - marketing automatio\\new project - marketing automatio\\automation\\editor\\work\\acceptance_test\\final_render_9x16.mp4",
+    "duration": 6.0,
+    "resolution": "1080x1920",
+    "aspect_ratio": "9:16",
+    "status": "PASS",
+    "score": 1.0,
+    "critical_count": 0,
+    "major_count": 0,
+    "minor_count": 0,
+    "defects": [],
+    "audio_metrics": {
+     "integrated_lufs": -14.0,
+     "true_peak_db": -1.0
+    },
+    "visual_metrics": {
+     "black_spans": 0,
+     "video_codec": null
+    }
+   },
+   "created_at": 1794417876.413551,
+   "updated_at": 1794417876.413551
+  }
+ },
+ "series": {},
+ "publishing": {
+  "pub_0ada7d9fde7e": {
+   "id": "pub_0ada7d9fde7e",
+   "title": "Stop building features",
+   "caption": "Stop building features nobody asked for. GrowthOS Director 2.0 autonomous edit.",
+   "platforms": [
+    "instagram"
+   ],
+   "storyboard_id": null,
+   "render_id": "final_render_9x16",
+   "video_url": "/render/final_render_9x16.mp4",
+   "scheduled_at": null,
+   "status": "FAILED",
+   "results": {
+    "instagram": {
+     "status": "failed",
+     "error": "PUBLIC_BASE_URL must be the public https address of the media server (e.g. a Cloudflare tunnel) so Instagram can fetch the video"
+    }
+   },
+   "error": {
+    "code": "PUBLIC_URL_MISSING",
+    "message": "PUBLIC_BASE_URL must be the public https address of the media server (e.g. a Cloudflare tunnel) so Instagram can fetch the video",
+    "retryable": true
+   },
+   "attempts": 1,
+   "metrics": null,
+   "updated_at": 1794417876.4552765,
+   "created_at": 1794417876.417655,
+   "outcome_unknown": false
+  }
+ },
+ "settings": {},
+ "carousels": {},
+ "events": [
+  {
+   "ts": 1794417876.4291036,
+   "kind": "publishing",
+   "message": "Scheduled “Stop building features”",
+   "id": "pub_0ada7d9fde7e"
+  }
+ ]
+}

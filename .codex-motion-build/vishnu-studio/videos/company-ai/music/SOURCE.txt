@@ -1,0 +1,1 @@
+track-1.mp3: copied from videos/build-your-jarvis/music/track-1.mp3 (the YC demo track, ElevenLabs Music, paid-plan key, made 2026-10-28; Vishnu picked it for Jarvis 2026-10-29), picked by Claude 2026-11-08 for company-ai; reused, nothing new generated.

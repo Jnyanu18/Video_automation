@@ -1,0 +1,13 @@
+{
+  "video": "J:\\ai editor\\raw footage\\vishnu\\DfNqPECzXSq.mp4",
+  "duration": 60.992,
+  "threshold": 0.3,
+  "cuts": [],
+  "scenes": [
+    {
+      "index": 0,
+      "start": 0.0,
+      "end": 60.992
+    }
+  ]
+}

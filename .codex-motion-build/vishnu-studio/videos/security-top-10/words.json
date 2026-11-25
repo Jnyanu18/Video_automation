@@ -1,0 +1,467 @@
+[
+ {
+  "w": "5",
+  "start": 0.0,
+  "end": 0.22
+ },
+ {
+  "w": "security",
+  "start": 0.22,
+  "end": 0.6
+ },
+ {
+  "w": "repos",
+  "start": 0.6,
+  "end": 1.1
+ },
+ {
+  "w": "for",
+  "start": 1.1,
+  "end": 1.22
+ },
+ {
+  "w": "Claude",
+  "start": 1.22,
+  "end": 1.52
+ },
+ {
+  "w": "Code,",
+  "start": 1.52,
+  "end": 1.78
+ },
+ {
+  "w": "ranked",
+  "start": 2.04,
+  "end": 2.28
+ },
+ {
+  "w": "by",
+  "start": 2.28,
+  "end": 2.5
+ },
+ {
+  "w": "GitHub",
+  "start": 2.5,
+  "end": 2.74
+ },
+ {
+  "w": "Stars.",
+  "start": 2.74,
+  "end": 3.12
+ },
+ {
+  "w": "The",
+  "start": 3.54,
+  "end": 3.62
+ },
+ {
+  "w": "one",
+  "start": 3.62,
+  "end": 3.74
+ },
+ {
+  "w": "at",
+  "start": 3.74,
+  "end": 3.82
+ },
+ {
+  "w": "the",
+  "start": 3.82,
+  "end": 3.88
+ },
+ {
+  "w": "top",
+  "start": 3.88,
+  "end": 4.12
+ },
+ {
+  "w": "has",
+  "start": 4.12,
+  "end": 4.32
+ },
+ {
+  "w": "over",
+  "start": 4.32,
+  "end": 4.5
+ },
+ {
+  "w": "57,000.",
+  "start": 4.5,
+  "end": 5.92
+ },
+ {
+  "w": "Number",
+  "start": 6.354,
+  "end": 6.534
+ },
+ {
+  "w": "5.",
+  "start": 6.534,
+  "end": 6.854
+ },
+ {
+  "w": "Anthropic's",
+  "start": 7.034,
+  "end": 7.574
+ },
+ {
+  "w": "own",
+  "start": 7.674,
+  "end": 7.814
+ },
+ {
+  "w": "security",
+  "start": 7.814,
+  "end": 8.234
+ },
+ {
+  "w": "review.",
+  "start": 8.234,
+  "end": 8.694
+ },
+ {
+  "w": "It",
+  "start": 8.954,
+  "end": 9.074
+ },
+ {
+  "w": "checks",
+  "start": 9.074,
+  "end": 9.314
+ },
+ {
+  "w": "every",
+  "start": 9.314,
+  "end": 9.654
+ },
+ {
+  "w": "code",
+  "start": 9.654,
+  "end": 9.954
+ },
+ {
+  "w": "change",
+  "start": 9.954,
+  "end": 10.254
+ },
+ {
+  "w": "for",
+  "start": 10.254,
+  "end": 10.474
+ },
+ {
+  "w": "vulnerabilities.",
+  "start": 10.474,
+  "end": 10.834
+ },
+ {
+  "w": "4.",
+  "start": 11.424,
+  "end": 11.644
+ },
+ {
+  "w": "Trail",
+  "start": 12.064,
+  "end": 12.164
+ },
+ {
+  "w": "of",
+  "start": 12.164,
+  "end": 12.324
+ },
+ {
+  "w": "Bits.",
+  "start": 12.324,
+  "end": 12.704
+ },
+ {
+  "w": "Their",
+  "start": 12.964,
+  "end": 13.044
+ },
+ {
+  "w": "security",
+  "start": 13.044,
+  "end": 13.384
+ },
+ {
+  "w": "research",
+  "start": 13.384,
+  "end": 13.904
+ },
+ {
+  "w": "and",
+  "start": 13.904,
+  "end": 14.104
+ },
+ {
+  "w": "audit",
+  "start": 14.104,
+  "end": 14.344
+ },
+ {
+  "w": "workflows",
+  "start": 14.344,
+  "end": 14.804
+ },
+ {
+  "w": "as",
+  "start": 14.804,
+  "end": 15.344
+ },
+ {
+  "w": "skills.",
+  "start": 15.344,
+  "end": 15.604
+ },
+ {
+  "w": "3.",
+  "start": 16.078,
+  "end": 16.258
+ },
+ {
+  "w": "NVIDIA's",
+  "start": 16.598,
+  "end": 16.998
+ },
+ {
+  "w": "SkillSpector.",
+  "start": 16.998,
+  "end": 17.678
+ },
+ {
+  "w": "It",
+  "start": 17.858,
+  "end": 17.958
+ },
+ {
+  "w": "scans",
+  "start": 17.958,
+  "end": 18.218
+ },
+ {
+  "w": "skills",
+  "start": 18.218,
+  "end": 18.578
+ },
+ {
+  "w": "for",
+  "start": 18.578,
+  "end": 18.818
+ },
+ {
+  "w": "malicious",
+  "start": 18.818,
+  "end": 19.058
+ },
+ {
+  "w": "code",
+  "start": 19.058,
+  "end": 19.438
+ },
+ {
+  "w": "before",
+  "start": 19.438,
+  "end": 19.718
+ },
+ {
+  "w": "you",
+  "start": 19.718,
+  "end": 19.898
+ },
+ {
+  "w": "install",
+  "start": 19.898,
+  "end": 20.218
+ },
+ {
+  "w": "them.",
+  "start": 20.218,
+  "end": 20.418
+ },
+ {
+  "w": "2.",
+  "start": 20.769,
+  "end": 20.989
+ },
+ {
+  "w": "A",
+  "start": 21.329,
+  "end": 21.429
+ },
+ {
+  "w": "library",
+  "start": 21.429,
+  "end": 21.769
+ },
+ {
+  "w": "of",
+  "start": 21.769,
+  "end": 22.029
+ },
+ {
+  "w": "817",
+  "start": 22.029,
+  "end": 22.909
+ },
+ {
+  "w": "cybersecurity",
+  "start": 22.909,
+  "end": 23.589
+ },
+ {
+  "w": "skills,",
+  "start": 23.589,
+  "end": 24.189
+ },
+ {
+  "w": "mapped",
+  "start": 24.549,
+  "end": 24.709
+ },
+ {
+  "w": "to",
+  "start": 24.709,
+  "end": 24.949
+ },
+ {
+  "w": "MITRE ATT&CK",
+  "start": 24.949,
+  "end": 25.549
+ },
+ {
+  "w": "and",
+  "start": 25.549,
+  "end": 25.849
+ },
+ {
+  "w": "NIST.",
+  "start": 25.849,
+  "end": 26.189
+ },
+ {
+  "w": "and",
+  "start": 26.408,
+  "end": 26.588
+ },
+ {
+  "w": "number",
+  "start": 26.588,
+  "end": 26.828
+ },
+ {
+  "w": "one,",
+  "start": 26.828,
+  "end": 27.168
+ },
+ {
+  "w": "Cloudflare's",
+  "start": 27.408,
+  "end": 28.068
+ },
+ {
+  "w": "security",
+  "start": 28.068,
+  "end": 28.408
+ },
+ {
+  "w": "audit",
+  "start": 28.408,
+  "end": 28.768
+ },
+ {
+  "w": "skill.",
+  "start": 28.768,
+  "end": 29.088
+ },
+ {
+  "w": "It",
+  "start": 29.408,
+  "end": 29.488
+ },
+ {
+  "w": "runs",
+  "start": 29.488,
+  "end": 29.708
+ },
+ {
+  "w": "multi-phase",
+  "start": 29.708,
+  "end": 30.328
+ },
+ {
+  "w": "audits",
+  "start": 30.328,
+  "end": 30.848
+ },
+ {
+  "w": "and",
+  "start": 30.848,
+  "end": 31.028
+ },
+ {
+  "w": "every",
+  "start": 31.028,
+  "end": 31.348
+ },
+ {
+  "w": "finding",
+  "start": 31.348,
+  "end": 31.708
+ },
+ {
+  "w": "is",
+  "start": 31.708,
+  "end": 32.008
+ },
+ {
+  "w": "independently",
+  "start": 32.008,
+  "end": 32.568
+ },
+ {
+  "w": "verified.",
+  "start": 32.568,
+  "end": 33.088
+ },
+ {
+  "w": "Comment",
+  "start": 33.61,
+  "end": 33.87
+ },
+ {
+  "w": "security",
+  "start": 33.87,
+  "end": 34.21
+ },
+ {
+  "w": "and",
+  "start": 34.21,
+  "end": 34.59
+ },
+ {
+  "w": "I'll",
+  "start": 34.59,
+  "end": 34.71
+ },
+ {
+  "w": "send",
+  "start": 34.71,
+  "end": 34.85
+ },
+ {
+  "w": "you",
+  "start": 34.85,
+  "end": 34.95
+ },
+ {
+  "w": "the",
+  "start": 34.95,
+  "end": 35.05
+ },
+ {
+  "w": "links.",
+  "start": 35.05,
+  "end": 35.27
+ }
+]

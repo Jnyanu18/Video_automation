@@ -1,0 +1,58 @@
+<template>
+  <style>
+#root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #fff; }
+.card { position: absolute; background: rgba(15,16,22,.80); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  border-radius: 24px; border: 1px solid rgba(255,255,255,.10); box-shadow: 0 30px 70px -24px rgba(0,0,0,.7);
+  padding: 30px 36px 32px; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 24px; letter-spacing: .14em; text-transform: uppercase;
+  color: #FF8AD8; display: flex; align-items: center; gap: 12px; }
+.dot { width: 11px; height: 11px; border-radius: 6px; background: #E03FB4; box-shadow: 0 0 14px #E03FB4; }
+.title { font-family: Poppins, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.12; letter-spacing: -.02em; margin-top: 14px; }
+.sub { font-size: 28px; line-height: 1.35; color: rgba(255,255,255,.72); margin-top: 12px; }
+.big { font-family: Poppins, sans-serif; font-weight: 700; font-size: 128px; line-height: 1; letter-spacing: -.04em; margin-top: 10px; }
+.big small { font-size: 64px; color: #FF8AD8; margin-left: 6px; }
+.accent { color: #FF8AD8; } .good { color: #3DDC84; } .bad { color: #FF6B6B; }
+.rows { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+.row { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 500; }
+.mark { width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800; flex: none; }
+.mark.ok { background: #3DDC84; color: #08130c; } .mark.no { background: #FF6B6B; color: #1a0707; }
+.mark.mid { background: #FFB547; color: #1d1203; } .mark.idle { background: rgba(255,255,255,.12); }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.chip { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  padding: 10px 22px; font-size: 28px; font-weight: 600; }
+.steps { display: flex; gap: 14px; margin-top: 22px; }
+.step { flex: 1; background: rgba(255,255,255,.07); border-radius: 18px; padding: 18px 20px; }
+.step b { display: block; font-family: Poppins, sans-serif; font-size: 40px; color: #FF8AD8; }
+.step span { font-size: 28px; font-weight: 600; line-height: 1.2; }
+.bar { height: 18px; border-radius: 9px; background: rgba(255,255,255,.12); margin-top: 18px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; border-radius: 9px; background: linear-gradient(90deg, #E03FB4, #ff9ad9); transform-origin: left center; }
+.quote { font-family: Poppins, sans-serif; font-weight: 600; font-size: 52px; line-height: 1.12; letter-spacing: -.02em; }
+.quote .w { display: inline-block; margin-right: .26em; }
+.who { font-size: 26px; color: rgba(255,255,255,.6); margin-top: 16px; font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; }
+.tag { position: absolute; left: 192px; top: 108px; display: flex; align-items: center; gap: 14px; background: rgba(15,16,22,.72);
+  backdrop-filter: blur(16px); border-radius: 999px; padding: 12px 24px 12px 16px; border: 1px solid rgba(255,255,255,.10); }
+.tag .n { font-family: 'JetBrains Mono', monospace; font-size: 24px; background: #A3127F; border-radius: 999px; padding: 4px 12px; font-weight: 700; }
+.tag .l { font-family: Poppins, sans-serif; font-weight: 600; font-size: 28px; }
+.tag .pips { display: flex; gap: 6px; margin-left: 6px; }
+.tag .pips i { width: 22px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.22); }
+.tag .pips i.on { background: #E03FB4; }
+</style>
+  <div data-hf-id="hf-4m6f" id="root" data-composition-id="intro" data-width="1920" data-height="1080" data-layout-allow-overlap>
+    <div data-hf-id="hf-xi7o" id="intro-name" class="clip" data-start="0.8" data-duration="6.2" data-track-index="2"><div data-hf-id="hf-wnks" id="intro-name-c" class="card" style="left:192px;top:760px;width:520px"><div data-hf-id="hf-emsu" class="eyebrow"><span data-hf-id="hf-9gry" class="dot"></span>Speaker</div><div data-hf-id="hf-wz88" class="title">Nihar Rao</div><div data-hf-id="hf-q3xq" class="sub">Founder, LiveSafe</div></div></div>
+    <div data-hf-id="hf-u56h" id="intro-topic" class="clip" data-start="15.62" data-duration="5.7" data-track-index="3"><div data-hf-id="hf-zvvt" id="intro-topic-c" class="card" style="left:192px;top:300px;width:600px"><div data-hf-id="hf-w3m2" class="eyebrow"><span data-hf-id="hf-zcc2" class="dot"></span>Today's talk</div><div data-hf-id="hf-ujrn" class="title">Wireless radiation, <span data-hf-id="hf-6ga6" class="accent">and how to live with it</span></div></div></div>
+    <div data-hf-id="hf-4lq4" id="intro-years" class="clip" data-start="21.95" data-duration="5.55" data-track-index="1"><div data-hf-id="hf-yv0t" id="intro-years-c" class="card" style="left:192px;top:300px;width:560px"><div data-hf-id="hf-drep" class="eyebrow"><span data-hf-id="hf-zqn3" class="dot"></span>In the field</div><div data-hf-id="hf-vf1u" class="big"><span data-hf-id="hf-oon1" id="intro-yrs">0</span><small data-hf-id="hf-sxpu">years</small></div><div data-hf-id="hf-b3zc" class="sub">studying electromagnetic radiation</div><div data-hf-id="hf-kggq" id="intro-yrs2" class="chips"><span data-hf-id="hf-ilf3" class="chip">10 years in communication</span></div></div></div>
+  </div>
+  <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#intro-name-c",{opacity:0,clipPath:"inset(0% 100% 0% 0% round 24px)"},{opacity:1,clipPath:"inset(0% 0% 0% 0% round 24px)",duration:0.7,ease:"power3.out"},0.8);
+      tl.to("#intro-name-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},6.64);
+      tl.fromTo("#intro-topic-c",{opacity:0,x:-56,filter:"blur(10px)"},{opacity:1,x:0,filter:"blur(0px)",duration:0.6,ease:"expo.out"},15.62);
+      tl.to("#intro-topic-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},20.96);
+      tl.fromTo("#intro-years-c",{opacity:0,scale:0.86,filter:"blur(8px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.55,ease:"back.out(1.5)"},21.95);
+      tl.to("#intro-years-c",{opacity:0,x:-24,filter:"blur(6px)",duration:0.3,ease:"power2.in"},27.14);
+      (function(){const o={v:0};const el=document.querySelector("#intro-yrs");tl.to(o,{v:20,duration:1.2,ease:"power2.out",onUpdate:function(){el.textContent=Math.round(o.v);}},22.25);})();
+      tl.fromTo("#intro-yrs2",{opacity:0,y:16,filter:"blur(6px)"},{opacity:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},24.65);
+      window.__timelines["intro"] = tl;
+  </script>
+</template>

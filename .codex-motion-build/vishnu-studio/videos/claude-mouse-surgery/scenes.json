@@ -1,0 +1,26 @@
+[
+ {
+  "scene": "surgery",
+  "at": "an ai just",
+  "bg": "#0a0c11",
+  "section": "Claude and the mouse surgery: a colour world per chapter (34 system), the brain calms orange to blue, the patient revealed halfway",
+  "mark": [],
+  "props": {
+   "look": "dev",
+   "captions": "none",
+   "stageScale": 1.0,
+   "stageLift": 0,
+   "slug": "claude-mouse-surgery",
+   "parts": {
+    "chose": "picked the treatment", "needle": "the needle into",
+    "b2": "a san francisco", "goal": "one job", "list": "19 gene", "robot": "a robot",
+    "b3": "so it chose", "calming": "calms the", "research": "the research", "exactly": "exact spot",
+    "b4": "a surgeon", "approved": "a human", "drove": "pushed the", "camera": "needle in",
+    "b5": "the patient", "mouse": "a mouse",
+    "b6": "one claude model", "refused": "refused", "living": "live animal",
+    "b7": "the mouse recovered", "didit": "did it work",
+    "b8": "would you let", "notsure": "im not sure", "comment": "tell me below", "follow": "follow me"
+   }
+  }
+ }
+]

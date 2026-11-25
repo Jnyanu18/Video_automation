@@ -1,0 +1,41 @@
+{
+  "projectId": "event-studio-stage-study",
+  "revision": 1,
+  "fictionalBrand": true,
+  "logo": {
+    "asset": null,
+    "fallback": "Typeset brand name in preview; not approved logo artwork"
+  },
+  "assets": [
+    {
+      "path": "public/Inter.ttf",
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+      "origin": "Bundled Inter variable font",
+      "license": "public/Inter-OFL.txt"
+    },
+    {
+      "path": "public/Mono.ttf",
+      "sha256": "54bf827eb99404e8f430c330ad30f063334f637eba0109b6a18d4f566a8e9dd8",
+      "origin": "Bundled monospace font",
+      "license": "public/Mono-LICENSE.txt"
+    },
+    {
+      "path": "public/grain.png",
+      "sha256": "3c2786176b3008cabf9d4b62c4e9a7c832d26cee9043f925dcd681f8b9cab74f",
+      "origin": "Seeded procedural grain retained from skill example"
+    },
+    {
+      "path": "public/event-stage-score.wav",
+      "sha256": "6a0e4261c6bf390f472d449c5b8a3cfcd5284e68d5724b8dc9809790781c218a",
+      "origin": "Original deterministic local synthesis",
+      "source": [
+        "make-audio.py",
+        "audio_timing.py"
+      ],
+      "note": "See AUDIO-NOTE.md and audio-report.json"
+    }
+  ],
+  "eventPhotography": false,
+  "downloadedMedia": false,
+  "voiceover": false
+}
