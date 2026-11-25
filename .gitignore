@@ -44,3 +44,12 @@ push_output.txt
 automation/editor/work/agent_queue/
 # local engine / gateway logs
 automation/editor/work/*.log
+
+# --- excluded from the render-deploy-clean push (backups, copies, scratch) ---
+work/
+.codex-motion-build/
+.tmp/
+.backup/
+automation/app-deps-backup-*/
+automation/app-deps-partial-*/
+automation/app/node_modules.temp-link-*/

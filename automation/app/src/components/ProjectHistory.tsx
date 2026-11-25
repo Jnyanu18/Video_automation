@@ -175,7 +175,7 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                 style={({ pressed, hovered }: any) => [
                   styles.cinematicCardSurface,
                   {
-                    borderColor: hovered ? (film.accentColor || '#6C4CF0') : '#232936',
+                    borderColor: hovered ? (film.accentColor || '#FF5A1F') : '#232936',
                   },
                   hovered && styles.cinematicCardHovered,
                   pressed && { opacity: 0.95 },
@@ -288,7 +288,7 @@ export function ProjectHistory({ customFilms, onCreateFilm }: ProjectHistoryProp
                   <VideoPlayer uri={selectedFilm.videoUrl} isLandscape={selectedFilm.isLandscape} />
                 ) : (
                   <View style={styles.placeholderPlayer}>
-                    <Icon name="film" size={48} color="#6C4CF0" />
+                    <Icon name="film" size={48} color="#FF5A1F" />
                     <Text style={{ color: '#E2E8F0', marginTop: 12, fontWeight: '700' }}>
                       Ready to Render Video
                     </Text>
@@ -726,7 +726,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 6,
-    backgroundColor: '#6C4CF0',
+    backgroundColor: '#FF5A1F',
     paddingVertical: 10,
     borderRadius: radius.sm,
     ...Platform.select({

@@ -9,7 +9,7 @@ export type IconName =
   | 'folder' | 'calendar' | 'database' | 'book' | 'users' | 'gift' | 'lightbulb' | 'chevron-left' | 'chevron-right' | 'chevron-down' | 'chevron-up'
   | 'smartphone' | 'square' | 'monitor' | 'type' | 'arrow-left' | 'arrow-right' | 'alert-triangle'
   | 'lock' | 'scissors' | 'cut' | 'maximize' | 'minus' | 'zoom-in' | 'zoom-out' | 'video' | 'subtitles' | 'crosshair'
-  | 'pause' | 'magnet' | 'skip-back' | 'skip-forward';
+  | 'pause' | 'magnet' | 'skip-back' | 'skip-forward' | 'megaphone';
 
 /** Stroke icons on a 24px grid (Feather-style), drawn with react-native-svg so they render identically on web and native. */
 export function Icon({ name, size = 20, color = '#000', strokeWidth = 2 }: { name: IconName; size?: number; color?: string; strokeWidth?: number }) {
@@ -35,6 +35,7 @@ function render(name: IconName, p: any) {
     case 'share':
     case 'send': return <><Line {...p} x1="22" y1="2" x2="11" y2="13" /><Path {...p} d="M22 2 15 22l-4-9-9-4z" /></>;
     case 'bar-chart': return <><Line {...p} x1="12" y1="20" x2="12" y2="10" /><Line {...p} x1="18" y1="20" x2="18" y2="4" /><Line {...p} x1="6" y1="20" x2="6" y2="16" /></>;
+    case 'megaphone': return <><Path {...p} d="M3 11v2a2 2 0 0 0 2 2h3l2 6h3l-2-6h1l8 4V5l-8 4H5a2 2 0 0 0-2 2z" /><Line {...p} x1="20" y1="10" x2="23" y2="10" /><Line {...p} x1="20" y1="14" x2="23" y2="14" /></>;
     case 'sliders': return <><Line {...p} x1="4" y1="21" x2="4" y2="14" /><Line {...p} x1="4" y1="10" x2="4" y2="3" /><Line {...p} x1="12" y1="21" x2="12" y2="12" /><Line {...p} x1="12" y1="8" x2="12" y2="3" /><Line {...p} x1="20" y1="21" x2="20" y2="16" /><Line {...p} x1="20" y1="12" x2="20" y2="3" /><Line {...p} x1="1" y1="14" x2="7" y2="14" /><Line {...p} x1="9" y1="8" x2="15" y2="8" /><Line {...p} x1="17" y1="16" x2="23" y2="16" /></>;
     case 'server': return <><Rect {...p} x="2" y="3" width="20" height="8" rx="2" /><Rect {...p} x="2" y="13" width="20" height="8" rx="2" /><Line {...p} x1="6" y1="7" x2="6.01" y2="7" /><Line {...p} x1="6" y1="17" x2="6.01" y2="17" /></>;
     case 'plus': return <><Line {...p} x1="12" y1="5" x2="12" y2="19" /><Line {...p} x1="5" y1="12" x2="19" y2="12" /></>;

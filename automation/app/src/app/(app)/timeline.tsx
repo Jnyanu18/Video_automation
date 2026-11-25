@@ -38,10 +38,9 @@ function timeLabel(value: number): string {
 export default function TimelineEditor() {
   const router = useRouter();
   const toast = useToast();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { current, list, error, loading, reload } = useStoryboards();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [rendering, setRendering] = useState(false);
   const scenes = useMemo(() => timedScenes(current?.storyboard?.scenes ?? []), [current?.storyboard?.scenes]);
   const duration = Math.max(
     1,
@@ -50,7 +49,11 @@ export default function TimelineEditor() {
   );
   const selected = scenes[Math.min(selectedIndex, scenes.length - 1)] ?? null;
   const stacked = width < 1050;
-  const renderBusy = rendering || current?.render_job?.status === 'queued' || current?.render_job?.status === 'running';
+  const monitorHeight = stacked
+    ? Math.min(480, Math.max(320, width * 0.8))
+    : Math.min(520, Math.max(320, height - 390));
+  const monitorWidth = monitorHeight * 9 / 16;
+  const workspaceHeight = monitorHeight + 82;
   const renderUrl = current?.latest_render?.video_url || current?.latest_preview?.video_url;
 
   useEffect(() => { setSelectedIndex(0); }, [current?.id]);
@@ -76,24 +79,6 @@ export default function TimelineEditor() {
     }
   }
 
-  async function startRender() {
-    if (!current) return;
-    if (!current.approved) {
-      router.push({ pathname: '/storyboard', params: { sb: current.id } });
-      return;
-    }
-    setRendering(true);
-    try {
-      await editor.render(current.id, 'preview');
-      await reload();
-      toast('Preview render started');
-    } catch (cause) {
-      toast(errorText(cause));
-    } finally {
-      setRendering(false);
-    }
-  }
-
   function selectScene(index: number) {
     setSelectedIndex(Math.max(0, Math.min(index, scenes.length - 1)));
   }
@@ -108,48 +93,34 @@ export default function TimelineEditor() {
 
   return (
     <View style={styles.page}>
-      <View style={styles.header}>
-        <View style={styles.headerTitle}>
-          <View style={styles.brand}><Icon name="sparkles" size={14} color="#fff" /><T style={styles.brandText}>GROWTHOS</T></View>
-          <View style={{ flex: 1, minWidth: 150 }}>
-            <T style={styles.title} numberOfLines={1}>{current.storyboard?.title || current.prompt || 'Untitled reel'}</T>
-            <T style={styles.subtle}>Scene timeline · {scenes.length} scenes · {timeLabel(duration)}</T>
-          </View>
-        </View>
-        <View style={styles.headerActions}>
-          <View style={styles.status}><View style={[styles.statusDot, { backgroundColor: current.approved ? '#10B981' : '#F59E0B' }]} /><T style={styles.statusText}>{current.approved ? 'Approved' : 'Needs approval'}</T></View>
-          <Button label={renderBusy ? 'Rendering…' : current.approved ? 'Render preview' : 'Review & render'} icon="film" loading={renderBusy} onPress={startRender} />
-        </View>
-      </View>
-
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.workspace, stacked && styles.workspaceStacked]}>
+        <View style={[styles.workspace, !stacked && { height: workspaceHeight }, stacked && styles.workspaceStacked]}>
           <View style={[styles.panel, styles.mediaPanel, stacked && styles.stackedPanel]}>
-            <T style={styles.panelTitle}>MEDIA & EFFECTS</T>
-            <View style={styles.panelBody}>
+            <View style={styles.panelHeading}><T style={styles.panelTitle}>MEDIA & EFFECTS</T></View>
+            <ScrollView style={styles.sideScroll} contentContainerStyle={styles.panelBody}>
               <T style={styles.groupLabel}>SOURCE</T>
               {current.lane === 'motion' ? (
-                <View style={styles.asset}><Icon name="sparkles" size={19} color="#6C4CF0" /><View style={{ flex: 1 }}><T style={styles.assetName}>Motion graphics</T><T style={styles.subtle}>Generated scene plan</T></View></View>
+                <View style={styles.asset}><Icon name="sparkles" size={19} color="#FF5A1F" /><View style={{ flex: 1 }}><T style={styles.assetName}>Motion graphics</T><T style={styles.subtle}>Generated scene plan</T></View></View>
               ) : current.video_path ? (
-                <View style={styles.asset}><Icon name="video" size={19} color="#6C4CF0" /><View style={{ flex: 1 }}><T style={styles.assetName} numberOfLines={2}>{current.video_path.split(/[\\/]/).pop()}</T><T style={styles.subtle}>Storyboard source</T></View></View>
+                <View style={styles.asset}><Icon name="video" size={19} color="#FF5A1F" /><View style={{ flex: 1 }}><T style={styles.assetName} numberOfLines={2}>{current.video_path.split(/[\\/]/).pop()}</T><T style={styles.subtle}>Storyboard source</T></View></View>
               ) : <T style={styles.subtle}>No source footage</T>}
               <T style={[styles.groupLabel, { marginTop: 22 }]}>AVAILABLE TRACKS</T>
-              <View style={styles.asset}><Icon name="video" size={18} color="#6C4CF0" /><T style={styles.assetName}>Scenes ({scenes.length})</T></View>
-              <View style={styles.asset}><Icon name="type" size={18} color="#9B6CF0" /><T style={styles.assetName}>Captions ({scenes.filter((item) => item.scene.caption).length})</T></View>
+              <View style={styles.asset}><Icon name="video" size={18} color="#FF5A1F" /><T style={styles.assetName}>Scenes ({scenes.length})</T></View>
+              <View style={styles.asset}><Icon name="type" size={18} color="#FF8A5C" /><T style={styles.assetName}>Captions ({scenes.filter((item) => item.scene.caption).length})</T></View>
               <View style={styles.asset}><Icon name="volume" size={18} color="#10B981" /><T style={styles.assetName}>Sound cues ({scenes.reduce((sum, item) => sum + (item.scene.sfx?.length || 0), 0)})</T></View>
               <T style={[styles.subtle, { marginTop: 18 }]}>Pick a clip on the timeline, then describe the change in the inspector. It comes back as a new version to review.</T>
-            </View>
+            </ScrollView>
           </View>
 
           <View style={[styles.panel, styles.previewPanel, stacked && styles.stackedPanel]}>
             <View style={styles.panelHeading}><T style={styles.panelTitle}>PREVIEW MONITOR</T><T style={styles.subtle}>{renderUrl ? 'Rendered video' : 'Storyboard preview'}</T></View>
-            <View style={styles.previewArea}>
-              {renderUrl ? <VideoPlayer uri={absoluteUrl(renderUrl) as string} /> : (
-                <View style={styles.phone}>
+            <View style={[styles.previewArea, { height: monitorHeight }]}>
+              {renderUrl ? <View style={{ width: monitorWidth }}><VideoPlayer uri={absoluteUrl(renderUrl) as string} /></View> : (
+                <View style={[styles.phone, { width: monitorWidth, height: monitorHeight }]}>
                   <View style={styles.phoneTop} />
                   <View style={styles.phoneContent}>
                     <View style={styles.scenePill}><T style={styles.scenePillText}>SCENE {selected ? selected.index + 1 : '—'}</T></View>
-                    <Icon name={current.lane === 'motion' ? 'sparkles' : 'video'} size={33} color="#9C89FF" />
+                    <Icon name={current.lane === 'motion' ? 'sparkles' : 'video'} size={33} color="#FF8A5C" />
                     <T style={styles.previewScene} numberOfLines={3}>{selected?.scene.type || 'No scene selected'}</T>
                     <T style={styles.previewAction} numberOfLines={5}>{selected?.scene.action || 'Scene details will appear here.'}</T>
                     {selected?.scene.caption ? <View style={styles.caption}><T style={styles.captionText} numberOfLines={4}>{selected.scene.caption}</T></View> : null}
@@ -166,7 +137,7 @@ export default function TimelineEditor() {
 
           <View style={[styles.panel, styles.inspectorPanel, stacked && styles.stackedPanel]}>
             <View style={styles.panelHeading}><T style={styles.panelTitle}>CLIP INSPECTOR</T><T style={styles.subtle}>{selected ? `Scene ${selected.index + 1}` : 'No selection'}</T></View>
-            <View style={styles.panelBody}>
+            <ScrollView style={styles.sideScroll} contentContainerStyle={styles.panelBody}>
               {selected ? (
                 <>
                   <T style={styles.fieldLabel}>SCENE</T><T style={styles.fieldValue}>{selected.scene.type || 'Untitled scene'}</T>
@@ -191,17 +162,17 @@ export default function TimelineEditor() {
                 </View>
               ) : null}
               <View style={{ marginTop: 12 }}><Button label="Open in Storyboard" variant="secondary" onPress={() => router.push({ pathname: '/storyboard', params: { sb: current.id } })} /></View>
-            </View>
+            </ScrollView>
           </View>
         </View>
 
         <View style={styles.timeline}>
-          <View style={styles.timelineToolbar}><View><T style={styles.panelTitle}>TIMELINE</T><T style={styles.subtle}>Select a clip to inspect its saved storyboard data</T></View><T style={styles.timecode}>{timeLabel(duration)} total</T></View>
+          <View style={styles.timelineToolbar}><T style={styles.panelTitle}>TIMELINE</T><T style={styles.timecode}>{timeLabel(duration)} total</T></View>
           <ScrollView horizontal contentContainerStyle={{ minWidth: 760, flexGrow: 1 }}>
             <View style={{ width: '100%' }}>
               <View style={styles.ruler}><T style={styles.trackName}>TRACKS</T><View style={styles.rulerLane}>{Array.from({ length: 6 }, (_, index) => <T key={index} style={styles.tick}>{timeLabel(duration * index / 5)}</T>)}</View></View>
-              <TrackRow label={current.lane === 'motion' ? 'M1  Motion' : 'V1  Video'} color="#6C4CF0" scenes={scenes} duration={duration} selectedIndex={selectedIndex} selectScene={selectScene} text={(item) => item.scene.type || `Scene ${item.index + 1}`} />
-              <TrackRow label="T1  Captions" color="#9B6CF0" scenes={scenes.filter((item) => !!item.scene.caption)} duration={duration} selectedIndex={selectedIndex} selectScene={selectScene} text={(item) => item.scene.caption} />
+              <TrackRow label={current.lane === 'motion' ? 'M1  Motion' : 'V1  Video'} color="#FF5A1F" scenes={scenes} duration={duration} selectedIndex={selectedIndex} selectScene={selectScene} text={(item) => item.scene.type || `Scene ${item.index + 1}`} />
+              <TrackRow label="T1  Captions" color="#FF8A5C" scenes={scenes.filter((item) => !!item.scene.caption)} duration={duration} selectedIndex={selectedIndex} selectScene={selectScene} text={(item) => item.scene.caption} />
               <TrackRow label="A1  Sound" color="#10B981" scenes={scenes.filter((item) => !!item.scene.sfx?.length)} duration={duration} selectedIndex={selectedIndex} selectScene={selectScene} text={(item) => item.scene.sfx.map((cue) => cue.name).join(', ')} />
             </View>
           </ScrollView>
@@ -229,18 +200,9 @@ function TrackRow({ label, color, scenes, duration, selectedIndex, selectScene, 
 
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: '#F4F6FA' },
-  header: { minHeight: 70, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#E5E9F0', paddingHorizontal: 22, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 },
-  headerTitle: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 },
-  brand: { backgroundColor: '#6C4CF0', borderRadius: 7, paddingHorizontal: 9, paddingVertical: 7, flexDirection: 'row', alignItems: 'center', gap: 5 },
-  brandText: { color: '#fff', fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
-  title: { fontSize: 17, fontWeight: '700', color: '#171B2A' },
   subtle: { fontSize: 12, color: '#727D91', lineHeight: 18 },
-  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  status: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#F7F8FB', borderRadius: 20, paddingHorizontal: 10, paddingVertical: 6 },
-  statusDot: { width: 7, height: 7, borderRadius: 4 },
-  statusText: { color: '#5D6779', fontSize: 11 },
-  content: { padding: 18, gap: 16, paddingBottom: 28 },
-  workspace: { flexDirection: 'row', gap: 14, minHeight: 470 },
+  content: { padding: 10, gap: 8, paddingBottom: 12 },
+  workspace: { flexDirection: 'row', gap: 10 },
   workspaceStacked: { flexWrap: 'wrap' },
   panel: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#DFE4ED', borderRadius: 14, overflow: 'hidden' },
   mediaPanel: { width: 246 },
@@ -248,33 +210,34 @@ const styles = StyleSheet.create({
   inspectorPanel: { width: 270 },
   stackedPanel: { flexGrow: 1, minHeight: 330 },
   panelTitle: { fontSize: 11, fontWeight: '800', color: '#495367', letterSpacing: 0.8 },
-  panelHeading: { paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: '#ECEDF2', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  panelHeading: { minHeight: 40, paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#ECEDF2', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  sideScroll: { flex: 1 },
   panelBody: { padding: 16, gap: 11 },
   groupLabel: { color: '#8B95A7', fontSize: 10, fontWeight: '800', letterSpacing: 0.6 },
   asset: { borderWidth: 1, borderColor: '#E8EAF0', borderRadius: 9, padding: 10, flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 48 },
   assetName: { color: '#293144', fontSize: 12, fontWeight: '600' },
-  previewArea: { flex: 1, backgroundColor: '#F8F9FC', padding: 14, alignItems: 'center', justifyContent: 'center', minHeight: 370 },
-  phone: { width: 200, height: 355, borderRadius: 22, backgroundColor: '#111426', borderWidth: 5, borderColor: '#292D3D', padding: 9 },
+  previewArea: { backgroundColor: '#F8F9FC', alignItems: 'center', justifyContent: 'center' },
+  phone: { borderRadius: 22, backgroundColor: '#111426', borderWidth: 5, borderColor: '#292D3D', padding: 9 },
   phoneTop: { alignSelf: 'center', width: 48, height: 5, borderRadius: 5, backgroundColor: '#3E4354', marginBottom: 16 },
   phoneContent: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, paddingHorizontal: 10 },
-  scenePill: { borderRadius: 20, backgroundColor: '#2D2853', paddingHorizontal: 10, paddingVertical: 5 },
-  scenePillText: { fontSize: 9, fontWeight: '800', color: '#B8A8FF', letterSpacing: 0.8 },
+  scenePill: { borderRadius: 20, backgroundColor: '#3A2218', paddingHorizontal: 10, paddingVertical: 5 },
+  scenePillText: { fontSize: 9, fontWeight: '800', color: '#FFB899', letterSpacing: 0.8 },
   previewScene: { fontSize: 16, fontWeight: '800', color: '#fff', textAlign: 'center' },
   previewAction: { fontSize: 11, color: '#C8C9D6', textAlign: 'center', lineHeight: 16 },
   caption: { backgroundColor: '#262947', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 5 },
   captionText: { fontSize: 10, color: '#fff', textAlign: 'center', fontWeight: '600' },
-  transport: { minHeight: 48, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 16, borderTopWidth: 1, borderTopColor: '#ECEEF3' },
+  transport: { minHeight: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 16, borderTopWidth: 1, borderTopColor: '#ECEEF3' },
   transportButton: { padding: 7 },
   timecode: { color: '#536075', fontSize: 12, fontWeight: '700', fontVariant: ['tabular-nums'] },
   fieldLabel: { color: '#8993A4', fontSize: 10, fontWeight: '800', letterSpacing: 0.6, marginTop: 5 },
   fieldValue: { color: '#2A3448', fontSize: 12, lineHeight: 17 },
   timeline: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#DFE4ED', borderRadius: 14, overflow: 'hidden' },
-  timelineToolbar: { paddingHorizontal: 18, paddingVertical: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: '#ECEEF3' },
-  ruler: { flexDirection: 'row', height: 34, borderBottomWidth: 1, borderBottomColor: '#E8EBF0' },
+  timelineToolbar: { minHeight: 32, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: '#ECEEF3' },
+  ruler: { flexDirection: 'row', height: 30, borderBottomWidth: 1, borderBottomColor: '#E8EBF0' },
   trackName: { width: 125, paddingHorizontal: 12, alignSelf: 'center', color: '#657085', fontSize: 11, fontWeight: '700' },
   rulerLane: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 4 },
   tick: { fontSize: 10, color: '#929BAB', fontVariant: ['tabular-nums'] },
-  trackRow: { flexDirection: 'row', minHeight: 55, borderBottomWidth: 1, borderBottomColor: '#EBEDF2' },
+  trackRow: { flexDirection: 'row', minHeight: 40, borderBottomWidth: 1, borderBottomColor: '#EBEDF2' },
   trackLane: { flex: 1, position: 'relative', backgroundColor: '#FAFBFD', marginVertical: 7, marginRight: 10, borderRadius: 5 },
   clip: { position: 'absolute', top: 3, bottom: 3, borderRadius: 5, borderWidth: 2, justifyContent: 'center', paddingHorizontal: 6, overflow: 'hidden' },
   clipText: { color: '#fff', fontSize: 10, fontWeight: '700' },

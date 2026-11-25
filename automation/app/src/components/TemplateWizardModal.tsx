@@ -32,7 +32,7 @@ const STEPS = [
 ];
 
 const ACCENT_COLORS = [
-  '#6C4CF0', // Brand Violet
+  '#FF5A1F', // Brand Violet
   '#0EA5E9', // Sky Blue
   '#10B981', // Emerald
   '#F59E0B', // Amber
@@ -51,11 +51,11 @@ export function TemplateWizardModal({
   const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
 
   // Form State
-  const [name, setName] = useState(initialData?.name || 'GrowthOS Viral Clip Template');
+  const [name, setName] = useState(initialData?.name || 'AILO Viral Clip Template');
   const [language, setLanguage] = useState(initialData?.language || 'English');
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '1:1' | '16:9'>(initialData?.aspectRatio || '9:16');
   const [framing, setFraming] = useState<'auto-face' | 'split' | 'full'>(initialData?.framing || 'auto-face');
-  const [accentColor, setAccentColor] = useState(initialData?.accentColor || '#6C4CF0');
+  const [accentColor, setAccentColor] = useState(initialData?.accentColor || '#FF5A1F');
   const [showWatermark, setShowWatermark] = useState(initialData?.showWatermark ?? false);
   const [captionStyle, setCaptionStyle] = useState<'karaoke' | 'minimal' | 'bold' | 'retro'>(initialData?.captionStyle || 'karaoke');
   const [targetDuration, setTargetDuration] = useState(initialData?.targetDuration || 30);

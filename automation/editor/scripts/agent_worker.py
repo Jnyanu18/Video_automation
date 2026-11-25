@@ -42,6 +42,8 @@ def brief_line(j: dict) -> str:
         extra.append(f"{len(j['clips'])} clip(s)")
     if j.get("assets"):
         extra.append(f"{len(j['assets'])} library file(s)")
+    if j.get("audio_path"):
+        extra.append("custom audio")
     prompt = " ".join(str(j.get("prompt", "")).split())
     return (f"{j['id']} kind={j['kind']} format={j['format']} duration={j['duration']}s user={j.get('user_id')}"
             f"{' [' + ', '.join(extra) + ']' if extra else ''} :: {prompt[:300]}")
@@ -74,8 +76,10 @@ def cmd_claim(a) -> None:
             else "Your creative director is reading the brief and planning the film.")
     j = ab.update_job(a.job_id, status="working", started_at=time.time(), stage=1, note=note)
     keys = ("id", "kind", "format", "duration", "title", "prompt", "clips", "assets", "reference_url", "reference_video_id",
-            "reference_video_path", "direction", "revision", "parent", "root")
+            "reference_video_path", "audio_path", "direction", "revision", "parent", "root")
     print(json.dumps({k: j.get(k) for k in keys if j.get(k) is not None}, indent=1, ensure_ascii=False))
+    if j.get("audio_path"):
+        print("CUSTOM AUDIO: Use this track to guide timing. Leave it out of the source render; the done command mixes it into the finished video.")
     print("JOB_DIR", ab.job_dir(a.job_id))
     if j.get("parent"):  # a change request: build on the previous version's project folder
         print("PARENT_DIR", ab.job_dir(j["parent"]))
@@ -95,12 +99,44 @@ def probe(path: Path) -> dict:
     return {"width": s.get("width"), "height": s.get("height"), "duration": round(float((d.get("format") or {}).get("duration") or 0), 2)}
 
 
+def mix_custom_audio(video: Path, audio: Path) -> None:
+    """Place the selected music under existing sound, or use it as the soundtrack."""
+    if not audio.is_file():
+        raise FileNotFoundError(f"Custom audio is missing: {audio}")
+    has_audio = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a:0", "-show_entries",
+                                "stream=codec_type", "-of", "default=noprint_wrappers=1:nokey=1", str(video)],
+                               capture_output=True, text=True, check=True).stdout.strip() == "audio"
+    duration = probe(video)["duration"]
+    if duration <= 0:
+        raise RuntimeError("Rendered video has no duration")
+    audio_filter = ("[1:a]volume=0.28[m];[0:a][m]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[a]"
+                    if has_audio else "[1:a]volume=0.8[a]")
+    mixed = video.with_name("output-with-music.mp4")
+    command = ["ffmpeg", "-y", "-v", "error", "-i", str(video), "-stream_loop", "-1", "-i", str(audio),
+               "-filter_complex", audio_filter, "-map", "0:v:0", "-map", "[a]", "-c:v", "copy",
+               "-c:a", "aac", "-b:a", "192k", "-t", str(duration), "-movflags", "+faststart", str(mixed)]
+    try:
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode:
+            raise RuntimeError(f"Could not add custom audio: {result.stderr[-500:]}")
+        mixed.replace(video)
+    finally:
+        mixed.unlink(missing_ok=True)
+
+
 def cmd_done(a) -> None:
     src = Path(a.video)
     if not src.is_file():
         sys.exit(f"no such video: {src}")
     dst = ab.job_dir(a.job_id) / "output.mp4"
     shutil.copyfile(src, dst)
+    job = ab.read_job(a.job_id) or {}
+    if job.get("audio_path"):
+        try:
+            mix_custom_audio(dst, Path(job["audio_path"]))
+        except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
+            ab.update_job(a.job_id, status="failed", error=str(error), note=f"Could not add custom audio: {error}")
+            raise SystemExit(str(error)) from error
     if a.scenes:  # scene cards for the Storyboard and Timeline screens (studio/agent_storyboards.py)
         sc = json.loads(Path(a.scenes).read_text(encoding="utf-8"))
         if not isinstance(sc.get("scenes"), list) or not sc["scenes"]:

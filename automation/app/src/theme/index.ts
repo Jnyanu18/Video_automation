@@ -1,7 +1,7 @@
 import { Platform, useColorScheme } from 'react-native';
 
 /**
- * GrowthOS Design System — Cinematic Dark Interface
+ * AILO Design System — Cinematic Dark Interface
  * Primary Palette:
  * - Background: #090A0C
  * - Sidebar: #0C0E11
@@ -54,9 +54,9 @@ const light = {
   text: '#0F172A',
   textMuted: '#64748B',
   textFaint: '#94A3B8',
-  primary: '#6C4CF0',
-  primaryPressed: '#5838D6',
-  primarySoft: 'rgba(108, 76, 240, 0.08)',
+  primary: '#FF5A1F',
+  primaryPressed: '#E64A12',
+  primarySoft: 'rgba(255, 90, 31, 0.08)',
   onPrimary: '#FFFFFF',
   brandPeach: '#FF5A1F',
   brandPeachSoft: '#FFF5F0',
@@ -66,8 +66,8 @@ const light = {
   warningSoft: '#FFFBEB',
   danger: '#EF4444',
   dangerSoft: '#FEF2F2',
-  info: '#6C4CF0',
-  infoSoft: 'rgba(108, 76, 240, 0.08)',
+  info: '#FF5A1F',
+  infoSoft: 'rgba(255, 90, 31, 0.08)',
   overlay: 'rgba(15, 23, 42, 0.45)',
   shadow: '#000000',
 };

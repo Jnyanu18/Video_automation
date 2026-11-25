@@ -144,3 +144,27 @@ export function uploadVideo(
     x.send((file.blob ?? ({ uri: file.uri, type: file.type, name: file.name } as any)) as any);
   });
 }
+
+/** Stage optional music for an AI editor job. The editor service validates the audio stream. */
+export function uploadAgentAudio(
+  file: { blob?: Blob; uri?: string; name: string; type: string },
+  onProgress: (pct: number) => void,
+): Promise<{ id: string; file_name: string; size_bytes: number }> {
+  return new Promise((resolve, reject) => {
+    const x = new XMLHttpRequest();
+    x.open('POST', baseUrl + '/api/editor/agent/audio');
+    x.withCredentials = true;
+    x.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    x.setRequestHeader('X-File-Name', encodeURIComponent(file.name));
+    x.setRequestHeader('X-CSRF-Token', csrf);
+    x.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(Math.round(100 * e.loaded / e.total)); };
+    x.onload = () => {
+      let d: any = {};
+      try { d = JSON.parse(x.responseText); } catch { /* ignore */ }
+      if (x.status === 201 && d.audio) resolve(d.audio);
+      else reject(new ApiError(x.status, d.error || 'UPLOAD_FAILED', d.message || d.detail || `Upload failed (${x.status})`, d));
+    };
+    x.onerror = () => reject(new ApiError(0, 'NETWORK', 'Audio upload failed. Check your connection.'));
+    x.send((file.blob ?? ({ uri: file.uri, type: file.type, name: file.name } as any)) as any);
+  });
+}

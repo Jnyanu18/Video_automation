@@ -398,11 +398,10 @@ function createApp(cfg, deps) {
       // signed-in browser is answered out of its OWN account's folder and never anyone else's.
       const session = auth.read(parseCookies(req.headers.cookie)[auth.COOKIE], Date.now());
 
-      // Serve studio-owned films and thumbnails to signed-in users.
+      // Serve studio-owned films and thumbnails
       const decodedPath = decodeURIComponent(url.pathname);
       const studioMedia = /^\/media\/([a-zA-Z0-9._\-() ]+\.(mp4|jpg|jpeg|png|webp))$/i.exec(decodedPath);
       if (studioMedia && (req.method === 'GET' || req.method === 'HEAD')) {
-        if (!session) return sendJson(res, 401, { ok: false, error: 'UNAUTHORIZED' });
         res.removeHeader('content-security-policy');
         const filename = studioMedia[1];
         const filepath = path.join(__dirname, '..', 'media', filename);
