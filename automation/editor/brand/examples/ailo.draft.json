@@ -1,0 +1,158 @@
+{
+  "note": "DRAFT KIT built from accelerationlogics.com (home, services and work pages, read 2026-11-26). Values that come from the site are filled in. Values the site does not state are PLACEHOLDER. Proof points stay verified=false: the site's numbers and case studies are unnamed and need a person to check them against the client records. Every group stays status draft until a person approves it. Colours and fonts were added from the site's stylesheet on 2026-11-26.",
+  "brand": {
+    "name": "AILO",
+    "legal_name": "PLACEHOLDER - legal entity name (not stated on the site)",
+    "one_liner": "AILO partners with small & medium businesses to build, automate and grow with AI. One technology team for everything you need to scale.",
+    "tagline": "Acceleration logics for modern business.",
+    "note": "Name, one-liner and tagline are from the site home page. Legal name is not on the site."
+  },
+  "facts": {
+    "history": "PLACEHOLDER - history and founding year (not stated on the site; the site says AI engineers, developers, designers and marketers work under a single roof)",
+    "mission": "PLACEHOLDER - mission statement (not stated on the site; the footer says Built for SMEs. Engineered to last.)",
+    "expertise": [
+      "AI strategy and audits",
+      "Managed AI operations",
+      "AI content at scale",
+      "Data and model setup",
+      "Fractional AI team",
+      "Compliance and governance",
+      "Content and creative: blog writing, website content, video scripts, social media creatives, branding content",
+      "Digital marketing and SEO: social media management, paid ads (Google and Meta), technical and on-page SEO, off-page and local SEO, keyword research and SEO audits",
+      "Build and engineering: websites, mobile apps, desktop applications, software development",
+      "Infrastructure: cloud deployment, server management, CI/CD setup, security and support"
+    ],
+    "proof_points": [
+      {
+        "text": "68% of support tickets auto-resolved for a regional e-commerce retailer (unnamed client, from the site's work page)",
+        "verified": false,
+        "source": "https://accelerationlogics.com/work"
+      },
+      {
+        "text": "3.2x organic traffic in 6 months after a site rebuild plus technical and local SEO (unnamed client, from the site's work page)",
+        "verified": false,
+        "source": "https://accelerationlogics.com/work"
+      },
+      {
+        "text": "20 hours per week saved automating quoting, invoicing and reporting for a logistics SME (unnamed client, from the site's work page)",
+        "verified": false,
+        "source": "https://accelerationlogics.com/work"
+      }
+    ],
+    "approved_claims": [],
+    "note": "The site's home-page impact counters show zero, so they are not used. The 'before vs after' figures are labelled illustrative on the site and are not used. Add approved claims only after a person checks them."
+  },
+  "voice": {
+    "adjectives": [
+      "confident",
+      "concise",
+      "reassuring"
+    ],
+    "words_to_use": [
+      "for modern business",
+      "Built for SMEs",
+      "Engineered to last",
+      "one technology team",
+      "one capable partner",
+      "AI-first by default",
+      "built for SME budgets"
+    ],
+    "words_to_avoid": [
+      "PLACEHOLDER - words the brand avoids (not stated on the site)"
+    ],
+    "banned_claims": [
+      "PLACEHOLDER - claims the brand must never make (not stated on the site)"
+    ],
+    "note": "Adjectives and phrases are the reading of the site copy: 'quietly' recurs (for example 'Monitor, improve and scale - quietly, every day'). Confirm before use."
+  },
+  "visual": {
+    "palette": [
+      {
+        "hex": "#FF8A4C",
+        "role": "primary",
+        "share": 0.15,
+        "note": "From the site stylesheet: the orange used on buttons and gradients (background:#ff8a4c)."
+      },
+      {
+        "hex": "#FFB088",
+        "role": "accent",
+        "share": 0.1,
+        "note": "From the site stylesheet: gradient stop (#ffb088)."
+      },
+      {
+        "hex": "#FFD4B8",
+        "role": "neutral",
+        "share": 0.05,
+        "note": "From the site stylesheet: gradient start and highlight text (#ffd4b8)."
+      },
+      {
+        "hex": "#000000",
+        "role": "background",
+        "share": 0.6,
+        "note": "From the site stylesheet: --color-black. Confirm the page background is black, not a near-black."
+      },
+      {
+        "hex": "#FFFFFF",
+        "role": "text",
+        "share": 0.1,
+        "note": "From the site stylesheet: --color-white."
+      }
+    ],
+    "fonts": {
+      "heading": "Poppins",
+      "body": "Poppins",
+      "note": "From the site stylesheet: --font-display and --font-sans are Poppins. The font file is loaded from the site's CSS, not stored here."
+    },
+    "logo": {
+      "full": "https://accelerationlogics.com/images/ailo-mark.png",
+      "mono": "PLACEHOLDER - mono logo file (only the full mark was found on the site)",
+      "min_px": 120,
+      "note": "The full mark is the header logo on the site. min_px is a stand-in until the brand's minimum size is confirmed."
+    },
+    "imagery": "Near-black backgrounds with orange (#FF8A4C) gradient accents; bold white Poppins headlines; clean, modern scenes of small-business people and work in natural light; uncluttered compositions with generous space. Confident and calm, never flashy.",
+    "reference_images": [],
+    "note": "Colours and fonts were read from the site stylesheet /assets/styles-C4uoPhg6.css on 2026-11-26. A person should confirm them before the kit is approved. Imagery style is a proposal written from the same stylesheet and the voice adjectives (confident, concise, reassuring). The owner must approve it."
+  },
+  "motion": {
+    "easing": "PLACEHOLDER - easing name, for example power2.out",
+    "avg_shot_seconds": 2.5,
+    "pacing": "PLACEHOLDER - pacing (not stated on the site)",
+    "note": "The shot length is a stand-in."
+  },
+  "captions": {
+    "font": "Poppins",
+    "text_colour": "#FFFFFF",
+    "highlight_colour": "#FF8A4C",
+    "position": "bottom",
+    "note": "Caption colours come from the palette above (white text, orange highlight)."
+  },
+  "music": {
+    "mood": "PLACEHOLDER - music mood (not stated on the site)",
+    "bpm_min": 100,
+    "bpm_max": 120,
+    "licensed": false,
+    "note": "Tempo is a stand-in; licensed stays false until a track's licence is confirmed."
+  },
+  "ctas": [
+    "Book a free consultation",
+    "Tell us where you want to go"
+  ],
+  "aspect_ratios": [
+    "9:16",
+    "16:9"
+  ],
+  "status": {
+    "brand": "draft",
+    "facts": "draft",
+    "voice": "draft",
+    "visual": "draft",
+    "motion": "draft",
+    "captions": "draft",
+    "music": "draft",
+    "ctas": "draft",
+    "aspect_ratios": "draft"
+  },
+  "version": 1,
+  "updated_at": "",
+  "owner": "PLACEHOLDER - account id that owns this kit"
+}

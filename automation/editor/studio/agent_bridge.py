@@ -37,7 +37,7 @@ EDITOR_ROOT = Path(__file__).resolve().parents[1]
 QUEUE_DIR = Path(os.environ.get("AGENT_QUEUE_DIR") or EDITOR_ROOT / "work" / "agent_queue")
 LIBRARY_CONFIG = Path(os.environ.get("AGENT_LIBRARY_CONFIG") or EDITOR_ROOT / "agent_library.json")
 HEARTBEAT_FRESH_S = 90
-KINDS = ("motion", "edit", "event")
+KINDS = ("motion", "edit", "event", "givemotion")  # givemotion: Claude builds video.html with the givemotion skill (studio/givemotion_job.py)
 FORMATS = ("9:16", "16:9", "1:1")
 MEDIA_EXT = {".mp4", ".mov", ".m4v", ".webm", ".mkv", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg",
              ".mp3", ".wav", ".m4a", ".aac", ".pdf"}
@@ -144,7 +144,7 @@ def list_library(limit: int = 2000) -> List[dict]:
 # ------------------------------------------------------------------ API
 class AgentJobRequest(BaseModel):
     prompt: str = Field(..., min_length=3, max_length=4000)
-    kind: str = Field("motion", pattern="^(motion|edit|event)$")
+    kind: str = Field("motion", pattern="^(motion|edit|event|givemotion)$")
     format: str = Field("9:16", pattern=r"^(9:16|16:9|1:1)$")
     duration: int = Field(30, ge=5, le=180)
     title: Optional[str] = Field(None, max_length=120)
@@ -218,7 +218,10 @@ def register_agent_routes(app, user_id: Optional[str], uploads_dir: Optional[Pat
     def agent_status():
         mine = [j for j in all_jobs() if j.get("user_id") == owner]
         waiting = [j for j in all_jobs() if j.get("status") == "queued"]
-        return {"ok": True, **worker_status(), "queued_total": len(waiting),
+        from studio import director_worker  # lazy: director_worker imports this module
+        automatic = (os.environ.get("DIRECTOR_WORKER") or "auto").strip().lower() not in ("off", "0", "false", "no") \
+            and director_worker.why_not_ready() is None
+        return {"ok": True, **worker_status(), "queued_total": len(waiting), "automatic": automatic,
                 "mine": {"total": len(mine), "done": sum(j.get("status") == "done" for j in mine)}}
 
     @app.post("/api/editor/agent/jobs", status_code=202)

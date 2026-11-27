@@ -9,20 +9,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /srv
-COPY app/package.json app/package-lock.json app/
-RUN cd app && npm ci --omit=dev
+# Remotion captions renderer: motion-kit (render.mjs + projects/captions) and its node_modules.
+COPY packages/motion-kit packages/motion-kit
+RUN cd packages/motion-kit && npm ci --omit=dev
 
-# chrome-headless-shell enables HeadlessExperimental.beginFrame (Hyperframes' fast deterministic capture path).
-# Regular Chrome silently falls back to slower screenshot capture. Hyperframes also auto-installs it into its
-# cache on first run; installing here at build time avoids a network fetch at render time.
+# chrome-headless-shell is the browser Remotion drives; CHROME_PATH points composition.py at it.
 RUN npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path /opt/chrome \
     && ln -sf "$(find /opt/chrome -name chrome-headless-shell -type f | head -1)" /usr/local/bin/chrome-headless-shell
-ENV HYPERFRAMES_BROWSER_PATH=/usr/local/bin/chrome-headless-shell \
-    HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_NO_UPDATE_CHECK=1
+ENV CHROME_PATH=/usr/local/bin/chrome-headless-shell \
+    PYTHON=python3
 
 COPY services/render services/render
 COPY tools tools
-# GSAP is vendored in services/render/vendor (local file, no CDN).
 ENV PYTHONPATH=/srv
 # Usage: docker run -v $PWD/work:/work claude-editor-render python3 -m services.render.cli plan.json /work --final
 ENTRYPOINT ["python3", "-m", "services.render.cli"]

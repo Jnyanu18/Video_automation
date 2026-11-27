@@ -42,16 +42,17 @@ def _anthropic_client():
     Reaching this at all requires EDITOR_LLM=anthropic: _make_client() checks EDITOR_LLM first, so with
     EDITOR_LLM=gemini the key below is never looked at.
 
-    The model is chosen by agent.loop.MODEL (claude-opus-5-5, or EDITOR_AGENT_MODEL), not here - the loop
-    is called without a model= argument, so the attribute set below is advisory only.
+    The model: EDITOR_LLM_MODEL, else EDITOR_CLAUDE_MODEL, else EDITOR_AGENT_MODEL, else claude-sonnet-5-5
+    (studio.claude_director.model_name). The API server passes client.model to run_agent explicitly.
     """
     key = os.environ.get("ANTHROPIC_API_KEY")
     if not key:
         return None
     try:
         import anthropic
-        client = anthropic.Anthropic(api_key=key)
-        client.model = os.environ.get("EDITOR_LLM_MODEL") or os.environ.get("EDITOR_AGENT_MODEL") or "claude-opus-5-5"
+        from studio import claude_director
+        client = anthropic.Anthropic(api_key=key, timeout=claude_director.TIMEOUT_S, max_retries=2)
+        client.model = os.environ.get("EDITOR_LLM_MODEL") or claude_director.model_name()
         return client
     except Exception as e:
         log.warning("anthropic client unavailable: %s", e)
@@ -63,7 +64,7 @@ def _make_client():
     try:
         from agent.openai_compat import load_dotenv, make_client_from_env  # EDITOR_LLM=gemini|openrouter|ollama|custom|anthropic
         load_dotenv()
-        if (os.environ.get("EDITOR_LLM") or "").lower() == "anthropic":
+        if (os.environ.get("EDITOR_LLM") or "").lower() in ("anthropic", "claude"):
             return _anthropic_client()
         llm = make_client_from_env()
     except ImportError as e:  # agent package missing or shadowed: fall through to the Anthropic client / fake

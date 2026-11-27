@@ -2,8 +2,10 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from services.render import render_final, render_preview
-from services.render.composition import build_composition
+from services.render.composition import renderer_ready
 from services.render.cut import build_video_filter, probe
 from services.render.timeline import _fallback_remap, remap_to_output
 
@@ -32,17 +34,12 @@ def test_none_mode_pads(plan):
     assert "pad=360:640" in build_video_filter(plan, plan["keep"][0], 360, 640, 30)
 
 
-def test_composition_local_gsap_and_clips(plan, tmp_path):
-    cut = tmp_path / "c.mp4"
-    cut.write_bytes(b"x")
-    w = build_composition(tmp_path / "p", cut, 3.0, _fallback_remap(plan)["captions"],
-                          _fallback_remap(plan)["overlays"], 360, 640, 30)
-    html = (tmp_path / "p" / "index.html").read_text()
-    assert 'src="vendor/gsap.min.js"' in html and "http" not in html.replace("</", "")
-    assert (tmp_path / "p" / "vendor" / "gsap.min.js").stat().st_size > 10000
-    assert html.count('class="clip cap"') == 2 and 'data-has-audio="true"' in html and not w
+READY, WHY = renderer_ready()
+SKIP_NO_REMOTION = pytest.mark.skipif(not READY, reason=f"Remotion captions renderer unavailable: {WHY}")
 
 
+@pytest.mark.slow
+@SKIP_NO_REMOTION
 def test_preview_end_to_end(plan, tmp_path):
     p = render_preview(plan, tmp_path)
     i = probe(p)
@@ -61,6 +58,8 @@ def test_final_ffmpeg_only_frame_accurate(plan, tmp_path):
     assert s["nb_read_frames"] == "30" and (s["width"], s["height"]) == (360, 640)
 
 
+@pytest.mark.slow
+@SKIP_NO_REMOTION
 def test_final_with_captions(plan, tmp_path):
     p = render_final(plan, tmp_path)
     i = probe(p)

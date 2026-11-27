@@ -57,6 +57,7 @@ def gemini_probe() -> dict:
     if hit and now - hit[0] < 60:
         return hit[1]
     provider = os.environ.get("EDITOR_LLM", "gemini").lower()
+    provider = "anthropic" if provider == "claude" else provider  # EDITOR_LLM=claude is the same Claude path
     key_env = {"gemini": "GEMINI_API_KEY", "openrouter": "OPENROUTER_API_KEY", "anthropic": "ANTHROPIC_API_KEY"}.get(provider)
     key = os.environ.get(key_env or "") if key_env else None
     if provider == "ollama":
@@ -117,7 +118,6 @@ def probe_all(self_port: int = 8793) -> List[dict]:
                    "ONLINE" if (st == 200 or port_open(8792)) else "OFFLINE", "serves /render and /media files"))
 
     for id_, name, type_, port, cfg_vars in (
-        ("mpt_server", "Multi-Platform Publisher Adapter (MPT)", "Publishing", 8791, ("MPT_API_KEY",)),
         ("postiz", "Postiz Social Publisher Bridge", "Social Publishing", 8790, ("POSTIZ_API_URL", "POSTIZ_API_KEY")),
     ):
         st, _ = http_get(f"http://127.0.0.1:{port}/healthz", 1.0)

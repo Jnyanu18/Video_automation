@@ -32,16 +32,19 @@ REPO_ROOT = ROOT.parent
 from agent import run_agent  # noqa: E402
 from agent.loop import _call_tool, _normalize  # noqa: E402
 from agent.openai_compat import load_dotenv  # noqa: E402
-from agent.review import run_scorecard  # noqa: E402
+from agent.review import extract_frames, run_scorecard  # noqa: E402
 from services.api.editor_api import adapters  # noqa: E402
 from services.render import render_final_info, render_preview_info  # noqa: E402
-from studio import analytics, animator, carousel as carousel_mod, director, film_library, health, ingest as ingest_mod, longform as longform_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
+from studio import analytics, animator, carousel as carousel_mod, claude_director, director, film_library, health, ingest as ingest_mod, longform as longform_mod, posts as posts_mod, recipes as recipes_mod, series as series_mod, vstudio as vstudio_mod, workflows  # noqa: E402
 from studio.presets import PRESET_STYLES, probe_video_file  # noqa: E402
 from studio.publishing import PLATFORMS, Publisher  # noqa: E402
 from studio import tenancy  # noqa: E402
 from studio.motion_api import register_motion_routes  # noqa: E402
 from studio.agent_bridge import register_agent_routes  # noqa: E402
 from studio.agent_storyboards import register_agent_storyboards  # noqa: E402
+from studio.images import register_image_routes  # noqa: E402
+from brand.routes import register_brand_routes  # noqa: E402
+from brand.checks import brand_report, string_leaves  # noqa: E402
 from studio.store import Store  # noqa: E402
 from styles.aggregate import aggregate as aggregate_styles  # noqa: E402
 from styles.style_extract import extract_style as do_extract_style, save_style  # noqa: E402
@@ -315,6 +318,8 @@ class PublishScheduleRequest(BaseModel):
     scheduled_at: Optional[str] = None
     storyboard_id: Optional[str] = None
     render_id: Optional[str] = None
+    accept_review: bool = False  # publish even when the gate asks for a person to check (REVIEW)
+    visual_review: bool = False  # also have Claude look at sampled frames before publishing (costs a model call)
 
 
 class MetricsRequest(BaseModel):
@@ -451,10 +456,19 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         return JSONResponse(status_code=exc.status_code, content=body)
 
     # ------------------------------------------------------------ agent jobs
-    def _llm():
+    def _select_llm():
+        """The configured client, or None. EDITOR_LLM=claude with no usable Claude key falls back to Gemini, logged."""
         client = adapters._make_client()
+        if client is None and claude_director.claude_selected():
+            client = claude_director.gemini_fallback_client()
+            if client is not None:
+                log.warning("EDITOR_LLM=claude but no usable ANTHROPIC_API_KEY: using the Gemini path")
+        return client
+
+    def _llm():
+        client = _select_llm()
         if client is None:
-            raise RuntimeError("No LLM is configured. In automation/editor/.env set EDITOR_LLM=gemini with GEMINI_API_KEY, or EDITOR_LLM=anthropic with ANTHROPIC_API_KEY")
+            raise RuntimeError("No LLM is configured. In automation/editor/.env set EDITOR_LLM=gemini with GEMINI_API_KEY, or EDITOR_LLM=claude with ANTHROPIC_API_KEY")
         return client
 
     def _compact(e: dict) -> Optional[dict]:
@@ -488,9 +502,21 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
 
         try:
             history = [{"role": m["role"], "content": m["content"]} for m in (sb.get("messages") or [])[-8:]]
-            res = run_agent(sb_id, message, sb["plan"], adapters.collect_tools(), client, workdir=sb["workdir"],
-                            max_iterations=max_iter, on_event=on_event, history=history,
-                            model=getattr(client, "model", None) or "claude-sonnet-5-5")
+
+            def _agent(c: Any) -> dict:
+                return run_agent(sb_id, message, sb["plan"], adapters.collect_tools(), c, workdir=sb["workdir"],
+                                 max_iterations=max_iter, on_event=on_event, history=history,
+                                 model=getattr(c, "model", None) or "claude-sonnet-5-5")
+            try:
+                res = _agent(client)
+            except Exception as first:
+                fb = claude_director.gemini_fallback_client() if claude_director.is_claude_client(client) else None
+                if fb is None:
+                    raise
+                log.warning("[%s] Claude agent run failed (%s), retrying on Gemini", sb_id, type(first).__name__)
+                on_event({"ts": time.time(), "type": "message",
+                          "text": f"Claude failed ({type(first).__name__}); continuing on the Gemini path."})
+                res = _agent(fb)
             plan = res["plan"]
             card = format_storyboard(plan, sb["workdir"])
             changed = len(res.get("versions") or []) > 1
@@ -818,6 +844,20 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             r["stage_text"] = text
         store.update("storyboards", sb_id, add)
 
+    def _sample_frames(video: Path, duration: float, outdir: Path) -> list:
+        """(time, path) for four frames across the cut, for Claude to look at. Empty when sampling fails."""
+        frames = []
+        for f in (0.1, 0.35, 0.6, 0.85):
+            t = round(duration * f, 2)
+            try:
+                paths = extract_frames(str(video), [t], str(outdir))
+            except Exception as e:  # a missing frame only costs Claude a look, never the job
+                log.warning("frame sampling at %.2fs failed: %s", t, e)
+                continue
+            if paths:
+                frames.append((t, paths[0]))
+        return frames
+
     def _run_auto_job(sb_id: str, url: Optional[str], video_path: Optional[Path], style: str, instruction: str,
                       client: Any, reference_path: Optional[Path] = None) -> None:
         try:
@@ -873,7 +913,10 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
 
             _stage(sb_id, "The director is planning the visuals" + ("" if client else " (no LLM configured: using the plainer built-in planner)"))
             sfx_names = [i["name"] for i in sfxlib.catalog()]
-            dplan, source, warns = director.make_plan(client, transcript, float(info["duration"]), style, instruction, sfx_names)
+            duration = float(info["duration"])
+            frames = _sample_frames(video_path, duration, Path(sb["workdir"]) / "frames") if claude_director.is_claude_client(client) else []
+            dplan, source, warns = claude_director.plan_edit(client, transcript, duration, style, instruction, sfx_names,
+                                                             frames=frames, silences=claude_director.removed_gaps(plan.get("keep") or []))
             if any(b.get("template") == "custom" for b in dplan["beats"]):
                 dplan["beats"], cwarns = animator.fill_custom(client, dplan["beats"], lambda m: _stage(sb_id, m))
                 warns = list(warns) + cwarns
@@ -887,7 +930,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
                 card["title"] = dplan["hook"]["text"]  # a real title for lists, carousels and posts (not the file name)
             sc = card["scorecard"]
             reply = (f"Auto-edited {video_path.name}: {len(dplan['beats'])} diagrams, {len(dplan['zooms'])} zooms, {len(dplan['sfx'])} sound effects. "
-                     f"Planned by the {'LLM director' if source == 'llm' else 'built-in heuristic planner'}. Scorecard {sc['status']}"
+                     f"Planned by the {claude_director.PLANNER_LABEL.get(source, 'built-in heuristic planner')}. Scorecard {sc['status']}"
                      + (f" ({round(sc['score'] * 100)}%)" if sc.get("score") is not None else "")
                      + (f". Failing: {', '.join(sc['failed_checks'])}" if sc["failed_checks"] else "")
                      + (f". Warnings: {', '.join(sc['warnings'])}" if sc["warnings"] else "") + ".")
@@ -940,7 +983,7 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
             if reference_path is None:
                 raise HTTPException(404, f"Reference video '{req.reference_video_id}' not found")
         try:
-            client = adapters._make_client()
+            client = _select_llm()
         except Exception:
             client = None
         sb_id = store.new_id("sb")
@@ -975,6 +1018,11 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
         except Exception:
             client = None
         out = await asyncio.to_thread(posts_mod.generate, client, hook, sents, sb["storyboard"]["title"], "")
+        brand = brand_report(Path(work_dir), user_id if tenant else "local", "copy",
+                             {"text": string_leaves(out), "colours_used": [], "fonts_used": [], "has_logo": False,
+                              "cta": "", "duration_s": 0.0, "aspect": "9:16"})
+        if brand is not None:
+            out = {**out, "brand_check": brand}
         store.update("storyboards", sb_id, lambda r: r.update(posts=out))
         return {"ok": True, "posts": out}
 
@@ -1245,7 +1293,14 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
                 probed = probe_video_file(renders_dir / f"{rid}.mp4")
                 rec = {"render_id": rid, "video_url": f"/render/{rid}.mp4", "quality": quality, "duration": round(probed["duration"], 2),
                        "resolution": f"{probed['width']}x{probed['height']}", "backend": info.get("stage"),
-                       "warnings": info.get("warnings") or [], "seconds": info.get("seconds"), "created_at": time.time()}
+                       "warnings": info.get("warnings") or [], "seconds": info.get("seconds"), "created_at": time.time(),
+                       "output_scorecard": info.get("scorecard")}
+                if quality == "final":
+                    caps = [c.get("text", "") for c in (sb.get("plan", {}).get("captions") or []) if isinstance(c, dict)]
+                    rec["brand_check"] = brand_report(Path(work_dir), user_id if tenant else "local", "final_video",
+                                                      {"text": caps, "colours_used": [], "fonts_used": [], "has_logo": False,
+                                                       "cta": "", "duration_s": float(probed["duration"]),
+                                                       "aspect": "9:16" if probed["height"] > probed["width"] else "16:9"})
 
                 def done(r):
                     r.setdefault("renders", []).append(rec)
@@ -1346,10 +1401,14 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
 
     @app.post("/api/editor/publishing/schedule")
     async def schedule_publish(req: PublishScheduleRequest):
+        payload = req.model_dump(exclude={"accept_review", "visual_review"})
+        visual_client = _llm() if req.visual_review else None
         try:
-            item = await asyncio.to_thread(publisher.schedule, req.model_dump())
+            item = await asyncio.to_thread(publisher.schedule, payload, visual_client=visual_client, accept_review=req.accept_review)
         except ValueError as e:
             raise HTTPException(400, str(e))
+        except RuntimeError as e:  # no LLM configured for the requested visual review
+            raise HTTPException(503, str(e))
         return {"ok": True, "item": item}
 
     def _pub_action(fn, pid: str):
@@ -1888,6 +1947,8 @@ def create_app(state_file: Optional[Path] = None, renders_dir: Optional[Path] = 
     register_motion_routes(app, store, work_dir, renders_dir, render_lock, roots)
     register_agent_routes(app, user_id if tenant else None, uploads_dir, roots)
     register_agent_storyboards(app, user_id if tenant else None, store, work_dir, renders_dir)
+    register_image_routes(app, user_id if tenant else None, work_dir)
+    register_brand_routes(app, user_id if tenant else None, work_dir, lambda: _select_llm())
     return app
 
 
@@ -1914,6 +1975,10 @@ if __name__ == "__main__":
     # inside an isolated network and never published to the host.
     host = os.environ.get("EDITOR_HOST", "127.0.0.1")
     log.info("Starting AI Video Editor Engine on http://%s:%s", host, port)
+    # The creative director: makes every queued Motion / AI editing brief into a finished film, with no person in
+    # the loop. Starts when ANTHROPIC_API_KEY is set (DIRECTOR_WORKER=off disables, =on insists). One per process.
+    from studio import director_worker
+    director_worker.start_background()
     # One worker only: the per-account store is a JSON file guarded by an in-process
     # lock, so a second worker would silently lose the first one's writes.
     uvicorn.run(app, host=host, port=port, log_level="info")
