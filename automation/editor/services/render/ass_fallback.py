@@ -1,7 +1,7 @@
-"""Caption burn-in with FFmpeg + libass, used when the HyperFrames (browser) render cannot run or times out.
+"""Caption burn-in with FFmpeg + libass, used only when the Remotion captions render fails.
 
 It keeps the captions on screen (word-by-word highlight for karaoke) so a failed browser render never silently drops them.
-Title / lower-third / b-roll overlays need the browser composition and are NOT drawn here; the caller reports that.
+Title / lower-third overlays need the Remotion composition and are NOT drawn here; the caller reports that.
 """
 from __future__ import annotations
 

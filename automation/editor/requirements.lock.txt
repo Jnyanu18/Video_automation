@@ -33,4 +33,9 @@ ctranslate2==4.8.5
 # (agent/openai_compat.py), so no google SDK is required.
 anthropic==2.4.0
 
+# Music: the creative director picks a licensed track and cuts it on bar lines (soundtrack/). librosa measures tempo,
+# onsets and bars; soundfile reads the audio. Same versions as the tested dev machine.
+librosa==1.0.1
+soundfile==0.14.0
+
 yt-dlp==2026.10.26

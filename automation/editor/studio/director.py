@@ -25,6 +25,8 @@ video with timestamps. Decide what is SEEN and HEARD on top of it. Reply with ON
 Direction rules (from the studio's playbook):
 - A new picture for each idea: every key claim gets an animated diagram that SHOWS the sentence, not a headline repeating it.
 - The first sentence is acted out in the first 2.6 seconds with a short hook title that works with the sound off.
+- Rehook: about a quarter to 40% of the way through, re-grab attention with one short title (up to 9 words) that restates the
+  promise of the hook or names the surprising point coming next. Use a sentence the speaker says in that window.
 - Nothing static for long: spread diagrams across the video, with a short gap between them. Never one headline sitting alone.
 - Story loops: open a question early, pay it off in the middle, leave exactly one loop open at the end (the call to action).
 - Use ONLY facts, names and numbers that appear in the transcript. Never invent a number, a name or a claim. Copy names exactly as spoken.
@@ -44,6 +46,7 @@ Diagram templates (pick the one that matches what is being SAID):
 
 JSON shape (times are SOURCE seconds taken from the transcript; every beat is 3 to 9 seconds):
 {"hook": {"text": "..."},
+ "rehook": {"text": "...", "start": 0.0, "end": 0.0} or null,
  "speaker": {"name": "...", "role": "..."} or null,
  "beats": [{"template": "counter", "start": 0.0, "end": 0.0, ...template fields...}],
  "zooms": [{"start": 0.0, "end": 0.0}],
@@ -135,7 +138,7 @@ def clean(raw: Any, duration: float, sents: List[dict], sfx_names: List[str]) ->
     raw = raw if isinstance(raw, dict) else {}
     starts = [s["start"] for s in sents]
     ends = [s["end"] for s in sents]
-    plan: Dict[str, Any] = {"hook": None, "speaker": None, "beats": [], "zooms": [], "sfx": [], "cta": None}
+    plan: Dict[str, Any] = {"hook": None, "rehook": None, "speaker": None, "beats": [], "zooms": [], "sfx": [], "cta": None}
 
     h = (raw.get("hook") or {}).get("text") if isinstance(raw.get("hook"), dict) else None
     h = " ".join(str(h or "").split())
@@ -192,6 +195,22 @@ def clean(raw: Any, duration: float, sents: List[dict], sfx_names: List[str]) ->
         taken.append((st, en))
         plan["beats"].append({**prm, "start": round(st, 3), "end": round(en, 3)})
     plan["beats"].sort(key=lambda x: x["start"])
+
+    # Rehook: one title re-grabbing attention 25-40% of the way through. Dropped (not moved) if it cannot sit there cleanly.
+    rh = raw.get("rehook")
+    if isinstance(rh, dict) and str(rh.get("text", "")).strip():
+        try:
+            st = _snap(float(rh.get("start", duration * 0.3)), starts, 1.0)
+        except (TypeError, ValueError):
+            st = None
+        if st is None or not (0.25 * duration <= st <= 0.40 * duration):
+            warn.append("rehook not in the 25-40% window; dropped")
+        else:
+            en = min(st + 2.2, duration - CTA_SECONDS - 0.6)
+            if en - st < 1.5 or any(st < e + 0.3 and en > s - 0.3 for s, e in taken):
+                warn.append("rehook overlaps a diagram or has no room; dropped")
+            else:
+                plan["rehook"] = {"text": _words_text(" ".join(str(rh["text"]).split()), 9)[:60], "start": round(st, 3), "end": round(en, 3)}
 
     zt: List[Tuple[float, float]] = []
     for z in raw.get("zooms") or []:
@@ -295,6 +314,9 @@ def to_steps(plan: dict) -> List[dict]:
     if plan.get("hook"):
         h = plan["hook"]
         steps.append({"tool": "add_title", "input": {"text": h["text"], "start": h["start"], "end": h["end"], "y": 0.30, "size": 52, "box": True, "style": "bold"}})
+    if plan.get("rehook"):
+        r = plan["rehook"]
+        steps.append({"tool": "add_title", "input": {"text": r["text"], "start": r["start"], "end": r["end"], "y": 0.30, "size": 52, "box": True, "style": "bold"}})
     if plan.get("speaker"):
         sp = plan["speaker"]
         steps.append({"tool": "add_lower_third", "input": {"name": sp["name"], "subtitle": sp.get("role", ""), "start": 0.6, "end": 4.6}})

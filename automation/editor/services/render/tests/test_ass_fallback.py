@@ -1,4 +1,4 @@
-"""A failed or slow HyperFrames render must never silently drop the captions."""
+"""A failed or slow Remotion render must never silently drop the captions."""
 import subprocess
 
 import cv2
@@ -41,8 +41,8 @@ def test_burn_captions_draws_text(tmp_path, sample):
 
 def test_render_falls_back_to_burned_captions_with_a_warning(plan, monkeypatch, tmp_path):
     def boom(*a, **k):
-        raise R.RenderError("hyperframes render failed (1): chrome crashed")
-    monkeypatch.setattr(R, "hyperframes_render", boom)
+        raise R.RenderError("remotion render failed (1): chrome crashed")
+    monkeypatch.setattr(R, "build_composition", boom)
     info = R.render_preview_info(plan, tmp_path)
     assert info["stage"] == "ffmpeg-ass-fallback"
     assert any("captions were burned in" in w and "chrome crashed" in w for w in info["warnings"])
@@ -52,10 +52,10 @@ def test_render_falls_back_to_burned_captions_with_a_warning(plan, monkeypatch, 
     assert (diff > 60).sum() > 100
 
 
-def test_hyperframes_timeout_is_configurable(monkeypatch):
-    monkeypatch.delenv("HYPERFRAMES_TIMEOUT", raising=False)
-    assert R._hf_timeout(False) == 900 and R._hf_timeout(True) == 600
-    monkeypatch.setenv("HYPERFRAMES_TIMEOUT", "300")
-    assert R._hf_timeout(False) == 300
-    monkeypatch.setenv("HYPERFRAMES_TIMEOUT", "junk")
-    assert R._hf_timeout(False) == 900
+def test_remotion_timeout_is_configurable(monkeypatch):
+    monkeypatch.delenv("REMOTION_TIMEOUT", raising=False)
+    assert R._captions_timeout(False) == 900 and R._captions_timeout(True) == 600
+    monkeypatch.setenv("REMOTION_TIMEOUT", "300")
+    assert R._captions_timeout(False) == 300
+    monkeypatch.setenv("REMOTION_TIMEOUT", "junk")
+    assert R._captions_timeout(False) == 900

@@ -1,4 +1,4 @@
-"""Render worker: EditPlan -> mp4 (FFmpeg cut/reframe + Hyperframes captions/overlays)."""
+"""Render worker: EditPlan -> mp4 (FFmpeg cut/reframe + Remotion captions/overlays)."""
 import tempfile
 
 from .render import (  # noqa: F401

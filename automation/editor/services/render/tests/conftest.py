@@ -33,3 +33,25 @@ def plan(sample):
                       "asset": "", "params": {"name": "Jane Doe", "title": "CEO"}}],
         "style_ref": None, "notes": "",
     }
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "slow: renders real video with the Revideo caption renderer")
+
+
+@pytest.fixture
+def fake_remotion(monkeypatch):
+    """Stand-in for the caption renderer (services/render/revideo.py; the fixture keeps its old name): the cut video
+    is the 'rendered' file, so no browser runs. Records every call in the returned list."""
+    import shutil
+    from services.render import render as R
+
+    calls: list[dict] = []
+
+    def fake(proj, cut_video, duration, captions, overlays, w, h, fps, *, out_mp4, style=None, timeout=900):
+        calls.append({"captions": captions, "overlays": overlays, "w": w, "h": h, "fps": fps, "duration": duration})
+        shutil.copy(cut_video, out_mp4)
+        return Path(out_mp4), []
+
+    monkeypatch.setattr(R, "build_composition", fake)
+    return calls

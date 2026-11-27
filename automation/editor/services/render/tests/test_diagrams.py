@@ -3,7 +3,7 @@ import re
 
 import pytest
 
-from services.render import composition, diagrams, render as R
+from services.render import diagrams, render as R
 from tools.visuals import TOOLS
 
 PRMS = [
@@ -26,20 +26,6 @@ def test_every_template_renders_numbers_not_css_lengths_into_the_script(prm):
     assert not re.findall(r"[xy]:-?[\d.]+px", "\n".join(js))  # `y:15px` is a JS syntax error that silently kills ALL animation
 
 
-@pytest.mark.parametrize("prm", PRMS, ids=[p["template"] for p in PRMS])
-def test_a_whole_composition_with_the_diagram_passes_the_script_check(prm, tmp_path):
-    (tmp_path / "c.mp4").write_bytes(b"x")
-    ov = [{"id": "o1", "kind": "diagram", "start": 1.0, "end": 6.0, "asset": "d", "params": prm}]
-    assert composition.build_composition(tmp_path / "p", tmp_path / "c.mp4", 10.0, [], ov, 360, 640, 24) == []
-    page = (tmp_path / "p" / "index.html").read_text()
-    assert "window.__timelines" in page and ".dg{" in page and 'id="ov0p"' in page
-
-
-def test_a_broken_script_is_refused_not_shipped():
-    with pytest.raises(ValueError, match="syntax error"):
-        composition._check_script('<script>tl.from("#a",{y:15px});</script>')
-
-
 def test_validation_gives_the_agent_something_to_act_on():
     for bad, msg in [({"template": "nope"}, "template must be"), ({"template": "flow", "steps": ["a"]}, "2 to 5 steps"),
                      ({"template": "flow", "steps": ["a", "x" * 40]}, "too long"), ({"template": "counter", "value": -1, "caption": "c"}, "non-negative"),
@@ -59,20 +45,11 @@ def test_add_diagram_tool():
     assert with_from["plan"]["overlays"][0]["params"]["from"] == "Click through menus"  # `from` is a Python keyword: must survive
 
 
-def test_a_composition_that_cannot_be_built_falls_back_visibly(monkeypatch, tmp_path):
-    import json
-    import subprocess
-    clip = tmp_path / "in.mp4"
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "testsrc2=s=320x180:r=15:d=3", "-f", "lavfi", "-i", "sine=f=300:d=3",
-                    "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", str(clip)], check=True)
-    plan = {"version": 1, "source": {"path": str(clip), "duration": 3.0, "width": 320, "height": 180, "fps": 15}, "output": {"width": 180, "height": 320, "fps": 15},
-            "keep": [{"id": "k1", "start": 0, "end": 3.0}], "reframe": {"mode": "center", "track": []},
-            "captions": [{"id": "c1", "text": "hello there", "start": 0.2, "end": 2.5, "style": "bold-pop"}],
-            "overlays": [{"id": "o1", "kind": "diagram", "start": 0.5, "end": 2.8, "asset": "d", "params": PRMS[3]}], "notes": ""}
-
-    def boom(*a, **k):
-        raise ValueError("the generated animation script has a syntax error: test")
-    monkeypatch.setattr(R, "build_composition", boom)
-    info = R.render_preview_info(plan, tmp_path / "w")
-    assert info["stage"] == "ffmpeg-ass-fallback" and any("syntax error" in w for w in info["warnings"])
-    json.dumps(info)
+def test_diagrams_are_not_drawn_by_the_remotion_path_and_say_so():
+    """Diagrams are HTML/GSAP and the Remotion captions renderer only draws title and lower-third: the diagram is dropped."""
+    from services.render import composition as C
+    warns = []
+    diagram = {"id": "o1", "kind": "diagram", "start": 0.5, "end": 2.8, "asset": "d", "params": PRMS[3]}
+    props = C._props([], [diagram], 3.0, 180, 320, 15, dict(C.DEFAULT_STYLE), "cut.mp4", warns)
+    assert props["overlays"] == []
+    assert any("diagram" in w and "not drawn" in w for w in warns)

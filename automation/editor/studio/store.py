@@ -1,7 +1,16 @@
-"""Small durable store for the studio (storyboards, series, publishing queue, activity log).
+"""Durable store for the studio (storyboards, series, publishing queue, carousels, activity log).
 
-One JSON file, written atomically after every change, so a restart of the editor service never loses work.
-Everything is guarded by one re-entrant lock: handlers run in threads (FastAPI) and background workers (jobs, scheduler).
+Two backends behind one interface:
+  * JSON file (default, unchanged): the whole state is written atomically after every change.
+  * Database (when STUDIO_DATABASE_URL is set): one row per record, written on every change.
+      - postgresql://...  Postgres: Supabase, AWS RDS, or any Postgres.
+      - sqlite:///path    SQLite file: local development and tests.
+
+Every record lives in one table, keyed by (namespace, collection, key). The namespace is the store's
+path (one per account folder), so several accounts can share one database without seeing each other.
+
+Everything is guarded by one re-entrant lock: handlers run in threads (FastAPI) and background workers
+(jobs, scheduler). Within one process the in-memory copy is authoritative; the database is the durable copy.
 """
 from __future__ import annotations
 
@@ -16,36 +25,113 @@ from typing import Any, Callable, Dict, List, Optional
 
 COLLECTIONS = ("storyboards", "series", "publishing", "settings", "carousels", "longform_jobs")
 MAX_EVENTS = 300
+DATABASE_URL_ENV = "STUDIO_DATABASE_URL"
+EVENTS_COLL, EVENTS_KEY = "events", "log"
+
+
+class _SqlBackend:
+    """One table, one row per record. Works with Postgres (psycopg) and SQLite (sqlite3)."""
+
+    def __init__(self, url: str, namespace: str):
+        self.namespace = namespace
+        if url.startswith(("postgres://", "postgresql://")):
+            import psycopg  # the Postgres driver; the only extra dependency for the database backend
+            self.conn = psycopg.connect(url, autocommit=True)
+            self.ph = "%s"
+            real = "double precision"
+        elif url.startswith("sqlite:///"):
+            import sqlite3
+            path = Path(url[len("sqlite:///"):])
+            path.parent.mkdir(parents=True, exist_ok=True)
+            self.conn = sqlite3.connect(str(path), check_same_thread=False, isolation_level=None)
+            self.ph = "?"
+            real = "real"
+        else:
+            raise ValueError(f"{DATABASE_URL_ENV} must start with postgresql:// or sqlite:///")
+        self.conn.execute(
+            f"create table if not exists studio_records ("
+            f" namespace text not null, coll text not null, key text not null,"
+            f" value text not null, updated_at {real} not null,"
+            f" primary key (namespace, coll, key))"
+        )
+
+    def _sql(self, sql: str) -> str:
+        return sql.replace("?", self.ph)
+
+    def load_all(self) -> List[tuple]:
+        cur = self.conn.execute(self._sql("select coll, key, value from studio_records where namespace = ?"), (self.namespace,))
+        return cur.fetchall()
+
+    def upsert(self, coll: str, key: str, value: Any) -> None:
+        self.conn.execute(self._sql(
+            "insert into studio_records (namespace, coll, key, value, updated_at) values (?, ?, ?, ?, ?)"
+            " on conflict (namespace, coll, key) do update set value = excluded.value, updated_at = excluded.updated_at"
+        ), (self.namespace, coll, key, json.dumps(value, ensure_ascii=False, default=str), time.time()))
+
+    def delete(self, coll: str, key: str) -> None:
+        self.conn.execute(self._sql("delete from studio_records where namespace = ? and coll = ? and key = ?"),
+                          (self.namespace, coll, key))
 
 
 class Store:
-    def __init__(self, path: str | Path):
+    def __init__(self, path: str | Path, database_url: Optional[str] = None, namespace: Optional[str] = None):
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.lock = threading.RLock()
         self.data: Dict[str, Any] = {c: {} for c in COLLECTIONS}
         self.data["events"] = []
+        url = database_url if database_url is not None else os.environ.get(DATABASE_URL_ENV, "").strip()
+        self.db = _SqlBackend(url, namespace or str(self.path)) if url else None
+        self.backend = self.db.conn.__class__.__module__.split(".")[0] if self.db else "json"
         self._load()
 
     # ------------------------------------------------------------ persistence
     def _load(self) -> None:
-        if not self.path.is_file():
+        if self.db is not None:
+            rows = self.db.load_all()
+            if rows:
+                for coll, key, value in rows:
+                    record = json.loads(value)
+                    if coll == EVENTS_COLL and key == EVENTS_KEY:
+                        self.data["events"] = record[-MAX_EVENTS:]
+                    elif coll in self.data:
+                        self.data[coll][key] = record
+                self._recover_interrupted()
+                self._persist_all()
+                return
+            # First start on the database: import the JSON file once, if there is one, so nothing is lost.
+            raw = self._read_json()
+            if raw is None:
+                return
+            self._apply_raw(raw)
+            self._recover_interrupted()
+            self._persist_all()
             return
+        raw = self._read_json()
+        if raw is None:
+            return
+        self._apply_raw(raw)
+        self._recover_interrupted()
+
+    def _read_json(self) -> Optional[dict]:
+        if not self.path.is_file():
+            return None
         try:
-            raw = json.loads(self.path.read_text(encoding="utf-8"))
+            return json.loads(self.path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             bad = self.path.with_suffix(".corrupt-" + time.strftime("%Y%m%d-%H%M%S"))
             try:
                 self.path.replace(bad)  # keep the unreadable file for inspection instead of overwriting it
             except OSError:
                 pass
-            return
+            return None
+
+    def _apply_raw(self, raw: dict) -> None:
         for c in COLLECTIONS:
             if isinstance(raw.get(c), dict):
                 self.data[c] = raw[c]
         if isinstance(raw.get("events"), list):
             self.data["events"] = raw["events"][-MAX_EVENTS:]
-        self._recover_interrupted()
 
     def _recover_interrupted(self) -> None:
         """Fail every record that was still in flight when the process last died.
@@ -86,10 +172,36 @@ class Store:
                               "message": "the service restarted while publishing; check the account before retrying"}
 
     def save(self) -> None:
+        """JSON backend: rewrite the whole file atomically. Database backend: write every record."""
         with self.lock:
+            if self.db is not None:
+                self._persist_all()
+                return
             tmp = self.path.with_suffix(".tmp")
             tmp.write_text(json.dumps(self.data, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
             os.replace(tmp, self.path)
+
+    def _persist_all(self) -> None:
+        with self.lock:
+            for c in COLLECTIONS:
+                for k, v in self.data[c].items():
+                    self.db.upsert(c, k, v)
+            self.db.upsert(EVENTS_COLL, EVENTS_KEY, self.data["events"])
+
+    def _commit(self, coll: str, key: str) -> None:
+        """Persist one changed record. Database: one row. JSON: the whole file."""
+        with self.lock:
+            if self.db is None:
+                self.save()
+                return
+            if coll == EVENTS_COLL:
+                self.db.upsert(EVENTS_COLL, EVENTS_KEY, self.data["events"])
+            else:
+                rec = self.data[coll].get(key)
+                if rec is None:
+                    self.db.delete(coll, key)
+                else:
+                    self.db.upsert(coll, key, rec)
 
     # ------------------------------------------------------------ access
     def new_id(self, prefix: str) -> str:
@@ -113,7 +225,7 @@ class Store:
             value["updated_at"] = time.time()
             value.setdefault("created_at", value["updated_at"])
             self.data[coll][key] = value
-            self.save()
+            self._commit(coll, key)
             return value
 
     def update(self, coll: str, key: str, fn: Callable[[dict], Any]) -> Optional[dict]:
@@ -124,14 +236,14 @@ class Store:
                 return None
             fn(rec)
             rec["updated_at"] = time.time()
-            self.save()
+            self._commit(coll, key)
             return rec
 
     def delete(self, coll: str, key: str) -> bool:
         with self.lock:
             gone = self.data[coll].pop(key, None) is not None
             if gone:
-                self.save()
+                self._commit(coll, key)
             return gone
 
     # ------------------------------------------------------------ activity log
@@ -139,7 +251,7 @@ class Store:
         with self.lock:
             self.data["events"].append({"ts": time.time(), "kind": kind, "message": message, **extra})
             del self.data["events"][:-MAX_EVENTS]
-            self.save()
+            self._commit(EVENTS_COLL, EVENTS_KEY)
 
     def events(self, limit: int = 30) -> List[dict]:
         with self.lock:

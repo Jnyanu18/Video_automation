@@ -1,46 +1,36 @@
-"""Build a Hyperframes project (index.html + local GSAP + assets) for captions/overlays on the cut video."""
+"""Captions and title/lower-third overlays on the cut video, drawn by Remotion (packages/motion-kit/projects/captions).
+
+build_composition() copies the captions project to a scratch dir, writes this render's props to src/captions.json,
+copies the cut video into public/, and runs motion-kit's render.mjs (--final, --json). The repo is never written to.
+captions and overlays must already be in OUTPUT time (timeline.remap_to_output).
+"""
 from __future__ import annotations
 
-import html
 import json
+import os
+import re
 import shutil
+import subprocess
 from pathlib import Path
 
-from . import diagrams
+from .combine import MOTION_KIT, RENDER_MJS
 
-# GSAP must come from a local file: CDNs are blocked in the sandbox/worker.
-_HERE = Path(__file__).resolve().parent
+CAPTIONS_PROJECT = MOTION_KIT / "projects" / "captions"
+IGNORE = shutil.ignore_patterns("out", ".bundle", "node_modules", "*.log")
+TEXT_OVERLAYS = ("title", "lower-third")  # the kinds the Remotion captions project draws
+DEFAULT_STYLE = {"fontFamily": "Geist", "fontFile": None, "textColor": "#FFFFFF", "highlightColor": "#FFD400",
+                 "position": "bottom", "uppercase": False}
+POSITIONS = ("top", "middle", "bottom")
+_HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
+# Graphic-only helpers kept for studio/diagrams.py (standalone_page). Not used by the Remotion render.
 GSAP_CANDIDATES = [
-    _HERE / "vendor" / "gsap.min.js",
-    _HERE.parents[1] / "app" / "test-video" / "vendor" / "gsap.min.js",
+    Path(__file__).resolve().parent / "vendor" / "gsap.min.js",
+    Path(__file__).resolve().parents[2] / "app" / "test-video" / "vendor" / "gsap.min.js",
 ]
-VIDEO_EXT = {".mp4", ".mov", ".webm", ".m4v", ".mkv"}
-IMAGE_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
-
-CAPTION_STYLES = {
-    # style -> (css, entrance tween kwargs)
-    "bold-pop": ("font-weight:800;color:#fff;-webkit-text-stroke:0;text-shadow:0 4px 18px rgba(0,0,0,.85);"
-                 "text-transform:uppercase", {"scale": 0.7, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"}),
-    "clean": ("font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)",
-              {"opacity": 0, "y": 12, "duration": 0.18, "ease": "power2.out"}),
-    "boxed": ("font-weight:700;color:#fff;background:rgba(0,0,0,.65);padding:.25em .6em;border-radius:.3em",
-              {"opacity": 0, "duration": 0.12}),
-    "highlight": ("font-weight:800;color:#111;background:#ffd400;padding:.2em .55em;border-radius:.3em",
-                  {"scale": 0.85, "opacity": 0, "duration": 0.14, "ease": "back.out(2)"}),
-    # word-by-word: the whole line shows, the word being spoken lights up (needs caption `words`, see below)
-    "karaoke": ("font-weight:800;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.85);text-transform:uppercase",
-                {"opacity": 0, "y": 10, "duration": 0.12, "ease": "power2.out"}),
-}
-KARAOKE_ACTIVE = "#ffd400"
-DEFAULT_STYLE = "bold-pop"
-# Canonical caption style names come from tools/edit/styles.py (bold-pop, clean-lower, karaoke, boxed).
-# Map them (and legacy names) onto the looks implemented here.
-STYLE_ALIASES = {"clean-lower": "clean"}
 
 
-def resolve_style(name) -> str:
-    name = STYLE_ALIASES.get(name, name)
-    return name if name in CAPTION_STYLES else DEFAULT_STYLE
+class CaptionsRenderError(RuntimeError):
+    pass
 
 
 def find_gsap() -> Path:
@@ -50,215 +40,145 @@ def find_gsap() -> Path:
     raise FileNotFoundError("gsap.min.js not found; place it at services/render/vendor/gsap.min.js")
 
 
-def _esc(t) -> str:
-    return html.escape(str(t), quote=True)
+def chrome_path() -> str | None:
+    """A Chrome/Chromium binary for Remotion: CHROME_PATH if set, else the first one found. None lets Remotion decide."""
+    if os.environ.get("CHROME_PATH"):
+        return os.environ["CHROME_PATH"]
+    win = [os.path.join(os.environ.get(v, ""), "Google", "Chrome", "Application", "chrome.exe")
+           for v in ("PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA")] if os.name == "nt" else []
+    for cand in (shutil.which("chrome-headless-shell"), shutil.which("chromium"), shutil.which("google-chrome"),
+                 "/usr/bin/chrome-headless-shell", "/usr/bin/chromium", "/usr/bin/google-chrome", *win):
+        if cand and Path(cand).is_file():
+            return cand
+    return None
 
 
-def _num(x) -> str:
-    return f"{float(x):.3f}"
-
-
-def _tween(vars_: dict) -> str:
-    return json.dumps(vars_)
+def renderer_ready() -> tuple[bool, str]:
+    """(True, "") when node, motion-kit's render.mjs, its node_modules and a Chrome are all present; else (False, why)."""
+    if shutil.which("node") is None:
+        return False, "node is not on PATH"
+    if not RENDER_MJS.is_file() or not CAPTIONS_PROJECT.is_dir():
+        return False, f"motion-kit render.mjs or projects/captions missing under {MOTION_KIT}"
+    if not (MOTION_KIT / "node_modules" / "remotion").is_dir():
+        return False, f"remotion is not installed in {MOTION_KIT} (run npm install there)"
+    if chrome_path() is None:
+        return False, "no Chrome or Chromium found (set CHROME_PATH)"
+    return True, ""
 
 
 def _clamp(items: list[dict], duration: float) -> list[dict]:
     res = []
-    for it in items:
+    for it in items or []:
         s, e = max(0.0, float(it["start"])), min(duration, float(it["end"]))
         if e - s >= 0.04:
-            res.append({**it, "start": s, "end": e})
+            res.append({**it, "start": round(s, 3), "end": round(e, 3)})
     return res
 
 
-def _stage_asset(src: str, proj: Path, name: str) -> str | None:
-    p = Path(src)
-    if not p.is_file():
-        return None
-    (proj / "assets").mkdir(exist_ok=True)
-    dst = proj / "assets" / f"{name}{p.suffix.lower()}"
-    shutil.copy(p, dst)
-    return f"assets/{dst.name}"
+def _style(brand: dict | None, warnings: list[str]) -> tuple[dict, Path | None]:
+    """Merge a caption style over the defaults. Returns (style, font file to copy into public/ or None)."""
+    st = dict(DEFAULT_STYLE)
+    font_src = None
+    for k, v in (brand or {}).items():
+        if k in ("textColor", "highlightColor") and not (isinstance(v, str) and _HEX.match(v)):
+            warnings.append(f"caption style {k}={v!r} is not a #rrggbb colour; using {DEFAULT_STYLE[k]}")
+            continue
+        if k == "position" and v not in POSITIONS:
+            warnings.append(f"caption position {v!r} unknown; using bottom")
+            continue
+        if k == "fontFile":
+            p = Path(str(v))
+            if p.is_file() and p.suffix.lower() in (".ttf", ".otf", ".woff", ".woff2"):
+                font_src = p
+            else:
+                warnings.append(f"caption font file not found or unsupported: {v}; using Geist")
+            continue
+        if k in st:
+            st[k] = v
+    if font_src is None:
+        st["fontFile"] = None
+    else:
+        st["fontFile"] = f"brand-font{font_src.suffix.lower()}"
+    return st, font_src
 
 
-def _check_script(doc: str) -> None:
-    """A JS syntax error in the generated page makes the renderer play NO animation (not even karaoke) without any message.
-    Parse the script with node before it is written, so that failure is loud."""
-    import re
-    import subprocess
-    import tempfile
-    node = shutil.which("node")
-    if not node:
-        return
-    scripts = re.findall(r"<script>(.*?)</script>", doc, re.S)
-    if not scripts:
-        return
-    with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
-        f.write(scripts[-1])
-        path = f.name
+def _props(captions: list[dict], overlays: list[dict], duration: float, w: int, h: int, fps: float,
+           style: dict, video_name: str, warnings: list[str]) -> dict:
+    caps = []
+    for c in _clamp(captions, duration):
+        words = [{"word": str(x.get("word", "")).strip(), "start": round(float(x["start"]), 3),
+                  "end": round(float(x["end"]), 3)}
+                 for x in (c.get("words") or []) if str(x.get("word", "")).strip()]
+        words = [x for x in words if x["end"] > x["start"] and x["start"] < c["end"] and x["end"] > c["start"]]
+        item = {"text": str(c.get("text", "")), "start": c["start"], "end": c["end"]}
+        if words:
+            item["words"] = words
+        if item["text"].strip() or words:
+            caps.append(item)
+    ovs = []
+    for o in _clamp(overlays, duration):
+        kind = o.get("kind")
+        if kind not in TEXT_OVERLAYS:
+            warnings.append(f"overlay {o.get('id')}: kind {kind!r} is not drawn by the captions renderer "
+                            "(only title and lower-third are)")
+            continue
+        prm = o.get("params") or {}
+        ovs.append({"kind": kind, "text": o.get("text") or prm.get("text") or o.get("asset") or "",
+                    "start": o["start"], "end": o["end"], "params": prm})
+    return {"video": video_name, "width": w, "height": h, "fps": float(fps), "duration": round(duration, 3),
+            "captions": caps, "overlays": ovs, "style": style}
+
+
+def _parse_last_json(stdout: str) -> dict:
+    lines = [ln for ln in (stdout or "").splitlines() if ln.strip()]
     try:
-        r = subprocess.run([node, "--check", path], capture_output=True, text=True, timeout=20)
-    finally:
-        Path(path).unlink(missing_ok=True)
-    if r.returncode != 0:
-        detail = [ln for ln in r.stderr.splitlines() if ln.strip()][:3]
-        raise ValueError("the generated animation script has a syntax error: " + " | ".join(detail))
-
-
-def _place(prm: dict, h: int, px, wide_margin: float = 60) -> str:
-    """Inline style that puts a title/graphic card at params.y (fraction of height), instead of the default centre."""
-    y = prm.get("y")
-    if y is None:
-        y = {"top": 0.18, "bottom": 0.78}.get(prm.get("position"))
-    if y is None:
-        return ""
-    y = min(max(float(y), 0.04), 0.96)
-    return f"inset:auto;left:{px(wide_margin)};right:{px(wide_margin)};top:{y * 100:.1f}%;transform:translateY(-50%);"
-
-
-def _text_style(prm: dict, px) -> str:
-    parts = []
-    if prm.get("size"):
-        parts.append(f"font-size:{px(float(prm['size']))}")
-    if prm.get("box"):
-        parts.append("background:rgba(0,0,0,.6);padding:.25em .6em;border-radius:.3em;display:inline-block")
-    return ";".join(parts)
+        return json.loads(lines[-1]) if lines else {}
+    except json.JSONDecodeError:
+        return {}
 
 
 def build_composition(proj: Path, cut_video: Path, duration: float, captions: list[dict],
-                      overlays: list[dict], w: int, h: int, fps: float) -> list[str]:
-    """Write proj/index.html. captions/overlays must already be in OUTPUT time. Returns warnings."""
+                      overlays: list[dict], w: int, h: int, fps: float, *, out_mp4: Path,
+                      style: dict | None = None, timeout: int = 900) -> tuple[Path, list[str]]:
+    """Render captions + title/lower-third overlays over cut_video into out_mp4. Returns (out_mp4, warnings).
+
+    proj is a scratch directory for this render (the captions project is copied into it). Raises CaptionsRenderError.
+    """
+    ok, why = renderer_ready()
+    if not ok:
+        raise CaptionsRenderError(why)
     warnings: list[str] = []
-    proj.mkdir(parents=True, exist_ok=True)
-    (proj / "vendor").mkdir(exist_ok=True)
-    shutil.copy(find_gsap(), proj / "vendor" / "gsap.min.js")
-    shutil.copy(cut_video, proj / "cut.mp4")
-    s = min(w, h) / 1080.0  # scale all px sizes relative to a 1080 short side
-    px = lambda v: f"{v * s:.1f}px"  # noqa: E731
+    proj, out_mp4 = Path(proj), Path(out_mp4)
+    if proj.exists():
+        shutil.rmtree(proj)
+    shutil.copytree(CAPTIONS_PROJECT, proj, ignore=IGNORE)
+    st, font_src = _style(style, warnings)
+    (proj / "public").mkdir(exist_ok=True)
+    shutil.copy2(cut_video, proj / "public" / "cut.mp4")
+    if font_src is not None:
+        shutil.copy2(font_src, proj / "public" / st["fontFile"])
+    props = _props(captions, overlays, duration, w, h, fps, st, "cut.mp4", warnings)
+    (proj / "src" / "captions.json").write_text(json.dumps(props, indent=2), encoding="utf-8")
 
-    els: list[str] = []
-    js: list[str] = []
-
-    def clip(idn, st, en, cls, inner, extra_style=""):
-        els.append(f'<div id="{idn}" class="clip {cls}" data-start="{_num(st)}" data-duration="{_num(en - st)}" '
-                   f'data-track-index="{{TRACK}}" style="{extra_style}">{inner}</div>')
-
-    dia_windows: list[list[float]] = []
-    # --- overlays (below captions in z-order) ---
-    for i, o in enumerate(_clamp(overlays, duration)):
-        kind, prm = o.get("kind"), o.get("params") or {}
-        st, en, oid = o["start"], o["end"], f"ov{i}"
-        if kind == "broll":
-            ref = _stage_asset(str(o.get("asset", "")), proj, oid)
-            if not ref:
-                warnings.append(f"overlay {o.get('id')}: asset not found: {o.get('asset')}")
-                continue
-            if Path(ref).suffix in VIDEO_EXT:
-                inner = f'<video id="{oid}v" src="{ref}" muted playsinline style="width:100%;height:100%;object-fit:cover"></video>'
-                # video inside clip wrapper: time the wrapper only
-                inner = inner.replace(f'id="{oid}v"', f'id="{oid}v" data-start="0" data-duration="{_num(en - st)}"')
-            else:
-                inner = f'<img src="{ref}" style="width:100%;height:100%;object-fit:cover"/>'
-            clip(oid, st, en, "ov-full", inner)
-            js.append(f'tl.from("#{oid}",{{opacity:0,duration:0.2}},{_num(st)});')
-        elif kind == "title":
-            sub = f'<div class="sub">{_esc(prm["subtitle"])}</div>' if prm.get("subtitle") else ""
-            clip(oid, st, en, "ov-title", f'<div class="ti" id="{oid}i"><div class="tt" style="{_text_style(prm, px)}">{_esc(prm.get("text", o.get("asset", "")))}</div>{sub}</div>',
-                 _place(prm, h, px))
-            js.append(f'tl.from("#{oid}i",{{y:{40 * s:.0f},opacity:0,duration:0.4,ease:"power3.out"}},{_num(st)});')
-        elif kind == "lower-third":
-            _sub = prm.get("subtitle") or prm.get("title")
-            sub = f'<div class="sub">{_esc(_sub)}</div>' if _sub else ""
-            clip(oid, st, en, "ov-lt", f'<div class="lt" id="{oid}i"><div class="tt">{_esc(prm.get("name", prm.get("text", o.get("asset", ""))))}</div>{sub}</div>')
-            js.append(f'tl.from("#{oid}i",{{x:{-80 * s:.0f},opacity:0,duration:0.4,ease:"power3.out"}},{_num(st)});')
-        elif kind == "diagram":
-            try:
-                inner, tweens = diagrams.render(prm, oid, st, en, px)
-            except diagrams.DiagramError as e:
-                warnings.append(f"overlay {o.get('id')}: diagram not drawn: {e}")
-                continue
-            clip(oid, st, en, "ov-dia", f'<div class="dg" id="{oid}p">{inner}</div>')
-            js.extend(tweens)
-            dia_windows.append([st, en])  # (only used to decide whether the diagram CSS is needed)
-        elif kind == "graphic":
-            ref = _stage_asset(str(o.get("asset", "")), proj, oid) if o.get("asset") else None
-            if ref and Path(ref).suffix in IMAGE_EXT:
-                clip(oid, st, en, "ov-gfx", f'<img id="{oid}i" src="{ref}" style="max-width:100%;max-height:100%"/>')
-            elif prm.get("text"):
-                clip(oid, st, en, "ov-gfx", f'<div class="tt" id="{oid}i" style="{_text_style(prm, px)}">{_esc(prm["text"])}</div>',
-                     _place(prm, h, px))
-            else:
-                warnings.append(f"overlay {o.get('id')}: graphic has no image asset or params.text (block ids unsupported)")
-                continue
-            js.append(f'tl.from("#{oid}i",{{scale:0.8,opacity:0,duration:0.3,ease:"back.out(1.6)"}},{_num(st)});')
-        else:
-            warnings.append(f"overlay {o.get('id')}: unknown kind {kind!r}")
-
-    # --- captions ---
-    for i, c in enumerate(_clamp(captions, duration)):
-        requested = c.get("style") or DEFAULT_STYLE
-        style = resolve_style(requested)
-        if style == DEFAULT_STYLE and requested != DEFAULT_STYLE:
-            warnings.append(f"caption {c.get('id')}: unknown style {requested!r}, using {DEFAULT_STYLE}")
-        css, tw = CAPTION_STYLES[style]
-        cid = f"cap{i}"
-        words = [w for w in (c.get("words") or []) if str(w.get("word", "")).strip()]
-        if style == "karaoke" and not words:
-            warnings.append(f"caption {c.get('id')}: karaoke needs word timings (use set_captions with words); "
-                            "showing the whole line highlighted instead")
-            css, tw = CAPTION_STYLES["highlight"]
-            style = "highlight"
-        if style == "karaoke":
-            spans = " ".join(f'<span class="w" id="{cid}w{k}">{_esc(str(wd["word"]).strip())}</span>' for k, wd in enumerate(words))
-            clip(cid, c["start"], c["end"], "cap", f'<span class="ct" id="{cid}t" style="{css}">{spans}</span>')
-            js.append(f'tl.from("#{cid}t",{_tween(tw)},{_num(c["start"])});')
-            for k, wd in enumerate(words):  # light up while the word is spoken, back to white after (NB: `w` is the frame width)
-                ws, we = max(float(wd["start"]), c["start"]), min(float(wd["end"]), c["end"])
-                if we - ws < 0.02:
-                    continue
-                js.append(f'tl.to("#{cid}w{k}",{{color:"{KARAOKE_ACTIVE}",scale:1.08,duration:0.06,ease:"power2.out"}},{_num(ws)});')
-                js.append(f'tl.to("#{cid}w{k}",{{color:"#ffffff",scale:1,duration:0.06,ease:"power2.in"}},{_num(we)});')
-            continue
-        clip(cid, c["start"], c["end"], "cap", f'<span class="ct" id="{cid}t" style="{css}">{_esc(c["text"])}</span>')
-        js.append(f'tl.from("#{cid}t",{_tween(tw)},{_num(c["start"])});')
-
-    body = "\n  ".join(els)
-    body = body.replace("{TRACK}", "1")  # Studio lane only; paint order is z-index
-
-    dia_css = diagrams.css(px, w, h) if dia_windows else ""
-    doc = f"""<!doctype html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width={w}, height={h}"/>
-<script src="vendor/gsap.min.js"></script>
-<style>
-*{{margin:0;padding:0;box-sizing:border-box}}
-html,body{{width:{w}px;height:{h}px;overflow:hidden;background:#000;font-family:sans-serif}}
-#stage{{position:relative;width:{w}px;height:{h}px;overflow:hidden}}
-#main{{position:absolute;left:0;top:0;width:{w}px;height:{h}px;z-index:0}}
-.ov-full{{position:absolute;inset:0;z-index:5;overflow:hidden}}
-.ov-title{{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 {px(120)}}}
-.ov-lt{{position:absolute;left:{px(110)};bottom:{h * 0.26:.0f}px;z-index:6}}
-.ov-gfx{{position:absolute;inset:{px(110)};z-index:6;display:flex;align-items:center;justify-content:center}}
-.tt{{color:#fff;font-weight:800;font-size:{px(72)};text-shadow:0 4px 18px rgba(0,0,0,.8)}}
-.sub{{color:#eee;font-weight:500;font-size:{px(38)};margin-top:{px(8)};text-shadow:0 2px 10px rgba(0,0,0,.8)}}
-.lt{{background:rgba(0,0,0,.6);border-left:{px(8)} solid #ff7a00;padding:{px(16)} {px(28)}}}
-.lt .tt{{font-size:{px(44)}}}
-.cap{{position:absolute;left:0;right:0;bottom:{h * 0.12:.0f}px;z-index:10;text-align:center;padding:0 {px(110)}}}
-.ct{{display:inline-block;font-size:{px(64)};line-height:1.2;word-spacing:.1em}}
-.w{{display:inline-block;transform-origin:50% 70%;margin:0 .06em}}
-{dia_css}
-</style></head><body>
-<div id="stage" data-composition-id="edit" data-start="0" data-duration="{_num(duration)}" data-width="{w}" data-height="{h}" data-fps="{fps:g}">
-  <video id="main" class="clip" data-start="0" data-duration="{_num(duration)}" data-track-index="0" data-has-audio="true" src="cut.mp4" playsinline></video>
-  {body}
-</div>
-<script>
-gsap.defaults({{lazy:false}});  // frame capture reads the page right after a seek: no deferred writes
-const tl = gsap.timeline({{paused:true}});
-{chr(10).join(js)}
-window.__timelines = window.__timelines || {{}};
-window.__timelines["edit"] = tl;
-</script></body></html>"""
-    _check_script(doc)
-    (proj / "index.html").write_text(doc)
-    (proj / "meta.json").write_text(json.dumps({"name": "edit"}))
-    return warnings
+    env = dict(os.environ)
+    cp = chrome_path()
+    if cp and not env.get("CHROME_PATH"):
+        env["CHROME_PATH"] = cp
+    cmd = ["node", str(RENDER_MJS), "--final", "--project", str(proj), "--name", out_mp4.name, "--json"]
+    try:
+        r = subprocess.run(cmd, cwd=str(MOTION_KIT), env=env, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=timeout)
+    except subprocess.TimeoutExpired as e:
+        raise CaptionsRenderError(f"captions render timed out after {timeout}s") from e
+    payload = _parse_last_json(r.stdout)
+    rendered = payload.get("path")
+    err = str(payload.get("error") or "")
+    # Captions over silent footage make the kit's loudness gate report an error. That is expected while the file exists.
+    audio_only = any(x in err.lower() for x in ("loudnorm", "loudness", "silent", "unmeasurable"))
+    if r.returncode != 0 or not rendered or (err and not audio_only):
+        raise CaptionsRenderError(f"remotion render failed ({r.returncode}): {err or (r.stderr or '')[-800:]}")
+    if not Path(rendered).is_file():
+        raise CaptionsRenderError(f"remotion reported {rendered} but the file is missing")
+    out_mp4.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(rendered, out_mp4)
+    return out_mp4, warnings

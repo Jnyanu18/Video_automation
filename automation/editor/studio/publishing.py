@@ -18,6 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
+from . import gate
 from .store import Store
 
 PLATFORMS = {
@@ -116,7 +117,7 @@ class Publisher:
         return out
 
     # ------------------------------------------------------------------ queue
-    def schedule(self, payload: dict) -> dict:
+    def schedule(self, payload: dict, *, visual_client: Any = None, accept_review: bool = False) -> dict:
         title = str(payload.get("title") or "").strip()
         caption = str(payload.get("caption") or "").strip()
         if not title or not caption:
@@ -130,17 +131,26 @@ class Publisher:
             raise ValueError(f"no connector for {', '.join(unconnected)}; only Instagram can be published right now")
         render_id = payload.get("render_id")
         sb_id = payload.get("storyboard_id")
-        if not render_id and sb_id:
-            sb = self.store.get("storyboards", sb_id)
+        sb = self.store.get("storyboards", sb_id) if sb_id else None
+        if not render_id and sb:
             render_id = ((sb or {}).get("latest_render") or {}).get("render_id")
         if not render_id or not (self.renders_dir / f"{render_id}.mp4").is_file():
             raise ValueError("a finished render is required: render the approved storyboard first")
+        # The publish gate: BLOCK refuses; REVIEW needs the caller to acknowledge it (accept_review).
+        g = gate.check_for_publish(str(self.renders_dir / f"{render_id}.mp4"), ((sb or {}).get("director") or {}).get("plan"),
+                                   visual_client=visual_client)
+        if g["verdict"] == gate.BLOCK:
+            raise ValueError("publishing refused by the gate: " + "; ".join(c["detail"] for c in g["checks"] if c["level"] == gate.BLOCK))
+        if g["verdict"] == gate.REVIEW and not accept_review:
+            raise ValueError("the gate wants a person to check this first: " + "; ".join(c["detail"] for c in g["checks"] if c["level"] == gate.REVIEW)
+                             + ". Publish anyway by passing accept_review.")
         when = parse_when(payload.get("scheduled_at"))
         pid = self.store.new_id("pub")
         item = {
             "id": pid, "title": title[:200], "caption": caption[:2200], "platforms": platforms,
             "storyboard_id": sb_id, "render_id": render_id, "video_url": f"/render/{render_id}.mp4",
             "scheduled_at": when, "status": "SCHEDULED", "results": {}, "error": None, "attempts": 0, "metrics": None,
+            "gate": g, "gate_accepted_review": bool(accept_review and g["verdict"] == gate.REVIEW),
         }
         self.store.put("publishing", pid, item)
         self.store.log("publishing", f"Scheduled “{item['title']}”", id=pid)

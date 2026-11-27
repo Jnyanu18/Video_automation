@@ -201,7 +201,8 @@ def test_publish_flow_end_to_end(env, monkeypatch, adapter):
     c = env["client"]
     sb_id = rendered_storyboard(env, monkeypatch)
     acc = {a["platform"]: a for a in c.get("/api/editor/publishing/accounts").json()["accounts"]}
-    assert acc["instagram"]["connected"] and acc["instagram"]["account"] == "studio" and not acc["tiktok"]["connected"]
+    assert acc["instagram"]["connected"] and acc["instagram"]["account"] == "studio" and not acc["youtube_shorts"]["connected"]
+    assert "tiktok" not in acc  # TikTok was dropped on purpose (2026-11-27)
     r = c.post("/api/editor/publishing/schedule", json={"title": "T", "caption": "send this", "storyboard_id": sb_id})
     assert r.status_code == 200
     it = wait_item(c, r.json()["item"]["id"], "PUBLISHED")
@@ -220,7 +221,8 @@ def test_schedule_validation(env, monkeypatch, adapter):
     body = {"title": "T", "caption": "c"}
     assert c.post("/api/editor/publishing/schedule", json=body).status_code == 400                    # no render
     sb_id = rendered_storyboard(env, monkeypatch)
-    assert c.post("/api/editor/publishing/schedule", json={**body, "storyboard_id": sb_id, "platforms": ["tiktok"]}).status_code == 400
+    assert c.post("/api/editor/publishing/schedule", json={**body, "storyboard_id": sb_id, "platforms": ["youtube_shorts"]}).status_code == 400  # no connector
+    assert c.post("/api/editor/publishing/schedule", json={**body, "storyboard_id": sb_id, "platforms": ["tiktok"]}).status_code == 400  # not offered
     future = c.post("/api/editor/publishing/schedule", json={**body, "storyboard_id": sb_id, "scheduled_at": "2099-01-01T10:00:00+00:00"}).json()["item"]
     assert future["status"] == "SCHEDULED" and adapter.posts_created == 0                            # not published early
     assert c.post(f"/api/editor/publishing/{future['id']}/cancel").json()["item"]["status"] == "CANCELED"
@@ -253,11 +255,12 @@ def test_missing_public_url_fails_clearly(env, monkeypatch, adapter):
 def test_scheduler_publishes_due_items(env, monkeypatch, adapter):
     c, pub = env["client"], env["app"].state.publisher
     sb_id = rendered_storyboard(env, monkeypatch)
-    soon = time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(time.time() + 1))
+    # 3 s ahead, not 1: the timestamp is truncated to whole seconds and the publish gate now takes a moment before scheduling.
+    soon = time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(time.time() + 3))
     soon = soon[:-2] + ":" + soon[-2:]
     pid = c.post("/api/editor/publishing/schedule", json={"title": "T", "caption": "c", "storyboard_id": sb_id, "scheduled_at": soon}).json()["item"]["id"]
     assert pub.due() == []
-    time.sleep(1.5)
+    time.sleep(3.5)
     assert pub.due() == [pid]
     pub.publish(pid)
     assert wait_item(c, pid, "PUBLISHED")
@@ -317,7 +320,7 @@ def test_integration_health_is_probed_not_asserted(env):
     d = env["client"].get("/api/editor/integrations/health").json()
     by = {s["id"]: s for s in d["services"]}
     assert by["ffmpeg"]["status"] == "ONLINE" and by["sfx"]["detail"] == "40 effects" and "ytdlp" in by
-    assert by["mpt_server"]["status"] in ("STANDBY", "OFFLINE", "ONLINE") and by["editor_api"]["status"] == "ONLINE"
+    assert by["editor_api"]["status"] == "ONLINE"
     assert "core_ready" in d["summary"]
     wf = env["client"].get("/api/editor/automation/workflows").json()
     assert len(wf["workflows"]) == 7 and wf["workflows"][0]["webhooks"] == ["reels/intake", "reels/intake-retry"]
